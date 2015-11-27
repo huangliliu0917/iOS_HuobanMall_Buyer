@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-625" y="-130"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="kVQ-GN-2e5">
+            <objects>
+                <viewController storyboardIdentifier="RootViewController" id="xif-ee-rg9" customClass="RootViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hAa-Uo-alI"/>
+                        <viewControllerLayoutGuide type="bottom" id="cgV-mA-DuW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UkL-lL-YkM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pgn-zv-Ldx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1320" y="-948"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="jUk-lK-jSF">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" id="ktW-1V-IxR" customClass="HomeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5nF-u4-eME"/>
+                        <viewControllerLayoutGuide type="bottom" id="YUa-aL-xev"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l6d-M4-nA0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eux-2m-kae" userLabel="BottonWebView">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="CVn-mw-Olm"/>
+                                </constraints>
+                            </webView>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wn-L7-R3D">
+                                <rect key="frame" x="0.0" y="20" width="600" height="530"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="0Wn-L7-R3D" secondAttribute="trailing" id="5sO-MB-6tu"/>
+                            <constraint firstItem="Eux-2m-kae" firstAttribute="top" secondItem="0Wn-L7-R3D" secondAttribute="bottom" id="XWF-QR-KAV"/>
+                            <constraint firstItem="0Wn-L7-R3D" firstAttribute="top" secondItem="5nF-u4-eME" secondAttribute="bottom" id="jEd-GR-o6H"/>
+                            <constraint firstAttribute="trailing" secondItem="Eux-2m-kae" secondAttribute="trailing" id="onr-lI-2S7"/>
+                            <constraint firstItem="Eux-2m-kae" firstAttribute="top" secondItem="0Wn-L7-R3D" secondAttribute="bottom" constant="1" id="sQK-BQ-eeO"/>
+                            <constraint firstItem="YUa-aL-xev" firstAttribute="top" secondItem="Eux-2m-kae" secondAttribute="bottom" id="t8H-Rq-D3g"/>
+                            <constraint firstItem="0Wn-L7-R3D" firstAttribute="leading" secondItem="l6d-M4-nA0" secondAttribute="leading" id="vfu-aj-ghK"/>
+                            <constraint firstItem="Eux-2m-kae" firstAttribute="leading" secondItem="l6d-M4-nA0" secondAttribute="leading" id="w3t-GA-hek"/>
+                            <constraint firstItem="Eux-2m-kae" firstAttribute="top" secondItem="0Wn-L7-R3D" secondAttribute="bottom" id="wrX-KH-BHm"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="sQK-BQ-eeO"/>
+                                <exclude reference="wrX-KH-BHm"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="homeBottonWebView" destination="Eux-2m-kae" id="jSW-37-mKh"/>
+                        <outlet property="homeBottonWebViewHeight" destination="CVn-mw-Olm" id="OwL-Bl-ll8"/>
+                        <outlet property="homeWebView" destination="0Wn-L7-R3D" id="6BU-F9-0Hn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zFD-3i-wBf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1358" y="-130"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="vpc-1f-flb">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="4Yb-DM-Xgn" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jkG-T9-gWH"/>
+                        <viewControllerLayoutGuide type="bottom" id="ezx-14-fHs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="br7-9P-EDj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_bg_414x736" translatesAutoresizingMaskIntoConstraints="NO" id="arz-lq-epn">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <animations/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyL-xf-Njb">
+                                <rect key="frame" x="83" y="632" width="248" height="44"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Bps-ja-Bjk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" title="微信登陆" image="weixing">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginBtnClick:" destination="4Yb-DM-Xgn" eventType="touchUpInside" id="0YP-v5-Wyg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ezx-14-fHs" firstAttribute="top" secondItem="QyL-xf-Njb" secondAttribute="bottom" constant="60" id="ToO-CL-MXE"/>
+                            <constraint firstItem="arz-lq-epn" firstAttribute="top" secondItem="jkG-T9-gWH" secondAttribute="bottom" id="U6x-mq-dB3"/>
+                            <constraint firstAttribute="centerX" secondItem="QyL-xf-Njb" secondAttribute="centerX" id="UdZ-Ej-Rda"/>
+                            <constraint firstItem="arz-lq-epn" firstAttribute="top" secondItem="br7-9P-EDj" secondAttribute="top" id="VJ6-yS-vjo"/>
+                            <constraint firstAttribute="trailing" secondItem="arz-lq-epn" secondAttribute="trailing" id="bwp-VH-YCE"/>
+                            <constraint firstItem="ezx-14-fHs" firstAttribute="top" secondItem="arz-lq-epn" secondAttribute="bottom" id="iwy-H4-itf"/>
+                            <constraint firstItem="QyL-xf-Njb" firstAttribute="top" secondItem="arz-lq-epn" secondAttribute="bottom" id="mva-HJ-cHV"/>
+                            <constraint firstItem="QyL-xf-Njb" firstAttribute="width" secondItem="br7-9P-EDj" secondAttribute="width" multiplier="0.6" id="r0G-If-8JK"/>
+                            <constraint firstItem="arz-lq-epn" firstAttribute="leading" secondItem="br7-9P-EDj" secondAttribute="leading" id="tTS-aC-UHO"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="U6x-mq-dB3"/>
+                                <exclude reference="mva-HJ-cHV"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="loginButton" destination="QyL-xf-Njb" id="JLh-kg-qhI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jff-8t-zBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-35" y="-145"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="vos-QD-IG4">
+            <objects>
+                <tabBarController id="nz9-Yw-R6n" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="jSS-Nh-988">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RcK-Kl-SIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-568" y="-953"/>
+        </scene>
+        <!--Push Web View Controller-->
+        <scene sceneID="0IX-c5-xHy">
+            <objects>
+                <viewController storyboardIdentifier="PushWebViewController" id="Yr6-yI-NpG" customClass="PushWebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OgS-CL-KS1"/>
+                        <viewControllerLayoutGuide type="bottom" id="kAv-zQ-aAk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GQg-Mx-ysP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IeF-M3-Gnr">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IeF-M3-Gnr" firstAttribute="top" secondItem="OgS-CL-KS1" secondAttribute="bottom" id="Ivg-rF-ZN6"/>
+                            <constraint firstItem="IeF-M3-Gnr" firstAttribute="leading" secondItem="GQg-Mx-ysP" secondAttribute="leading" id="QK6-g5-8HQ"/>
+                            <constraint firstAttribute="trailing" secondItem="IeF-M3-Gnr" secondAttribute="trailing" id="hGO-Yf-Lgq"/>
+                            <constraint firstAttribute="bottom" secondItem="IeF-M3-Gnr" secondAttribute="bottom" id="xFS-Xv-WBS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="IeF-M3-Gnr" id="oaU-Bz-HNC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a4c-rP-5f7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="-942"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="login_bg_414x736" width="414" height="736"/>
+        <image name="weixing" width="40" height="40"/>
+    </resources>
+</document>

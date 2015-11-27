@@ -1,0 +1,7 @@
+.git
+Pods
+*.xcworkspace
+xcuserdata
+*.lock
+.DS_Store
+
