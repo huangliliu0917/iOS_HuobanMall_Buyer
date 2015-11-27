@@ -14,4 +14,8 @@
 
 
 + (UIImage *) LeftMenuImageWithIconName:(NSString *) imageName;
+
+
+
++ (UIImage *)ToCreateQRcodeWithInformation:(NSString *)QRStr;
 @end

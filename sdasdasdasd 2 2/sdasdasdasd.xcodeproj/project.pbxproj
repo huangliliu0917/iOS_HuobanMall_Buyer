@@ -9,9 +9,40 @@
 /* Begin PBXBuildFile section */
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
-		EF40A8201C056D6300E664C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81E1C056D6300E664C8 /* Main.storyboard */; };
 		EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF40A8221C056D7E00E664C8 /* ViewController.m */; };
 		EF40A8291C05820B00E664C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF40A8281C05820B00E664C8 /* InfoPlist.strings */; };
+		EF42C0FA1C0832A100602E60 /* AmendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C11C0832A100602E60 /* AmendController.m */; };
+		EF42C0FB1C0832A100602E60 /* DescribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C31C0832A100602E60 /* DescribeController.m */; };
+		EF42C0FC1C0832A100602E60 /* HMLineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C51C0832A100602E60 /* HMLineLayout.m */; };
+		EF42C0FD1C0832A100602E60 /* SISDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C71C0832A100602E60 /* SISDetailViewController.m */; };
+		EF42C0FE1C0832A100602E60 /* SISGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */; };
+		EF42C0FF1C0832A100602E60 /* SISHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */; };
+		EF42C1001C0832A100602E60 /* SISSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CD1C0832A100602E60 /* SISSettingController.m */; };
+		EF42C1011C0832A100602E60 /* SISShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CF1C0832A100602E60 /* SISShopViewController.m */; };
+		EF42C1021C0832A100602E60 /* SISWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0D11C0832A100602E60 /* SISWebViewController.m */; };
+		EF42C1031C0832A100602E60 /* TemplateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0D31C0832A100602E60 /* TemplateViewController.m */; };
+		EF42C1041C0832A100602E60 /* SISBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0D61C0832A100602E60 /* SISBaseModel.m */; };
+		EF42C1051C0832A100602E60 /* SISCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0D81C0832A100602E60 /* SISCategory.m */; };
+		EF42C1061C0832A100602E60 /* SISGoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0DA1C0832A100602E60 /* SISGoodModel.m */; };
+		EF42C1071C0832A100602E60 /* SISSecondCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0DC1C0832A100602E60 /* SISSecondCategory.m */; };
+		EF42C1081C0832A100602E60 /* SISSortModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0DE1C0832A100602E60 /* SISSortModel.m */; };
+		EF42C1091C0832A100602E60 /* TemplateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0E01C0832A100602E60 /* TemplateModel.m */; };
+		EF42C10A1C0832A100602E60 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0E31C0832A100602E60 /* CollectionViewCell.m */; };
+		EF42C10B1C0832A100602E60 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0E41C0832A100602E60 /* CollectionViewCell.xib */; };
+		EF42C10C1C0832A100602E60 /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0E61C0832A100602E60 /* DetailCell.m */; };
+		EF42C10D1C0832A100602E60 /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0E71C0832A100602E60 /* DetailCell.xib */; };
+		EF42C10E1C0832A100602E60 /* ItemCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0E91C0832A100602E60 /* ItemCollectionView.m */; };
+		EF42C10F1C0832A100602E60 /* ItemsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0EB1C0832A100602E60 /* ItemsView.m */; };
+		EF42C1101C0832A100602E60 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0ED1C0832A100602E60 /* KxMenu.m */; };
+		EF42C1111C0832A100602E60 /* menuView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0EF1C0832A100602E60 /* menuView.m */; };
+		EF42C1121C0832A100602E60 /* SISAddGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0F11C0832A100602E60 /* SISAddGoodCell.m */; };
+		EF42C1131C0832A100602E60 /* SISAddGoodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0F21C0832A100602E60 /* SISAddGoodCell.xib */; };
+		EF42C1141C0832A100602E60 /* SISGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0F41C0832A100602E60 /* SISGoodsCell.m */; };
+		EF42C1151C0832A100602E60 /* SISGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0F51C0832A100602E60 /* SISGoodsCell.xib */; };
+		EF42C1161C0832A100602E60 /* TemplateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0F71C0832A100602E60 /* TemplateCell.m */; };
+		EF42C1171C0832A100602E60 /* TemplateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0F81C0832A100602E60 /* TemplateCell.xib */; };
+		EF42C11B1C0832FE00602E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF42C1191C0832FE00602E60 /* Main.storyboard */; };
+		EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C11D1C08350500602E60 /* UITableView+CJ.m */; };
 		EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */; };
 		EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B221C055FF900D005E8 /* UIImage+LHB.m */; };
 		EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B241C055FF900D005E8 /* UIViewController+MonitorNetWork.m */; };
@@ -139,12 +170,68 @@
 		B016B458709B0BB7CC87B4E2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2CA2476854D5BB3A46CB1C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF40A81C1C05677600E664C8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		EF40A81F1C056D6300E664C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EF40A8211C056D7E00E664C8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF40A8221C056D7E00E664C8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		EF40A8261C05805300E664C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		EF40A8271C05805300E664C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		EF40A8281C05820B00E664C8 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		EF42C0C01C0832A100602E60 /* AmendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmendController.h; sourceTree = "<group>"; };
+		EF42C0C11C0832A100602E60 /* AmendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmendController.m; sourceTree = "<group>"; };
+		EF42C0C21C0832A100602E60 /* DescribeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescribeController.h; sourceTree = "<group>"; };
+		EF42C0C31C0832A100602E60 /* DescribeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescribeController.m; sourceTree = "<group>"; };
+		EF42C0C41C0832A100602E60 /* HMLineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLineLayout.h; sourceTree = "<group>"; };
+		EF42C0C51C0832A100602E60 /* HMLineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLineLayout.m; sourceTree = "<group>"; };
+		EF42C0C61C0832A100602E60 /* SISDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISDetailViewController.h; sourceTree = "<group>"; };
+		EF42C0C71C0832A100602E60 /* SISDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISDetailViewController.m; sourceTree = "<group>"; };
+		EF42C0C81C0832A100602E60 /* SISGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISGoodsViewController.h; sourceTree = "<group>"; };
+		EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISGoodsViewController.m; sourceTree = "<group>"; };
+		EF42C0CA1C0832A100602E60 /* SISHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISHomeViewController.h; sourceTree = "<group>"; };
+		EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISHomeViewController.m; sourceTree = "<group>"; };
+		EF42C0CC1C0832A100602E60 /* SISSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISSettingController.h; sourceTree = "<group>"; };
+		EF42C0CD1C0832A100602E60 /* SISSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISSettingController.m; sourceTree = "<group>"; };
+		EF42C0CE1C0832A100602E60 /* SISShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISShopViewController.h; sourceTree = "<group>"; };
+		EF42C0CF1C0832A100602E60 /* SISShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISShopViewController.m; sourceTree = "<group>"; };
+		EF42C0D01C0832A100602E60 /* SISWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISWebViewController.h; sourceTree = "<group>"; };
+		EF42C0D11C0832A100602E60 /* SISWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISWebViewController.m; sourceTree = "<group>"; };
+		EF42C0D21C0832A100602E60 /* TemplateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateViewController.h; sourceTree = "<group>"; };
+		EF42C0D31C0832A100602E60 /* TemplateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateViewController.m; sourceTree = "<group>"; };
+		EF42C0D51C0832A100602E60 /* SISBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISBaseModel.h; sourceTree = "<group>"; };
+		EF42C0D61C0832A100602E60 /* SISBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISBaseModel.m; sourceTree = "<group>"; };
+		EF42C0D71C0832A100602E60 /* SISCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISCategory.h; sourceTree = "<group>"; };
+		EF42C0D81C0832A100602E60 /* SISCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISCategory.m; sourceTree = "<group>"; };
+		EF42C0D91C0832A100602E60 /* SISGoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISGoodModel.h; sourceTree = "<group>"; };
+		EF42C0DA1C0832A100602E60 /* SISGoodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISGoodModel.m; sourceTree = "<group>"; };
+		EF42C0DB1C0832A100602E60 /* SISSecondCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISSecondCategory.h; sourceTree = "<group>"; };
+		EF42C0DC1C0832A100602E60 /* SISSecondCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISSecondCategory.m; sourceTree = "<group>"; };
+		EF42C0DD1C0832A100602E60 /* SISSortModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISSortModel.h; sourceTree = "<group>"; };
+		EF42C0DE1C0832A100602E60 /* SISSortModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISSortModel.m; sourceTree = "<group>"; };
+		EF42C0DF1C0832A100602E60 /* TemplateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateModel.h; sourceTree = "<group>"; };
+		EF42C0E01C0832A100602E60 /* TemplateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateModel.m; sourceTree = "<group>"; };
+		EF42C0E21C0832A100602E60 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		EF42C0E31C0832A100602E60 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		EF42C0E41C0832A100602E60 /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		EF42C0E51C0832A100602E60 /* DetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
+		EF42C0E61C0832A100602E60 /* DetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
+		EF42C0E71C0832A100602E60 /* DetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCell.xib; sourceTree = "<group>"; };
+		EF42C0E81C0832A100602E60 /* ItemCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCollectionView.h; sourceTree = "<group>"; };
+		EF42C0E91C0832A100602E60 /* ItemCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionView.m; sourceTree = "<group>"; };
+		EF42C0EA1C0832A100602E60 /* ItemsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemsView.h; sourceTree = "<group>"; };
+		EF42C0EB1C0832A100602E60 /* ItemsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsView.m; sourceTree = "<group>"; };
+		EF42C0EC1C0832A100602E60 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
+		EF42C0ED1C0832A100602E60 /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxMenu.m; sourceTree = "<group>"; };
+		EF42C0EE1C0832A100602E60 /* menuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuView.h; sourceTree = "<group>"; };
+		EF42C0EF1C0832A100602E60 /* menuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuView.m; sourceTree = "<group>"; };
+		EF42C0F01C0832A100602E60 /* SISAddGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISAddGoodCell.h; sourceTree = "<group>"; };
+		EF42C0F11C0832A100602E60 /* SISAddGoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISAddGoodCell.m; sourceTree = "<group>"; };
+		EF42C0F21C0832A100602E60 /* SISAddGoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SISAddGoodCell.xib; sourceTree = "<group>"; };
+		EF42C0F31C0832A100602E60 /* SISGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISGoodsCell.h; sourceTree = "<group>"; };
+		EF42C0F41C0832A100602E60 /* SISGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISGoodsCell.m; sourceTree = "<group>"; };
+		EF42C0F51C0832A100602E60 /* SISGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SISGoodsCell.xib; sourceTree = "<group>"; };
+		EF42C0F61C0832A100602E60 /* TemplateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateCell.h; sourceTree = "<group>"; };
+		EF42C0F71C0832A100602E60 /* TemplateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateCell.m; sourceTree = "<group>"; };
+		EF42C0F81C0832A100602E60 /* TemplateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TemplateCell.xib; sourceTree = "<group>"; };
+		EF42C11A1C0832FE00602E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF42C11C1C08350500602E60 /* UITableView+CJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+CJ.h"; sourceTree = "<group>"; };
+		EF42C11D1C08350500602E60 /* UITableView+CJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+CJ.m"; sourceTree = "<group>"; };
 		EF9D4B1C1C055B5400D005E8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EF9D4B1F1C055FF900D005E8 /* UIBarButtonItem+LHB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+LHB.h"; sourceTree = "<group>"; };
 		EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+LHB.m"; sourceTree = "<group>"; };
@@ -406,9 +493,103 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EF42C0BE1C0832A100602E60 /* SIS */ = {
+			isa = PBXGroup;
+			children = (
+				EF42C0BF1C0832A100602E60 /* controller */,
+				EF42C0D41C0832A100602E60 /* model */,
+				EF42C0E11C0832A100602E60 /* view */,
+			);
+			path = SIS;
+			sourceTree = "<group>";
+		};
+		EF42C0BF1C0832A100602E60 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				EF42C0C01C0832A100602E60 /* AmendController.h */,
+				EF42C0C11C0832A100602E60 /* AmendController.m */,
+				EF42C0C21C0832A100602E60 /* DescribeController.h */,
+				EF42C0C31C0832A100602E60 /* DescribeController.m */,
+				EF42C0C41C0832A100602E60 /* HMLineLayout.h */,
+				EF42C0C51C0832A100602E60 /* HMLineLayout.m */,
+				EF42C0C61C0832A100602E60 /* SISDetailViewController.h */,
+				EF42C0C71C0832A100602E60 /* SISDetailViewController.m */,
+				EF42C0C81C0832A100602E60 /* SISGoodsViewController.h */,
+				EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */,
+				EF42C0CA1C0832A100602E60 /* SISHomeViewController.h */,
+				EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */,
+				EF42C0CC1C0832A100602E60 /* SISSettingController.h */,
+				EF42C0CD1C0832A100602E60 /* SISSettingController.m */,
+				EF42C0CE1C0832A100602E60 /* SISShopViewController.h */,
+				EF42C0CF1C0832A100602E60 /* SISShopViewController.m */,
+				EF42C0D01C0832A100602E60 /* SISWebViewController.h */,
+				EF42C0D11C0832A100602E60 /* SISWebViewController.m */,
+				EF42C0D21C0832A100602E60 /* TemplateViewController.h */,
+				EF42C0D31C0832A100602E60 /* TemplateViewController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		EF42C0D41C0832A100602E60 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				EF42C0D51C0832A100602E60 /* SISBaseModel.h */,
+				EF42C0D61C0832A100602E60 /* SISBaseModel.m */,
+				EF42C0D71C0832A100602E60 /* SISCategory.h */,
+				EF42C0D81C0832A100602E60 /* SISCategory.m */,
+				EF42C0D91C0832A100602E60 /* SISGoodModel.h */,
+				EF42C0DA1C0832A100602E60 /* SISGoodModel.m */,
+				EF42C0DB1C0832A100602E60 /* SISSecondCategory.h */,
+				EF42C0DC1C0832A100602E60 /* SISSecondCategory.m */,
+				EF42C0DD1C0832A100602E60 /* SISSortModel.h */,
+				EF42C0DE1C0832A100602E60 /* SISSortModel.m */,
+				EF42C0DF1C0832A100602E60 /* TemplateModel.h */,
+				EF42C0E01C0832A100602E60 /* TemplateModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		EF42C0E11C0832A100602E60 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				EF42C0E21C0832A100602E60 /* CollectionViewCell.h */,
+				EF42C0E31C0832A100602E60 /* CollectionViewCell.m */,
+				EF42C0E41C0832A100602E60 /* CollectionViewCell.xib */,
+				EF42C0E51C0832A100602E60 /* DetailCell.h */,
+				EF42C0E61C0832A100602E60 /* DetailCell.m */,
+				EF42C0E71C0832A100602E60 /* DetailCell.xib */,
+				EF42C0E81C0832A100602E60 /* ItemCollectionView.h */,
+				EF42C0E91C0832A100602E60 /* ItemCollectionView.m */,
+				EF42C0EA1C0832A100602E60 /* ItemsView.h */,
+				EF42C0EB1C0832A100602E60 /* ItemsView.m */,
+				EF42C0EC1C0832A100602E60 /* KxMenu.h */,
+				EF42C0ED1C0832A100602E60 /* KxMenu.m */,
+				EF42C0EE1C0832A100602E60 /* menuView.h */,
+				EF42C0EF1C0832A100602E60 /* menuView.m */,
+				EF42C0F01C0832A100602E60 /* SISAddGoodCell.h */,
+				EF42C0F11C0832A100602E60 /* SISAddGoodCell.m */,
+				EF42C0F21C0832A100602E60 /* SISAddGoodCell.xib */,
+				EF42C0F31C0832A100602E60 /* SISGoodsCell.h */,
+				EF42C0F41C0832A100602E60 /* SISGoodsCell.m */,
+				EF42C0F51C0832A100602E60 /* SISGoodsCell.xib */,
+				EF42C0F61C0832A100602E60 /* TemplateCell.h */,
+				EF42C0F71C0832A100602E60 /* TemplateCell.m */,
+				EF42C0F81C0832A100602E60 /* TemplateCell.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		EF9963191C083E86002B0513 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
 		EF9D4B1D1C055FF900D005E8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EF42C0BE1C0832A100602E60 /* SIS */,
 				EF9D4B1E1C055FF900D005E8 /* CateGory */,
 				EF9D4B251C055FF900D005E8 /* Home */,
 				EF9D4B2C1C055FF900D005E8 /* LeftOption */,
@@ -516,6 +697,7 @@
 		EF9D4B421C055FF900D005E8 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				EF9963191C083E86002B0513 /* MJRefresh */,
 				EF9D4B431C055FF900D005E8 /* AFNetworking */,
 				EF9D4B6D1C055FF900D005E8 /* Encryption */,
 				EF9D4B751C055FF900D005E8 /* lib */,
@@ -797,6 +979,8 @@
 		EF9D4C491C055FF900D005E8 /* 扩展 */ = {
 			isa = PBXGroup;
 			children = (
+				EF42C11C1C08350500602E60 /* UITableView+CJ.h */,
+				EF42C11D1C08350500602E60 /* UITableView+CJ.m */,
 				EF9D4C4A1C055FF900D005E8 /* NSDictionary+HuoBanMallSign.h */,
 				EF9D4C4B1C055FF900D005E8 /* NSDictionary+HuoBanMallSign.m */,
 				EF9D4C4C1C055FF900D005E8 /* UIViewController+NAV.h */,
@@ -878,7 +1062,7 @@
 				EFA6D3591C04514500B39B36 /* AppDelegate.m */,
 				EF40A8211C056D7E00E664C8 /* ViewController.h */,
 				EF40A8221C056D7E00E664C8 /* ViewController.m */,
-				EF40A81E1C056D6300E664C8 /* Main.storyboard */,
+				EF42C1191C0832FE00602E60 /* Main.storyboard */,
 				EF40A81C1C05677600E664C8 /* Images.xcassets */,
 				EFA6D3631C04514500B39B36 /* LaunchScreen.storyboard */,
 				EFA6D3661C04514500B39B36 /* Info.plist */,
@@ -1089,18 +1273,23 @@
 			files = (
 				EF9D4C5D1C055FF900D005E8 /* MidTabelViewCell.xib in Resources */,
 				EF40A8291C05820B00E664C8 /* InfoPlist.strings in Resources */,
+				EF42C1151C0832A100602E60 /* SISGoodsCell.xib in Resources */,
+				EF42C10D1C0832A100602E60 /* DetailCell.xib in Resources */,
 				EFA6D3A81C04516E00B39B36 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				EF42C1171C0832A100602E60 /* TemplateCell.xib in Resources */,
 				EF9D4C661C055FF900D005E8 /* MyLoginView.xib in Resources */,
 				EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */,
 				EF9D4CB31C055FF900D005E8 /* MBProgressHUD.bundle in Resources */,
 				EFA6D3651C04514500B39B36 /* LaunchScreen.storyboard in Resources */,
 				EFA6D3AA1C04516E00B39B36 /* WeiboSDK.bundle in Resources */,
-				EF40A8201C056D6300E664C8 /* Main.storyboard in Resources */,
+				EF42C1131C0832A100602E60 /* SISAddGoodCell.xib in Resources */,
 				EF9D4C981C055FF900D005E8 /* LICENSE in Resources */,
 				EF9D4C701C055FF900D005E8 /* LICENSE in Resources */,
 				EFA6D3AE1C04516E00B39B36 /* ShareSDK.bundle in Resources */,
 				EFA6D3B21C04516E00B39B36 /* ShareSDKUI.bundle in Resources */,
 				EFA6D3AC1C04516E00B39B36 /* read_me.txt in Resources */,
+				EF42C11B1C0832FE00602E60 /* Main.storyboard in Resources */,
+				EF42C10B1C0832A100602E60 /* CollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,29 +1367,40 @@
 				EF9D4C761C055FF900D005E8 /* UIImageView+AFNetworking.m in Sources */,
 				EF9D4C7C1C055FF900D005E8 /* MD5Encryption.m in Sources */,
 				EF9D4C6F1C055FF900D005E8 /* AFURLSessionManager.m in Sources */,
+				EF42C10E1C0832A100602E60 /* ItemCollectionView.m in Sources */,
 				EF9D4C6C1C055FF900D005E8 /* AFURLConnectionOperation.m in Sources */,
 				EF9D4C931C055FF900D005E8 /* MJType.m in Sources */,
 				EF9D4C621C055FF900D005E8 /* UserInfo.m in Sources */,
+				EF42C1061C0832A100602E60 /* SISGoodModel.m in Sources */,
 				EF9D4CAE1C055FF900D005E8 /* LWTaBar.m in Sources */,
 				EF9D4C7A1C055FF900D005E8 /* Base64Util.m in Sources */,
+				EF42C1021C0832A100602E60 /* SISWebViewController.m in Sources */,
 				EF9D4C691C055FF900D005E8 /* AFHTTPSessionManager.m in Sources */,
+				EF42C1071C0832A100602E60 /* SISSecondCategory.m in Sources */,
+				EF42C1121C0832A100602E60 /* SISAddGoodCell.m in Sources */,
 				EF9D4C7B1C055FF900D005E8 /* GTMBase64.m in Sources */,
+				EF42C1051C0832A100602E60 /* SISCategory.m in Sources */,
 				EF9D4C7E1C055FF900D005E8 /* payRequsestHandler.mm in Sources */,
 				EF9D4C711C055FF900D005E8 /* README.md in Sources */,
 				EF9D4C6A1C055FF900D005E8 /* AFNetworkReachabilityManager.m in Sources */,
 				EF9D4CA81C055FF900D005E8 /* AccountModel.m in Sources */,
 				EF9D4C901C055FF900D005E8 /* MJIvar.m in Sources */,
 				EF9D4C9E1C055FF900D005E8 /* Order.m in Sources */,
+				EF42C10C1C0832A100602E60 /* DetailCell.m in Sources */,
 				EF9D4CAF1C055FF900D005E8 /* LWTabBarButton.m in Sources */,
+				EF42C1161C0832A100602E60 /* TemplateCell.m in Sources */,
 				EF9D4CA71C055FF900D005E8 /* LoginViewController.m in Sources */,
 				EF9D4C911C055FF900D005E8 /* MJMember.m in Sources */,
 				EF9D4C731C055FF900D005E8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				EF9D4C631C055FF900D005E8 /* AccountTool.m in Sources */,
+				EF42C1091C0832A100602E60 /* TemplateModel.m in Sources */,
 				EF9D4CB71C055FF900D005E8 /* UIViewController+NAV.m in Sources */,
 				EF9D4CAC1C055FF900D005E8 /* LWNavigationController.m in Sources */,
 				EF9D4C791C055FF900D005E8 /* UIWebView+AFNetworking.m in Sources */,
+				EF42C1101C0832A100602E60 /* KxMenu.m in Sources */,
 				EF9D4CB61C055FF900D005E8 /* NSDictionary+HuoBanMallSign.m in Sources */,
 				EF9D4C8D1C055FF900D005E8 /* MJArgument.m in Sources */,
+				EF42C10A1C0832A100602E60 /* CollectionViewCell.m in Sources */,
 				EF9D4C8E1C055FF900D005E8 /* MJConst.m in Sources */,
 				EF9D4C651C055FF900D005E8 /* MyLoginView.m in Sources */,
 				EF9D4C721C055FF900D005E8 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1210,36 +1410,49 @@
 				EF9D4C971C055FF900D005E8 /* NSObject+MJMember.m in Sources */,
 				EF9D4C6B1C055FF900D005E8 /* AFSecurityPolicy.m in Sources */,
 				EF9D4C7F1C055FF900D005E8 /* WXUtil.mm in Sources */,
+				EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */,
+				EF42C0FF1C0832A100602E60 /* SISHomeViewController.m in Sources */,
+				EF42C0FD1C0832A100602E60 /* SISDetailViewController.m in Sources */,
 				EF9D4CB51C055FF900D005E8 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				EF9D4CAA1C055FF900D005E8 /* PayModel.m in Sources */,
 				EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */,
+				EF42C1111C0832A100602E60 /* menuView.m in Sources */,
 				EF9D4C951C055FF900D005E8 /* NSObject+MJCoding.m in Sources */,
 				EF9D4CA91C055FF900D005E8 /* MallMessage.m in Sources */,
 				EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */,
 				EF9D4C7D1C055FF900D005E8 /* ApiXml.mm in Sources */,
 				EF9D4CBA1C055FF900D005E8 /* RootViewController.m in Sources */,
+				EF42C1031C0832A100602E60 /* TemplateViewController.m in Sources */,
 				EF9D4CAD1C055FF900D005E8 /* LWBadgeButton.m in Sources */,
+				EF42C0FE1C0832A100602E60 /* SISGoodsViewController.m in Sources */,
+				EF42C0FB1C0832A100602E60 /* DescribeController.m in Sources */,
 				EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */,
 				EF9D4C9C1C055FF900D005E8 /* UIViewController+MMDrawerController.m in Sources */,
+				EF42C1141C0832A100602E60 /* SISGoodsCell.m in Sources */,
 				EF9D4C5C1C055FF900D005E8 /* MidTabelViewCell.m in Sources */,
 				EF9D4CB01C055FF900D005E8 /* LWNewFeatureController.m in Sources */,
 				EF9D4C681C055FF900D005E8 /* AFHTTPRequestOperationManager.m in Sources */,
 				EF9D4C921C055FF900D005E8 /* MJMethod.m in Sources */,
 				EF9D4C8F1C055FF900D005E8 /* MJFoundation.m in Sources */,
 				EF9D4C9D1C055FF900D005E8 /* README.md in Sources */,
+				EF42C10F1C0832A100602E60 /* ItemsView.m in Sources */,
 				EFA6D35A1C04514500B39B36 /* AppDelegate.m in Sources */,
 				EF9D4C991C055FF900D005E8 /* MMDrawerBarButtonItem.m in Sources */,
 				EF9D4C601C055FF900D005E8 /* LeftGroupModel.m in Sources */,
 				EFA6D3571C04514500B39B36 /* main.m in Sources */,
+				EF42C1041C0832A100602E60 /* SISBaseModel.m in Sources */,
 				EF9D4C961C055FF900D005E8 /* NSObject+MJKeyValue.m in Sources */,
 				EF9D4CAB1C055FF900D005E8 /* HuoBanTabBarController.m in Sources */,
 				EF9D4CB21C055FF900D005E8 /* MBProgressHUD+MJ.m in Sources */,
 				EF9D4CB41C055FF900D005E8 /* MBProgressHUD.m in Sources */,
+				EF42C1081C0832A100602E60 /* SISSortModel.m in Sources */,
 				EF9D4CB11C055FF900D005E8 /* UserLoginTool.m in Sources */,
 				EF9D4C611C055FF900D005E8 /* LeftMenuModel.m in Sources */,
 				EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */,
+				EF42C0FA1C0832A100602E60 /* AmendController.m in Sources */,
 				EF9D4C5F1C055FF900D005E8 /* AQuthModel.m in Sources */,
 				EF9D4C5B1C055FF900D005E8 /* HomeViewController.m in Sources */,
+				EF42C0FC1C0832A100602E60 /* HMLineLayout.m in Sources */,
 				EF9D4C6D1C055FF900D005E8 /* AFURLRequestSerialization.m in Sources */,
 				EF9D4C751C055FF900D005E8 /* UIButton+AFNetworking.m in Sources */,
 				EF9D4C9B1C055FF900D005E8 /* MMDrawerVisualState.m in Sources */,
@@ -1249,6 +1462,8 @@
 				EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */,
 				EF9D4C6E1C055FF900D005E8 /* AFURLResponseSerialization.m in Sources */,
 				EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */,
+				EF42C1011C0832A100602E60 /* SISShopViewController.m in Sources */,
+				EF42C1001C0832A100602E60 /* SISSettingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1284,11 +1499,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		EF40A81E1C056D6300E664C8 /* Main.storyboard */ = {
+		EF42C1191C0832FE00602E60 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				EF40A81F1C056D6300E664C8 /* Base */,
-				EF40A8261C05805300E664C8 /* zh-Hans */,
+				EF42C11A1C0832FE00602E60 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

@@ -15,6 +15,9 @@
 
 #define LWNewFeatureImageCount 4
 
+
+#define ScreenHeight  [UIScreen mainScreen].bounds.size.height
+#define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define MallName @"行装商城"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
@@ -24,7 +27,17 @@
 #define HomeUrl @"http://cosytest.51flashmall.com/3447/index.aspx?back=1" //测室
 #define HomeBottomUrl @"/bottom.aspx?customerid="
 
-#define AppOriginUrl @"http://mallapi.huobanmall.com"   //@"http://mallapi.huobanj.cn" 测试
+
+//java
+// 店中店
+#define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+//MK
+#define MainUrlMK @"test.api.open.huobanplus.com:8081/sis"
+//接口地址 .net
+#define AppOriginUrl @"http://mallapi.huobanj.cn" //@"http://mallapi.huobanmall.com"
+#define HuoBanMallBuyAppId  @"huotu686ad1fe2bd8a02bb"  //@"huotuacf89c9231848c9f49"
+#define HuoBanMallBuyAppSecrect  @"483686ad1fe2bd8a02bbdca24e109953a4a96c" //@"0ad8abe244331aacf89c9231848c9f49"
+
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -33,8 +46,7 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyAppId  @"huotuacf89c9231848c9f49" //@"huotu686ad1fe2bd8a02bb"  //
-#define HuoBanMallBuyAppSecrect @"0ad8abe244331aacf89c9231848c9f49"    //url签名用的私钥 @"483686ad1fe2bd8a02bbdca24e109953a4a96c" //
+
 
 
 #define HuoBanMallBuyNavColor [UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000]
@@ -49,7 +61,7 @@
 #define SecrenHeight [UIScreen mainScreen].bounds.size.height
 
 //伙伴商城商户信息
-#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
 
 //友盟数据统计
 #define HuoBanMallUMengAppKey @"123"
@@ -101,4 +113,10 @@
 #define LoginStatus @"LoginStatus" //登录标志
 #define Success @"Success" //成功
 #define Failure @"Failure" //失败
+//店中店用户信息
+#define SISUserInfo @"SISUserInfo" //店中店用户信息
+
+#import "MJExtension.h"
+#import "NSDictionary+HuoBanMallSign.h"
+
 #endif /* PrefixHeader_pch */
