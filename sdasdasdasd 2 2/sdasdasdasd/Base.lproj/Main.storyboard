@@ -71,21 +71,11 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spK-zD-tTZ">
-                                <rect key="frame" x="277" y="285" width="46" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="sisOpen:" destination="sCe-gz-dBf" eventType="touchUpInside" id="p5e-5L-oeb"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Pur-OG-0Mz" firstAttribute="leading" secondItem="obm-1D-rf4" secondAttribute="leading" id="75v-sw-h0q"/>
-                            <constraint firstItem="spK-zD-tTZ" firstAttribute="centerX" secondItem="obm-1D-rf4" secondAttribute="centerX" id="7Ew-lb-xpy"/>
-                            <constraint firstItem="spK-zD-tTZ" firstAttribute="centerY" secondItem="obm-1D-rf4" secondAttribute="centerY" id="94w-2f-x70"/>
                             <constraint firstItem="kE9-ps-FDj" firstAttribute="top" secondItem="Pur-OG-0Mz" secondAttribute="bottom" id="d25-df-0iL"/>
                             <constraint firstItem="Pur-OG-0Mz" firstAttribute="top" secondItem="dPe-Pq-0Dn" secondAttribute="bottom" id="gxh-cd-agv"/>
                             <constraint firstItem="dPe-Pq-0Dn" firstAttribute="leading" secondItem="obm-1D-rf4" secondAttribute="leading" id="pKQ-14-jxA"/>

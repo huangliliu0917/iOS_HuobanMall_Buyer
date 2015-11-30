@@ -215,11 +215,13 @@ static NSString *addCellIdentify = @"addCell";
             [self.goodsArray addObjectsFromArray:array];
             
             [self.tableView reloadData];
-            
+            // 拿到当前的下拉刷新控件，结束刷新状态
+            [self.tableView.mj_header endRefreshing];
         }
         
     } failure:^(NSError *error) {
-        
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [self.tableView.mj_header endRefreshing];
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
         NSLog(@"%@", error);
     }];
@@ -253,11 +255,13 @@ static NSString *addCellIdentify = @"addCell";
             [self.goodsArray addObjectsFromArray:array];
             
             [self.tableView reloadData];
-            
+            // 拿到当前的下拉刷新控件，结束刷新状态
+            [self.tableView.mj_header endRefreshing];
         }
         
     } failure:^(NSError *error) {
-        
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [self.tableView.mj_header endRefreshing];
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
         NSLog(@"%@", error);
     }];

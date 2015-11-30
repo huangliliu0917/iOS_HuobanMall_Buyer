@@ -253,12 +253,10 @@
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
 //        NSLog(@"toPostWeiXinUserMessage%@",json);
         if ([json[@"code"] integerValue] == 200) {
-            
-//            NSLog(@"toPostWeiXinUserMessage%@",json);
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
-            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类

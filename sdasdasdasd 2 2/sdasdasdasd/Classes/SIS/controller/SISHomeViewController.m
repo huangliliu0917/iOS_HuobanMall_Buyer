@@ -333,6 +333,8 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
             self.sisuptotal = json[@"resultData"][@"sisuptotal"];
             self.sisouttotal = json[@"resultData"][@"sisouttotal"];
             [self _initOutUPLabel];
+            // 拿到当前的下拉刷新控件，结束刷新状态
+            [self.tableView.mj_header endRefreshing];
         }
         
 //        [self.tableView.mj_header headerEndRefreshing];
@@ -340,7 +342,8 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
 //        [self.tableView headerEndRefreshing];
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
         NSLog(@"%@",error);
-        
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [self.tableView.mj_header endRefreshing];
     }];
     
 }
@@ -370,7 +373,8 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
             
             self.sisuptotal = json[@"resultData"][@"sisuptotal"];
             self.sisouttotal = json[@"resultData"][@"sisouttotal"];
-            
+            // 拿到当前的下拉刷新控件，结束刷新状态
+            [self.tableView.mj_header endRefreshing];
             [self _initOutUPLabel];
         }else {
             
@@ -378,7 +382,8 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     } failure:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
         NSLog(@"%@",error);
-//        [self.tableView footerEndRefreshing];
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [self.tableView.mj_header endRefreshing];
     }];
     
 }
