@@ -31,7 +31,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "LWNewFeatureController.h"
 #import "UserLoginTool.h"
-
+#import "NSDictionary+HuoBanMallSign.h"
+#import "PayModel.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 @end
@@ -49,7 +50,8 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
-        [self toGetMainUrl];
+        //初始化接口
+        [self myAppToInit];
         RootViewController * root = [[RootViewController alloc] init];
         self.window.rootViewController = root;
         [self.window makeKeyAndVisible];
@@ -133,35 +135,39 @@
     
 }
 
+
 /**
- *  获取前端app接口地址
+ *  app初始化接口
  */
-/**
- *  获取主地址
- */
-- (void)toGetMainUrl{
-    
+- (void)myAppToInit{
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    UserInfo * usaa = nil;
-    if ([AccountTool account]) {
-        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-        usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    };
-    parame[@"unionid"] = usaa.unionid;
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/mall/getmsiteurl"];
+    [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        //        NSLog(@"toGetMainUrl%@",json);
+        
+        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:payType forKey:PayTypeflat];
+            //结束编码
+            [archiver finishEncoding];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+            //写入
+            [data writeToFile:filename atomically:YES];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        
     }];
+    
 }
-
 
 
 -(void) onResp:(BaseResp*)resp
