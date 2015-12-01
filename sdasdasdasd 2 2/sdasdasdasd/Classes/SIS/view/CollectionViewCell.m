@@ -20,8 +20,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
-    self.item.layer.borderWidth = 0.5;
-    _item.adjustsFontSizeToFitWidth = YES;
+//    self.item.layer.borderWidth = 0.5;
+//    _item.adjustsFontSizeToFitWidth = YES;
 }
 
 

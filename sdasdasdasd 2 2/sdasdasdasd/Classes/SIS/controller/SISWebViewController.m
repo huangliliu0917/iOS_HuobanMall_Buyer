@@ -20,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     if (self.type == 1) {
         //商品详细
         
@@ -29,7 +31,7 @@
         [self.webView loadRequest:request];
         
         if (self.goodSelected) {
-            self.updown.userInteractionEnabled = NO;
+            [self.updown setTitle:@"下架" forState:UIControlStateNormal];
             self.updown.backgroundColor = [UIColor lightGrayColor];
         }
         
@@ -64,6 +66,8 @@
 */
 
 - (IBAction)updownAction:(id)sender {
+    
+    
     NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:SISUserInfo];
     SISBaseModel *user = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
@@ -72,11 +76,16 @@
     
     parame[@"userid"] = user.userId;
     parame[@"goodsid"] = [NSString stringWithFormat:@"%@",self.goodId];
-    parame[@"opertype"] = @"1";
     
     
+    if ([self.updown.titleLabel.text isEqualToString:@"上架"]) {
+        parame[@"opertype"] = @"1";
+    }else if ([self.updown.titleLabel.text isEqualToString:@"下架"]) {
+        parame[@"opertype"] = @"0";
+    }
     NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
     [url appendString:@"operGoods"];
+    [SVProgressHUD showWithStatus:nil];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
         if ([json[@"systemResultCode"] intValue] ==1&&[json[@"resultCode"] intValue] == 1) {
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
@@ -84,6 +93,7 @@
             self.updown.userInteractionEnabled  = NO;
         }
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"%@", error);
     }];
 }

@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSString *detailsUrl;
 
+@property (nonatomic, strong) NSString *rebate;
+
 @property (nonatomic, assign) BOOL goodSelected;
 
 @end

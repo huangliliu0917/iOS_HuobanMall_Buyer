@@ -15,8 +15,6 @@
 		EF42C0FA1C0832A100602E60 /* AmendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C11C0832A100602E60 /* AmendController.m */; };
 		EF42C0FB1C0832A100602E60 /* DescribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C31C0832A100602E60 /* DescribeController.m */; };
 		EF42C0FC1C0832A100602E60 /* HMLineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C51C0832A100602E60 /* HMLineLayout.m */; };
-		EF42C0FD1C0832A100602E60 /* SISDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C71C0832A100602E60 /* SISDetailViewController.m */; };
-		EF42C0FE1C0832A100602E60 /* SISGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */; };
 		EF42C0FF1C0832A100602E60 /* SISHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */; };
 		EF42C1001C0832A100602E60 /* SISSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CD1C0832A100602E60 /* SISSettingController.m */; };
 		EF42C1011C0832A100602E60 /* SISShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C0CF1C0832A100602E60 /* SISShopViewController.m */; };
@@ -183,10 +181,6 @@
 		EF42C0C31C0832A100602E60 /* DescribeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescribeController.m; sourceTree = "<group>"; };
 		EF42C0C41C0832A100602E60 /* HMLineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMLineLayout.h; sourceTree = "<group>"; };
 		EF42C0C51C0832A100602E60 /* HMLineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMLineLayout.m; sourceTree = "<group>"; };
-		EF42C0C61C0832A100602E60 /* SISDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISDetailViewController.h; sourceTree = "<group>"; };
-		EF42C0C71C0832A100602E60 /* SISDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISDetailViewController.m; sourceTree = "<group>"; };
-		EF42C0C81C0832A100602E60 /* SISGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISGoodsViewController.h; sourceTree = "<group>"; };
-		EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISGoodsViewController.m; sourceTree = "<group>"; };
 		EF42C0CA1C0832A100602E60 /* SISHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISHomeViewController.h; sourceTree = "<group>"; };
 		EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SISHomeViewController.m; sourceTree = "<group>"; };
 		EF42C0CC1C0832A100602E60 /* SISSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SISSettingController.h; sourceTree = "<group>"; };
@@ -524,10 +518,6 @@
 				EF42C0C31C0832A100602E60 /* DescribeController.m */,
 				EF42C0C41C0832A100602E60 /* HMLineLayout.h */,
 				EF42C0C51C0832A100602E60 /* HMLineLayout.m */,
-				EF42C0C61C0832A100602E60 /* SISDetailViewController.h */,
-				EF42C0C71C0832A100602E60 /* SISDetailViewController.m */,
-				EF42C0C81C0832A100602E60 /* SISGoodsViewController.h */,
-				EF42C0C91C0832A100602E60 /* SISGoodsViewController.m */,
 				EF42C0CA1C0832A100602E60 /* SISHomeViewController.h */,
 				EF42C0CB1C0832A100602E60 /* SISHomeViewController.m */,
 				EF42C0CC1C0832A100602E60 /* SISSettingController.h */,
@@ -1247,7 +1237,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = Q3B3AD6JJH;
+						DevelopmentTeam = 3Z4NZSRMPF;
 					};
 					EFA6D36A1C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1425,7 +1415,6 @@
 				EF9D4C7F1C055FF900D005E8 /* WXUtil.mm in Sources */,
 				EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */,
 				EF42C0FF1C0832A100602E60 /* SISHomeViewController.m in Sources */,
-				EF42C0FD1C0832A100602E60 /* SISDetailViewController.m in Sources */,
 				EF9D4CB51C055FF900D005E8 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				EF9D4CAA1C055FF900D005E8 /* PayModel.m in Sources */,
 				EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */,
@@ -1438,7 +1427,6 @@
 				EF9D4CBA1C055FF900D005E8 /* RootViewController.m in Sources */,
 				EF42C1031C0832A100602E60 /* TemplateViewController.m in Sources */,
 				EF9D4CAD1C055FF900D005E8 /* LWBadgeButton.m in Sources */,
-				EF42C0FE1C0832A100602E60 /* SISGoodsViewController.m in Sources */,
 				EF42C0FB1C0832A100602E60 /* DescribeController.m in Sources */,
 				EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */,
 				EF9D4C9C1C055FF900D005E8 /* UIViewController+MMDrawerController.m in Sources */,

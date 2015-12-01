@@ -82,6 +82,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     //页面初始化
     [self setup];

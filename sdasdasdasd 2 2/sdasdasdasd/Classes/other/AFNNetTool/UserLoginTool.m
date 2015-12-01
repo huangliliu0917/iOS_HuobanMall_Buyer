@@ -26,7 +26,7 @@
        success(json);
         NSLog(@"%@",request);
     } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-//        failure(error);
+        failure(error);
     }];
 }
 

@@ -69,6 +69,12 @@
 - (void)setSliderColor:(UIColor *)sliderColor {
     _slider.backgroundColor = sliderColor;
     _sliderColor = sliderColor;
+    if (_buttonArray.count != 0) {
+        UIButton *button = _buttonArray[0];
+        [button setTitleColor:sliderColor forState:UIControlStateNormal];
+        self.selectButton = button;
+    }
+    self.slider.backgroundColor = sliderColor;
 }
 
 - (void)setIteamArray:(NSArray *)iteamArray {
@@ -88,11 +94,15 @@
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(scrollViewButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        button.titleLabel.adjustsFontSizeToFitWidth = YES;
+//        button.titleLabel.adjustsFontSizeToFitWidth = YES;
         [_meauView addSubview:button];
         [_buttonArray addObject:button];
     }
-    
+    if (_sliderColor) {
+        UIButton *button = _buttonArray[0];
+        [button setTitleColor:_sliderColor forState:UIControlStateNormal];
+        self.selectButton = button;
+    }
     
 }
 
@@ -121,7 +131,7 @@
         if (self.selectButton != sender) {
             [self.selectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             self.selectButton = sender;
-            [sender setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [sender setTitleColor:_sliderColor forState:UIControlStateNormal];
         }
         
         
@@ -178,7 +188,7 @@
     UIButton *button = _buttonArray[tag];
     [_selectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _selectButton = button;
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:_sliderColor forState:UIControlStateNormal];
     
     [UIView animateWithDuration:.2 animations:^{
         self.slider.frame = CGRectMake(button.frame.origin.x + 5, self.frame.size.height - 2, 60, 2);

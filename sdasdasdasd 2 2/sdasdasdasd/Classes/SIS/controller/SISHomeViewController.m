@@ -9,7 +9,6 @@
 #import "SISHomeViewController.h"
 #import <UIView+BlocksKit.h>
 #import <UIBarButtonItem+BlocksKit.h>
-#import "SISGoodsViewController.h"
 #import "SISWebViewController.h"
 #import "SISSettingController.h"
 #import "SISShopViewController.h"
@@ -25,6 +24,9 @@
 #import "KxMenu.h"
 #import <MJRefresh.h>
 #import <SVProgressHUD.h>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import "SISWebViewController.h"
 
 @interface SISHomeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -63,6 +65,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     self.goodsArray = [NSMutableArray array];
     
@@ -137,6 +140,14 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     self.model = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
     
     [self.logoImage sd_setImageWithURL:[NSURL URLWithString:self.model.imgUrl] placeholderImage:nil options:SDWebImageRetryFailed];
+    self.logoImage.userInteractionEnabled = YES;
+    [self.logoImage bk_whenTapped:^{
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        SISSettingController *set = [story instantiateViewControllerWithIdentifier:@"SISSettingController"];
+        \
+        [self.navigationController pushViewController:set animated:YES];
+    }];
     
     self.SISName.text = self.model.title;
 }
@@ -214,22 +225,33 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
      *  二维码
      */
     self.QRCode.contentMode = UIViewContentModeScaleAspectFit;
-    self.QRCode.image = [UIImage ToCreateQRcodeWithInformation:@"www.baidu.com"];
+    self.QRCode.image = [UIImage imageNamed:@"40"];
     
     [self.QRCode bk_whenTapped:^{
         
+        
         UIView * black = [[UIView alloc] init];
         black.frame = CGRectMake(0, 0, SecrenWith, SecrenHeight);
-        black.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.384];
+        black.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.720];
 //        black.alpha = 0.5;
-        [self.view addSubview:black];
+        [self.view.window addSubview:black];
         
         UIImageView * QRCode = [[UIImageView alloc] init];
         QRCode.center = black.center;
         QRCode.bounds = CGRectMake(0, 0, SecrenWith * 0.5, SecrenWith * 0.5);
-        QRCode.image =  [UIImage ToCreateQRcodeWithInformation:@"www.baidu.com"];
+        QRCode.frame = CGRectMake(QRCode.frame.origin.x, QRCode.frame.origin.y, SecrenWith * 0.5, SecrenWith * 0.5);
+        QRCode.image =  [UIImage ToCreateQRcodeWithInformation:self.model.indexUrl];
         QRCode.contentMode = UIViewContentModeScaleToFill;
         [black addSubview:QRCode];
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(QRCode.frame.origin.x, QRCode.frame.origin.y + SecrenWith * 0.5 + 20 , SecrenWith * 0.5, 40)];
+        [button setTitle:@"点击我分享" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(shareQRCode) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = HuoBanMallBuyNavColor;
+        button.layer.cornerRadius = 5;
+        
+        [black addSubview:button];
+        
         [black bk_whenTapped:^{
            
         [black removeFromSuperview];
@@ -238,6 +260,53 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     }];
     
     
+}
+
+- (void)shareQRCode{
+    
+    //1、创建分享参数
+    NSArray* imageArray = @[self.model.imgUrl];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:nil
+                                         images:imageArray
+                                            url:[NSURL URLWithString:self.model.indexUrl]
+                                          title:self.model.shareTitle
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+                                 items:nil
+                           shareParams:shareParams
+                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                       
+                       switch (state) {
+                           case SSDKResponseStateSuccess:
+                           {
+                               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                   message:nil
+                                                                                  delegate:nil
+                                                                         cancelButtonTitle:@"确定"
+                                                                         otherButtonTitles:nil];
+                               [alertView show];
+                               break;
+                           }
+                           case SSDKResponseStateFail:
+                           {
+                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                               message:[NSString stringWithFormat:@"%@",error]
+                                                                              delegate:nil
+                                                                     cancelButtonTitle:@"OK"
+                                                                     otherButtonTitles:nil, nil];
+                               [alert show];
+                               break;
+                           }
+                           default:
+                               break;
+                       }
+                       
+                   }];
+        
+    }
 }
 
 - (void)_initOutUPLabel {
@@ -365,7 +434,17 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
             
             
             NSArray *array = [SISGoodModel objectArrayWithKeyValuesArray:json[@"resultData"][@"list"]];
-            [self.goodsArray addObjectsFromArray:array];
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:array];
+            
+            for (SISGoodModel *good1 in array) {
+                for (SISGoodModel *goodTemp in self.goodsArray) {
+                    if ([good1.goodsId isEqualToString:goodTemp.goodsId]) {
+                        [temp removeObject:good1];
+                    }
+                }
+            }
+            
+            [self.goodsArray addObjectsFromArray:temp];
             
             [self.tableView reloadData];
             
@@ -374,7 +453,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
             self.sisuptotal = json[@"resultData"][@"sisuptotal"];
             self.sisouttotal = json[@"resultData"][@"sisouttotal"];
             // 拿到当前的下拉刷新控件，结束刷新状态
-            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
             [self _initOutUPLabel];
         }else {
             
@@ -486,6 +565,23 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     return 110;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SISGoodModel *model = self.goodsArray[indexPath.row];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SISWebViewController *web = [story instantiateViewControllerWithIdentifier:@"SISWebViewController"];
+    web.type = 1;
+    web.goodUrl = model.detailsUrl;
+    web.goodId = model.goodsId;
+    web.goodSelected = model.goodSelected;
+    
+    [self.navigationController pushViewController:web animated:YES];
+    
+}
+
+
+
 - (void)tableViewCellMoreButtonAction:(UIButton *) button {
     
     self.selectIndexPath = [NSIndexPath indexPathForRow:button.tag - 10000 inSection:0];
@@ -570,7 +666,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     
     NSLog(@"%@", sender.title);
     if ([sender.title isEqualToString:@"推广"]) {
-        
+        [self shareGoods];
     }else {
         NSMutableDictionary *parame = [NSMutableDictionary dictionary];
         
@@ -613,5 +709,53 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     }
     
 }
+
+- (void)shareGoods{
+    
+    //1、创建分享参数
+    NSArray* imageArray = @[self.good.imgUrl];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:nil
+                                         images:imageArray
+                                            url:[NSURL URLWithString:self.good.detailsUrl]
+                                          title:self.good.goodsName
+                                           type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+                                 items:nil
+                           shareParams:shareParams
+                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                       
+                       switch (state) {
+                           case SSDKResponseStateSuccess:
+                           {
+                               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                   message:nil
+                                                                                  delegate:nil
+                                                                         cancelButtonTitle:@"确定"
+                                                                         otherButtonTitles:nil];
+                               [alertView show];
+                               break;
+                           }
+                           case SSDKResponseStateFail:
+                           {
+                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                               message:[NSString stringWithFormat:@"%@",error]
+                                                                              delegate:nil
+                                                                     cancelButtonTitle:@"OK"
+                                                                     otherButtonTitles:nil, nil];
+                               [alert show];
+                               break;
+                           }
+                           default:
+                               break;
+                       }
+                       
+                   }];
+        
+    }
+}
+
 
 @end

@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
 }
 

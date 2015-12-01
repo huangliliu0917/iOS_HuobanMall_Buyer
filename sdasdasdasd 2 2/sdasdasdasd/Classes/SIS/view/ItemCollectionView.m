@@ -79,8 +79,6 @@ static NSString *ID = @"btn";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCell * bolds = (CollectionViewCell *)[collectionView cellForItemAtIndexPath:self.indexPath];
-    bolds.backgroundColor = [UIColor whiteColor];
-    bolds.layer.borderColor = [UIColor whiteColor].CGColor;
     CollectionViewCell * cc =  (CollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     cc.backgroundColor = [UIColor orangeColor];
     self.indexPath = indexPath;

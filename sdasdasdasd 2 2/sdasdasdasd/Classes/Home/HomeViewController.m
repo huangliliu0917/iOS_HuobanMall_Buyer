@@ -320,6 +320,8 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
     NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];

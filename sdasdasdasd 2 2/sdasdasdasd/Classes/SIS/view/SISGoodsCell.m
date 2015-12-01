@@ -27,7 +27,7 @@
     self.name.text = self.model.goodsName;
     [self.GoodImage sd_setImageWithURL:[NSURL URLWithString:self.model.imgUrl] placeholderImage:nil options:SDWebImageRetryFailed];
     
-    self.detail.text = [NSString stringWithFormat:@"销售量:%@ 利润:¥%@/件", self.model.stock, self.model.profit];
+    self.detail.text = [NSString stringWithFormat:@"库存:%@ 返利:%@", self.model.stock, self.model.rebate];
     
     self.money.text = [NSString stringWithFormat:@"¥%@", self.model.profit];
     

@@ -81,14 +81,16 @@ static NSString *addCellIdentify = @"addCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     self.title = @"市场选购";
     
     self.view.backgroundColor = [UIColor whiteColor];
 
     menuView * view = [[menuView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    view.iteamArray = self.topTitles;
     view.delegate = self;
     view.sliderColor = HuoBanMallBuyNavColor;
+    view.iteamArray = self.topTitles;
     _headtitleView = view;
     [self.view addSubview:view];
  
@@ -252,11 +254,24 @@ static NSString *addCellIdentify = @"addCell";
             
             NSArray *array = [SISGoodModel objectArrayWithKeyValuesArray:json[@"resultData"][@"list"]];
             self.rpageno = json[@"resultData"][@"rpageno"];
-            [self.goodsArray addObjectsFromArray:array];
+            
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:array];
+            
+            for (SISGoodModel *good1 in array) {
+                for (SISGoodModel *goodTemp in self.goodsArray) {
+                    if ([good1.goodsId isEqualToString:goodTemp.goodsId]) {
+                        [temp removeObject:good1];
+                    }
+                }
+            }
+            
+            
+            
+            [self.goodsArray addObjectsFromArray:temp];
             
             [self.tableView reloadData];
             // 拿到当前的下拉刷新控件，结束刷新状态
-            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         }
         
     } failure:^(NSError *error) {
@@ -306,6 +321,9 @@ static NSString *addCellIdentify = @"addCell";
                 
             }
             CGFloat chittemH = (itemView.items.count / 4 + 1) * 30;
+            if (itemView.items.count % 4 == 0) {
+                chittemH -= 30;
+            }
             itemView.frame = CGRectMake(ittemX, ittemY, ittemW, chittemH);
             itemView.backgroundColor = [UIColor grayColor];
             [self.view insertSubview:itemView belowSubview:self.view];
@@ -355,6 +373,7 @@ static NSString *addCellIdentify = @"addCell";
             SISCategory *model = self.categroyArray[indexPath.row - 1];
             self.categoryid = model.sisId;
             self.selectButton = indexPath.row - 1;
+            [self.headtitleView setButtonClickWithAction:indexPath.row];
         }
     }else {
         SISCategory *model = self.categroyArray[self.selectButton];
@@ -402,6 +421,15 @@ static NSString *addCellIdentify = @"addCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.searchStr = @"";
+    
+    self.searchBar.text = nil;
+    
+    [self.searchBar resignFirstResponder];
+    
+    [self.searchBgView removeFromSuperview];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SISGoodModel *model = self.goodsArray[indexPath.row];
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SISWebViewController *web = [story instantiateViewControllerWithIdentifier:@"SISWebViewController"];

@@ -37,6 +37,8 @@ static NSString *templateIdentify = @"templateCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     self.title = @"模版选择";
     
     self.showArray = [NSMutableArray array];

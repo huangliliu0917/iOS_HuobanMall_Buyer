@@ -446,46 +446,6 @@
             </objects>
             <point key="canvasLocation" x="498" y="63"/>
         </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="f8G-gL-JfW">
-            <objects>
-                <viewController storyboardIdentifier="SISDetailViewController" id="yaR-nN-M4g" customClass="SISDetailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zDM-W8-Ah3"/>
-                        <viewControllerLayoutGuide type="bottom" id="Vf9-7P-TQK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tPl-PV-K33">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="crD-Nt-Flk">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="yaR-nN-M4g" id="TUh-QJ-UNS"/>
-                                    <outlet property="delegate" destination="yaR-nN-M4g" id="gMy-T1-Rau"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="crD-Nt-Flk" secondAttribute="trailing" id="2yn-Fe-mUh"/>
-                            <constraint firstItem="crD-Nt-Flk" firstAttribute="leading" secondItem="tPl-PV-K33" secondAttribute="leading" id="Cjf-eB-j3c"/>
-                            <constraint firstItem="crD-Nt-Flk" firstAttribute="top" secondItem="zDM-W8-Ah3" secondAttribute="bottom" id="gvZ-a3-auK"/>
-                            <constraint firstItem="Vf9-7P-TQK" firstAttribute="top" secondItem="crD-Nt-Flk" secondAttribute="bottom" id="lmC-aQ-MXg"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <outlet property="tableView" destination="crD-Nt-Flk" id="Bsz-cw-tJf"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="45r-gF-liI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="729" y="-622"/>
-        </scene>
         <!--Web View Controller-->
         <scene sceneID="TcG-zM-RZn">
             <objects>
@@ -743,7 +703,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFb-tI-fVK">
                                         <rect key="frame" x="0.0" y="0.0" width="207" height="33"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="销售中(5)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSu-cl-AsM">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="销售中(0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSu-cl-AsM">
                                                 <rect key="frame" x="71" y="8" width="65" height="18"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -761,7 +721,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="348-zp-8XD">
                                         <rect key="frame" x="207" y="0.0" width="207" height="33"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已下架(5)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lis-hJ-wgI">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已下架(0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lis-hJ-wgI">
                                                 <rect key="frame" x="71" y="8" width="65" height="18"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>

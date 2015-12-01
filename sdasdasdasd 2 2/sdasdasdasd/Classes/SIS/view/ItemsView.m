@@ -25,7 +25,7 @@
 
 @implementation ItemsView
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame AndColor:(UIColor *) color{
     
     if (self = [super initWithFrame:frame]) {
         
