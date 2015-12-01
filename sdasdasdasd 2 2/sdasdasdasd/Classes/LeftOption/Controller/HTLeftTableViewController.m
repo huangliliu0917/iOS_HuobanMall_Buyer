@@ -1,3 +1,4 @@
+
 //
 //  HTLeftTableViewController.m
 //  HuoBanMallBuy
@@ -8,7 +9,7 @@
 
 #import "HTLeftTableViewController.h"
 #import "LeftGroupModel.h"
-
+#import "UserLoginTool.h"
 #import "AQuthModel.h"
 #import "AccountTool.h"
 #import "UserInfo.h"
@@ -20,7 +21,10 @@
 #import <UIImageView+WebCache.h>
 #import "MyLoginView.h"
 #import "UserInfo.h"
-@interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate>
+#import <SVProgressHUD.h>
+#import "SISHomeViewController.h"
+#import "SISBaseModel.h"
+@interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate>
 
 /**zml左侧数据*/
 @property(nonatomic,strong) NSMutableArray * dataList;
@@ -93,8 +97,61 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeixinQauth:) name:WeiXinQAuthSuccessNotigication object:nil];
     
+   
+    
 }
 
+
+/**
+ *  更新左侧菜单
+ *
+ *  @param animated <#animated description#>
+ */
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    __weak HTLeftTableViewController * wself = self;
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"clientusertype"] = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:MallUserType]];
+    parame[@"userid"] = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId]];
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/weixin/UpdateLeftInfo"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(NSDictionary* json) {
+        
+        NSLog(@"%@",json);
+        if ([json[@"code"] integerValue] == 200) {
+           [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            _topHeadView.secondLable.text = json[@"data"][@"levelName"];
+            if ([json[@"data"][@"menusCode"] integerValue] == 1) {
+                
+                NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+                [wself.groupArray removeAllObjects];
+                [wself toGroupsByTime:lefts];
+                [wself.tableView reloadData];
+                NSMutableData *data = [[NSMutableData alloc] init];
+                //创建归档辅助类
+                NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+                //编码
+                [archiver encodeObject:lefts forKey:LeftMenuModels];
+                //结束编码
+                [archiver finishEncoding];
+                NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+                //写入
+                [data writeToFile:filename atomically:YES];
+            }else{
+                [wself.groupArray removeAllObjects];
+                [wself toDivLefrMenue];
+                [wself.tableView reloadData];
+                
+            }
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+    
+}
 
 - (void) toDivLefrMenue{
     
@@ -271,18 +328,119 @@
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSMutableString * url = [NSMutableString stringWithString:uraaa];
     [url appendString:models.menu_url];
-  
-    NSRange rangs = [url rangeOfString:@"?"];
-    rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
-
     
-    NSString * urls = [NSDictionary ToSignUrlWithString:url];
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-        
-        NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-    }];
+    if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+        [self sisOpen];
+    }else{
+        NSRange rangs = [url rangeOfString:@"?"];
+        rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
+        NSString * urls = [NSDictionary ToSignUrlWithString:url];
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+            
+            NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+        }];
+    }
 }
+
+
+
+
+/**
+ *  <#Description#>
+ */
+- (void)sisOpen{
+    
+    [SVProgressHUD showWithStatus:@"数据加载中"];
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+    NSString *str = [NSString stringWithFormat:@"%@" ,userid];
+    parame[@"userid"] = str;
+    //    parame[@"userid"] = @"64";
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    
+    NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
+    [url appendString:@"getSisInfo"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        [SVProgressHUD dismiss];
+        
+        NSLog(@"%@",json);
+        if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
+            SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:SISUserInfo];
+            [NSKeyedArchiver archiveRootObject:baseModel toFile:filename];
+            
+            if (baseModel.enableSis) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"pushtoSIS" object:nil userInfo:nil];
+            }else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您没有开启店中店，是否开启" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alert.tag = 5000;
+                [alert show];
+            }
+        }else {
+            [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@",json[@"resultDescription"]]];
+        }
+        
+        
+        
+        
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 5000) {
+        if (buttonIndex == 1) {
+            
+            [SVProgressHUD showWithStatus:@"启用店中店ing"];
+            NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+            NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+            NSString *str = [NSString stringWithFormat:@"%@" ,userid];
+            parame[@"userid"] = str;
+            //            parame[@"userid"] = @"64";
+            parame = [NSDictionary asignWithMutableDictionary:parame];
+            
+            NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
+            [url appendString:@"open"];
+            [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+                
+                [SVProgressHUD dismiss];
+                
+                NSLog(@"%@",json);
+                if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
+                    SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
+                    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:SISUserInfo];
+                    [NSKeyedArchiver archiveRootObject:baseModel toFile:filename];
+                    
+                    if (baseModel.enableSis) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushtoSIS" object:nil userInfo:nil];
+                    }
+                }else {
+                    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@",json[@"resultDescription"]]];
+                }
+                
+                
+                
+                
+            } failure:^(NSError *error) {
+                [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
+                NSLog(@"%@",error);
+            }];
+            
+        }
+    }
+}
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     

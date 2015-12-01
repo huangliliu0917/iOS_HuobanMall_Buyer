@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
+		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
 		EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF40A8221C056D7E00E664C8 /* ViewController.m */; };
 		EF40A8291C05820B00E664C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF40A8281C05820B00E664C8 /* InfoPlist.strings */; };
@@ -169,6 +170,8 @@
 		ACF9CE19FF0913C78BBF377F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B016B458709B0BB7CC87B4E2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2CA2476854D5BB3A46CB1C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF2DC41E1C0BDE2400C3ACD2 /* WeiXinLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiXinLoginModel.h; sourceTree = "<group>"; };
+		EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiXinLoginModel.m; sourceTree = "<group>"; };
 		EF40A81C1C05677600E664C8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EF40A8211C056D7E00E664C8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF40A8221C056D7E00E664C8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -491,6 +494,15 @@
 				ACF9CE19FF0913C78BBF377F /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EF2DC41D1C0BDE0600C3ACD2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EF2DC41E1C0BDE2400C3ACD2 /* WeiXinLoginModel.h */,
+				EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		EF42C0BE1C0832A100602E60 /* SIS */ = {
@@ -921,6 +933,7 @@
 		EF9D4C381C055FF900D005E8 /* NewFeature(版本新特性) */ = {
 			isa = PBXGroup;
 			children = (
+				EF2DC41D1C0BDE0600C3ACD2 /* Model */,
 				EF9D4C391C055FF900D005E8 /* Controller */,
 			);
 			path = "NewFeature(版本新特性)";
@@ -1418,6 +1431,7 @@
 				EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */,
 				EF42C1111C0832A100602E60 /* menuView.m in Sources */,
 				EF9D4C951C055FF900D005E8 /* NSObject+MJCoding.m in Sources */,
+				EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */,
 				EF9D4CA91C055FF900D005E8 /* MallMessage.m in Sources */,
 				EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */,
 				EF9D4C7D1C055FF900D005E8 /* ApiXml.mm in Sources */,

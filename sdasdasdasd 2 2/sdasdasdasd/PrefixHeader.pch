@@ -108,6 +108,7 @@
 #define HuoBanMallMemberLevel @"HuoBanMallMemberLevel" //用户会员等级
 #define HuoBanMallUserId @"HuoBanMallUserId" //用户编号
 #define IconHeadImage @"IconHeadImage" //用户头像
+#define MallUserType @"MallUserType" //用户类型
 #define LeftMenuModels @"LeftMenuModels" //用户左侧列表
 #define DatePackageVersion @"DatePackageVersion" //网络数据包版本号
 #define LoginStatus @"LoginStatus" //登录标志
