@@ -31,6 +31,7 @@
 //java
 // 店中店
 #define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+//#define SISMainUrl @"http://192.168.1.41:8080/sis/"
 //MK
 #define MainUrlMK @"test.api.open.huobanplus.com:8081/sis"
 //接口地址 .net

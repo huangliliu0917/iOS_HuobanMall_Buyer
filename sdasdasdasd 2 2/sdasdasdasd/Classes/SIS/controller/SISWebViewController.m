@@ -24,6 +24,7 @@
     
     if (self.type == 1) {
         //商品详细
+        self.title  = @"商品详情";
         
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.goodUrl]];

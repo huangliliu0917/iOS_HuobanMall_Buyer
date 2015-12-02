@@ -112,7 +112,11 @@ static NSString *addCellIdentify = @"addCell";
     self.goodsArray = [NSMutableArray array];
     self.selectButton = 0;
     
+    
+    
     [self _initNavSearchBar];
+    
+    
 }
 
 - (void)_initNavSearchBar {
@@ -252,6 +256,8 @@ static NSString *addCellIdentify = @"addCell";
         
         if ([json[@"systemResultCode"] intValue] ==1&&[json[@"resultCode"] intValue] == 1) {
             
+            
+            
             NSArray *array = [SISGoodModel objectArrayWithKeyValuesArray:json[@"resultData"][@"list"]];
             self.rpageno = json[@"resultData"][@"rpageno"];
             
@@ -276,7 +282,7 @@ static NSString *addCellIdentify = @"addCell";
         
     } failure:^(NSError *error) {
         // 拿到当前的下拉刷新控件，结束刷新状态
-        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
         NSLog(@"%@", error);
     }];
@@ -285,6 +291,8 @@ static NSString *addCellIdentify = @"addCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.searchBar resignFirstResponder];
     
     [self getNewGoods];
 }
@@ -493,11 +501,15 @@ static NSString *addCellIdentify = @"addCell";
 //        [SVProgressHUD showErrorWithStatus:@"请输入至少6位订单号"];
 //    }else {
     
-        self.searchStr = self.searchBar.text;
-        
-        [self getNewGoods];
+    self.searchStr = self.searchBar.text;
+    
+    [self.searchBar resignFirstResponder];
+    
+    [self getNewGoods];
 //    }
 }
+
+
 
 
 @end

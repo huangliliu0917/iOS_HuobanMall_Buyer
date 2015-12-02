@@ -100,13 +100,14 @@
     
    
     
+    
 }
 
 
 /**
  *  更新左侧菜单
  *
- *  @param animated <#animated description#>
+ *  @param animated
  */
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -358,7 +359,7 @@
     NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
     NSString *str = [NSString stringWithFormat:@"%@" ,userid];
     parame[@"userid"] = str;
-    //    parame[@"userid"] = @"64";
+//        parame[@"userid"] = @"64";
     parame = [NSDictionary asignWithMutableDictionary:parame];
     
     NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
@@ -406,7 +407,7 @@
             NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
             NSString *str = [NSString stringWithFormat:@"%@" ,userid];
             parame[@"userid"] = str;
-            //            parame[@"userid"] = @"64";
+//                        parame[@"userid"] = @"64";
             parame = [NSDictionary asignWithMutableDictionary:parame];
             
             NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
