@@ -63,20 +63,8 @@
 
 static NSString *addCellIdentify = @"addCell";
 
-- (NSArray *)topTitles{
-    
-    if (_topTitles == nil) {
-        
-        _topTitles = [NSMutableArray array];
-        [_topTitles addObject:@"全部"];
-        for (SISCategory *cate in self.categroyArray) {
-            [_topTitles addObject:cate.sisName];
-        }
-    }
-    
-    return _topTitles;
-    
-}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,6 +74,11 @@ static NSString *addCellIdentify = @"addCell";
     self.title = @"市场选购";
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _topTitles = [NSMutableArray array];
+    for (SISCategory *cate in self.categroyArray) {
+        [_topTitles addObject:cate.sisName];
+    }
 
     menuView * view = [[menuView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     view.delegate = self;
@@ -195,7 +188,8 @@ static NSString *addCellIdentify = @"addCell";
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     
     parame[@"userid"] = self.user.userId;
-    parame[@"rpageno"] = @"0";
+//    parame[@"userid"] = @"8839";
+    parame[@"pageno"] = @"0";
     parame[@"categoryid"] = self.categoryid;
     parame[@"key"] = self.searchStr;
     
@@ -237,7 +231,8 @@ static NSString *addCellIdentify = @"addCell";
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     
     parame[@"userid"] = self.user.userId;
-    parame[@"rpageno"] = [NSString stringWithFormat:@"%@", self.rpageno ];
+//    parame[@"userid"] = @"8839";
+    parame[@"pageno"] = [NSString stringWithFormat:@"%@", self.rpageno ];
     parame[@"categoryid"] = self.categoryid;
     parame[@"key"] = self.searchStr;
     
@@ -357,9 +352,13 @@ static NSString *addCellIdentify = @"addCell";
         
         [self.headtitleView SetTheArrowToRight];
         
+        
+        
         SISCategory *model = self.categroyArray[btn.tag];
         self.categoryid = model.sisId;
         self.selectButton = btn.tag;
+      
+        
         
         [self getNewGoods];
         

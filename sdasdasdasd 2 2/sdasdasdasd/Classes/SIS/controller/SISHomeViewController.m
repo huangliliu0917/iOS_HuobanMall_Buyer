@@ -182,7 +182,13 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
                 NSArray *cate = [SISCategory objectArrayWithKeyValuesArray:json[@"resultData"][@"list"]];
                 
                 SISShopViewController *shop = [[SISShopViewController alloc] init];
-                shop.categroyArray = cate;
+                SISCategory *all = [[SISCategory alloc] init];
+                all.sisId = @"0";
+                all.sisName = @"全部";
+                NSMutableArray *arry = [NSMutableArray array];
+                [arry addObject:all];
+                [arry addObjectsFromArray:cate];
+                shop.categroyArray = arry;
                 [self.navigationController pushViewController:shop animated:YES];
             }else {
                 

@@ -99,9 +99,11 @@
         [_buttonArray addObject:button];
     }
     if (_sliderColor) {
-        UIButton *button = _buttonArray[0];
-        [button setTitleColor:_sliderColor forState:UIControlStateNormal];
-        self.selectButton = button;
+        if (_buttonArray.count != 0) {
+            UIButton *button = _buttonArray[0];
+            [button setTitleColor:_sliderColor forState:UIControlStateNormal];
+            self.selectButton = button;
+        }
     }
     
 }
