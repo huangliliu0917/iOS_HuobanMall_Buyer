@@ -24,7 +24,7 @@
     AFHTTPRequestOperationManager * manager  = [AFHTTPRequestOperationManager manager];
     [manager GET:urlStr parameters:params success:^void(AFHTTPRequestOperation * request, id json) {
        success(json);
-        NSLog(@"%@",request);
+//        NSLog(@"%@",request);
     } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
         failure(error);
     }];
@@ -60,7 +60,7 @@
     AFHTTPRequestOperationManager * manager  = [AFHTTPRequestOperationManager manager];
     [manager POST:urlStr parameters:params success:^void(AFHTTPRequestOperation * requset, id json) {
         success(json);
-        NSLog(@"%@",requset);
+//        NSLog(@"%@",requset);
     } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
         failure(error);
     }];

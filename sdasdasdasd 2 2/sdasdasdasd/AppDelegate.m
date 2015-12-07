@@ -189,6 +189,9 @@
             NSDictionary * dict = @{@"code":code};
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ToGetUserInfo" object:nil userInfo:dict];
             return;
+        }else if (aresp.errCode== -4 || aresp.errCode== -2 ){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ToGetUserInfoError" object:nil userInfo:nil];
         }
     }
     NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];

@@ -48,10 +48,10 @@
     //1、创建scrollView
     [self setupScrollView];
     //2、添加  pageControll
-//    [self setupPageControll];
+//    [self setupPageControll];ToGetUserInfoError
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
     [UIViewController MonitorNetWork];
     
 }
@@ -75,12 +75,27 @@
  */
 - (void)WeiXinLog{
     
-    //构造SendAuthReq结构体
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo" ;
-    req.state = @"123" ;
-    //第三方向微信终端发送一个SendAuthReq消息结构
-    [WXApi sendAuthReq:req viewController:self delegate:self];
+    
+    if ([WXApi isWXAppInstalled]) {
+        //构造SendAuthReq结构体
+        SendAuthReq* req =[[SendAuthReq alloc ] init];
+        req.scope = @"snsapi_userinfo" ;
+        req.state = @"123" ;
+        //第三方向微信终端发送一个SendAuthReq消息结构
+        [WXApi sendAuthReq:req viewController:self delegate:self];
+    }else{
+        
+        
+        NSLog(@"xxxx没有危险客户端");
+    }
+    
+}
+
+
+- (void)WeiXinFailureToUserOrigin{
+    
+    NSLog(@"xxxxxxxx");
+    
 }
 
 /**
@@ -444,7 +459,7 @@
     
     //设置文字
     startButton.imageView.image = [UIImage imageNamed:@"weixing"];
-    [startButton setTitle:@"立即体验" forState:UIControlStateNormal];
+    [startButton setTitle:@"微信授权登录" forState:UIControlStateNormal];
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
