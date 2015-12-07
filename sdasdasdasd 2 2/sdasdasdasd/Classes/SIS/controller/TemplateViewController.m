@@ -51,6 +51,7 @@ static NSString *templateIdentify = @"templateCell";
     self.collectionView.dataSource = self;
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerNib:[UINib nibWithNibName:@"TemplateCell" bundle:nil] forCellWithReuseIdentifier:templateIdentify];
+    self.collectionView.backgroundColor = HuoBanMallBuyNavColor;
     [self.view addSubview:self.collectionView];
     
 }

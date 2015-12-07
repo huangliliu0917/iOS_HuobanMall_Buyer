@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) NSString *imgUrl;
 
-@property (nonatomic, strong) NSString *price;
+@property (nonatomic, strong) NSNumber *price;
 
 @property (nonatomic, strong) NSString *profit;
 

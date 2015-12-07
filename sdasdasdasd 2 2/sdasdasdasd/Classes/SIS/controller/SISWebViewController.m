@@ -33,7 +33,7 @@
         
         if (self.goodSelected) {
             [self.updown setTitle:@"下架" forState:UIControlStateNormal];
-            self.updown.backgroundColor = [UIColor lightGrayColor];
+//            self.updown.backgroundColor = [UIColor lightGrayColor];
         }
         
     }else if (self.type == 2) {
@@ -89,7 +89,7 @@
     [SVProgressHUD showWithStatus:nil];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
         if ([json[@"systemResultCode"] intValue] ==1&&[json[@"resultCode"] intValue] == 1) {
-            [SVProgressHUD showSuccessWithStatus:@"上架成功"];
+            [SVProgressHUD showSuccessWithStatus:@"操作成功"];
             self.updown.backgroundColor = [UIColor lightGrayColor];
             self.updown.userInteractionEnabled  = NO;
         }

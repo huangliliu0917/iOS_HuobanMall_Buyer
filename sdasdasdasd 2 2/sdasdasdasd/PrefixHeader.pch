@@ -31,7 +31,7 @@
 //java
 // 店中店
 #define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
-//#define SISMainUrl @"http://192.168.1.41:8080/sis/"
+//#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
 #define MainUrlMK @"test.api.open.huobanplus.com:8081/sis"
 //接口地址 .net
@@ -62,7 +62,9 @@
 #define SecrenHeight [UIScreen mainScreen].bounds.size.height
 
 //伙伴商城商户信息
+
 #define HuoBanMallBuyApp_Merchant_Id @"4493" //0504
+
 
 //友盟数据统计
 #define HuoBanMallUMengAppKey @"123"
