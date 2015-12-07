@@ -461,12 +461,17 @@ static NSString *addCellIdentify = @"addCell";
     
     NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
     [url appendString:@"operGoods"];
+    [SVProgressHUD showWithStatus:@"上传中"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
+        
         if ([json[@"systemResultCode"] intValue] ==1&&[json[@"resultCode"] intValue] == 1) {
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
             button.hidden = YES;
+        }else {
+            [SVProgressHUD dismiss];
         }
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"%@", error);
     }];
     

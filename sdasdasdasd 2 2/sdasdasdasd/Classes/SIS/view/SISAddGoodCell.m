@@ -33,7 +33,7 @@
     
     self.details.text = [NSString stringWithFormat:@"库存:%@ 返利:%@", self.model.stock, self.model.rebate];
     
-    self.profits.text = [NSString stringWithFormat:@"¥%@", self.model.profit];
+    self.profits.text = [NSString stringWithFormat:@"¥%@", self.model.price];
 }
 
 

@@ -18,13 +18,19 @@
                         <animations/>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gg" translatesAutoresizingMaskIntoConstraints="NO" id="sb5-3F-FOG">
-                        <rect key="frame" x="230" y="10" width="20" height="20"/>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="260x400" translatesAutoresizingMaskIntoConstraints="NO" id="sb5-3F-FOG">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="400"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="7PU-SC-UZF"/>
-                            <constraint firstAttribute="height" constant="20" id="FVb-iL-1HT"/>
+                            <constraint firstAttribute="width" constant="60" id="7PU-SC-UZF"/>
+                            <constraint firstAttribute="height" constant="60" id="FVb-iL-1HT"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7PU-SC-UZF"/>
+                                <exclude reference="FVb-iL-1HT"/>
+                            </mask>
+                        </variation>
                     </imageView>
                 </subviews>
                 <animations/>
@@ -32,14 +38,28 @@
             </view>
             <animations/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="sb5-3F-FOG" secondAttribute="trailing" id="HDc-U8-2gD"/>
+                <constraint firstAttribute="bottom" secondItem="sb5-3F-FOG" secondAttribute="bottom" id="JkK-be-n2f"/>
                 <constraint firstItem="84U-dk-iAy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="N76-NG-Xg8"/>
-                <constraint firstItem="sb5-3F-FOG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Pxt-Ne-1ja"/>
+                <constraint firstItem="sb5-3F-FOG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Pxt-Ne-1ja"/>
+                <constraint firstItem="sb5-3F-FOG" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="-70" id="RQr-Je-Gf2"/>
                 <constraint firstAttribute="bottom" secondItem="84U-dk-iAy" secondAttribute="bottom" id="UJf-AO-XlR"/>
-                <constraint firstAttribute="trailing" secondItem="sb5-3F-FOG" secondAttribute="trailing" constant="10" id="eLW-Ej-XWD"/>
+                <constraint firstItem="sb5-3F-FOG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="btt-U7-IjD"/>
+                <constraint firstAttribute="trailing" secondItem="sb5-3F-FOG" secondAttribute="trailing" id="eLW-Ej-XWD"/>
+                <constraint firstItem="sb5-3F-FOG" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" constant="50" id="ehV-8V-9oH"/>
+                <constraint firstItem="sb5-3F-FOG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jef-80-uM7"/>
                 <constraint firstAttribute="trailing" secondItem="84U-dk-iAy" secondAttribute="trailing" id="kzu-Zl-l2O"/>
                 <constraint firstItem="84U-dk-iAy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tSp-zC-S0C"/>
             </constraints>
             <size key="customSize" width="259" height="378"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Pxt-Ne-1ja"/>
+                    <exclude reference="RQr-Je-Gf2"/>
+                    <exclude reference="eLW-Ej-XWD"/>
+                    <exclude reference="ehV-8V-9oH"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="bgImage" destination="84U-dk-iAy" id="hOH-Jc-pb4"/>
                 <outlet property="select" destination="sb5-3F-FOG" id="Wcw-QM-eff"/>
@@ -48,6 +68,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="gg" width="40" height="40"/>
+        <image name="260x400" width="260" height="400"/>
     </resources>
 </document>
