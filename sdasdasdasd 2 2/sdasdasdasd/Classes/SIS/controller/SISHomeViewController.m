@@ -578,7 +578,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SISWebViewController *web = [story instantiateViewControllerWithIdentifier:@"SISWebViewController"];
     web.type = 1;
-    web.goodUrl = model.detailsUrl;
+    web.goodUrl = model.shareUrl;
     web.goodId = model.goodsId;
     web.goodSelected = model.goodSelected;
     
@@ -724,7 +724,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
         [shareParams SSDKSetupShareParamsByText:nil
                                          images:imageArray
-                                            url:[NSURL URLWithString:self.good.detailsUrl]
+                                            url:[NSURL URLWithString:self.good.shareUrl]
                                           title:self.good.goodsName
                                            type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
