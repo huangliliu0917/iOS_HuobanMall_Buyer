@@ -42,6 +42,7 @@
 		EF42C1171C0832A100602E60 /* TemplateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF42C0F81C0832A100602E60 /* TemplateCell.xib */; };
 		EF42C11B1C0832FE00602E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF42C1191C0832FE00602E60 /* Main.storyboard */; };
 		EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C11D1C08350500602E60 /* UITableView+CJ.m */; };
+		EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8E69F81C16B27E004ACB5A /* IponeVerifyViewController.m */; };
 		EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */; };
 		EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B221C055FF900D005E8 /* UIImage+LHB.m */; };
 		EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B241C055FF900D005E8 /* UIViewController+MonitorNetWork.m */; };
@@ -229,6 +230,8 @@
 		EF42C11A1C0832FE00602E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EF42C11C1C08350500602E60 /* UITableView+CJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+CJ.h"; sourceTree = "<group>"; };
 		EF42C11D1C08350500602E60 /* UITableView+CJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+CJ.m"; sourceTree = "<group>"; };
+		EF8E69F71C16B27E004ACB5A /* IponeVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IponeVerifyViewController.h; sourceTree = "<group>"; };
+		EF8E69F81C16B27E004ACB5A /* IponeVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IponeVerifyViewController.m; sourceTree = "<group>"; };
 		EF9D4B1C1C055B5400D005E8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EF9D4B1F1C055FF900D005E8 /* UIBarButtonItem+LHB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+LHB.h"; sourceTree = "<group>"; };
 		EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+LHB.m"; sourceTree = "<group>"; };
@@ -870,6 +873,8 @@
 				EF9D4C221C055FF900D005E8 /* LoginViewController.h */,
 				EF9D4C231C055FF900D005E8 /* LoginViewController.m */,
 				EF9D4C241C055FF900D005E8 /* model */,
+				EF8E69F71C16B27E004ACB5A /* IponeVerifyViewController.h */,
+				EF8E69F81C16B27E004ACB5A /* IponeVerifyViewController.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1428,6 +1433,7 @@
 				EF42C1031C0832A100602E60 /* TemplateViewController.m in Sources */,
 				EF9D4CAD1C055FF900D005E8 /* LWBadgeButton.m in Sources */,
 				EF42C0FB1C0832A100602E60 /* DescribeController.m in Sources */,
+				EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */,
 				EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */,
 				EF9D4C9C1C055FF900D005E8 /* UIViewController+MMDrawerController.m in Sources */,
 				EF42C1141C0832A100602E60 /* SISGoodsCell.m in Sources */,
