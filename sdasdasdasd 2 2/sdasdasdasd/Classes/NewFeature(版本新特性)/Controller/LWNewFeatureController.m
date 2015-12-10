@@ -25,7 +25,7 @@
 #import "RootViewController.h"
 #import "MallMessage.h"
 #import "LeftMenuModel.h"
-
+#import "IponeVerifyViewController.h"
 
 
 @interface LWNewFeatureController ()<UIScrollViewDelegate,WXApiDelegate>
@@ -48,10 +48,10 @@
     //1、创建scrollView
     [self setupScrollView];
     //2、添加  pageControll
-//    [self setupPageControll];
+//    [self setupPageControll];ToGetUserInfoError
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
     [UIViewController MonitorNetWork];
     
 }
@@ -75,12 +75,27 @@
  */
 - (void)WeiXinLog{
     
-    //构造SendAuthReq结构体
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo" ;
-    req.state = @"123" ;
-    //第三方向微信终端发送一个SendAuthReq消息结构
-    [WXApi sendAuthReq:req viewController:self delegate:self];
+    
+    if ([WXApi isWXAppInstalled]) {
+        //构造SendAuthReq结构体
+        SendAuthReq* req =[[SendAuthReq alloc ] init];
+        req.scope = @"snsapi_userinfo" ;
+        req.state = @"123" ;
+        //第三方向微信终端发送一个SendAuthReq消息结构
+        [WXApi sendAuthReq:req viewController:self delegate:self];
+    }else{
+        [self WeiXinFailureToUserOrigin];
+    }
+    
+}
+
+
+- (void)WeiXinFailureToUserOrigin{
+    
+    IponeVerifyViewController * iphone = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+    [self presentViewController:iphone animated:YES completion:nil];
+    NSLog(@"xxxx没有危险客户端");
+    
 }
 
 /**
@@ -439,12 +454,13 @@
     startButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:128/255.0 blue:45/255.0 alpha:1.000];
     startButton.layer.borderColor = [UIColor blackColor].CGColor;
     [startButton becomeFirstResponder];
-    startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/3,44}};
+    startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/4,44}};
     [startButton addTarget:self action:@selector(startButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     //设置文字
-    startButton.imageView.image = [UIImage imageNamed:@"weixing"];
-    [startButton setTitle:@"立即体验" forState:UIControlStateNormal];
+    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
+    [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
+    [startButton setTitle:@"微信授权登录" forState:UIControlStateNormal];
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
