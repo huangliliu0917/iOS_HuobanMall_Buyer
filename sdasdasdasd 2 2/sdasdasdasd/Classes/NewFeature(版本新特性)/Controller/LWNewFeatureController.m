@@ -101,7 +101,7 @@
 /**
  *  用户登录成功
  *
- *  @param note <#note description#>
+ *  @param note
  */
 - (void)UserLoginSuccess{
     
@@ -248,7 +248,7 @@
 /**
  *  提交数据给服务端
  *
- *  @param user <#user description#>
+ *  @param user
  */
 - (void)toPostWeiXinUserMessage:(UserInfo *) user{
     
@@ -272,6 +272,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
             NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
@@ -362,6 +363,10 @@
     
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 - (void)dealloc{

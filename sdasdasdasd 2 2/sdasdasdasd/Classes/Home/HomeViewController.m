@@ -26,6 +26,7 @@
 #import "UIViewController+MonitorNetWork.h"
 #import "MallMessage.h"
 #import "PayModel.h"
+#import "IponeVerifyViewController.h"
 #import <SDWebImageManager.h>
 //#import "Order.h"  //支付宝
 //#import "DataSigner.h"
@@ -368,6 +369,7 @@
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushtoSIShomeVC) name:@"pushtoSIS" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
     [UIViewController MonitorNetWork];
     
@@ -1051,6 +1053,12 @@
     SISHomeViewController *home = [story instantiateViewControllerWithIdentifier:@"SISHomeViewController"];
     
     [self.navigationController pushViewController:home animated:YES];
+}
+
+- (void)pushToIphone {
+    UIStoryboard *stroy = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    IponeVerifyViewController *phone = [stroy instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+    [self.navigationController pushViewController:phone animated:YES];
 }
 
 

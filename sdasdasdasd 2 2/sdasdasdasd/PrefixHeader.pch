@@ -63,7 +63,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"4493" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"5" //0504
 
 
 //友盟数据统计
@@ -114,6 +114,7 @@
 #define MallUserType @"MallUserType" //用户类型
 #define LeftMenuModels @"LeftMenuModels" //用户左侧列表
 #define DatePackageVersion @"DatePackageVersion" //网络数据包版本号
+#define MallUserRelatedType @"MallUserRelatedType" //用户绑定数据类型 0需要绑定微信 1需要绑定手机
 #define LoginStatus @"LoginStatus" //登录标志
 #define Success @"Success" //成功
 #define Failure @"Failure" //失败

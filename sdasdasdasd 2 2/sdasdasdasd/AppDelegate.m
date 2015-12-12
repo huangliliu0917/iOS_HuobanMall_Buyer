@@ -187,7 +187,13 @@
             NSLog(@"----%@",code);
             //授权成功的code
             NSDictionary * dict = @{@"code":code};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ToGetUserInfo" object:nil userInfo:dict];
+            NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+            if ([login isEqualToString:Success]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ToGetUserInfoBuild" object:nil userInfo:dict];
+                
+            }else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ToGetUserInfo" object:nil userInfo:dict];
+            }
             return;
         }else if (aresp.errCode== -4 || aresp.errCode== -2 ){
             

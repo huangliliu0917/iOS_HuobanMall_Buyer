@@ -8,6 +8,7 @@
 //
 
 #import "HTLeftTableViewController.h"
+#import "WXApi.h"
 #import "LeftGroupModel.h"
 #import "UserLoginTool.h"
 #import "AQuthModel.h"
@@ -24,7 +25,9 @@
 #import <SVProgressHUD.h>
 #import "SISHomeViewController.h"
 #import "SISBaseModel.h"
-@interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate>
+#import "IponeVerifyViewController.h"
+
+@interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate,WXApiDelegate>
 
 /**zml左侧数据*/
 @property(nonatomic,strong) NSMutableArray * dataList;
@@ -38,7 +41,9 @@
 @property(nonatomic,strong) UIButton * logingBtn;
 @property(nonatomic,strong) NSMutableArray * groupArray;
 
-
+//添加菜单
+@property (nonatomic, strong)LeftMenuModel *wx;
+@property (nonatomic, strong)LeftMenuModel *phone;
 
 
 @property(nonatomic,strong) MyLoginView * topHeadView;
@@ -98,9 +103,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeixinQauth:) name:WeiXinQAuthSuccessNotigication object:nil];
     
-   
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
     
-    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
 
@@ -192,6 +197,21 @@
             [groupModel.models addObject:model];
         }
     }
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+
+    if ([str intValue] == 0) {
+        _wx = [[LeftMenuModel alloc] init];
+        _wx.menu_icon = @"home_menu_wx";
+        _wx.menu_name = @"绑定微信";
+        _wx.menu_group = self.groupArray.count ;
+        [groupModel.models addObject:_wx];
+    }else if ([str intValue] == 1){
+        _phone = [[LeftMenuModel alloc] init];
+        _phone.menu_icon = @"home_menu_sjbd";
+        _phone.menu_name = @"绑定手机";
+        _phone.menu_group = self.groupArray.count ;
+        [groupModel.models addObject:_phone];
+    }
 }
 
 
@@ -206,7 +226,7 @@
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
         UserInfo *userinfoss =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
         [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:userinfoss.headimgurl] placeholderImage:[UIImage imageNamed:@"sideslip_login_lefttop_logo"] options:SDWebImageRetryFailed];
-        
+       
     }
     
 }
@@ -329,21 +349,33 @@
     LeftMenuModel * models =  model.models[indexPath.row];
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSMutableString * url = [NSMutableString stringWithString:uraaa];
-    [url appendString:models.menu_url];
-    
-    if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
-        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-        [self sisOpen];
-    }else{
-        NSRange rangs = [url rangeOfString:@"?"];
-        rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
-        NSString * urls = [NSDictionary ToSignUrlWithString:url];
-        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-            
-            NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-        }];
+    if (models.menu_url) {
+        [url appendString:models.menu_url];
     }
+    
+    //绑定微信
+    if ([models.menu_name isEqualToString:@"绑定微信"]) {
+        [self WeiXinLog];
+    }else if ([models.menu_name isEqualToString:@"绑定手机"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    }else {
+        //业务逻辑(胖子写的)
+        if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+            [self sisOpen];
+        }else{
+            NSRange rangs = [url rangeOfString:@"?"];
+            rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
+            NSString * urls = [NSDictionary ToSignUrlWithString:url];
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+                
+                NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+            }];
+        }
+    }
+    
 }
 
 
@@ -584,4 +616,139 @@
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+#pragma mark 微信授权登录
+
+/**
+ *  微信授权登录
+ */
+- (void)WeiXinLog{
+    
+    //构造SendAuthReq结构体
+    SendAuthReq* req =[[SendAuthReq alloc ] init];
+    req.scope = @"snsapi_userinfo" ;
+    req.state = @"123" ;
+    //第三方向微信终端发送一个SendAuthReq消息结构
+    [WXApi sendAuthReq:req viewController:self delegate:self];
+}
+
+/**
+ *  微信授权登录后返回的用户信息
+ */
+-(void)getUserInfo1:(AQuthModel*)aquth
+{
+    __weak HTLeftTableViewController * wself = self;
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"access_token"] = aquth.access_token;
+    parame[@"openid"] = aquth.openid;
+    [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
+        NSLog(@"%@",json);
+        UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
+        //向服务端提供微信数据
+        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+        UserInfo *userLocal = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+        
+        [self bindWeixinWithUserInfo:userInfo AndUnionid:userLocal.unionid  AndRefreshToken:aquth.refresh_token];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+    
+}
+- (void)OquthByWeiXinSuccess1:(NSNotification *) note{
+    
+    NSLog(@"-=------------%@",note);
+    
+    
+    [self accessTokenWithCode1:note.userInfo[@"code"]];
+   
+    
+}
+
+
+- (void)accessTokenWithCode1:(NSString * )code
+{
+    __weak HTLeftTableViewController * wself = self;
+    //进行授权
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
+    [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
+        
+                NSLog(@"accessTokenWithCode%@",json);
+        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        [AccountTool saveAccount:aquth];
+        //获取用户信息
+        [wself getUserInfo1:aquth];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+}
+/**
+ *  刷新access_token
+ */
+- (void)toRefreshaccess_token1{
+    
+    [SVProgressHUD setStatus:nil];
+    __weak HTLeftTableViewController * wself = self;
+    AQuthModel * mode = [AccountTool account];
+    NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
+    [UserLoginTool loginRequestGet:ss parame:nil success:^(id json) {
+        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        [AccountTool saveAccount:aquth];
+        //获取用户信息
+        [wself getUserInfo1:aquth];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+}
+
+- (void)bindWeixinWithUserInfo:(UserInfo *)userInfo AndUnionid:(NSString *) unionid AndRefreshToken:(NSString *)refreshToken
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    params[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    params[@"userid"] = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId]];
+    params[@"sex"] = [NSString stringWithFormat:@"%@",userInfo.sex];
+    params[@"nickname"] = userInfo.nickname;
+    params[@"openid"] = userInfo.openid;
+    params[@"city"] = userInfo.city;
+    params[@"country"] = userInfo.country;
+    params[@"province"] = userInfo.province;
+    params[@"unionid"] = userInfo.unionid;
+    params[@"headimgurl"] = userInfo.headimgurl;
+    params[@"refreshtoken"] = refreshToken;
+    
+    
+    params = [NSDictionary asignWithMutableDictionary:params];
+    
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/Account/bindWeixin"];
+    
+    [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
+        NSLog(@"%@",json);
+        if ([json[@"code"] intValue] == 200) {
+            
+            UserInfo * userInfo1 = [UserInfo objectWithKeyValues:json[@"data"]];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo1 toFile:fileName];
+            
+            LeftGroupModel * model = self.groupArray[self.groupArray.count - 1];
+            [model.models removeObject:self.phone];
+            [self.tableView reloadData];
+            
+            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+        }else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
+
+
+
 @end

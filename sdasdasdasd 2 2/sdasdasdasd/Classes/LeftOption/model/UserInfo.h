@@ -37,4 +37,5 @@
 @property(nonatomic,strong) NSString * province;
 @property(nonatomic,strong) NSNumber * sex;
 @property(nonatomic,strong) NSString * unionid;
+@property(nonatomic,strong) NSString *relatedType;
 @end

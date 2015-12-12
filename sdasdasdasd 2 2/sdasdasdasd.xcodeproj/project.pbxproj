@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
@@ -166,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
+		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		ACF9CE19FF0913C78BBF377F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B016B458709B0BB7CC87B4E2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B2CA2476854D5BB3A46CB1C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -987,6 +990,8 @@
 		EF9D4C491C055FF900D005E8 /* 扩展 */ = {
 			isa = PBXGroup;
 			children = (
+				60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */,
+				60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */,
 				EF42C11C1C08350500602E60 /* UITableView+CJ.h */,
 				EF42C11D1C08350500602E60 /* UITableView+CJ.m */,
 				EF9D4C4A1C055FF900D005E8 /* NSDictionary+HuoBanMallSign.h */,
@@ -1402,6 +1407,7 @@
 				EF9D4C731C055FF900D005E8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				EF9D4C631C055FF900D005E8 /* AccountTool.m in Sources */,
 				EF42C1091C0832A100602E60 /* TemplateModel.m in Sources */,
+				60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */,
 				EF9D4CB71C055FF900D005E8 /* UIViewController+NAV.m in Sources */,
 				EF9D4CAC1C055FF900D005E8 /* LWNavigationController.m in Sources */,
 				EF9D4C791C055FF900D005E8 /* UIWebView+AFNetworking.m in Sources */,
@@ -1631,7 +1637,7 @@
 					"$(SRCROOT)/sdasdasdasd/Classes/lib/openssl",
 				);
 				INFOPLIST_FILE = sdasdasdasd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1668,7 +1674,7 @@
 					"$(SRCROOT)/sdasdasdasd/Classes/lib/openssl",
 				);
 				INFOPLIST_FILE = sdasdasdasd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

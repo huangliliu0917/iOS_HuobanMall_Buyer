@@ -10,5 +10,5 @@
 #import <UIKit/UIKit.h>
 
 @interface IponeVerifyViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UIButton *login;
 @end
