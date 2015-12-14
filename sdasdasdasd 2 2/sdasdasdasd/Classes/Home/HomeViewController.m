@@ -709,7 +709,7 @@
             LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
             UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
             [self presentViewController:root animated:YES completion:^{
-               
+               [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
             
         }else if([url rangeOfString:@"AppAlipay.aspx"].location != NSNotFound){

@@ -26,6 +26,8 @@
 #import "UserLoginTool.h"
 #import "LeftMenuModel.h"
 #import "MallMessage.h"
+#import "IponeVerifyViewController.h"
+
 @interface LoginViewController ()<WXApiDelegate>
 
 - (IBAction)loginBtnClick:(id)sender;
@@ -43,6 +45,8 @@
     self.image.contentMode = UIViewContentModeScaleAspectFit;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
     
     [UIViewController MonitorNetWork];
     
@@ -335,6 +339,15 @@
     
 }
 
+- (void)WeiXinFailureToUserOrigin{
+    
+    IponeVerifyViewController * iphone = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+    UINavigationController *nav =[[UINavigationController alloc] initWithRootViewController:iphone];
+    [self presentViewController:nav animated:YES completion:nil];
+    
+    NSLog(@"xxxx没有危险客户端");
+    
+}
 
 
 - (void)dealloc{

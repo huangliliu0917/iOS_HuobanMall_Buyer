@@ -794,7 +794,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XKp-lh-QWt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78" y="683"/>
+            <point key="canvasLocation" x="59" y="514"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="AoC-kh-sV2">
@@ -987,7 +987,7 @@
                                             <constraint firstAttribute="width" constant="120" id="9bb-w0-QGG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UiL-Fe-1mb">
@@ -1030,7 +1030,9 @@
                                     <constraint firstAttribute="height" constant="44" id="Jqh-vD-tYa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="登录"/>
+                                <state key="normal" title="登录">
+                                    <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="loginActionClick:" destination="9dE-mo-d3E" eventType="touchUpInside" id="zeT-R0-Ifb"/>
                                 </connections>
@@ -1042,7 +1044,9 @@
                                     <constraint firstAttribute="height" constant="20" id="V7w-OI-MoD"/>
                                     <constraint firstAttribute="width" constant="60" id="mGA-sJ-8pe"/>
                                 </constraints>
-                                <state key="normal" title="重新授权"/>
+                                <state key="normal" title="重新授权">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
                         </subviews>
                         <animations/>
@@ -1064,6 +1068,7 @@
                         <outlet property="VerifyLable" destination="nDF-Nk-ekg" id="xAf-SJ-30K"/>
                         <outlet property="iphoneTextField" destination="BvI-Hi-sPK" id="F0V-Wu-dNH"/>
                         <outlet property="login" destination="OcG-7E-32k" id="1ar-Ql-fvR"/>
+                        <outlet property="weixinLogin" destination="Yyj-ns-HSS" id="wBv-h9-c66"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8dO-Xq-0jr" userLabel="First Responder" sceneMemberID="firstResponder"/>

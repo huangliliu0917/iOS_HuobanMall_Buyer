@@ -93,7 +93,8 @@
 - (void)WeiXinFailureToUserOrigin{
     
     IponeVerifyViewController * iphone = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-    [self presentViewController:iphone animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iphone];
+    [self presentViewController:nav animated:YES completion:nil];
     NSLog(@"xxxx没有危险客户端");
     
 }
@@ -456,7 +457,7 @@
 //    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;
     startButton.layer.masksToBounds =YES;
-    startButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:128/255.0 blue:45/255.0 alpha:1.000];
+    startButton.backgroundColor = HuoBanMallBuyNavColor;
     startButton.layer.borderColor = [UIColor blackColor].CGColor;
     [startButton becomeFirstResponder];
     startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/4,44}};

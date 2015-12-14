@@ -11,4 +11,8 @@
 
 @interface IponeVerifyViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *login;
+
+@property (weak, nonatomic) IBOutlet UIButton *weixinLogin;
+
+
 @end
