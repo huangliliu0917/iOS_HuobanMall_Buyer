@@ -46,7 +46,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin1) name:@"ToGetUserInfoError" object:nil];
     
     [UIViewController MonitorNetWork];
     
@@ -339,7 +339,7 @@
     
 }
 
-- (void)WeiXinFailureToUserOrigin{
+- (void)WeiXinFailureToUserOrigin1{
     
     IponeVerifyViewController * iphone = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
     UINavigationController *nav =[[UINavigationController alloc] initWithRootViewController:iphone];

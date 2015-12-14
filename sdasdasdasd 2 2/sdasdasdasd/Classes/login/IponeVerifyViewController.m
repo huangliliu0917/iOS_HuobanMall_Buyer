@@ -61,6 +61,7 @@
     
     self.VerifyLable.backgroundColor = HuoBanMallBuyNavColor;
     self.VerifyLable.layer.cornerRadius = 5;
+    self.VerifyLable.layer.masksToBounds = YES;
     
     self.login.backgroundColor = HuoBanMallBuyNavColor;
     self.login.layer.cornerRadius = 5;
@@ -187,8 +188,10 @@
             if ([json[@"code"] intValue] == 200) {
                 
                 
-                UserInfo * userInfo = [UserInfo objectWithKeyValues:json[@"data"]];
+                UserInfo * userInfo = [[UserInfo alloc] init];
                 userInfo.unionid = json[@"data"][@"authorizeCode"];
+                userInfo.nickname = json[@"data"][@"nickName"];
+                userInfo.headimgurl = json[@"data"][@"headImgUrl"];
                 NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
                 NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
                 [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];

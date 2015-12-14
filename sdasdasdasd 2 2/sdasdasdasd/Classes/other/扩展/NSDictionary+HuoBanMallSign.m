@@ -61,11 +61,11 @@
      NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
     [signUrl appendFormat:@"&buserid=%@",userid];
     UserInfo * usaa = nil;
-    if ([AccountTool account]) {
+//    if ([AccountTool account]) {
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
         usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    };
+//    };
     [signUrl appendFormat:@"&unionid=%@",usaa.unionid];
     NSRange new = [signUrl rangeOfString:@"?"];
     
