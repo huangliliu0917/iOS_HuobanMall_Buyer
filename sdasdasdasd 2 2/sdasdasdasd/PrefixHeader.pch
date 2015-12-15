@@ -30,10 +30,10 @@
 
 //java
 // 店中店
-#define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+#define SISMainUrl @"http://api.open.huobanplus.com:8081/sis/"
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
-#define MainUrlMK @"test.api.open.huobanplus.com:8081/sis"
+#define MainUrlMK @"api.open.huobanplus.com:8081/sis"
 //接口地址 .net
 #define AppOriginUrl @"http://mallapi.huobanmall.com" // @"http://mallapi.huobanj.cn"//
 #define HuoBanMallBuyAppId  @"huotu686ad1fe2bd8a02bb"  //@"huotuacf89c9231848c9f49" //
