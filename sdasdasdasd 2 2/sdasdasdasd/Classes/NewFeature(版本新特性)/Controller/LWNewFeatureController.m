@@ -452,13 +452,14 @@
 
     //设置尺寸
     CGFloat centerX = imageView.frame.size.width*0.5;
-    CGFloat centerY = imageView.frame.size.height*0.85;
+    CGFloat centerY = imageView.frame.size.height*0.9;
     startButton.center = CGPointMake(centerX,centerY);
 //    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;
     startButton.layer.masksToBounds =YES;
-    startButton.backgroundColor = HuoBanMallBuyNavColor;
-    startButton.layer.borderColor = [UIColor blackColor].CGColor;
+    startButton.backgroundColor = [UIColor whiteColor];
+//    startButton.layer.borderColor = [UIColor colorWithRed:0.922 green:0.353 blue:0.157 alpha:1.000].CGColor;
+//    startButton.layer.borderWidth = 2;
     [startButton becomeFirstResponder];
     startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/4,44}};
     [startButton addTarget:self action:@selector(startButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -467,7 +468,7 @@
     [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
     [startButton setTitle:@"微信授权登录" forState:UIControlStateNormal];
-    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
 }
