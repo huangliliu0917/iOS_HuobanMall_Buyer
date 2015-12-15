@@ -481,7 +481,14 @@
     if ([AccountTool verifyAccess_Token_Effect]) {
         [self toRefreshaccess_token]; //刷新access_token
     }else{
-        [self WeiXinLog];
+        
+        if ([WXApi isWXAppInstalled]) {
+            [self WeiXinLog];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"你没有安装微信,请使用手机登录"];
+            [self WeiXinFailureToUserOrigin];
+        }
+
     }
     
 }
