@@ -7,12 +7,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "main_title_left_sideslip@2x.png",
+      "filename" : "main_title_left_sideslip@2X.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "main_title_left_sideslip@3x.png",
+      "filename" : "main_title_left_sideslip@3X.png",
       "scale" : "3x"
     }
   ],

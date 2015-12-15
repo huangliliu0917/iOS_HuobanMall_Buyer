@@ -282,7 +282,7 @@
             [archiver encodeObject:lefts forKey:LeftMenuModels];
             //结束编码
             [archiver finishEncoding];
-            
+             
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
             //写入
