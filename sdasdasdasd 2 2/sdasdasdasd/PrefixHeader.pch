@@ -108,6 +108,7 @@
 #define PayTypeflat @"paytype" //支付数据存档
 #define HuoBanMaLLMess @"HuoBanMaLLMess" //商城信息
 #define AccountList @"AccountList" //用户账户列表
+#define UserInfoList @"UserInfoList" //用户数据列表
 #define HuoBanMallMemberLevel @"HuoBanMallMemberLevel" //用户会员等级
 #define HuoBanMallUserId @"HuoBanMallUserId" //用户编号
 #define IconHeadImage @"IconHeadImage" //用户头像

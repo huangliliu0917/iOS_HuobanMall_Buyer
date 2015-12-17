@@ -44,6 +44,12 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+    if ([str intValue] == 1) {
+        self.weixinLogin.hidden = YES;
+    }
+    
     self.title = @"手机登录";
     
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
@@ -161,6 +167,7 @@
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
             if ([json[@"code"] intValue] == 200) {
                 [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
                 [SVProgressHUD showErrorWithStatus:json[@"msg"]];
@@ -307,10 +314,39 @@
             [archiver encodeObject:account forKey:AccountList];
             //结束编码
             [archiver finishEncoding];
+            
+            
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
             //写入
             [data writeToFile:filename atomically:YES];
+            
+            /**
+             *  用户数据存到数组
+             */
+            NSMutableArray *userList = [NSMutableArray array];
+            NSArray *temp = json[@"data"];
+            for (NSDictionary *dic in temp) {
+                UserInfo *user = [[UserInfo alloc] init];
+                user.headimgurl = dic[@"wxHeadImg"];
+                user.nickname = dic[@"wxNickName"];
+                user.openid = dic[@"wxOpenId"];
+                user.unionid = dic[@"wxUnionId"];
+                user.relatedType = dic[@"relatedType"];
+                [userList addObject:user];
+            }
+            NSMutableData *userData = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
+            [userArchiver encodeObject:userList forKey:UserInfoList];
+            [data writeToFile:filename atomically:YES];
+            [userArchiver finishEncoding];
+            
+            NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
+            //写入
+            [userData writeToFile:filename1 atomically:YES];
+            
             
         }
     } failure:^(NSError *error) {

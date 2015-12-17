@@ -733,10 +733,14 @@
         NSLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
-            UserInfo * userInfo1 = [UserInfo objectWithKeyValues:json[@"data"]];
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-            [NSKeyedArchiver archiveRootObject:userInfo1 toFile:fileName];
+            
+            userInfo.relatedType = json[@"data"][@"relatedType"];
+            
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
             
             LeftGroupModel * model = self.groupArray[self.groupArray.count - 1];
             [model.models removeObject:self.phone];

@@ -262,6 +262,7 @@
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/weixin/LoginAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
+        [MBProgressHUD hideHUD];
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
@@ -281,8 +282,11 @@
             [data writeToFile:filename atomically:YES];
             //登陆成功
             [wself UserLoginSuccess];
+            
+            
         }
     } failure:^(NSError *error) {
+        [MBProgressHUD hideHUD];
          NSLog(@"%@ --- ",error.description);
     }];
    
@@ -308,7 +312,35 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
             //写入
             [data writeToFile:filename atomically:YES];
-            
+                
+                
+                /**
+                 *  用户数据存到数组
+                 */
+                NSMutableArray *userList = [NSMutableArray array];
+                NSArray *temp = json[@"data"];
+                for (NSDictionary *dic in temp) {
+                    UserInfo *user = [[UserInfo alloc] init];
+                    user.headimgurl = dic[@"wxHeadImg"];
+                    user.nickname = dic[@"wxNickName"];
+                    user.openid = dic[@"wxOpenId"];
+                    user.unionid = dic[@"wxUnionId"];
+                    user.relatedType = dic[@"relatedType"];
+                    [userList addObject:user];
+                }
+                NSMutableData *userData = [[NSMutableData alloc] init];
+                //创建归档辅助类
+                NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
+                [userArchiver encodeObject:userList forKey:UserInfoList];
+                [data writeToFile:filename atomically:YES];
+                [userArchiver finishEncoding];
+                
+                NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
+                //写入
+                [userData writeToFile:filename1 atomically:YES];
+                
+                
         }
     } failure:^(NSError *error) {
         NSLog(@"%@",error.description);

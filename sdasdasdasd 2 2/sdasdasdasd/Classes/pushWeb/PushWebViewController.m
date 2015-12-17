@@ -141,6 +141,7 @@
  *网页下拉刷新
  */
 - (void)loadNewData{
+    
     [self.webView reload];
 }
 
