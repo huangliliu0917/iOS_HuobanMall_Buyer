@@ -50,21 +50,23 @@
     //2、添加  pageControll
 //    [self setupPageControll];ToGetUserInfoError
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess3:) name:@"ToGetUserInfo" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
     [UIViewController MonitorNetWork];
     
 }
 
-- (void)OquthByWeiXinSuccess:(NSNotification *) note{
+- (void)OquthByWeiXinSuccess3:(NSNotification *) note{
     
     AQuthModel * account = [AccountTool account];
-    if (account) {
+    if (account.refresh_token.length) {
         [self toRefreshaccess_token];
     }else{
         [self accessTokenWithCode:note.userInfo[@"code"]];
     }
     [self ToGetShareMessage];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
 }
 
 
@@ -106,6 +108,7 @@
  */
 - (void)UserLoginSuccess{
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [MBProgressHUD hideHUD];
         AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -125,7 +128,7 @@
 - (void)accessTokenWithCode:(NSString * )code
 {
     
-    [MBProgressHUD showMessage:nil];
+//    [MBProgressHUD showMessage:nil];
     __weak LWNewFeatureController * wself = self;
     //进行授权
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
@@ -147,7 +150,7 @@
  */
 - (void)toRefreshaccess_token{
     
-    [MBProgressHUD showMessage:nil];
+//    [MBProgressHUD showMessage:nil];
     __weak LWNewFeatureController * wself = self;
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];

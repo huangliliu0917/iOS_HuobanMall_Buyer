@@ -44,12 +44,6 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
-    if ([str intValue] == 1) {
-        self.weixinLogin.hidden = YES;
-    }
-    
     self.title = @"手机登录";
     
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
@@ -59,6 +53,7 @@
 
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     if ([login isEqualToString:Success]) {
+        self.weixinLogin.hidden = YES;
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
     }else {
         [self.login setTitle:@"登录" forState:UIControlStateNormal];
@@ -167,7 +162,14 @@
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
             if ([json[@"code"] intValue] == 200) {
                 [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
-                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+                [[NSUserDefaults standardUserDefaults] setObject:@2 forKey:MallUserRelatedType];
+                NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *userfileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+                UserInfo *user = [NSKeyedUnarchiver unarchiveObjectWithFile:userfileName];
+                user.relatedType = @2;
+                [NSKeyedArchiver archiveRootObject:user toFile:userfileName];
+                
+                
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
                 [SVProgressHUD showErrorWithStatus:json[@"msg"]];
@@ -206,7 +208,12 @@
                 
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
-                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+                if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                    [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+                }else {
+                    [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+                }
+                
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
                 NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
@@ -286,6 +293,7 @@
  */
 - (void)UserLoginSuccess{
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
         [self.VerifyCode resignFirstResponder];
@@ -377,7 +385,7 @@
 - (void)accessTokenWithCode:(NSString * )code
 {
     
-    [MBProgressHUD showMessage:nil];
+//    [MBProgressHUD showMessage:nil];
     __weak IponeVerifyViewController * wself = self;
     //进行授权
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
@@ -400,7 +408,7 @@
  */
 - (void)toRefreshaccess_token{
     
-    [MBProgressHUD showMessage:nil];
+//    [MBProgressHUD showMessage:nil];
     __weak IponeVerifyViewController * wself = self;
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
@@ -555,12 +563,13 @@
 - (void)OquthByWeiXinSuccess:(NSNotification *) note{
     
     AQuthModel * account = [AccountTool account];
-    if (account) {
+    if (account.refresh_token.length) {
         [self toRefreshaccess_token];
     }else{
         [self accessTokenWithCode:note.userInfo[@"code"]];
     }
     [self ToGetShareMessage];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
 }
 
 /**
@@ -581,6 +590,11 @@
     }];
     
     
+}
+
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

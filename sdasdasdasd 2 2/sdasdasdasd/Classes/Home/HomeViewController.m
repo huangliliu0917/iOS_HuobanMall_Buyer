@@ -228,6 +228,8 @@
     
     
     
+    
+    
     if(self.homeWebView.loading){
         return;
     }
@@ -601,6 +603,9 @@
     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *userfileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
     [NSKeyedArchiver archiveRootObject:user toFile:userfileName];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+    
     
     [self switchUserInfoSuccess];
     

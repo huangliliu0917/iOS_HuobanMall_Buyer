@@ -7,10 +7,7 @@
 //  跳转的网页页面
 
 #import "PushWebViewController.h"
-//#import "DataSigner.h"
 #import "RootViewController.h"
-//#import "Order.h"  //支付宝
-//#import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
 #import "payRequsestHandler.h"
 #import <ShareSDK/ShareSDK.h>
@@ -225,13 +222,19 @@
 
     
     //1、创建分享参数
-    NSArray* imageArray = @[url];
+#pragma mark 分享修改
+    NSString *str = [self.webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+    
+    NSArray *array = [str componentsSeparatedByString:@"^"];
+    
+    //1、创建分享参数
+    NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:nil
+        [shareParams SSDKSetupShareParamsByText:array[1]
                                          images:imageArray
-                                            url:[NSURL URLWithString:urs]
-                                          title:@"行装"
+                                            url:[NSURL URLWithString:array[2]]
+                                          title:array[0]
                                            type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
         [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
