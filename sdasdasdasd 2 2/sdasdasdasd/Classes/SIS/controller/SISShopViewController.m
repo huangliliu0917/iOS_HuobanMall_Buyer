@@ -441,7 +441,7 @@ static NSString *addCellIdentify = @"addCell";
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SISWebViewController *web = [story instantiateViewControllerWithIdentifier:@"SISWebViewController"];
     web.type = 1;
-    web.goodUrl = model.shareUrl;
+    web.goodUrl = model.detailsUrl;
     web.goodId = model.goodsId;
     web.goodSelected = model.goodSelected;
     

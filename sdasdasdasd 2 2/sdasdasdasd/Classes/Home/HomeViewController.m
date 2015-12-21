@@ -38,6 +38,7 @@
 #import <SVProgressHUD.h>
 #import "SISBaseModel.h"
 #import "SISHomeViewController.h"
+#import "UserInfo.h"
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
@@ -103,6 +104,7 @@
 
 
 - (NSArray *)LocalAccounts{
+    _LocalAccounts = nil;
     if (_LocalAccounts == nil) {
         NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
@@ -224,6 +226,8 @@
 }
 
 - (void)shareSdkSha{
+    
+    
     
     
     
@@ -371,6 +375,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
+    
+    
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
@@ -447,6 +453,13 @@
     [self.homeWebView reload];
 }
 
+- (void)switchUserInfoSuccess {
+    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+    NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [self.homeWebView loadRequest:req];
+}
 
 /**
  *  切换账号
@@ -578,7 +591,29 @@
     [_backView removeFromSuperview];
     AccountModel * account =  _LocalAccounts[indexPath.row-1];
     [[NSUserDefaults standardUserDefaults] setObject:account.userid forKey:HuoBanMallUserId];
+    
+    //取出用户数据列表
+    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
+    NSData *data = [NSData dataWithContentsOfFile:filename];
+    // 2.创建反归档对象
+    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    // 3.解码并存到数组中
+    NSArray *userList = [unArchiver decodeObjectForKey:UserInfoList];
+    
+    //读取相应的用户数据以及替换本地书记
+    UserInfo *user = userList[indexPath.row - 1];
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *userfileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+    [NSKeyedArchiver archiveRootObject:user toFile:userfileName];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+    
+    
+    [self switchUserInfoSuccess];
+    
 }
+
 
 
 - (void)WeixinQauth{

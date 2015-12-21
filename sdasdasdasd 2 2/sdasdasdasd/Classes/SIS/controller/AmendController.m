@@ -62,7 +62,7 @@
         
         SISBaseModel *model = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
         
-        dic[@"sisid"] = model.sisId;
+        dic[@"sisid"] = model.sisId;\
         
         dic = [NSDictionary asignWithMutableDictionary:dic];
         
