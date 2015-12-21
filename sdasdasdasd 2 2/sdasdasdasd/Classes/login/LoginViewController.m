@@ -44,7 +44,7 @@
     
     self.image.contentMode = UIViewContentModeScaleAspectFit;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess2:) name:@"ToGetUserInfo" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin1) name:@"ToGetUserInfoError" object:nil];
     
@@ -59,16 +59,18 @@
 
 
 
-- (void)OquthByWeiXinSuccess:(NSNotification *) note{
+- (void)OquthByWeiXinSuccess2:(NSNotification *) note{
     
-//    NSLog(@"-=------------%@",note);
-    AQuthModel * account = [AccountTool account];
-    if (account) {
-        [self toRefreshaccess_token];
-    }else{
+    NSLog(@"-=------------%@",note);
+//    AQuthModel * account = [AccountTool account];
+//    if (account.refresh_token.length) {
+//        [self toRefreshaccess_token];
+//    }else{
         [self accessTokenWithCode:note.userInfo[@"code"]];
-    }
+//    }
     [self ToGetShareMessage];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
 }
 
 /**
@@ -124,9 +126,12 @@
  *  @param note <#note description#>
  */
 - (void)UserLoginSuccess{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
+    
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideHUD];
+//        [MBProgressHUD hideHUD];
         
         AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         de.SwitchAccount = @"first";
@@ -145,7 +150,7 @@
 - (void)accessTokenWithCode:(NSString * )code
 {
     
-    [MBProgressHUD showMessage:nil];
+    
      __weak LoginViewController * wself = self;
     //进行授权
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
@@ -168,7 +173,7 @@
  */
 - (void)toRefreshaccess_token{
     
-    [MBProgressHUD showMessage:nil];
+    
     __weak LoginViewController * wself = self;
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
@@ -248,6 +253,7 @@
  *  @param user <#user description#>
  */
 - (void)toPostWeiXinUserMessage:(UserInfo *) user{
+//    [MBProgressHUD showMessage:nil];
     __weak LoginViewController * wself = self;
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"sex"] = [NSString stringWithFormat:@"%ld",(long)[user.sex integerValue]];
@@ -281,8 +287,11 @@
             [data writeToFile:filename atomically:YES];
             //登陆成功
             [wself UserLoginSuccess];
+            
+            
         }
     } failure:^(NSError *error) {
+//        [MBProgressHUD hideHUD];
          NSLog(@"%@ --- ",error.description);
     }];
    
@@ -308,7 +317,38 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
             //写入
             [data writeToFile:filename atomically:YES];
-            
+                
+                
+                /**
+                 *  用户数据存到数组
+                 */
+                NSMutableArray *userList = [NSMutableArray array];
+                NSArray *temp = json[@"data"];
+                for (NSDictionary *dic in temp) {
+                    UserInfo *user = [[UserInfo alloc] init];
+                    user.headimgurl = dic[@"wxHeadImg"];
+                    user.nickname = dic[@"wxNickName"];
+                    user.openid = dic[@"wxOpenId"];
+                    user.unionid = dic[@"wxUnionId"];
+                    user.relatedType = dic[@"relatedType"];
+                    [userList addObject:user];
+                    if (account.count == 1) {
+                        [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+                    }
+                }
+                NSMutableData *userData = [[NSMutableData alloc] init];
+                //创建归档辅助类
+                NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
+                [userArchiver encodeObject:userList forKey:UserInfoList];
+                [data writeToFile:filename atomically:YES];
+                [userArchiver finishEncoding];
+                
+                NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
+                //写入
+                [userData writeToFile:filename1 atomically:YES];
+                
+                
         }
     } failure:^(NSError *error) {
         NSLog(@"%@",error.description);
