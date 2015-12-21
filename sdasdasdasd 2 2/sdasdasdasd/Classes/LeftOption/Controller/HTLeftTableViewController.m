@@ -25,6 +25,7 @@
 #import <SVProgressHUD.h>
 #import "SISHomeViewController.h"
 #import "SISBaseModel.h"
+#import "AccountModel.h"
 #import "IponeVerifyViewController.h"
 
 @interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate,WXApiDelegate>
@@ -158,6 +159,7 @@
         NSLog(@"%@",error.description);
     }];
     
+    [self setHeadViewLabelsAndImage];
 }
 
 - (void) toDivLefrMenue{
@@ -294,6 +296,20 @@
 //    [self.view layoutIfNeeded];
 }
 
+- (void)setHeadViewLabelsAndImage {
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+    UserInfo * userInfor =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+    
+    NSString * headUrl =  [[NSUserDefaults standardUserDefaults] objectForKey:IconHeadImage];
+    [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+    
+    _topHeadView.firstLable.text = userInfor.nickname;
+    
+    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
+    _topHeadView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
+}
+
 - (void)accountLogin:(UIButton *) btn{
     
 //    NSLog(@"点击登陆");
@@ -356,7 +372,6 @@
     //绑定微信
     if ([models.menu_name isEqualToString:@"绑定微信"]) {
         if ([WXApi isWXAppInstalled]) {
-            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
             [self WeiXinLog];
         }else {
             [SVProgressHUD showErrorWithStatus:@"你没有安装微信"];
@@ -669,6 +684,7 @@
     
     [self accessTokenWithCode1:note.userInfo[@"code"]];
    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfoBuild" object:nil];
     
 }
 
@@ -733,20 +749,22 @@
         NSLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
-            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [self GetUserList1:userInfo.unionid];
             
-            userInfo.relatedType = json[@"data"][@"relatedType"];
-            
-            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+//            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+//            
+//            userInfo.relatedType = json[@"data"][@"relatedType"];
+//            
+//            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+//
+            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
             
             LeftGroupModel * model = self.groupArray[self.groupArray.count - 1];
             [model.models removeObject:self.phone];
             [self.tableView reloadData];
             
-            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+            
         }else {
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
         }
@@ -756,7 +774,93 @@
     
 }
 
+- (void)GetUserList1:(NSString *)unionid{
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"unionid"] = unionid;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/weixin/getuserlist"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        if ([json[@"code"] integerValue] == 200){
+            NSArray * account = [AccountModel objectArrayWithKeyValuesArray:json[@"data"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:account forKey:AccountList];
+            //结束编码
+            [archiver finishEncoding];
+            
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
+            //写入
+            [data writeToFile:filename atomically:YES];
+            
+            /**
+             *  用户数据存到数组
+             */
+            NSMutableArray *userList = [NSMutableArray array];
+            NSArray *temp = json[@"data"];
+            for (NSDictionary *dic in temp) {
+                UserInfo *user = [[UserInfo alloc] init];
+                user.headimgurl = dic[@"wxHeadImg"];
+                user.nickname = dic[@"wxNickName"];
+                user.openid = dic[@"wxOpenId"];
+                user.unionid = dic[@"wxUnionId"];
+                user.relatedType = dic[@"relatedType"];
+                [userList addObject:user];
+                if (account.count == 1) {
+                    //                    [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"levelName"] forKey:HuoBanMallMemberLevel];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"userid"] forKey:HuoBanMallUserId];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"wxHeadImg"] forKey:IconHeadImage];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"userType"] forKey:MallUserType];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"relatedType"] forKey:MallUserRelatedType];
+                    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+                    [NSKeyedArchiver archiveRootObject:user toFile:fileName];
+                }
+            }
+            if (account.count > 1) {
+                NSDictionary *dic = temp[1];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"levelName"] forKey:HuoBanMallMemberLevel];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"userid"] forKey:HuoBanMallUserId];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"wxHeadImg"] forKey:IconHeadImage];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"userType"] forKey:MallUserType];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"relatedType"] forKey:MallUserRelatedType];
+                UserInfo *user = [[UserInfo alloc] init];
+                user.headimgurl = dic[@"wxHeadImg"];
+                user.nickname = dic[@"wxNickName"];
+                user.openid = dic[@"wxOpenId"];
+                user.unionid = dic[@"wxUnionId"];
+                user.relatedType = dic[@"relatedType"];
+                NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+                [NSKeyedArchiver archiveRootObject:user toFile:fileName];
 
+            }
+            NSMutableData *userData = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
+            [userArchiver encodeObject:userList forKey:UserInfoList];
+            [data writeToFile:filename atomically:YES];
+            [userArchiver finishEncoding];
+            
+            NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
+            //写入
+            [userData writeToFile:filename1 atomically:YES];
+            
+            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+            
+            
+            [self setHeadViewLabelsAndImage];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+}
 
 
 

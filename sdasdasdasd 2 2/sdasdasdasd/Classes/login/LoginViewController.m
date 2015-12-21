@@ -62,12 +62,12 @@
 - (void)OquthByWeiXinSuccess2:(NSNotification *) note{
     
     NSLog(@"-=------------%@",note);
-    AQuthModel * account = [AccountTool account];
-    if (account.refresh_token.length) {
-        [self toRefreshaccess_token];
-    }else{
+//    AQuthModel * account = [AccountTool account];
+//    if (account.refresh_token.length) {
+//        [self toRefreshaccess_token];
+//    }else{
         [self accessTokenWithCode:note.userInfo[@"code"]];
-    }
+//    }
     [self ToGetShareMessage];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
@@ -127,6 +127,8 @@
  */
 - (void)UserLoginSuccess{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
+    
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [MBProgressHUD hideHUD];
@@ -266,7 +268,6 @@
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/weixin/LoginAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
-//        [MBProgressHUD hideHUD];
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
@@ -331,6 +332,9 @@
                     user.unionid = dic[@"wxUnionId"];
                     user.relatedType = dic[@"relatedType"];
                     [userList addObject:user];
+                    if (account.count == 1) {
+                        [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+                    }
                 }
                 NSMutableData *userData = [[NSMutableData alloc] init];
                 //创建归档辅助类

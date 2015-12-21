@@ -104,6 +104,7 @@
 
 
 - (NSArray *)LocalAccounts{
+    _LocalAccounts = nil;
     if (_LocalAccounts == nil) {
         NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
@@ -374,6 +375,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
+    
+    
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
@@ -610,7 +613,6 @@
     [self switchUserInfoSuccess];
     
 }
-
 
 
 

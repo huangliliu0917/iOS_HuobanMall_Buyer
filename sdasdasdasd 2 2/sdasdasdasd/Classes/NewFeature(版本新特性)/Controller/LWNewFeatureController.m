@@ -345,6 +345,10 @@
                 user.unionid = dic[@"wxUnionId"];
                 user.relatedType = dic[@"relatedType"];
                 [userList addObject:user];
+                
+                if (account.count == 1) {
+                    [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
+                }
             }
             NSMutableData *userData = [[NSMutableData alloc] init];
             //创建归档辅助类
