@@ -127,7 +127,7 @@
     [url appendString:@"/weixin/UpdateLeftInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(NSDictionary* json) {
         
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             _topHeadView.secondLable.text = json[@"data"][@"levelName"];
@@ -420,7 +420,7 @@
         
         [SVProgressHUD dismiss];
         
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
         if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
             SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -468,7 +468,7 @@
                 
                 [SVProgressHUD dismiss];
                 
-                NSLog(@"%@",json);
+//                NSLog(@"%@",json);
                 if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
                     SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
                     NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -663,7 +663,7 @@
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
     [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
         UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
         //向服务端提供微信数据
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -746,7 +746,7 @@
     [url appendString:@"/Account/bindWeixin"];
     
     [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
             [self GetUserList1:userInfo.unionid];

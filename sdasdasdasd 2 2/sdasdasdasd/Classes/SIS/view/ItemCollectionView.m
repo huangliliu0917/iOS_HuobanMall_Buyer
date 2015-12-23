@@ -64,7 +64,7 @@ static NSString *ID = @"btn";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectio{
 
-    NSLog(@"collectionView%lu",(unsigned long)self.items.count);
+//    NSLog(@"collectionView%lu",(unsigned long)self.items.count);
     return self.items.count;
 }
 

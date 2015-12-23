@@ -4,7 +4,7 @@
 //
 //  Created by lhb on 15/10/13.
 //  Copyright (c) 2015年 HT. All rights reserved.
-//  网页链接签名
+//  网页链接签名   SISJAVAAPPID
 
 #import "NSDictionary+HuoBanMallSign.h"
 #import "MD5Encryption.h"

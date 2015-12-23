@@ -81,7 +81,7 @@
     CGFloat itemW = SecrenWith * 0.156;
     CGFloat itemH = 42;
     _itemsScroll.contentSize = CGSizeMake(items.count * itemW+39 , 0);
-    NSLog(@"%lu",(unsigned long)items.count);
+//    NSLog(@"%lu",(unsigned long)items.count);
     for (int i = 0; i<items.count; i++) {
         NSString * itemtitle =  items[i];
         CGFloat itemX = itemW * i;
@@ -106,7 +106,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 
-    NSLog(@"%@",NSStringFromCGPoint(scrollView.contentOffset));
+//    NSLog(@"%@",NSStringFromCGPoint(scrollView.contentOffset));
     
     [UIView animateWithDuration:0.1 animations:^{
         self.allitem.hidden =  !(scrollView.contentOffset.x > SecrenWith * 0.156);
