@@ -72,17 +72,17 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"be89777c387c"
+#define HuoBanMallShareSdkAppId @"d58c3c003afc"
 //sina
-#define HuoBanMallShareSdkSinaKey @"1862469055"
-#define HuoBanMallShareSdkSinaSecret @"07ebe0f450679806a23c1bcc7627f4dc"
+#define HuoBanMallShareSdkSinaKey @"1055668791"
+#define HuoBanMallShareSdkSinaSecret @"c95987ea61d6919b7868296303e4dcbe"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
+#define HuoBanMallBuyWeiXinAppId @"wx3ffb8909086d8e26"
 #define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
 //qq
-#define HuoBanMallShareSdkQQKey @"1104945838"
-#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
+#define HuoBanMallShareSdkQQKey @"1105021260"
+#define HuoBanMallShareSdkQQSecret @"TmqHXkheCH6R5pNz"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
