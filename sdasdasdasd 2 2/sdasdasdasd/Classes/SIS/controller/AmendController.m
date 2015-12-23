@@ -74,7 +74,7 @@
         [UserLoginTool loginRequestGet:url parame:dic success:^(id json) {
             
             
-            NSLog(@"%@", json);
+//            NSLog(@"%@", json);
             
             [SVProgressHUD dismiss];
             

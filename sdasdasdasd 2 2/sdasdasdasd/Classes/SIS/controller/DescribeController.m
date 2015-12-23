@@ -74,7 +74,7 @@
         
         [UserLoginTool loginRequestGet:url parame:dic success:^(id json) {
             
-            NSLog(@"%@",json);
+//            NSLog(@"%@",json);
             
             [SVProgressHUD dismiss];
             
@@ -84,7 +84,7 @@
                 NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
                 NSString *fileName = [path stringByAppendingPathComponent:SISUserInfo];
                 [NSKeyedArchiver archiveRootObject:model toFile:fileName];
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"sisUserInfoReload" object:nil];
             }
             
             

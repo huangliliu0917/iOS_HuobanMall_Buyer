@@ -147,7 +147,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
@@ -184,7 +184,7 @@
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
-            NSLog(@"----%@",code);
+//            NSLog(@"----%@",code);
             //授权成功的code
             NSDictionary * dict = @{@"code":code};
             NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];

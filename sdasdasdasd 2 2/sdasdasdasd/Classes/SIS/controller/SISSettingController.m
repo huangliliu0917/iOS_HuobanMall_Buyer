@@ -27,6 +27,8 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_initLogoAndName) name:@"sisUserInfoReload" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,6 +42,7 @@
     
     [self _initLogoAndName];
 }
+
 
 - (void)_initLogoAndName {
     
@@ -119,7 +122,7 @@
             [self.navigationController pushViewController:amend animated:YES];
         }else if (indexPath.row == 1) {
             DescribeController *descri = [story instantiateViewControllerWithIdentifier:@"DescribeController"];
-            descri.string = self.model.sisDescription;
+            descri.string = self.model.shareDescription;
             descri.title = @"分享内容";
             [self.navigationController pushViewController:descri animated:YES];
         }
