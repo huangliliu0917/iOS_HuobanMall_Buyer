@@ -274,7 +274,7 @@ static NSString *homeCellIdentify = @"homeCellIdentify";
     NSArray* imageArray = @[self.model.imgUrl];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:nil
+        [shareParams SSDKSetupShareParamsByText:self.model.shareDescription
                                          images:imageArray
                                             url:[NSURL URLWithString:self.model.indexUrl]
                                           title:self.model.shareTitle
