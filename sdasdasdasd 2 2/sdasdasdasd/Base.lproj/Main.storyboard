@@ -377,7 +377,6 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18S-Rz-Mrf">
                                 <rect key="frame" x="64" y="406" width="192" height="44"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="rIG-Av-grK"/>
                                 </constraints>
