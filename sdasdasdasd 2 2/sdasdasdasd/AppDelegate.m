@@ -73,6 +73,8 @@
     [_window.layer addSublayer:_maskLayer];
     self.maskLayer.hidden = YES;
     
+    [self resetUserAgent];
+    
     return YES;
 }
 
@@ -255,6 +257,27 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
+    
+}
+
+
+- (void) resetUserAgent {
+    
+    
+    // Do any additional setup after loading the view, typically from a nib.
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString *Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    
+    
+    //add my info to the new agent
+    NSString *newAgent = nil;
+    
+    newAgent = [Agent stringByAppendingString:@";mobile"];
+    
+    //regist the new agent
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
     
 }
 
