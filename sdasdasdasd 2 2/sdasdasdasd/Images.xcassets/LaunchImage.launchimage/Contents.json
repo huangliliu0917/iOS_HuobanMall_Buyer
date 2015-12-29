@@ -22,7 +22,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "667h",
-      "filename" : "login_bg_375x667@2x.png",
+      "filename" : "启动图750x1334.png",
       "minimum-system-version" : "8.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -30,7 +30,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "login_bg_320x480@2x-1.png",
+      "filename" : "启动图640x960-1.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -39,7 +39,7 @@
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "retina4",
-      "filename" : "login_bg_320x568@2x-1.png",
+      "filename" : "启动图640x1136.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -75,21 +75,21 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "login_bg_320x480.png",
+      "filename" : "启动图320x480.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "login_bg_320x480@2x.png",
+      "filename" : "启动图640x960.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "login_bg_320x568@2x-2.png",
+      "filename" : "启动图750x1334-2.png",
       "extent" : "full-screen",
       "subtype" : "retina4",
       "scale" : "2x"
