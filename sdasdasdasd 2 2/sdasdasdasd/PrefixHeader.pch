@@ -51,7 +51,7 @@
 
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000]
+#define HuoBanMallBuyNavColor [UIColor colorWithRed:0.922 green:0.353 blue:0.157 alpha:1.000]
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
