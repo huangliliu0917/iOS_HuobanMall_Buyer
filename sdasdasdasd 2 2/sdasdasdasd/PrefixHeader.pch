@@ -30,11 +30,11 @@
 
 //java
 // 店中店
-#define SISMainUrl @"http://api.open.acclife.cn:8081/sis"
+#define SISMainUrl @"http://api.open.acclife.cn:8081/sis/"
 
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
-#define MainUrlMK @"api.open.acclife.cn:8081/sis"
+#define MainUrlMK @"api.open.acclife.cn:8081/sis/"
 //接口地址 .net
 #define AppOriginUrl @"http://mallapi.acclife.cn" // @"http://mallapi.huobanj.cn"//
 #define HuoBanMallBuyAppId @"app"  //  @"huotuacf89c9231848c9f49" //
