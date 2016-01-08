@@ -42,7 +42,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
+    
     [self setupInit];
+    [self myAppToInit];
     //微信支付
     [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:@"行装"];
     
@@ -51,7 +53,7 @@
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
         //初始化接口
-        [self myAppToInit];
+        
         RootViewController * root = [[RootViewController alloc] init];
         self.window.rootViewController = root;
         [self.window makeKeyAndVisible];

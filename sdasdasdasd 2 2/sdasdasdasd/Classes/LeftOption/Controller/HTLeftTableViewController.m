@@ -202,12 +202,14 @@
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
 
     if ([str intValue] == 0) {
-        _wx = [[LeftMenuModel alloc] init];
-        _wx.menu_icon = @"home_menu_wx";
-        _wx.menu_name = @"绑定微信";
-        _wx.menu_group = self.groupArray.count ;
-        [groupModel.models addObject:_wx];
-    }else if ([str intValue] == 1){
+        if ([WXApi isWXAppInstalled]) {
+            _wx = [[LeftMenuModel alloc] init];
+            _wx.menu_icon = @"home_menu_wx";
+            _wx.menu_name = @"绑定微信";
+            _wx.menu_group = self.groupArray.count ;
+            [groupModel.models addObject:_wx];
+        }
+    }else if ([str intValue] == 1 || [str intValue] == 3){
         _phone = [[LeftMenuModel alloc] init];
         _phone.menu_icon = @"home_menu_sjbd";
         _phone.menu_name = @"绑定手机";
@@ -374,7 +376,7 @@
         if ([WXApi isWXAppInstalled]) {
             [self WeiXinLog];
         }else {
-            [SVProgressHUD showErrorWithStatus:@"你没有安装微信"];
+            [SVProgressHUD showErrorWithStatus:@"绑定失败"];
         }
     }else if ([models.menu_name isEqualToString:@"绑定手机"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];

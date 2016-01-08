@@ -41,7 +41,7 @@
 //接口地址 .net
 #define AppOriginUrl  @"http://mallapi.huobanj.cn"// @"http://mallapi.huobanmall.com"//
 #define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
+#define HuoBanMallBuyAppSecrect @"483686ad1fe　2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
 
 #elif
 //接口地址 .net
@@ -78,6 +78,9 @@
 #define SecrenWith [UIScreen mainScreen].bounds.size.width
 /**屏幕高度*/
 #define SecrenHeight [UIScreen mainScreen].bounds.size.height
+/**设备唯一号*/
+#define  DeviceNo ([[UIDevice currentDevice].identifierForVendor UUIDString])
+
 
 //伙伴商城商户信息
 
