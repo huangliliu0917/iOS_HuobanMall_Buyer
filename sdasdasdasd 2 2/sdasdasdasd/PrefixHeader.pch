@@ -41,7 +41,6 @@
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe" //@"0ad8abe244331aacf89c9231848c9f49" //
 
 
-
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
 /****************************************************/
 #define WeiXinHuoBanMallBuyerAppId @""
@@ -67,7 +66,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
 
 
 //友盟数据统计

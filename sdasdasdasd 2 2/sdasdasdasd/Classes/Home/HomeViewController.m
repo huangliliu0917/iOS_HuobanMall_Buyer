@@ -337,7 +337,7 @@
 //    self.homeWebView.scrollView.bounces = NO;
     [self.homeWebView loadRequest:req];
     
-    NSLog(@"dddurl: %@",urlStr);
+//    NSLog(@"dddurl: %@",urlStr);
     
     
     
@@ -404,7 +404,7 @@
             [wself ToGetDownDateWithDateSource:json[@"data"][@"downloadUrl"] andverson:json[@"version"]];
         }
     } failure:^(NSError *error) {
-         NSLog(@"%@",error.description);
+//         NSLog(@"%@",error.description);
     }];
     
 }
