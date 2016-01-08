@@ -337,6 +337,8 @@
 //    self.homeWebView.scrollView.bounces = NO;
     [self.homeWebView loadRequest:req];
     
+    NSLog(@"dddurl: %@",urlStr);
+    
     
     
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
@@ -375,7 +377,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
-    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"getmsiteurlSuccess" object:nil];
     
     [UIViewController MonitorNetWork];
     

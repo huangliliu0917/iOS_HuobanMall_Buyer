@@ -101,7 +101,7 @@
         if ([WXApi isWXAppInstalled]) {
             [self WeiXinLog];
         }else {
-            [SVProgressHUD showErrorWithStatus:@"你没有安装微信，请使用手机登录"];
+
             [self WeiXinFailureToUserOrigin1];
         }
     }
@@ -390,7 +390,7 @@
     UINavigationController *nav =[[UINavigationController alloc] initWithRootViewController:iphone];
     [self presentViewController:nav animated:YES completion:nil];
     
-    NSLog(@"xxxx没有危险客户端");
+  
     
 }
 
