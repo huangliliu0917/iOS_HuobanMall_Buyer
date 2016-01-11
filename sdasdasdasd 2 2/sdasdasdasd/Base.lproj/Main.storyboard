@@ -1043,6 +1043,7 @@
         <image name="ewm_d" width="40" height="40"/>
         <image name="mr_d" width="40" height="40"/>
         <image name="newfeature_02_414x736" width="414" height="736"/>
+        <image name="weixin" width="50" height="60"/>
         <image name="weixing" width="40" height="40"/>
         <image name="youke" width="50" height="60"/>
     </resources>
