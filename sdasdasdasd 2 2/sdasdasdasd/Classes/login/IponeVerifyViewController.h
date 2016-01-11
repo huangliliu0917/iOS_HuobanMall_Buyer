@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *weixinLogin;
 
+@property (weak, nonatomic) IBOutlet UIButton *visiLogin;
 
 @end

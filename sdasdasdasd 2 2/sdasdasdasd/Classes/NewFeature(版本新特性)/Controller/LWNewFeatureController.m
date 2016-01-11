@@ -97,7 +97,7 @@
     IponeVerifyViewController * iphone = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:iphone];
     [self presentViewController:nav animated:YES completion:nil];
-    NSLog(@"xxxx没有危险客户端");
+   
     
 }
 
@@ -500,7 +500,7 @@
     [startButton addTarget:self action:@selector(startButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     //设置文字
-    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
+//    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
     [startButton setTitle:@"微信授权登录" forState:UIControlStateNormal];
     [startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -521,7 +521,6 @@
         if ([WXApi isWXAppInstalled]) {
             [self WeiXinLog];
         }else {
-            [SVProgressHUD showErrorWithStatus:@"你没有安装微信,请使用手机登录"];
             [self WeiXinFailureToUserOrigin];
         }
 

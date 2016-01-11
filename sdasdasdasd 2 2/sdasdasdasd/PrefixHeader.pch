@@ -61,6 +61,9 @@
 #define SecrenWith [UIScreen mainScreen].bounds.size.width
 /**屏幕高度*/
 #define SecrenHeight [UIScreen mainScreen].bounds.size.height
+/**设备唯一号*/
+#define  DeviceNo ([[UIDevice currentDevice].identifierForVendor UUIDString])
+
 
 //伙伴商城商户信息
 
