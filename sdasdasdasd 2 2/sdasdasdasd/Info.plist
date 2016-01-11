@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>HuoBanMallYingyan2015</string>
+				<string>com.olquanapp.ttds.ios</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,9 +33,9 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxf0b37b263cfe4d44</string>
-				<string>wb1862469055</string>
-				<string>wb1862469055</string>
+				<string>wx16a5589cff4c76d5</string>
+				<string>wb1000919385</string>
+				<string>wb1000919385</string>
 				<string>QQ41DC22AE</string>
 				<string>tencent1104945838</string>
 			</array>
