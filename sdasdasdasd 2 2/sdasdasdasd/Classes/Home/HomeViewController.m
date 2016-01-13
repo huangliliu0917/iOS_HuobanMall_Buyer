@@ -867,12 +867,24 @@
             if (ran.location != NSNotFound) {
                 NSRange cc = NSMakeRange(ran.location+ran.length, 1);
                 newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:dddd];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                return NO;
+            }else {
+//                newUrl = url;
+//                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:url];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                return NO;
             }
-            NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
-            NSURL * urlStr = [NSURL URLWithString:dddd];
-            NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-            [self.homeWebView loadRequest:req];
-            return NO;
+//            NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+//            NSURL * urlStr = [NSURL URLWithString:dddd];
+//            NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//            [self.homeWebView loadRequest:req];
+//            return NO;
         }
     }
     return YES;

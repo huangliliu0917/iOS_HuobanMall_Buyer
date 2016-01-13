@@ -39,7 +39,7 @@
 
 
 //接口地址 .net
-#define AppOriginUrl  @"http://m.olquan.cn"
+#define AppOriginUrl  @"http://mallapi.olquan.cn/"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
@@ -56,7 +56,7 @@
 
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000]
+#define HuoBanMallBuyNavColor [UIColor colorWithRed:1.000 green:0.435 blue:0.655 alpha:1.000]
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
