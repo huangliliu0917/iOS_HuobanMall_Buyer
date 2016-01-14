@@ -200,6 +200,8 @@
         NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
         [url appendString:@"/Account/loginAuthorize"];
         
+        [SVProgressHUD showWithStatus:@"登录中"];
+        
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
             NSLog(@"%@",json);
             if ([json[@"code"] intValue] == 200) {
@@ -389,6 +391,8 @@
  */
 - (void)UserLoginSuccess{
     
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
@@ -398,6 +402,7 @@
         de.SwitchAccount = @"first";
         RootViewController * root = [[RootViewController alloc] init];
         [UIApplication sharedApplication].keyWindow.rootViewController = root;
+        [SVProgressHUD dismiss];
     });
 }
 
@@ -665,6 +670,8 @@
 }
 
 - (void)OquthByWeiXinSuccess:(NSNotification *) note{
+    
+    [SVProgressHUD showWithStatus:@"登录中"];
     
     AQuthModel * account = [AccountTool account];
     if (account.refresh_token.length) {
