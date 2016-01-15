@@ -18,7 +18,7 @@
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"行装商城"
+#define MallName @"OL圈"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
