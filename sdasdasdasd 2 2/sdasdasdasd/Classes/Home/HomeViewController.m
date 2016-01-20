@@ -812,22 +812,36 @@
 
             
         }else{
-            NSRange range = [url rangeOfString:@"__newframe"];
-            if (range.location != NSNotFound) {
-                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
-                funWeb.funUrl = url;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                return NO;
+            if (request.URL.host) {
+                NSRange range = [url rangeOfString:@"__newframe"];
+                if (range.location != NSNotFound) {
+                    UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+                    funWeb.funUrl = url;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    return NO;
+                }else{
+                    
+                    NSRange range = [url rangeOfString:@"back"];
+                    if (range.location != NSNotFound) {
+                        self.showBackArrows = YES;
+                    }else{
+                        self.showBackArrows = NO;
+                    }
+                    return YES;
+                }
+                
             }else{
                 
-                NSRange range = [url rangeOfString:@"back"];
-                if (range.location != NSNotFound) {
-                    self.showBackArrows = YES;
-                }else{
-                    self.showBackArrows = NO;
-                }
-                return YES;
+                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+                NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                self.homeWebView.scalesPageToFit = YES;
+                self.homeWebView.tag = 100;
+                self.homeWebView.delegate = self;
+                //    self.homeWebView.scrollView.bounces = NO;
+                [self.homeWebView loadRequest:req];
             }
             
         }
