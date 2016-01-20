@@ -288,40 +288,6 @@
     }
 }
 
--(void)xxxxx {
-        //    //构造分享内容
-        //    id<ISSContent> publishContent = [ShareSDK content:mallmess.mall_description
-        //                                       defaultContent:mallmess.mall_description
-        //                                                image:[ShareSDK imageWithUrl:url]
-        //                                                title:mallmess.mall_name
-        //                                                  url:[self toCutew:urs]      //mallmess.mall_site
-        //                                          description:mallmess.mall_description
-        //                                            mediaType:SSPublishContentMediaTypeNews];
-        //    [publishContent addSinaWeiboUnitWithContent:mallmess.mall_description image:[ShareSDK imageWithUrl:mallmess.mall_logo] locationCoordinate:nil];
-        //    //创建弹出菜单容器
-        //    id<ISSContainer> container = [ShareSDK container];
-        //
-        //    //弹出分享菜单
-        //    [ShareSDK showShareActionSheet:container
-        //                         shareList:nil
-        //                           content:publishContent
-        //                     statusBarTips:YES
-        //                       authOptions:nil
-        //                      shareOptions:nil
-        //                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        //
-        //                                if (state == SSResponseStateSuccess)
-        //                                {
-        //                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        //                                    [alert show];
-        //
-        //                                }
-        //                                else if (state == SSResponseStateFail)
-        //                                {
-        //                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-        //                                }
-        //                            }];
-}
 - (void)viewDidLoad{
     [super viewDidLoad];
     
@@ -812,24 +778,38 @@
 
             
         }else{
-            NSRange range = [url rangeOfString:@"__newframe"];
-            if (range.location != NSNotFound) {
-                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
-                funWeb.funUrl = url;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                return NO;
+            
+            if (request.URL.host) {
+                NSRange range = [url rangeOfString:@"__newframe"];
+                if (range.location != NSNotFound) {
+                    UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+                    funWeb.funUrl = url;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    return NO;
+                }else{
+                    
+                    NSRange range = [url rangeOfString:@"back"];
+                    if (range.location != NSNotFound) {
+                        self.showBackArrows = YES;
+                    }else{
+                        self.showBackArrows = NO;
+                    }
+                    return YES;
+                }
+                
             }else{
                 
-                NSRange range = [url rangeOfString:@"back"];
-                if (range.location != NSNotFound) {
-                    self.showBackArrows = YES;
-                }else{
-                    self.showBackArrows = NO;
-                }
-                return YES;
+                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+                NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                self.homeWebView.scalesPageToFit = YES;
+                self.homeWebView.tag = 100;
+                self.homeWebView.delegate = self;
+                //    self.homeWebView.scrollView.bounces = NO;
+                [self.homeWebView loadRequest:req];
             }
-            
         }
         
         
