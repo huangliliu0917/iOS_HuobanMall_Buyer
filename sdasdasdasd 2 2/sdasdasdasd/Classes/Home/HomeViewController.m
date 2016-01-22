@@ -704,6 +704,9 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     NSString *url = request.URL.absoluteString;
+    if ([url isEqualToString:@"about:blank"]) {
+        return NO;
+    }
     if (webView.tag == 100) {
         
         if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
