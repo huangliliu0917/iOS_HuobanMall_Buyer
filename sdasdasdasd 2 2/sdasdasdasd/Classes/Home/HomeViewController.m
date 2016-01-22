@@ -702,8 +702,8 @@
 
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSString *url = request.URL.absoluteString;
     
+    NSString *url = request.URL.absoluteString;
     if (webView.tag == 100) {
         
         if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
@@ -779,7 +779,6 @@
             
         }else{
             
-            if (request.URL.host) {
                 NSRange range = [url rangeOfString:@"__newframe"];
                 if (range.location != NSNotFound) {
                     UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -798,18 +797,7 @@
                     return YES;
                 }
                 
-            }else{
-                
-                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-                NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
-                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-                self.homeWebView.scalesPageToFit = YES;
-                self.homeWebView.tag = 100;
-                self.homeWebView.delegate = self;
-                //    self.homeWebView.scrollView.bounces = NO;
-                [self.homeWebView loadRequest:req];
-            }
+           
         }
         
         
