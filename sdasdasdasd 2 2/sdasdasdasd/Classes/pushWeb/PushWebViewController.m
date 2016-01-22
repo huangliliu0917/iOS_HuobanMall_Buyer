@@ -366,6 +366,10 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     NSString *url = request.URL.absoluteString;
+    
+    if ([url isEqualToString:@"about:blank"]) {
+        return NO;
+    }
 //    NSLog(@"%@",url);
     if ([url rangeOfString:@"/UserCenter/Login.aspx"].location != NSNotFound) {
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
