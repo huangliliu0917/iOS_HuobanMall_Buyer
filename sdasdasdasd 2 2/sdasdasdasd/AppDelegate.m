@@ -153,6 +153,7 @@
         
 //        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
             NSMutableData *data = [[NSMutableData alloc] init];
