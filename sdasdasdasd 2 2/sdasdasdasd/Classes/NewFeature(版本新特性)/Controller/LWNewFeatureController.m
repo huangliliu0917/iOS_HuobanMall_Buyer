@@ -518,8 +518,8 @@
  */
 -(void)startButtonClick
 {
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
-    if ([str isEqualToString:@"1"]) {
+    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+    if ([[str stringValue] isEqualToString:@"1"]) {
         [self WeiXinFailureToUserOrigin];
     }else {
         
