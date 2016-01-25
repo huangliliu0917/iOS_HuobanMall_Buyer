@@ -108,7 +108,8 @@
 //左侧显示通知
 #define meauNotifation @"meauViewControllerShow"
 
-#define  AppMainUrl @"AppMainUrl"  //app域名
+#define TestMode @"testMode" //测试模式
+#define AppMainUrl @"AppMainUrl"  //app域名
 #define PayTypeflat @"paytype" //支付数据存档
 #define HuoBanMaLLMess @"HuoBanMaLLMess" //商城信息
 #define AccountList @"AccountList" //用户账户列表
