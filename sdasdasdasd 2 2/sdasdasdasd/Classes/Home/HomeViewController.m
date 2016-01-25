@@ -737,9 +737,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString *url = request.URL.absoluteString;
-    if ([url isEqualToString:@"about:blank"]) {
-        return NO;
-    }
     
     if ([url isEqualToString:@"about:blank"]) {
         return NO;
