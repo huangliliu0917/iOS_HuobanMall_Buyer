@@ -760,6 +760,12 @@
     
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    [self.iphoneTextField resignFirstResponder];
+    
+    [self.VerifyCode resignFirstResponder];
+}
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
