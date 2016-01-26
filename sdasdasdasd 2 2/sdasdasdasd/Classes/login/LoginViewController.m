@@ -97,14 +97,22 @@
 
 
 - (IBAction)loginBtnClick:(id)sender {
-    if ([AccountTool verifyAccess_Token_Effect]) {
-        [self toRefreshaccess_token]; //刷新access_token
-    }else{
-        if ([WXApi isWXAppInstalled]) {
-            [self WeiXinLog];
-        }else {
-
-            [self WeiXinFailureToUserOrigin1];
+    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+    if ([[str stringValue] isEqualToString:@"1"]) {
+        [self WeiXinFailureToUserOrigin1];
+    }else {
+        
+        
+        if ([AccountTool verifyAccess_Token_Effect]) {
+            [self toRefreshaccess_token]; //刷新access_token
+        }else{
+            
+            if ([WXApi isWXAppInstalled]) {
+                [self WeiXinLog];
+            }else {
+                [self WeiXinFailureToUserOrigin1];
+            }
+            
         }
     }
 }
