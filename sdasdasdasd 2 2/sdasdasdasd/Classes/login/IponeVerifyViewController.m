@@ -107,6 +107,13 @@
 
     }];
     
+    if ([WXApi isWXAppInstalled]) {
+        self.weixinLogin.hidden = NO;
+    }else {
+        self.weixinLogin.hidden = YES;
+    }
+    
+    
     [self.weixinLogin bk_whenTapped:^{
         
         if ([WXApi isWXAppInstalled]) {
