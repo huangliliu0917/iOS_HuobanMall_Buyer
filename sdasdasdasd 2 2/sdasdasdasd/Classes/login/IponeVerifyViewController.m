@@ -109,8 +109,10 @@
     
     if ([WXApi isWXAppInstalled]) {
         self.weixinLogin.hidden = NO;
+        self.visiCenter.constant = -60;
     }else {
         self.weixinLogin.hidden = YES;
+        self.visiCenter.constant = 0;
     }
     
     
