@@ -55,7 +55,6 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
 }
 

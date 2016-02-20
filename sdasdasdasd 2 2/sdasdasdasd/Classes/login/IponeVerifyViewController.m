@@ -715,6 +715,7 @@
     
     __weak IponeVerifyViewController * wself = self;
     
+    [SVProgressHUD showWithStatus:@"登录中,请稍后"];
     
     NSString *str = [MD5Encryption md5by32:DeviceNo];
     
@@ -726,7 +727,8 @@
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/Account/guestAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
+        [SVProgressHUD dismiss];
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"authorizeCode"];
@@ -770,6 +772,7 @@
             [wself UserLoginSuccess];
         }
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"%@ --- ",error.description);
     }];
     
