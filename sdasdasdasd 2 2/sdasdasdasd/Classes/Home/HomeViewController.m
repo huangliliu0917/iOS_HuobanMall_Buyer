@@ -39,8 +39,10 @@
 #import "SISBaseModel.h"
 #import "SISHomeViewController.h"
 #import "UserInfo.h"
+#import <NJKWebViewProgress.h>
+#import <NJKWebViewProgressView.h>
 
-@interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
+@interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *homeWebView;
 
@@ -85,6 +87,10 @@
 @property(nonatomic,strong) NSString * ServerPayUrl;
 
 @property(nonatomic,strong) PayModel * paymodel;
+
+@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
+@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
+
 
 @end
 
@@ -293,13 +299,27 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    _webViewProgress = [[NJKWebViewProgress alloc] init];
+    _webViewProgress.webViewProxyDelegate = self;
+    _webViewProgress.progressDelegate = self;
+    
+    CGRect navBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0,
+                                 navBounds.size.height - 2,
+                                 navBounds.size.width,
+                                 2);
+    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [_webViewProgressView setProgress:0 animated:YES];
+    [self.navigationController.navigationBar addSubview:_webViewProgressView];
+    
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
     NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     self.homeWebView.scalesPageToFit = YES;
     self.homeWebView.tag = 100;
-    self.homeWebView.delegate = self;
+    self.homeWebView.delegate = _webViewProgress;
 //    self.homeWebView.scrollView.bounces = NO;
     [self.homeWebView loadRequest:req];
     
@@ -1086,6 +1106,13 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+}
+
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_webViewProgressView setProgress:progress animated:YES];
 }
 
 @end
