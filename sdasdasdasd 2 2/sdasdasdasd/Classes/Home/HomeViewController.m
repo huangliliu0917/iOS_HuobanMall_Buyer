@@ -1059,7 +1059,7 @@
         params[@"nonce_str"] = noncestr; //随机字符串，不长于32位。推荐随机数生成算法
         params[@"trade_type"] = @"APP";   //取值如下：JSAPI，NATIVE，APP，WAP,详细说明见参数规定
         params[@"body"] = MallName; //商品或支付单简要描述
-        NSMutableString * urls = [NSMutableString stringWithString:MainUrl];
+        NSMutableString * urls = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
         [urls appendString:paymodel.notify];
         params[@"notify_url"] = urls;  //接收微信支付异步通知回调地址
         
