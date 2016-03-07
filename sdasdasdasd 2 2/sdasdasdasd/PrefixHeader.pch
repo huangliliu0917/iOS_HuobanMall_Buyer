@@ -13,12 +13,12 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #define LWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
-#define LWNewFeatureImageCount 4
+#define LWNewFeatureImageCount 1
 
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"行装商城"
+#define MallName @"果真好"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -37,19 +37,19 @@
 #define MainUrlMK @"test.api.open.huobanplus.com:8081/sis/"
 
 
-#ifndef Test  //
-//接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanj.cn"// @"http://mallapi.huobanmall.com"//
-#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe　2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
-
-#elif
-//接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanj.cn"// @"http://mallapi.huobanmall.com"//
-#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
-
-#endif
+//#ifndef Test  //
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.huobanj.cn"// @"http://mallapi.huobanmall.com"//
+//#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
+//#define HuoBanMallBuyAppSecrect @"483686ad1fe　2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
+//
+//#elif
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.huobanj.cn"// @"http://mallapi.huobanmall.com"//
+//#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
+//#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
+//
+//#endif
 
 
 //接口地址 .net
@@ -84,7 +84,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"6987" //0504
 
 
 //友盟数据统计
