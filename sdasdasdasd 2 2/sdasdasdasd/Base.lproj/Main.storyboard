@@ -1030,7 +1030,7 @@
                         <outlet property="VerifyLable" destination="nDF-Nk-ekg" id="xAf-SJ-30K"/>
                         <outlet property="iphoneTextField" destination="BvI-Hi-sPK" id="F0V-Wu-dNH"/>
                         <outlet property="login" destination="OcG-7E-32k" id="1ar-Ql-fvR"/>
-                        <outlet property="visiCenter" destination="JrF-6d-LPx" id="IQJ-dw-q6O"/>
+                        <outlet property="visiCenter" destination="JrF-6d-LPx" id="PpD-eA-yiC"/>
                         <outlet property="visiLogin" destination="qnl-pI-ErM" id="CEO-wv-ky1"/>
                         <outlet property="weixinLogin" destination="Yyj-ns-HSS" id="wBv-h9-c66"/>
                     </connections>

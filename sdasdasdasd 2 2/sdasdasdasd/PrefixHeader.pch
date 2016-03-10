@@ -30,7 +30,7 @@
 
 //java
 // 店中店
-#define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+#define SISMainUrl @"http://api.open.huobanplus.com/sis/"
 
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
@@ -126,7 +126,7 @@
 #define meauNotifation @"meauViewControllerShow"
 
 #define TestMode @"testMode" //测试模式
-#define  AppMainUrl @"AppMainUrl"  //app域名
+#define AppMainUrl @"AppMainUrl"  //app域名
 #define PayTypeflat @"paytype" //支付数据存档
 #define HuoBanMaLLMess @"HuoBanMaLLMess" //商城信息
 #define AccountList @"AccountList" //用户账户列表

@@ -513,18 +513,25 @@
  */
 -(void)startButtonClick
 {
-    if ([AccountTool verifyAccess_Token_Effect]) {
-        [self toRefreshaccess_token]; //刷新access_token
-    }else{
+    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+    if ([[str stringValue] isEqualToString:@"1"]) {
+        [self WeiXinFailureToUserOrigin];
+    }else {
         
-        if ([WXApi isWXAppInstalled]) {
-            [self WeiXinLog];
-        }else {
-            [self WeiXinFailureToUserOrigin];
+        
+        if ([AccountTool verifyAccess_Token_Effect]) {
+            [self toRefreshaccess_token]; //刷新access_token
+        }else{
+            
+            if ([WXApi isWXAppInstalled]) {
+                [self WeiXinLog];
+            }else {
+                [self WeiXinFailureToUserOrigin];
+            }
+            
         }
-
     }
-    
+
 }
 
 
