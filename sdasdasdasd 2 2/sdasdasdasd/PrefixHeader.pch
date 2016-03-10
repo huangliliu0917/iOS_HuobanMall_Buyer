@@ -52,13 +52,6 @@
 //#endif
 
 
-//接口地址 .net
-#define AppOriginUrl  @"http://gzh2016.huobanmall.com/"// @"http://mallapi.huobanmall.com"//
-#define HuoBanMallBuyAppId @"app"  // @"apphuotu686ad1fe2bd8a02bb"  //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
-
-
-
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
 /****************************************************/
 #define WeiXinHuoBanMallBuyerAppId @""
