@@ -21,8 +21,10 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import <MJRefresh.h>
+#import <NJKWebViewProgress.h>
+#import <NJKWebViewProgressView.h>
 
-@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate>
+@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 /***/
@@ -41,6 +43,9 @@
 
 /**支付的url*/
 @property(nonatomic,strong) NSString * ServerPayUrl;
+
+@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
+@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
 @end
 
@@ -87,14 +92,28 @@
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
 
+    _webViewProgress = [[NJKWebViewProgress alloc] init];
+    _webViewProgress.webViewProxyDelegate = self;
+    _webViewProgress.progressDelegate = self;
+    
+    CGRect navBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0,
+                                 navBounds.size.height - 2,
+                                 navBounds.size.width,
+                                 2);
+    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [_webViewProgressView setProgress:0 animated:YES];
+    [self.navigationController.navigationBar addSubview:_webViewProgressView];
+    
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     self.webView.scalesPageToFit = YES;
-    self.webView.delegate = self;
+    self.webView.delegate = _webViewProgress;
     self.webView.tag = 20;
     //    self.homeBottonWebView.hidden = YES;
-//    self.webView.scrollView.bounces = NO;
-//    self.webView.scrollView.scrollEnabled = NO;
+    //    self.webView.scrollView.bounces = NO;
+    //    self.webView.scrollView.scrollEnabled = NO;
     [self.webView loadRequest:req];
     
     //加载刷新控件
