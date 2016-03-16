@@ -39,6 +39,8 @@
 #import "SISBaseModel.h"
 #import "SISHomeViewController.h"
 #import "UserInfo.h"
+#import <NJKWebViewProgress.h>
+#import <NJKWebViewProgressView.h>
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
@@ -85,6 +87,9 @@
 @property(nonatomic,strong) NSString * ServerPayUrl;
 
 @property(nonatomic,strong) PayModel * paymodel;
+
+@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
+@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
 @end
 
