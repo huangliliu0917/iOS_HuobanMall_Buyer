@@ -492,7 +492,7 @@
 //    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;
     startButton.layer.masksToBounds =YES;
-    startButton.backgroundColor = HuoBanMallBuyNavColor;
+//    startButton.backgroundColor = HuoBanMallBuyNavColor;
     startButton.layer.borderColor = [UIColor blackColor].CGColor;
     [startButton becomeFirstResponder];
     startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/4,44}};

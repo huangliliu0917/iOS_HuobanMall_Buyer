@@ -372,7 +372,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LoginViewController" image="newfeature_04_414x736" translatesAutoresizingMaskIntoConstraints="NO" id="FaB-1m-uiT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LoginViewController" image="newfeature_01_414x736" translatesAutoresizingMaskIntoConstraints="NO" id="FaB-1m-uiT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18S-Rz-Mrf">
@@ -1043,7 +1043,7 @@
     <resources>
         <image name="ewm_d" width="40" height="40"/>
         <image name="mr_d" width="40" height="40"/>
-        <image name="newfeature_04_414x736" width="414" height="736"/>
+        <image name="newfeature_01_414x736" width="414" height="736"/>
         <image name="weixin" width="50" height="60"/>
         <image name="youke" width="50" height="60"/>
     </resources>

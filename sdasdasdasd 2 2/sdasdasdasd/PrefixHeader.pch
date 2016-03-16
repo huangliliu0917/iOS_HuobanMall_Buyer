@@ -55,7 +55,7 @@
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
-/**屏幕宽度*/
+/*屏幕宽度*/
 #define SecrenWith [UIScreen mainScreen].bounds.size.width
 /**屏幕高度*/
 #define SecrenHeight [UIScreen mainScreen].bounds.size.height
@@ -73,17 +73,17 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"be89777c387c"
+#define HuoBanMallShareSdkAppId @"d78c1adaf8a0"
 //sina
-#define HuoBanMallShareSdkSinaKey @"1862469055"
-#define HuoBanMallShareSdkSinaSecret @"07ebe0f450679806a23c1bcc7627f4dc"
+#define HuoBanMallShareSdkSinaKey @"585744512"
+#define HuoBanMallShareSdkSinaSecret @"ce8529412e7dd265e0872f33f0c717e4"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+#define HuoBanMallBuyWeiXinAppId @"wx8e819cad99a15961"
+#define HuoBanMallShareSdkWeiXinSecret @"6a8cc4c656e7b29bd55f84db30f5f4a1"
 //qq
-#define HuoBanMallShareSdkQQKey @"1104945838"
-#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
+#define HuoBanMallShareSdkQQKey @"1105224618"
+#define HuoBanMallShareSdkQQSecret @"2RAdPaGs3BXz3SKh"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
