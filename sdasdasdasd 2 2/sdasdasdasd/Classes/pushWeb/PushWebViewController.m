@@ -440,9 +440,12 @@
                         PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
                         self.paymodel = pay;
                         if ([pay.payType integerValue] == 300) {//300微信
-                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
-                            aa.tag = 500;//单个微信支付
-                            [aa showInView:self.view];
+                            if ([WXApi isWXAppInstalled]) {
+                                
+                                UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
+                                aa.tag = 500;//单个微信支付
+                                [aa showInView:self.view];
+                            }
                         }
                         if ([pay.payType integerValue] == 400) {//400支付宝
                             UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝", nil];
@@ -624,7 +627,7 @@
         NSString * prePayid = nil;
         prePayid  = [payManager sendPrepay:params];
 //        [payManager getDebugifo];
-//        NSLog(@"%@",[payManager getDebugifo]);
+        NSLog(@"%@",[payManager getDebugifo]);
         if ( prePayid != nil) {
             //获取到prepayid后进行第二次签名
             NSString    *package, *time_stamp, *nonce_str;
