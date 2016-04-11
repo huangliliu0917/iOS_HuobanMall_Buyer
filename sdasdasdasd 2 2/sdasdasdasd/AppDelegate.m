@@ -23,6 +23,7 @@
 #import "AFNetworking.h"
 #import "AQuthModel.h"
 #import "MJExtension.h"
+#import "NSString+EXTERN.h"
 #import "AccountTool.h"
 #import "UserInfo.h"
 #import "LoginViewController.h"
@@ -75,7 +76,10 @@
     [_window.layer addSublayer:_maskLayer];
     self.maskLayer.hidden = YES;
     
+    
     [self resetUserAgent];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
     
     return YES;
 }
@@ -273,8 +277,22 @@
     
     //add my info to the new agent
     NSString *newAgent = nil;
+    UserInfo * usaa = nil;
+    if ([AccountTool account]) {
+        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+        usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+    };
     
-    newAgent = [Agent stringByAppendingString:@";mobile"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"userid"] = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+    dic[@"unionid"] = usaa.unionid;
+    dic[@"sign"] = @"08afd6f9ae0c6017d105b4ce580de885";
+    
+    NSString *str = [NSString stringWithMutableDictionary:dic];
+    
+    
+    newAgent = [Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid ]];
     
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];

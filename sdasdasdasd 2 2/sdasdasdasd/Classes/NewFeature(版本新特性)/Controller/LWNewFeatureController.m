@@ -116,6 +116,8 @@
         RootViewController * root = [[RootViewController alloc] init];
         [UIApplication sharedApplication].keyWindow.rootViewController = root;
     });
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
 }
 
 
