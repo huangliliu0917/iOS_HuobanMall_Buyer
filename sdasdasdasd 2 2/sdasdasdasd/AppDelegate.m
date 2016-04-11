@@ -23,7 +23,7 @@
 #import "AFNetworking.h"
 #import "AQuthModel.h"
 #import "MJExtension.h"
-#import "NSString+EXTERN.h"
+#import "MD5Encryption.h"
 #import "AccountTool.h"
 #import "UserInfo.h"
 #import "LoginViewController.h"
@@ -284,15 +284,10 @@
         usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     };
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    dic[@"userid"] = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    dic[@"unionid"] = usaa.unionid;
-    dic[@"sign"] = @"08afd6f9ae0c6017d105b4ce580de885";
-    
-    NSString *str = [NSString stringWithMutableDictionary:dic];
+    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, SISSecret]];
     
     
-    newAgent = [Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid ]];
+    newAgent = [Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid]];
     
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];
