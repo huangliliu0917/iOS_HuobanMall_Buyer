@@ -106,19 +106,6 @@
     [_webViewProgressView setProgress:0 animated:YES];
     [self.navigationController.navigationBar addSubview:_webViewProgressView];
 
-    _webViewProgress = [[NJKWebViewProgress alloc] init];
-    _webViewProgress.webViewProxyDelegate = self;
-    _webViewProgress.progressDelegate = self;
-    
-    CGRect navBounds = self.navigationController.navigationBar.bounds;
-    CGRect barFrame = CGRectMake(0,
-                                 navBounds.size.height - 2,
-                                 navBounds.size.width,
-                                 2);
-    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [_webViewProgressView setProgress:0 animated:YES];
-    [self.navigationController.navigationBar addSubview:_webViewProgressView];
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];

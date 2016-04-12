@@ -480,6 +480,7 @@
     NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
     NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
     [self.homeWebView loadRequest:req];
 }
 
