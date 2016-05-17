@@ -503,7 +503,7 @@
     //设置文字
 //    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
-    [startButton setTitle:@"开始体验" forState:UIControlStateNormal];
+    [startButton setTitle:@"立即进入黄太纸" forState:UIControlStateNormal];
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
