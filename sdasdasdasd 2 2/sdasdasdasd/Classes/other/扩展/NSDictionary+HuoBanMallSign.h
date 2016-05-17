@@ -14,4 +14,7 @@
 + (NSMutableDictionary *)asignWithMutableDictionary:(NSMutableDictionary *)dict;
 
 + (NSString *)ToSignUrlWithString:(NSString *)urlStr;
+
+
+
 @end
