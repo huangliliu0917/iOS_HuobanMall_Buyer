@@ -252,6 +252,8 @@
                 
                 [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
                 
+                [self ToGetShareMessage];
+                
                 [wself UserLoginSuccess];
                 
                 
