@@ -91,7 +91,7 @@
     [super viewDidLoad];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
-
+    
     _webViewProgress = [[NJKWebViewProgress alloc] init];
     _webViewProgress.webViewProxyDelegate = self;
     _webViewProgress.progressDelegate = self;
@@ -105,6 +105,7 @@
     _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [_webViewProgressView setProgress:0 animated:YES];
     [self.navigationController.navigationBar addSubview:_webViewProgressView];
+
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -385,6 +386,7 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     NSString *url = request.URL.absoluteString;
+    
     if ([url isEqualToString:@"about:blank"]) {
         return NO;
     }
@@ -658,10 +660,15 @@
     return nil;
 }
 
-
 - (void)dealloc{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_webViewProgressView setProgress:progress animated:YES];
 }
 
 @end

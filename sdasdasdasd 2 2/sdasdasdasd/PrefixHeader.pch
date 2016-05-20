@@ -30,7 +30,7 @@
 
 //java
 // 店中店
-#define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+#define SISMainUrl @"http://api.open.huobanplus.com/sis/"
 #define SISSecret @"08afd6f9ae0c6017d105b4ce580de885" //店中店签名
 
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
@@ -39,10 +39,9 @@
 
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.51flashmall.com"// @"http://mallapi.huobanmall.com"//
-#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"  // @"app"  //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
-
+#define AppOriginUrl @"http://mallapi.huobanmall.com" // @"http://mallapi.huobanj.cn"//
+#define HuoBanMallBuyAppId @"app"  //  @"huotuacf89c9231848c9f49" //
+#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe" //@"0ad8abe244331aacf89c9231848c9f49" //
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -70,7 +69,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
 
 
 //友盟数据统计
@@ -112,7 +111,7 @@
 #define meauNotifation @"meauViewControllerShow"
 
 #define TestMode @"testMode" //测试模式
-#define  AppMainUrl @"AppMainUrl"  //app域名
+#define AppMainUrl @"AppMainUrl"  //app域名
 #define PayTypeflat @"paytype" //支付数据存档
 #define HuoBanMaLLMess @"HuoBanMaLLMess" //商城信息
 #define AccountList @"AccountList" //用户账户列表

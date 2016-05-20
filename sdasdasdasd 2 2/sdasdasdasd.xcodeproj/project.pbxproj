@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		607B85C31CEC897600482E40 /* HTNoticeCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B85C21CEC897600482E40 /* HTNoticeCenter.m */; };
+		607B85C61CEC8D5500482E40 /* NSData+NSDataDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B85C51CEC8D5500482E40 /* NSData+NSDataDeal.m */; };
+		607B85C91CEC8FF800482E40 /* NoticeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B85C81CEC8FF800482E40 /* NoticeMessage.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
@@ -167,6 +170,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		607B85C11CEC897600482E40 /* HTNoticeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTNoticeCenter.h; sourceTree = "<group>"; };
+		607B85C21CEC897600482E40 /* HTNoticeCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTNoticeCenter.m; sourceTree = "<group>"; };
+		607B85C41CEC8D5500482E40 /* NSData+NSDataDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSDataDeal.h"; sourceTree = "<group>"; };
+		607B85C51CEC8D5500482E40 /* NSData+NSDataDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSDataDeal.m"; sourceTree = "<group>"; };
+		607B85C71CEC8FF800482E40 /* NoticeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMessage.h; sourceTree = "<group>"; };
+		607B85C81CEC8FF800482E40 /* NoticeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeMessage.m; sourceTree = "<group>"; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		ACF9CE19FF0913C78BBF377F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -487,6 +496,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		607B85C01CEC897600482E40 /* HTNoticeCenter */ = {
+			isa = PBXGroup;
+			children = (
+				607B85C11CEC897600482E40 /* HTNoticeCenter.h */,
+				607B85C21CEC897600482E40 /* HTNoticeCenter.m */,
+				607B85C71CEC8FF800482E40 /* NoticeMessage.h */,
+				607B85C81CEC8FF800482E40 /* NoticeMessage.m */,
+			);
+			name = HTNoticeCenter;
+			path = ../HTNoticeCenter;
+			sourceTree = "<group>";
+		};
 		A5F4EAC65F57CC0DED1FF178 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +630,7 @@
 				EF9D4C4E1C055FF900D005E8 /* pushWeb */,
 				EF9D4C511C055FF900D005E8 /* Setting */,
 				EF9D4C551C055FF900D005E8 /* 根视图控制器（首页和左划） */,
+				607B85C01CEC897600482E40 /* HTNoticeCenter */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -990,6 +1012,8 @@
 		EF9D4C491C055FF900D005E8 /* 扩展 */ = {
 			isa = PBXGroup;
 			children = (
+				607B85C41CEC8D5500482E40 /* NSData+NSDataDeal.h */,
+				607B85C51CEC8D5500482E40 /* NSData+NSDataDeal.m */,
 				60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */,
 				60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */,
 				EF42C11C1C08350500602E60 /* UITableView+CJ.h */,
@@ -1417,6 +1441,7 @@
 				EF42C10A1C0832A100602E60 /* CollectionViewCell.m in Sources */,
 				EF9D4C8E1C055FF900D005E8 /* MJConst.m in Sources */,
 				EF9D4C651C055FF900D005E8 /* MyLoginView.m in Sources */,
+				607B85C31CEC897600482E40 /* HTNoticeCenter.m in Sources */,
 				EF9D4C721C055FF900D005E8 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EF9D4C641C055FF900D005E8 /* LeftTableViewCell.m in Sources */,
 				EF9D4C741C055FF900D005E8 /* UIAlertView+AFNetworking.m in Sources */,
@@ -1427,6 +1452,7 @@
 				EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */,
 				EF42C0FF1C0832A100602E60 /* SISHomeViewController.m in Sources */,
 				EF9D4CB51C055FF900D005E8 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				607B85C61CEC8D5500482E40 /* NSData+NSDataDeal.m in Sources */,
 				EF9D4CAA1C055FF900D005E8 /* PayModel.m in Sources */,
 				EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */,
 				EF42C1111C0832A100602E60 /* menuView.m in Sources */,
@@ -1448,6 +1474,7 @@
 				EF9D4C681C055FF900D005E8 /* AFHTTPRequestOperationManager.m in Sources */,
 				EF9D4C921C055FF900D005E8 /* MJMethod.m in Sources */,
 				EF9D4C8F1C055FF900D005E8 /* MJFoundation.m in Sources */,
+				607B85C91CEC8FF800482E40 /* NoticeMessage.m in Sources */,
 				EF9D4C9D1C055FF900D005E8 /* README.md in Sources */,
 				EF42C10F1C0832A100602E60 /* ItemsView.m in Sources */,
 				EFA6D35A1C04514500B39B36 /* AppDelegate.m in Sources */,
@@ -1646,7 +1673,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1683,7 +1710,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
