@@ -69,7 +69,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
 
 
 //友盟数据统计
