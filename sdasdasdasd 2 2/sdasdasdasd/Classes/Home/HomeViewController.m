@@ -399,6 +399,8 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"getmsiteurlSuccess" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToNewUrlFormRemoteNotifcation:) name:@"GoNewUrl" object:nil];
+    
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
@@ -1138,6 +1140,19 @@
 -(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
     [_webViewProgressView setProgress:progress animated:YES];
+}
+
+
+- (void)goToNewUrlFormRemoteNotifcation:(NSNotification *) notification {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:@"GoNewUrl"];
+    
+    NSString *url = notification.userInfo[@"url"];
+    
+    UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+    funWeb.funUrl = url;
+    [self.navigationController pushViewController:funWeb animated:YES];
 }
 
 @end
