@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>HuoBanMallYingyan2015</string>
+				<string>HuoBanMallHTZ2015</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,11 +33,11 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxf0b37b263cfe4d44</string>
-				<string>wb1862469055</string>
-				<string>wb1862469055</string>
-				<string>QQ41DC22AE</string>
-				<string>tencent1104945838</string>
+				<string>wx098959415b52798e</string>
+				<string>wb3804251087</string>
+				<string>wb3804251087</string>
+				<string>QQ41E2FDA4</string>
+				<string>tencent1105395108</string>
 			</array>
 		</dict>
 	</array>

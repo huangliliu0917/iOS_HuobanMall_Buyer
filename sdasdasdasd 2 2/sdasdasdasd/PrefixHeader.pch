@@ -18,7 +18,7 @@
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"行装商城"
+#define MallName @"黄太纸"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -80,15 +80,15 @@
 //ShareSDk数据统计
 #define HuoBanMallShareSdkAppId @"12b69a3db64e8"
 //sina
-#define HuoBanMallShareSdkSinaKey @"1862469055"
-#define HuoBanMallShareSdkSinaSecret @"07ebe0f450679806a23c1bcc7627f4dc"
+#define HuoBanMallShareSdkSinaKey @"3804251087"
+#define HuoBanMallShareSdkSinaSecret @"83616ef42b1f5284d4045d115f4ba0ab"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+#define HuoBanMallBuyWeiXinAppId @"wx098959415b52798e"
+#define HuoBanMallShareSdkWeiXinSecret @"e6f4201024212a6bcc6b8e2eac9cc9e2"
 //qq
-#define HuoBanMallShareSdkQQKey @"1104945838"
-#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
+#define HuoBanMallShareSdkQQKey @"1105395108"
+#define HuoBanMallShareSdkQQSecret @"1cJGhd9RBNio5FLe"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
