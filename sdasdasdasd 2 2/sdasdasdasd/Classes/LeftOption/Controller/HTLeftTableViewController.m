@@ -156,7 +156,7 @@
             }
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
     }];
     
     [self setHeadViewLabelsAndImage];
@@ -446,7 +446,7 @@
     } failure:^(NSError *error) {
         [SVProgressHUD dismiss];
         [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
-        NSLog(@"%@",error);
+//        NSLog(@"%@",error);
     }];
     
 }
@@ -489,7 +489,7 @@
                 
             } failure:^(NSError *error) {
                 [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
-                NSLog(@"%@",error);
+//                NSLog(@"%@",error);
             }];
             
         }
@@ -675,13 +675,13 @@
         [self bindWeixinWithUserInfo:userInfo AndUnionid:userLocal.unionid  AndRefreshToken:aquth.refresh_token];
         
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
     }];
     
 }
 - (void)OquthByWeiXinSuccess1:(NSNotification *) note{
     
-    NSLog(@"-=------------%@",note);
+//    NSLog(@"-=------------%@",note);
     
     
     [self accessTokenWithCode1:note.userInfo[@"code"]];
@@ -698,13 +698,13 @@
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
-                NSLog(@"accessTokenWithCode%@",json);
+//                NSLog(@"accessTokenWithCode%@",json);
         AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
     }];
 }
 /**
@@ -722,7 +722,7 @@
         //获取用户信息
         [wself getUserInfo1:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
     }];
 }
 
@@ -771,7 +771,7 @@
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+//        NSLog(@"%@",error);
     }];
     
 }
@@ -860,7 +860,7 @@
             [self setHeadViewLabelsAndImage];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
     }];
 }
 
