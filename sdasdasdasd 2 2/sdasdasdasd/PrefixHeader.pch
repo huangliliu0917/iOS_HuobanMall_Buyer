@@ -44,7 +44,6 @@
 #define HuoBanMallBuyAppSecrect @"9389e8a5c32eefa3134340640fb4ceaa"  //@"0ad8abe244331aacf89c9231848c9f49"//@"21ff3104eb7a7bf3f2b663b8ab18eebe"  //
 
 
-
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
 /****************************************************/
 #define WeiXinHuoBanMallBuyerAppId @""
