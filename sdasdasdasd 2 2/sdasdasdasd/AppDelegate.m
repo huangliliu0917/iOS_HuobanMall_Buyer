@@ -51,7 +51,7 @@
     [self setupInit];
     [self myAppToInit];
     //微信支付
-    [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:@"行装"];
+    [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:@"黄太纸"];
     
 
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
