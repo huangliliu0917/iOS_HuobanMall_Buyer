@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+# Uncomment this line to define a global platform for your project
 
 pod 'SHXMLParser','1.1.0'
 #pod 'ASIHTTPRequest','1.8.1'
