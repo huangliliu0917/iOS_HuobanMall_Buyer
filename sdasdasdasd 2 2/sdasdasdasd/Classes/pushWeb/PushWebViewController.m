@@ -232,13 +232,7 @@
 
 
 - (void)shareSdkSha{
-    
-    NSString * urs =  self.webView.request.URL.absoluteString;
-    
-    MallMessage * mallmess = [MallMessage getMallMessage];
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSMutableString * url = [NSMutableString stringWithString:uraaa];
-    [url appendString:mallmess.mall_logo];
+
 
     
     //1、创建分享参数
