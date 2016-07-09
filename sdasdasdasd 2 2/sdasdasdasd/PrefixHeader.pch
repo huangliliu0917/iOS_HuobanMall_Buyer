@@ -31,7 +31,7 @@
 //java
 // 店中店
 #define SISMainUrl @"http://api.open.olquan.cn/sis/"
-
+#define SISSecret @""
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
