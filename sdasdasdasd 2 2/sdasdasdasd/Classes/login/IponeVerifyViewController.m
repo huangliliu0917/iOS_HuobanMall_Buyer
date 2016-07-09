@@ -414,6 +414,8 @@
         [UIApplication sharedApplication].keyWindow.rootViewController = root;
         [SVProgressHUD dismiss];
     });
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
 }
 
 

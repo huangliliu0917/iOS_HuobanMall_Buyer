@@ -15,6 +15,9 @@
 + (BOOL) checkTel:(NSString *) phoneNumber;
 
 
-
+/**
+ *  通过字典计算网络请求的asign值
+ */
++ (NSString *)stringWithMutableDictionary:(NSMutableDictionary *)dict;
 
 @end
