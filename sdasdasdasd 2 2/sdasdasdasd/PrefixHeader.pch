@@ -30,7 +30,8 @@
 
 //java
 // 店中店
-#define SISMainUrl @"http://api.open.huobanplus.com/sis/"
+#define SISMainUrl @"http://test.api.open.huobanplus.com:8081/sis/"
+#define SISSecret @"08afd6f9ae0c6017d105b4ce580de885" //店中店签名
 
 //#define SISMainUrl @"http://192.168.1.57:8080/sis/"
 //MK
