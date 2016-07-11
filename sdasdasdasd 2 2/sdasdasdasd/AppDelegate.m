@@ -36,6 +36,8 @@
 #import "PayModel.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
+@property (nonatomic, strong) NSString *Agent;
+
 @end
 
 @implementation AppDelegate
@@ -76,7 +78,8 @@
     [_window.layer addSublayer:_maskLayer];
     self.maskLayer.hidden = YES;
     
-    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     [self resetUserAgent];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
@@ -272,8 +275,7 @@
     
     
     // Do any additional setup after loading the view, typically from a nib.
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    NSString *Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    
     
     
     //add my info to the new agent
@@ -288,7 +290,7 @@
     NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, SISSecret]];
     
     
-    newAgent = [Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid]];
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid]];
     
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];
