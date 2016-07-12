@@ -122,7 +122,12 @@
             [self WeiXinLog];
         }
     }];
-    
+    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+    if ([[str stringValue] isEqualToString:@"1"]) {
+        self.visiLogin.hidden = NO;
+    }else {
+        self.visiLogin.hidden = YES;
+    }
     [self.visiLogin bk_whenTapped:^{
         
         [self visiLoginApp];
