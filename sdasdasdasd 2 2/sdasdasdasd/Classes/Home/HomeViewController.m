@@ -359,7 +359,7 @@
 //    self.homeWebView.scrollView.bounces = NO;
     [self.homeWebView loadRequest:req];
     
-    NSLog(@"dddurl: %@",urlStr);
+//    NSLog(@"dddurl: %@",urlStr);
     
     
     
@@ -401,6 +401,8 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"getmsiteurlSuccess" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToNewUrlFormRemoteNotifcation:) name:@"GoNewUrl" object:nil];
+    
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
@@ -426,7 +428,7 @@
             [wself ToGetDownDateWithDateSource:json[@"data"][@"downloadUrl"] andverson:json[@"version"]];
         }
     } failure:^(NSError *error) {
-         NSLog(@"%@",error.description);
+//         NSLog(@"%@",error.description);
     }];
     
 }
@@ -765,6 +767,10 @@
         return NO;
     }
     
+    
+    if ([url isEqualToString:@"about:blank"]) {
+        return NO;
+    }
     if (webView.tag == 100) {
         
         if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
@@ -1062,7 +1068,7 @@
         params[@"nonce_str"] = noncestr; //随机字符串，不长于32位。推荐随机数生成算法
         params[@"trade_type"] = @"APP";   //取值如下：JSAPI，NATIVE，APP，WAP,详细说明见参数规定
         params[@"body"] = MallName; //商品或支付单简要描述
-        NSMutableString * urls = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSMutableString * urls = [NSMutableString stringWithString:[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl]];
         [urls appendString:paymodel.notify];
         params[@"notify_url"] = urls;  //接收微信支付异步通知回调地址
         
@@ -1138,6 +1144,19 @@
 -(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
     [_webViewProgressView setProgress:progress animated:YES];
+}
+
+
+- (void)goToNewUrlFormRemoteNotifcation:(NSNotification *) notification {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:@"GoNewUrl"];
+    
+    NSString *url = notification.userInfo[@"url"];
+    
+    UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+    funWeb.funUrl = url;
+    [self.navigationController pushViewController:funWeb animated:YES];
 }
 
 @end
