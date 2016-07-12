@@ -240,7 +240,6 @@
     if(self.homeWebView.loading){
         return;
     }
-    NSString * urs =  self.homeWebView.request.URL.absoluteString;
     
     MallMessage * mallmess = [MallMessage getMallMessage];
     
@@ -258,7 +257,7 @@
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
         [shareParams SSDKSetupShareParamsByText:nil
                                          images:imageArray
-                                            url:[NSURL URLWithString:mallmess.mall_site]
+                                            url:self.homeWebView.request.URL
                                           title:@"OL圈"
                                            type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
