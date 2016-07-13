@@ -61,12 +61,14 @@
         self.window.rootViewController = root;
         [self.window makeKeyAndVisible];
     }else{
-        
+        RootViewController * root = [[RootViewController alloc] init];
+        self.window.rootViewController = root;
+        [self.window makeKeyAndVisible];
 //        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        LWNewFeatureController * cc = [[LWNewFeatureController alloc] init];
-        self.window.rootViewController = cc;
-        [self.window makeKeyAndVisible];
+//        LWNewFeatureController * cc = [[LWNewFeatureController alloc] init];
+//        self.window.rootViewController = cc;
+//        [self.window makeKeyAndVisible];
     }
     
     
@@ -288,10 +290,10 @@
         usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     };
     
-    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, SISSecret]];
+    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
     
     
-    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid]];
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid]];
     
     //regist the new agent
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];

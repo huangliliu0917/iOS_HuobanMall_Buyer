@@ -55,6 +55,8 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
+    
+    self.loginButton.layer.cornerRadius = 22;
 
 }
 

@@ -23,8 +23,6 @@
 #import "MyLoginView.h"
 #import "UserInfo.h"
 #import <SVProgressHUD.h>
-#import "SISHomeViewController.h"
-#import "SISBaseModel.h"
 #import "AccountModel.h"
 #import "IponeVerifyViewController.h"
 
@@ -385,7 +383,6 @@
         //业务逻辑(胖子写的)
         if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
             [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-            [self sisOpen];
         }else{
             NSRange rangs = [url rangeOfString:@"?"];
             rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
@@ -401,100 +398,6 @@
 }
 
 
-
-
-/**
- *  <#Description#>
- */
-- (void)sisOpen{
-    
-    [SVProgressHUD showWithStatus:@"数据加载中"];
-    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    NSString *str = [NSString stringWithFormat:@"%@" ,userid];
-    parame[@"userid"] = str;
-//        parame[@"userid"] = @"64";
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    
-    NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
-    [url appendString:@"getSisInfo"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        
-        [SVProgressHUD dismiss];
-        
-//        NSLog(@"%@",json);
-        if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
-            SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:SISUserInfo];
-            [NSKeyedArchiver archiveRootObject:baseModel toFile:filename];
-            
-            if (baseModel.enableSis) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"pushtoSIS" object:nil userInfo:nil];
-            }else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您没有开启店中店，是否开启" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                alert.tag = 5000;
-                [alert show];
-            }
-        }else {
-            [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@",json[@"resultDescription"]]];
-        }
-        
-        
-        
-        
-    } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
-        NSLog(@"%@",error);
-    }];
-    
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 5000) {
-        if (buttonIndex == 1) {
-            
-            [SVProgressHUD showWithStatus:@"启用店中店ing"];
-            NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-            NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-            NSString *str = [NSString stringWithFormat:@"%@" ,userid];
-            parame[@"userid"] = str;
-//                        parame[@"userid"] = @"64";
-            parame = [NSDictionary asignWithMutableDictionary:parame];
-            
-            NSMutableString * url = [NSMutableString stringWithString:SISMainUrl];
-            [url appendString:@"open"];
-            [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-                
-                [SVProgressHUD dismiss];
-                
-//                NSLog(@"%@",json);
-                if ([json[@"systemResultCode"] intValue] == 1 && [json[@"resultCode"] intValue] == 1) {
-                    SISBaseModel *baseModel = [SISBaseModel objectWithKeyValues:json[@"resultData"][@"data"]];
-                    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:SISUserInfo];
-                    [NSKeyedArchiver archiveRootObject:baseModel toFile:filename];
-                    
-                    if (baseModel.enableSis) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushtoSIS" object:nil userInfo:nil];
-                    }
-                }else {
-                    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@",json[@"resultDescription"]]];
-                }
-                
-                
-                
-                
-            } failure:^(NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"网络异常，请检查网络"];
-                NSLog(@"%@",error);
-            }];
-            
-        }
-    }
-}
 
 
 

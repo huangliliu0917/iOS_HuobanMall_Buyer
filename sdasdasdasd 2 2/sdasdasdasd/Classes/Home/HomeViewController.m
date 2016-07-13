@@ -28,16 +28,11 @@
 #import "PayModel.h"
 #import "IponeVerifyViewController.h"
 #import <SDWebImageManager.h>
-//#import "Order.h"  //支付宝
-//#import "DataSigner.h"
-//#import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
 #import "payRequsestHandler.h"
 #import "UserLoginTool.h"
 #import <SSZipArchive.h>
 #import <SVProgressHUD.h>
-#import "SISBaseModel.h"
-#import "SISHomeViewController.h"
 #import "UserInfo.h"
 #import <NJKWebViewProgress.h>
 #import <NJKWebViewProgressView.h>
@@ -362,9 +357,6 @@
     
     //切换账号
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
-    
-    
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushtoSIShomeVC) name:@"pushtoSIS" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
@@ -735,7 +727,9 @@
     }
     
     if (webView.tag == 100) {
-        
+        if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
+            return YES;
+        }
         if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
              [UIViewController ToRemoveSandBoxDate];
             UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -1096,15 +1090,6 @@
     return nil;
 }
 
-
-- (void)pushtoSIShomeVC {
-    
-    
-    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    SISHomeViewController *home = [story instantiateViewControllerWithIdentifier:@"SISHomeViewController"];
-    
-    [self.navigationController pushViewController:home animated:YES];
-}
 
 - (void)pushToIphone {
     UIStoryboard *stroy = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

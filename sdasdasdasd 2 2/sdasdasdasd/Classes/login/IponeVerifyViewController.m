@@ -35,6 +35,7 @@
 /**验证码*/
 @property (weak, nonatomic) IBOutlet UILabel *VerifyLable;
 
+@property (strong, nonatomic) IBOutlet UIView *weixinLoginBgView;
 
 @end
 
@@ -107,31 +108,41 @@
 
     }];
     
-    if ([WXApi isWXAppInstalled]) {
-        self.weixinLogin.hidden = NO;
-        self.visiCenter.constant = -60;
+    if (_isPhoneLogin) {
+        self.weixinLoginBgView.hidden = YES;
     }else {
-        self.weixinLogin.hidden = YES;
-        self.visiCenter.constant = 0;
-    }
-    
-    [self.weixinLogin bk_whenTapped:^{
+        
+        self.weixinLoginBgView.hidden = NO;
         
         if ([WXApi isWXAppInstalled]) {
-            [self WeiXinLog];
+            self.weixinLogin.hidden = NO;
+            self.visiCenter.constant = -60;
+        }else {
+            self.weixinLogin.hidden = YES;
+            self.visiCenter.constant = 0;
         }
-    }];
-    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
-    if ([[str stringValue] isEqualToString:@"1"]) {
-        self.visiLogin.hidden = NO;
-    }else {
-        self.visiLogin.hidden = YES;
+        
+        [self.weixinLogin bk_whenTapped:^{
+            
+            if ([WXApi isWXAppInstalled]) {
+                [self WeiXinLog];
+            }
+        }];
+        NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+        if ([[str stringValue] isEqualToString:@"1"]) {
+            self.visiLogin.hidden = NO;
+        }else {
+            self.visiLogin.hidden = YES;
+        }
+        [self.visiLogin bk_whenTapped:^{
+            
+            [self visiLoginApp];
+            
+        }];
+        
     }
-    [self.visiLogin bk_whenTapped:^{
-        
-        [self visiLoginApp];
-        
-    }];
+    
+    
     
 }
 

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeViewController : UIViewController
-- (IBAction)sisOpen:(id)sender;
+
 
 @end
