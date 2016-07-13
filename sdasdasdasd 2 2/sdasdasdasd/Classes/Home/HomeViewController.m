@@ -233,32 +233,30 @@
 
 - (void)shareSdkSha{
     
-    
-    
-    
-    
     if(self.homeWebView.loading){
         return;
     }
-    
-    MallMessage * mallmess = [MallMessage getMallMessage];
-    
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    
-    NSMutableString * url = [NSMutableString stringWithString:uraaa];
-    if (url) {
-        [url appendString:mallmess.mall_logo];
-    }
-    
+
     
     //1、创建分享参数
-    NSArray* imageArray = @[url];
+#pragma mark 分享修改
+    NSString *str = [self.homeWebView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+    
+    NSArray *array = [str componentsSeparatedByString:@"^"];
+    if (array.count != 4) {
+        return;
+    }
+    
+    NSString *temp = [self toCutew:array[2]];
+    
+    //1、创建分享参数
+    NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:nil
+        [shareParams SSDKSetupShareParamsByText:array[1]
                                          images:imageArray
-                                            url:self.homeWebView.request.URL
-                                          title:@"OL圈"
+                                            url:[NSURL URLWithString:temp]
+                                          title:array[0]
                                            type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
         [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
@@ -292,9 +290,14 @@
                        }
                        
                    }];
-
+        
     }
+    
+    
 }
+
+
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -455,6 +458,8 @@
  *  切换账号
  */
 - (void)ToSwitchAccount{
+    
+    [SVProgressHUD showErrorWithStatus:@"没有账号可以切换"];
     
     if (self.LocalAccounts.count>1) {
         [self MildAlertView];
@@ -739,7 +744,11 @@
             [self presentViewController:root animated:YES completion:^{
                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
+            return NO;
+        }else if ([url rangeOfString:@"/UserCenter/AccountSwitcher.aspx"].location != NSNotFound) {
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchAccount" object:nil];
+            return NO;
         }else if([url rangeOfString:@"AppAlipay.aspx"].location != NSNotFound){
          
                 
@@ -1039,7 +1048,7 @@
         params[@"nonce_str"] = noncestr; //随机字符串，不长于32位。推荐随机数生成算法
         params[@"trade_type"] = @"APP";   //取值如下：JSAPI，NATIVE，APP，WAP,详细说明见参数规定
         params[@"body"] = MallName; //商品或支付单简要描述
-        NSMutableString * urls = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSMutableString * urls = [[NSMutableString alloc] initWithString:[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl]];
         [urls appendString:paymodel.notify];
         params[@"notify_url"] = urls;  //接收微信支付异步通知回调地址
         

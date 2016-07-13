@@ -237,7 +237,9 @@
     NSString *str = [self.webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
     
     NSArray *array = [str componentsSeparatedByString:@"^"];
-    
+    if (array.count != 3) {
+        return;
+    }
     //1、创建分享参数
     NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
     if (imageArray) {
