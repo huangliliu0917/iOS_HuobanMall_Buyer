@@ -45,7 +45,7 @@
                         <constraint firstItem="sLX-wy-lg8" firstAttribute="top" secondItem="BoG-0D-SXj" secondAttribute="top" constant="10" id="YaC-sc-EzU"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yds-O2-c63">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yds-O2-c63">
                     <rect key="frame" x="323" y="33" width="38" height="38"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="38" id="2qq-eB-9jc"/>

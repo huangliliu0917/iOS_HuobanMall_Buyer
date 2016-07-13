@@ -23,6 +23,10 @@
 #import <MJRefresh.h>
 #import <NJKWebViewProgress.h>
 #import <NJKWebViewProgressView.h>
+#import "UserLoginTool.h"
+#import <SVProgressHUD.h>
+#import "UserInfo.h"
+#import "LeftMenuModel.h"
 
 @interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
 
@@ -89,6 +93,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
 
@@ -237,7 +243,7 @@
     NSString *str = [self.webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
     
     NSArray *array = [str componentsSeparatedByString:@"^"];
-    if (array.count != 3) {
+    if (array.count != 4) {
         return;
     }
     //1、创建分享参数
@@ -392,6 +398,11 @@
             [UIViewController ToRemoveSandBoxDate];
         }];
         
+    }else if ([url rangeOfString:@"/UserCenter/AppAccountSwitcher.aspx"].location != NSNotFound) {
+        NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
+        NSLog(@"array:%@",array);
+        [self changeWithUserInfo:array];
+        return NO;
     }else{
         NSRange range = [url rangeOfString:@"AppAlipay.aspx"];
 //        NSLog(@"%@",url);
@@ -661,6 +672,68 @@
 -(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
     [_webViewProgressView setProgress:progress animated:YES];
+}
+
+
+#pragma mark 切换账号
+
+- (void)changeWithUserInfo:(NSArray *) array {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"userid"] = array[1];
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/Account/getAppUserInfo"];
+    
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        NSLog(@"%@", json);
+        
+        if ([json[@"code"] integerValue] == 200) {
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"unionId"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }else {
+                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:lefts forKey:LeftMenuModels];
+            //结束编码
+            [archiver finishEncoding];
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+            //写入
+            [data writeToFile:filename atomically:YES];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            [SVProgressHUD showSuccessWithStatus:@"账号切换成功"];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"切换失败"];
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"切换失败"];
+    }];
+    
+    
+    
 }
 
 @end

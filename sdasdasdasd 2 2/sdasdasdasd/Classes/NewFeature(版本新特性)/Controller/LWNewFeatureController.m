@@ -26,6 +26,7 @@
 #import "MallMessage.h"
 #import "LeftMenuModel.h"
 #import "IponeVerifyViewController.h"
+#import "LoginViewController.h"
 
 
 @interface LWNewFeatureController ()<UIScrollViewDelegate,WXApiDelegate>
@@ -520,24 +521,10 @@
  */
 -(void)startButtonClick
 {
-    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
-    if ([[str stringValue] isEqualToString:@"1"]) {
-        [self WeiXinFailureToUserOrigin];
-    }else {
-        
-        
-        if ([AccountTool verifyAccess_Token_Effect]) {
-            [self toRefreshaccess_token]; //刷新access_token
-        }else{
-            
-            if ([WXApi isWXAppInstalled]) {
-                [self WeiXinLog];
-            }else {
-                [self WeiXinFailureToUserOrigin];
-            }
-            
-        }
-    }
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    RootViewController * root = [[RootViewController alloc] init];
+    window.rootViewController = root;
+    [window makeKeyAndVisible];
 
 }
 

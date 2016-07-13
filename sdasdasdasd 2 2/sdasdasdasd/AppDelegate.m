@@ -34,6 +34,8 @@
 #import "UserLoginTool.h"
 #import "NSDictionary+HuoBanMallSign.h"
 #import "PayModel.h"
+#import "MallMessage.h"
+#import "LeftMenuModel.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSString *Agent;
@@ -48,29 +50,14 @@
     
     [self setupInit];
     [self myAppToInit];
+    
+    
+    [self myAppGetConfig];
     //微信支付
-    [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:@"行装"];
+    
     
 
-    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-    //    AQuthModel * AQuth = [AccountTool account];
-    if ([login isEqualToString:Success]) {
-        //初始化接口
-        
-        RootViewController * root = [[RootViewController alloc] init];
-        self.window.rootViewController = root;
-        [self.window makeKeyAndVisible];
-    }else{
-        RootViewController * root = [[RootViewController alloc] init];
-        self.window.rootViewController = root;
-        [self.window makeKeyAndVisible];
-//        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//        LWNewFeatureController * cc = [[LWNewFeatureController alloc] init];
-//        self.window.rootViewController = cc;
-//        [self.window makeKeyAndVisible];
-    }
-    
+    [self setImage];
     
     
     
@@ -183,6 +170,99 @@
     
 }
 
+/**
+ *  getconfig接口
+ */
+- (void)myAppGetConfig {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
+    [url appendString:@"/mall/getConfig"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+//        NSLog(@"%@" , json);
+        if (json) {
+            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
+            [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
+            
+            [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
+            
+            NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+            if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+                LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+                self.window.rootViewController = new;
+                [self.window makeKeyAndVisible];
+                [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+            }else {
+                NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+                //    AQuthModel * AQuth = [AccountTool account];
+                if ([login isEqualToString:Success]) {
+                    [self myAppGetUserInfo];
+                }
+                RootViewController * root = [[RootViewController alloc] init];
+                self.window.rootViewController = root;
+                [self.window makeKeyAndVisible];
+            }
+        }
+        
+        
+    } failure:^(NSError *error) {
+//        NSLog(@"%@", error);
+    }];
+}
+
+- (void)myAppGetUserInfo {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"userid"] = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId]];
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
+    [url appendString:@"/Account/getAppUserInfo"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+//        NSLog(@"%@", json);
+        if ([json[@"code"] integerValue] == 200) {
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"unionId"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }else {
+                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:lefts forKey:LeftMenuModels];
+            //结束编码
+            [archiver finishEncoding];
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+            //写入
+            [data writeToFile:filename atomically:YES];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
+}
 
 -(void) onResp:(BaseResp*)resp
 {
@@ -300,6 +380,41 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
     
     
+}
+
+
+- (void)setImage {
+    CGSize viewSize = self.window.bounds.size;
+    NSString *viewOrientation = @"Portrait";    //横屏请设置成 @"Landscape"
+    NSString *launchImage = nil;
+    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+    for (NSDictionary* dict in imagesDict)
+    {
+        CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+        
+        if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
+        {
+            launchImage = dict[@"UILaunchImageName"];
+        }
+    }
+    UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
+    launchView.frame = self.window.bounds;
+    launchView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.window addSubview:launchView];
+    [UIView animateWithDuration:2.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         launchView.alpha = 0.0f;
+                         launchView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1);
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         [launchView removeFromSuperview];
+                         
+                     }];
 }
 
 @end

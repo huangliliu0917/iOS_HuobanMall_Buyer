@@ -27,6 +27,7 @@
 #import "LeftMenuModel.h"
 #import "MallMessage.h"
 #import "IponeVerifyViewController.h"
+#import <UIBarButtonItem+BlocksKit.h>
 
 @interface LoginViewController ()<WXApiDelegate>
 
@@ -46,14 +47,19 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess2:) name:@"ToGetUserInfo" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin1) name:@"ToGetUserInfoError" object:nil];
     
     [UIViewController MonitorNetWork];
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     
     
     self.loginButton.layer.cornerRadius = 22;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
@@ -1303,6 +1304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */,
 				EFA6D37B1C04514500B39B36 /* sdasdasdasdUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

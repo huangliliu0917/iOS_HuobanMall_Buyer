@@ -1,4 +1,4 @@
-//
+
 //  HomeViewController.m
 //  HuoBanMallBuy
 //
@@ -196,34 +196,39 @@
     
     NSRange rang = [urs rangeOfString:@"?"];
     
-    NSString * back = [urs substringFromIndex:rang.location + 1];
-    
-    NSArray * aa =  [back componentsSeparatedByString:@"&"];
-    
-    __block NSMutableArray * todelete = [NSMutableArray arrayWithArray:aa];
-    
-    NSArray * key = @[@"unionid",@"appid",@"sign"];
-    [aa enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [key enumerateObjectsUsingBlock:^(NSString * key, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj containsString:key]) {
-                [todelete removeObject:obj];
-            }
-        }];
-    }];
-    
-    NSMutableString * cc = [[NSMutableString alloc] init];
-    [todelete enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *  stop) {
+    if (rang.location != NSNotFound) {
+        NSString * back = [urs substringFromIndex:rang.location + 1];
         
-        [cc appendFormat:@"%@&",obj];
-    }];
-    [cc appendFormat:@"gduid=%@",gduid];
+        NSArray * aa =  [back componentsSeparatedByString:@"&"];
+        
+        __block NSMutableArray * todelete = [NSMutableArray arrayWithArray:aa];
+        
+        NSArray * key = @[@"unionid",@"appid",@"sign"];
+        [aa enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [key enumerateObjectsUsingBlock:^(NSString * key, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj containsString:key]) {
+                    [todelete removeObject:obj];
+                }
+            }];
+        }];
+        
+        NSMutableString * cc = [[NSMutableString alloc] init];
+        [todelete enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *  stop) {
+            
+            [cc appendFormat:@"%@&",obj];
+        }];
+        [cc appendFormat:@"gduid=%@",gduid];
+        
+        NSString * ee = [urs substringToIndex:rang.location+1];
+        
+        NSString * dd = [NSString stringWithFormat:@"%@%@",ee,cc];
+        
+        
+        return dd;
+    }else {
+        return urs;
+    }
     
-    NSString * ee = [urs substringToIndex:rang.location+1];
-    
-    NSString * dd = [NSString stringWithFormat:@"%@%@",ee,cc];
-    
-    
-    return dd;
 }
 
 - (void)shareSdkSha{
@@ -733,15 +738,40 @@
         if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
              [UIViewController ToRemoveSandBoxDate];
             UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-            [self presentViewController:root animated:YES completion:^{
-               [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            }];
-            return NO;
-        }else if ([url rangeOfString:@"/UserCenter/AccountSwitcher.aspx"].location != NSNotFound) {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchAccount" object:nil];
+            NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+            
+            if ([str intValue] == 0) {
+                IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+                login.title = @"登陆";
+                [self presentViewController:root animated:YES completion:^{
+                    [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                }];
+            }else if ([str intValue] == 1) {
+                IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+                login.isPhoneLogin = YES;
+                login.title = @"登陆";
+                [self presentViewController:root animated:YES completion:^{
+                    [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                }];
+            }else if ([str intValue] == 2) {
+                LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                login.title = @"登陆";
+                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+                [self presentViewController:root animated:YES completion:^{
+                    [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                }];
+            }
+            
+            
+            return NO;
+        }else if ([url rangeOfString:@"/UserCenter/AppAccountSwitcher.aspx"].location != NSNotFound) {
+            
+            NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
+            NSLog(@"array:%@",array);
+            [self changeWithUserInfo:array];
             return NO;
         }else if([url rangeOfString:@"AppAlipay.aspx"].location != NSNotFound){
          
@@ -1092,8 +1122,10 @@
 
 
 - (void)pushToIphone {
+    
     UIStoryboard *stroy = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     IponeVerifyViewController *phone = [stroy instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+    phone.isBundlPhone = YES;
     [self.navigationController pushViewController:phone animated:YES];
 }
 
@@ -1111,6 +1143,68 @@
     [_webViewProgressView setProgress:progress animated:YES];
 }
 
+
+#pragma mark 切换账号
+
+- (void)changeWithUserInfo:(NSArray *) array {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"userid"] = array[1];
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/Account/getAppUserInfo"];
+    
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        NSLog(@"%@", json);
+        
+        if ([json[@"code"] integerValue] == 200) {
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"unionId"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }else {
+                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:lefts forKey:LeftMenuModels];
+            //结束编码
+            [archiver finishEncoding];
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+            //写入
+            [data writeToFile:filename atomically:YES];
+            
+            [self BackToWebView];
+            
+            [SVProgressHUD showSuccessWithStatus:@"账号切换成功"];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"切换失败"];
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"切换失败"];
+    }];
+    
+
+   
+}
 @end
 
 

@@ -8,6 +8,7 @@
 
 #import "IponeVerifyViewController.h"
 #import <UIView+BlocksKit.h>
+#import <UIBarButtonItem+BlocksKit.h>
 #import "NSString+EXTERN.h"
 #import "UserLoginTool.h"
 #import <SVProgressHUD.h>
@@ -52,9 +53,12 @@
 //    self.navigationController.navigationBar.translucent = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
-
-    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-    if ([login isEqualToString:Success]) {
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    if (self.isBundlPhone) {
         self.weixinLogin.hidden = YES;
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
         self.title = @"绑定手机";
@@ -73,14 +77,17 @@
     
     [self.VerifyLable bk_whenTapped:^{
         
+        self.VerifyLable.userInteractionEnabled = NO;
         NSString * phoneNumber= self.iphoneTextField.text;
         if ([phoneNumber isEqualToString:@""]) {
             [SVProgressHUD showErrorWithStatus:@"手机号不能为空"];
+            self.VerifyLable.userInteractionEnabled = YES;
             return;
         }
         //判断是否是手机号
         if (![NSString checkTel:phoneNumber]) {
             [SVProgressHUD showErrorWithStatus:@"帐号必须是手机号"];
+            self.VerifyLable.userInteractionEnabled = YES;
             self.iphoneTextField.text = @"";
             return ;
         }
@@ -97,8 +104,10 @@
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
             
             if ([json[@"code"] intValue] == 200) {
+                [SVProgressHUD showSuccessWithStatus:@"验证码发送成功"];
                 [self settime];
             }else {
+                self.VerifyLable.userInteractionEnabled = YES;
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
             }
             
@@ -116,10 +125,8 @@
         
         if ([WXApi isWXAppInstalled]) {
             self.weixinLogin.hidden = NO;
-            self.visiCenter.constant = -60;
         }else {
             self.weixinLogin.hidden = YES;
-            self.visiCenter.constant = 0;
         }
         
         [self.weixinLogin bk_whenTapped:^{
@@ -127,17 +134,6 @@
             if ([WXApi isWXAppInstalled]) {
                 [self WeiXinLog];
             }
-        }];
-        NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
-        if ([[str stringValue] isEqualToString:@"1"]) {
-            self.visiLogin.hidden = NO;
-        }else {
-            self.visiLogin.hidden = YES;
-        }
-        [self.visiLogin bk_whenTapped:^{
-            
-            [self visiLoginApp];
-            
         }];
         
     }
@@ -179,8 +175,7 @@
     
     
     
-    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-    if ([login isEqualToString:Success]) {
+    if (self.isBundlPhone) {
         
         NSMutableDictionary * params = [NSMutableDictionary dictionary];
         params[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
@@ -201,7 +196,7 @@
                 NSString *userfileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
                 UserInfo *user = [NSKeyedUnarchiver unarchiveObjectWithFile:userfileName];
                 
-                [self GetUserList1:user.unionid];
+//                [self GetUserList1:user.unionid];
                 
             }else {
                 [SVProgressHUD showErrorWithStatus:json[@"msg"]];
@@ -388,7 +383,7 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                [self.VerifyLable setText:@"验证码"];
+                [self.VerifyLable setText:@"重新发送"];
                 //                [captchaBtn setTitle:@"" forState:UIControlStateNormal];
                 //                [captchaBtn setBackgroundImage:[UIImage imageNamed:@"resent_icon"] forState:UIControlStateNormal];
                 self.VerifyLable.userInteractionEnabled = YES;

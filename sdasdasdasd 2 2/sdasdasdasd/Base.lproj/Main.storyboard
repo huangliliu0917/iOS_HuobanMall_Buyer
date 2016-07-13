@@ -19,8 +19,22 @@
                     <view key="view" contentMode="scaleToFill" id="cTz-g5-XOP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oEQ-fc-cby" customClass="newfeature_06_414x736">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oEQ-fc-cby" secondAttribute="trailing" id="30T-gi-2me"/>
+                            <constraint firstItem="oEQ-fc-cby" firstAttribute="top" secondItem="bBh-Hg-LOa" secondAttribute="bottom" id="gS0-al-uI6"/>
+                            <constraint firstItem="oEQ-fc-cby" firstAttribute="leading" secondItem="cTz-g5-XOP" secondAttribute="leading" id="gdt-Sg-7NC"/>
+                            <constraint firstItem="W2y-Iy-TVj" firstAttribute="top" secondItem="oEQ-fc-cby" secondAttribute="bottom" id="lmG-53-Nok"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="oEQ-fc-cby" id="ekL-VI-1Lp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zel-5z-3T6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -980,14 +994,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H70-Tf-fQh">
                                 <rect key="frame" x="0.0" y="636" width="414" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qnl-pI-ErM">
-                                        <rect key="frame" x="122" y="20" width="50" height="60"/>
-                                        <state key="normal" image="youke">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyj-ns-HSS">
-                                        <rect key="frame" x="242" y="20" width="50" height="60"/>
+                                        <rect key="frame" x="182" y="20" width="50" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="O1e-iT-kTm"/>
                                             <constraint firstAttribute="height" constant="60" id="QFH-Gm-v7r"/>
@@ -1006,21 +1014,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Yyj-ns-HSS" firstAttribute="centerX" secondItem="H70-Tf-fQh" secondAttribute="centerX" constant="60" id="4bK-av-qYU"/>
-                                    <constraint firstItem="qnl-pI-ErM" firstAttribute="centerX" secondItem="H70-Tf-fQh" secondAttribute="centerX" constant="-60" id="JrF-6d-LPx"/>
+                                    <constraint firstItem="Yyj-ns-HSS" firstAttribute="centerX" secondItem="H70-Tf-fQh" secondAttribute="centerX" id="4bK-av-qYU"/>
                                     <constraint firstItem="rP1-AB-zCC" firstAttribute="leading" secondItem="H70-Tf-fQh" secondAttribute="leading" id="NE9-AO-nds"/>
                                     <constraint firstItem="Yyj-ns-HSS" firstAttribute="centerY" secondItem="H70-Tf-fQh" secondAttribute="centerY" id="SuI-N7-1Gw"/>
-                                    <constraint firstItem="qnl-pI-ErM" firstAttribute="centerY" secondItem="H70-Tf-fQh" secondAttribute="centerY" id="XNU-2l-2hA"/>
                                     <constraint firstItem="rP1-AB-zCC" firstAttribute="top" secondItem="H70-Tf-fQh" secondAttribute="top" id="av2-8Y-CFS"/>
                                     <constraint firstAttribute="trailing" secondItem="rP1-AB-zCC" secondAttribute="trailing" id="bbh-17-GAd"/>
-                                    <constraint firstItem="rP1-AB-zCC" firstAttribute="leading" secondItem="qnl-pI-ErM" secondAttribute="trailing" id="chx-fg-UYK"/>
                                     <constraint firstAttribute="height" constant="100" id="kH2-sh-H6b"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="chx-fg-UYK"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1042,8 +1042,6 @@
                         <outlet property="VerifyLable" destination="nDF-Nk-ekg" id="xAf-SJ-30K"/>
                         <outlet property="iphoneTextField" destination="BvI-Hi-sPK" id="F0V-Wu-dNH"/>
                         <outlet property="login" destination="OcG-7E-32k" id="1ar-Ql-fvR"/>
-                        <outlet property="visiCenter" destination="JrF-6d-LPx" id="lOX-c5-kDV"/>
-                        <outlet property="visiLogin" destination="qnl-pI-ErM" id="CEO-wv-ky1"/>
                         <outlet property="weixinLogin" destination="Yyj-ns-HSS" id="wBv-h9-c66"/>
                         <outlet property="weixinLoginBgView" destination="H70-Tf-fQh" id="GUF-hg-uMR"/>
                     </connections>
@@ -1058,6 +1056,5 @@
         <image name="mr_d" width="40" height="40"/>
         <image name="weixin" width="50" height="60"/>
         <image name="weixing" width="40" height="40"/>
-        <image name="youke" width="50" height="60"/>
     </resources>
 </document>

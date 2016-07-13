@@ -123,6 +123,8 @@
 #define Success @"Success" //成功
 #define Failure @"Failure" //失败
 
+#define AppLoginType @"AppLoginType"
+
 #import "MJExtension.h"
 #import "NSDictionary+HuoBanMallSign.h"
 
