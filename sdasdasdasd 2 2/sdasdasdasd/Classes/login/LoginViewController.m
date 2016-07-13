@@ -147,15 +147,24 @@
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
     
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [MBProgressHUD hideHUD];
-        
-        AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        de.SwitchAccount = @"first";
-        RootViewController * root = [[RootViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = root;
-    });
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+    if ([str intValue] == 1) {
+        [SVProgressHUD dismiss];
+        [self.view endEditing:NO];
+        IponeVerifyViewController *login = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        login.isBundlPhone = YES;
+        [self.navigationController pushViewController:login animated:YES];
+    }else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            de.SwitchAccount = @"first";
+            RootViewController * root = [[RootViewController alloc] init];
+            [UIApplication sharedApplication].keyWindow.rootViewController = root;
+            [SVProgressHUD dismiss];
+        });
+    }
 }
 
 

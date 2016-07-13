@@ -47,23 +47,26 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    self.title = @"手机登录";
+    
     
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
 //    self.navigationController.navigationBar.translucent = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    
     
     if (self.isBundlPhone) {
         self.weixinLogin.hidden = YES;
+        self.title = @"绑定手机";
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
         self.title = @"绑定手机";
     }else {
+        self.title = @"手机登录";
         [self.login setTitle:@"登录" forState:UIControlStateNormal];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
     }
     
     
@@ -197,6 +200,8 @@
                 UserInfo *user = [NSKeyedUnarchiver unarchiveObjectWithFile:userfileName];
                 
                 [self GetUserList1:user.unionid];
+                
+//                [self UserLoginSuccess];
                 
             }else {
                 [SVProgressHUD showErrorWithStatus:json[@"msg"]];
@@ -359,7 +364,9 @@
             //写入
             [userData writeToFile:filename1 atomically:YES];
             
-            [self.navigationController popViewControllerAnimated:YES];
+            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+            
+            [self UserLoginSuccess];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadUserTabelView" object:nil];
         }
@@ -411,19 +418,28 @@
  *  @param note
  */
 - (void)UserLoginSuccess{
-    
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+    [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
+    if ([str intValue] == 1) {
         [SVProgressHUD dismiss];
-        [self.VerifyCode resignFirstResponder];
-        [self.iphoneTextField resignFirstResponder];
-        AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        de.SwitchAccount = @"first";
-        RootViewController * root = [[RootViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = root;
-        [SVProgressHUD dismiss];
-    });
+        [self.view endEditing:NO];
+        IponeVerifyViewController *login = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        login.isBundlPhone = YES;
+        [self.navigationController pushViewController:login animated:YES];
+    }else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            [self.VerifyCode resignFirstResponder];
+            [self.iphoneTextField resignFirstResponder];
+            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            de.SwitchAccount = @"first";
+            RootViewController * root = [[RootViewController alloc] init];
+            [UIApplication sharedApplication].keyWindow.rootViewController = root;
+            [SVProgressHUD dismiss];
+        });
+    }
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
 }
@@ -484,7 +500,7 @@
             //写入
             [userData writeToFile:filename1 atomically:YES];
             
-            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController popViewControllerAnimated:YES];
             
         }
     } failure:^(NSError *error) {
