@@ -196,7 +196,7 @@
                 NSString *userfileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
                 UserInfo *user = [NSKeyedUnarchiver unarchiveObjectWithFile:userfileName];
                 
-//                [self GetUserList1:user.unionid];
+                [self GetUserList1:user.unionid];
                 
             }else {
                 [SVProgressHUD showErrorWithStatus:json[@"msg"]];
@@ -411,7 +411,6 @@
  *  @param note
  */
 - (void)UserLoginSuccess{
-    
     
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -726,72 +725,6 @@
     
 }
 
-- (void)visiLoginApp {
-    
-    __weak IponeVerifyViewController * wself = self;
-    
-    [SVProgressHUD showWithStatus:@"登录中,请稍后"];
-    
-    NSString *str = [MD5Encryption md5by32:DeviceNo];
-    
-    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-  
-    parame[@"code"] = str;
-    
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/Account/guestAuthorize"];
-    [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
-//        NSLog(@"%@",json);
-        [SVProgressHUD dismiss];
-        if ([json[@"code"] integerValue] == 200) {
-            UserInfo * userInfo = [[UserInfo alloc] init];
-            userInfo.unionid = json[@"data"][@"authorizeCode"];
-            userInfo.nickname = json[@"data"][@"nickName"];
-            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
-            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
-            
-            
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
-            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
-                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
-            }else {
-                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:lefts forKey:LeftMenuModels];
-            //结束编码
-            [archiver finishEncoding];
-            
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
-            //写入
-            [data writeToFile:filename atomically:YES];
-            
-            [wself toGetMainUrl];
-            
-            [wself GetUserList:userInfo.unionid];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
-            
-            [wself UserLoginSuccess];
-        }
-    } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        NSLog(@"%@ --- ",error.description);
-    }];
-    
-}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
