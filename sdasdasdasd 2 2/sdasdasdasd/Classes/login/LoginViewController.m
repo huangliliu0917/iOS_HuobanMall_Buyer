@@ -50,17 +50,18 @@
     
     [UIViewController MonitorNetWork];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
 }
 
 
 
 - (void)OquthByWeiXinSuccess2:(NSNotification *) note{
-    
+    [SVProgressHUD showWithStatus:@"登录中"];
     NSLog(@"-=------------%@",note);
 //    AQuthModel * account = [AccountTool account];
 //    if (account.refresh_token.length) {

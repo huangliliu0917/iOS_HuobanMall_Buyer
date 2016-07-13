@@ -50,6 +50,8 @@
     //2、添加  pageControll
 //    [self setupPageControll];ToGetUserInfoError
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess3:) name:@"ToGetUserInfo" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin) name:@"ToGetUserInfoError" object:nil];
     [UIViewController MonitorNetWork];
@@ -57,6 +59,8 @@
 }
 
 - (void)OquthByWeiXinSuccess3:(NSNotification *) note{
+    
+    [SVProgressHUD showWithStatus:@"登录中"];
     
     AQuthModel * account = [AccountTool account];
     if (account.refresh_token.length) {
@@ -115,6 +119,7 @@
         de.SwitchAccount = @"first";
         RootViewController * root = [[RootViewController alloc] init];
         [UIApplication sharedApplication].keyWindow.rootViewController = root;
+        [SVProgressHUD dismiss];
     });
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];

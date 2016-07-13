@@ -233,30 +233,30 @@
 
 - (void)shareSdkSha{
     
-    
-    
-    
-    
     if(self.homeWebView.loading){
         return;
     }
-    NSString * urs =  self.homeWebView.request.URL.absoluteString;
-    
-    MallMessage * mallmess = [MallMessage getMallMessage];
-    
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSMutableString * url = [NSMutableString stringWithString:uraaa];
-    [url appendString:mallmess.mall_logo];
-    
+
     
     //1、创建分享参数
-    NSArray* imageArray = @[url];
+#pragma mark 分享修改
+    NSString *str = [self.homeWebView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+    
+    NSArray *array = [str componentsSeparatedByString:@"^"];
+    if (array.count != 4) {
+        return;
+    }
+    
+    NSString *temp = [self toCutew:array[2]];
+    
+    //1、创建分享参数
+    NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:nil
+        [shareParams SSDKSetupShareParamsByText:array[1]
                                          images:imageArray
-                                            url:[NSURL URLWithString:urs]
-                                          title:@"行装"
+                                            url:[NSURL URLWithString:temp]
+                                          title:array[0]
                                            type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
         [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
@@ -290,44 +290,15 @@
                        }
                        
                    }];
-
+        
     }
+    
+    
 }
 
--(void)xxxxx {
-        //    //构造分享内容
-        //    id<ISSContent> publishContent = [ShareSDK content:mallmess.mall_description
-        //                                       defaultContent:mallmess.mall_description
-        //                                                image:[ShareSDK imageWithUrl:url]
-        //                                                title:mallmess.mall_name
-        //                                                  url:[self toCutew:urs]      //mallmess.mall_site
-        //                                          description:mallmess.mall_description
-        //                                            mediaType:SSPublishContentMediaTypeNews];
-        //    [publishContent addSinaWeiboUnitWithContent:mallmess.mall_description image:[ShareSDK imageWithUrl:mallmess.mall_logo] locationCoordinate:nil];
-        //    //创建弹出菜单容器
-        //    id<ISSContainer> container = [ShareSDK container];
-        //
-        //    //弹出分享菜单
-        //    [ShareSDK showShareActionSheet:container
-        //                         shareList:nil
-        //                           content:publishContent
-        //                     statusBarTips:YES
-        //                       authOptions:nil
-        //                      shareOptions:nil
-        //                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        //
-        //                                if (state == SSResponseStateSuccess)
-        //                                {
-        //                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        //                                    [alert show];
-        //
-        //                                }
-        //                                else if (state == SSResponseStateFail)
-        //                                {
-        //                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-        //                                }
-        //                            }];
-}
+
+
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     
@@ -489,6 +460,8 @@
  *  切换账号
  */
 - (void)ToSwitchAccount{
+    
+    [SVProgressHUD showErrorWithStatus:@"没有账号可以切换"];
     
     if (self.LocalAccounts.count>1) {
         [self MildAlertView];
@@ -777,7 +750,11 @@
             [self presentViewController:root animated:YES completion:^{
                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
+            return NO;
+        }else if ([url rangeOfString:@"/UserCenter/AccountSwitcher.aspx"].location != NSNotFound) {
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchAccount" object:nil];
+            return NO;
         }else if([url rangeOfString:@"AppAlipay.aspx"].location != NSNotFound){
          
                 
@@ -841,25 +818,26 @@
 
             
         }else{
-            NSRange range = [url rangeOfString:@"__newframe"];
-            if (range.location != NSNotFound) {
-                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
-                funWeb.funUrl = url;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                return NO;
-            }else{
-                
-                NSRange range = [url rangeOfString:@"back"];
+            
+                NSRange range = [url rangeOfString:@"__newframe"];
                 if (range.location != NSNotFound) {
-                    self.showBackArrows = YES;
+                    UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+                    funWeb.funUrl = url;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    return NO;
                 }else{
-                    self.showBackArrows = NO;
+                    
+                    NSRange range = [url rangeOfString:@"back"];
+                    if (range.location != NSNotFound) {
+                        self.showBackArrows = YES;
+                    }else{
+                        self.showBackArrows = NO;
+                    }
+                    return YES;
                 }
-                return YES;
-            }
-            
-            
+                
+           
         }
         
         
@@ -897,12 +875,24 @@
             if (ran.location != NSNotFound) {
                 NSRange cc = NSMakeRange(ran.location+ran.length, 1);
                 newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:dddd];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                return NO;
+            }else {
+//                newUrl = url;
+//                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:url];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                return NO;
             }
-            NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
-            NSURL * urlStr = [NSURL URLWithString:dddd];
-            NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-            [self.homeWebView loadRequest:req];
-            return NO;
+//            NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+//            NSURL * urlStr = [NSURL URLWithString:dddd];
+//            NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//            [self.homeWebView loadRequest:req];
+//            return NO;
         }
     }
     return YES;

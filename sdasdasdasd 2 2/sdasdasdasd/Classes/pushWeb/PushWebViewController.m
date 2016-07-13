@@ -91,20 +91,6 @@
     [super viewDidLoad];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
-    
-    _webViewProgress = [[NJKWebViewProgress alloc] init];
-    _webViewProgress.webViewProxyDelegate = self;
-    _webViewProgress.progressDelegate = self;
-    
-    CGRect navBounds = self.navigationController.navigationBar.bounds;
-    CGRect barFrame = CGRectMake(0,
-                                 navBounds.size.height - 2,
-                                 navBounds.size.width,
-                                 2);
-    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [_webViewProgressView setProgress:0 animated:YES];
-    [self.navigationController.navigationBar addSubview:_webViewProgressView];
 
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
@@ -233,20 +219,14 @@
 
 - (void)shareSdkSha{
     
-    NSString * urs =  self.webView.request.URL.absoluteString;
-    
-    MallMessage * mallmess = [MallMessage getMallMessage];
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSMutableString * url = [NSMutableString stringWithString:uraaa];
-    [url appendString:mallmess.mall_logo];
-
-    
     //1、创建分享参数
 #pragma mark 分享修改
     NSString *str = [self.webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
     
     NSArray *array = [str componentsSeparatedByString:@"^"];
-    
+    if (array.count != 3) {
+        return;
+    }
     //1、创建分享参数
     NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
     if (imageArray) {

@@ -121,7 +121,12 @@
             [self WeiXinLog];
         }
     }];
-    
+    NSNumber *str = [[NSUserDefaults standardUserDefaults] objectForKey:TestMode];
+    if ([[str stringValue] isEqualToString:@"1"]) {
+        self.visiLogin.hidden = NO;
+    }else {
+        self.visiLogin.hidden = YES;
+    }
     [self.visiLogin bk_whenTapped:^{
         
         [self visiLoginApp];
@@ -207,6 +212,8 @@
         
         NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
         [url appendString:@"/Account/loginAuthorize"];
+        
+        [SVProgressHUD showWithStatus:@"登录中"];
         
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
             NSLog(@"%@",json);
@@ -399,6 +406,8 @@
  */
 - (void)UserLoginSuccess{
     
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
@@ -408,6 +417,7 @@
         de.SwitchAccount = @"first";
         RootViewController * root = [[RootViewController alloc] init];
         [UIApplication sharedApplication].keyWindow.rootViewController = root;
+        [SVProgressHUD dismiss];
     });
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
@@ -678,6 +688,8 @@
 
 - (void)OquthByWeiXinSuccess:(NSNotification *) note{
     
+    [SVProgressHUD showWithStatus:@"登录中"];
+    
     AQuthModel * account = [AccountTool account];
     if (account.refresh_token.length) {
         [self toRefreshaccess_token];
@@ -712,6 +724,7 @@
     
     __weak IponeVerifyViewController * wself = self;
     
+    [SVProgressHUD showWithStatus:@"登录中,请稍后"];
     
     NSString *str = [MD5Encryption md5by32:DeviceNo];
     
@@ -723,7 +736,8 @@
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/Account/guestAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
-        NSLog(@"%@",json);
+//        NSLog(@"%@",json);
+        [SVProgressHUD dismiss];
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"authorizeCode"];
@@ -767,6 +781,7 @@
             [wself UserLoginSuccess];
         }
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"%@ --- ",error.description);
     }];
     
@@ -779,6 +794,7 @@
     
     [self.VerifyCode resignFirstResponder];
 }
+
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

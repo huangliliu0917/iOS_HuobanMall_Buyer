@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wh6-OB-GmH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wh6-OB-GmH">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -372,7 +372,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LoginViewController" image="newfeature_04_414x736" translatesAutoresizingMaskIntoConstraints="NO" id="FaB-1m-uiT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LoginViewController" image="newfeature_06_414x736" translatesAutoresizingMaskIntoConstraints="NO" id="FaB-1m-uiT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18S-Rz-Mrf">
@@ -383,7 +383,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                 <state key="normal" title="开始体验">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1020,8 +1020,8 @@
                             <constraint firstItem="OcG-7E-32k" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="bottom" constant="20" id="lex-pE-89M"/>
                             <constraint firstAttribute="trailing" secondItem="H70-Tf-fQh" secondAttribute="trailing" id="mJM-qs-xuu"/>
                             <constraint firstAttribute="trailing" secondItem="OcG-7E-32k" secondAttribute="trailing" constant="13" id="mMv-5U-inZ"/>
-                            <constraint firstItem="arh-nc-uIR" firstAttribute="top" secondItem="IOj-lv-OHd" secondAttribute="bottom" constant="31" id="ouf-Z0-cgC"/>
-                            <constraint firstItem="B6V-Yp-cB6" firstAttribute="top" secondItem="H70-Tf-fQh" secondAttribute="bottom" id="pwh-ch-sqM"/>
+                            <constraint firstItem="arh-nc-uIR" firstAttribute="top" secondItem="IOj-lv-OHd" secondAttribute="bottom" constant="31" id="oGq-sS-OnX"/>
+                            <constraint firstItem="B6V-Yp-cB6" firstAttribute="top" secondItem="H70-Tf-fQh" secondAttribute="bottom" id="pya-Hp-lU7"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -1043,7 +1043,7 @@
     <resources>
         <image name="ewm_d" width="40" height="40"/>
         <image name="mr_d" width="40" height="40"/>
-        <image name="newfeature_04_414x736" width="414" height="736"/>
+        <image name="newfeature_06_414x736" width="414" height="736"/>
         <image name="weixin" width="50" height="60"/>
         <image name="youke" width="50" height="60"/>
     </resources>
