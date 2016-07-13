@@ -19,4 +19,6 @@
 
 @property (nonatomic, assign) BOOL isPhoneLogin;
 
+@property (nonatomic, assign) BOOL isBundlPhone;
+
 @end

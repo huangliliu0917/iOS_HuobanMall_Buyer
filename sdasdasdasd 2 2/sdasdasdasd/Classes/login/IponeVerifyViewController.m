@@ -413,7 +413,7 @@
 /**
  *  用户登录成功
  *
- *  @param note <#note description#>
+ *  @param note
  */
 - (void)UserLoginSuccess{
     
@@ -622,7 +622,7 @@
 /**
  *  提交数据给服务端
  *
- *  @param user <#user description#>
+ *  @param user 
  */
 - (void)toPostWeiXinUserMessage:(UserInfo *) user{
     __weak IponeVerifyViewController * wself = self;
