@@ -767,6 +767,10 @@
             
             
             return NO;
+        }else if ([url rangeOfString:@"/UserCenter/BindingWeixin.aspx"].location != NSNotFound) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeChatFistBack:) name:BingWeixinSuccess object:nil];
+            [self sendAuthRequest];
+            return NO;
         }else if ([url rangeOfString:@"/UserCenter/AppAccountSwitcher.aspx"].location != NSNotFound) {
             
             NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
