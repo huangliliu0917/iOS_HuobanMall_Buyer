@@ -376,11 +376,7 @@
     
     //绑定微信
     if ([models.menu_name isEqualToString:@"绑定微信"]) {
-//        if ([WXApi isWXAppInstalled]) {
-//            [self WeiXinLog];
-//        }else {
-//            [SVProgressHUD showErrorWithStatus:@"绑定失败"];
-//        }
+        
     }else if ([models.menu_name isEqualToString:@"绑定手机"]){
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
 //        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];

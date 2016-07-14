@@ -65,7 +65,9 @@
         self.title = @"手机登录";
         [self.login setTitle:@"登录" forState:UIControlStateNormal];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+            }];
         }];
     }
     

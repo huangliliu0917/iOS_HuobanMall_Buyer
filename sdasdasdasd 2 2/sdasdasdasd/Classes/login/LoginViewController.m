@@ -55,7 +55,9 @@
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+        }];
     }];
     
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];

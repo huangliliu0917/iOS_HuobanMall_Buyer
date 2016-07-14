@@ -1086,7 +1086,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = SC97784VSF;
+						DevelopmentTeam = Q3B3AD6JJH;
 					};
 					EFA6D36A1C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1458,7 +1458,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.olquanapp.ttds.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1495,7 +1495,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.olquanapp.ttds.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
