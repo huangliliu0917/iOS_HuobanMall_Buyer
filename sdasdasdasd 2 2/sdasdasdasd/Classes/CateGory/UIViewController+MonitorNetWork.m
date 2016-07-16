@@ -30,7 +30,7 @@
             default:
                 break;
         }
-    }]; 
+    }];
 }
 
 + (void)ToRemoveSandBoxDate{

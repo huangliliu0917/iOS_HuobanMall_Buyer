@@ -191,7 +191,7 @@
         
         //是否是只有手机登陆
         if (_isPhoneLogin) {
-            self.title = @"手机登陆";
+            self.title = @"手机登录";
             self.weixinLoginBgView.hidden = YES;
         }else {
             

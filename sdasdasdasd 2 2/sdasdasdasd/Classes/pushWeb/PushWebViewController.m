@@ -349,7 +349,7 @@
         if ([str intValue] == 0) {
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
             UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-            login.title = @"登陆";
+            login.title = @"登录";
             login.goUrl = goUrl;
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
@@ -358,14 +358,14 @@
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
             UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
             login.isPhoneLogin = YES;
-            login.title = @"登陆";
+            login.title = @"登录";
             login.goUrl = goUrl;
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
         }else if ([str intValue] == 2) {
             LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            login.title = @"登陆";
+            login.title = @"登录";
             login.goUrl = goUrl;
             UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
             [self presentViewController:root animated:YES completion:^{
