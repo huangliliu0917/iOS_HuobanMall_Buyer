@@ -30,7 +30,7 @@
             default:
                 break;
         }
-    }];
+    }]; 
 }
 
 + (void)ToRemoveSandBoxDate{
@@ -52,6 +52,12 @@
             NSLog(@"%@",error.description);
         }
     }
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:HuoBanMallUserId];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:IconHeadImage];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
     
 //    [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
 //       

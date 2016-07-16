@@ -31,6 +31,7 @@
 #import "AccountTool.h"
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
+#import "IponeVerifyViewController.h"
 
 @interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
 
@@ -129,6 +130,8 @@
     //加载刷新控件
     [self AddMjRefresh];
     
+    
+    self.shareBtn.hidden = YES;
  
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:self.shareBtn]];
     [UIViewController MonitorNetWork];
@@ -297,81 +300,16 @@
     
 }
 
-- (void)xxx{
-    
-//    //构造分享内容
-//    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-//                                       defaultContent:@"测试一下"
-//                                                image:[ShareSDK imageWithUrl:url]
-//                                                title:mallmess.mall_name
-//                                                  url:[self toCutew:urs]
-//                                          description:mallmess.mall_description
-//                                            mediaType:SSPublishContentMediaTypeNews];
-//    
-//    [publishContent addSinaWeiboUnitWithContent:mallmess.mall_description image:[ShareSDK imageWithUrl:mallmess.mall_logo] locationCoordinate:nil];
-//    //创建弹出菜单容器
-//    id<ISSContainer> container = [ShareSDK container];
-//    
-//    
-//    //弹出分享菜单
-//    [ShareSDK showShareActionSheet:container
-//                         shareList:nil
-//                           content:publishContent
-//                     statusBarTips:YES
-//                       authOptions:nil
-//                      shareOptions:nil
-//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                
-//                                if (state == SSResponseStateSuccess)
-//                                {
-//                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                                    [alert show];
-//                                    
-//                                }
-//                                else if (state == SSResponseStateFail)
-//                                {
-//                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-//                                }
-//                            }];
-//    //构造分享内容
-//    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-//                                       defaultContent:@"测试一下"
-//                                                image:[ShareSDK imageWithUrl:url]
-//                                                title:mallmess.mall_name
-//                                                  url:[self toCutew:urs]
-//                                          description:mallmess.mall_description
-//                                            mediaType:SSPublishContentMediaTypeNews];
-//    
-//    [publishContent addSinaWeiboUnitWithContent:mallmess.mall_description image:[ShareSDK imageWithUrl:mallmess.mall_logo] locationCoordinate:nil];
-//    //创建弹出菜单容器
-//    id<ISSContainer> container = [ShareSDK container];
-//    
-//    
-//    //弹出分享菜单
-//    [ShareSDK showShareActionSheet:container
-//                         shareList:nil
-//                           content:publishContent
-//                     statusBarTips:YES
-//                       authOptions:nil
-//                      shareOptions:nil
-//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                
-//                                if (state == SSResponseStateSuccess)
-//                                {
-//                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                                    [alert show];
-//                                    
-//                                }
-//                                else if (state == SSResponseStateFail)
-//                                {
-//                                    NSLog(@"分享失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
-//                                }
-//                            }];
- 
-}
-
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    NSString *str = [webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+    if (str.length != 0) {
+        self.shareBtn.hidden = NO;
+    }else {
+        self.shareBtn.hidden = YES;
+    }
+    
     [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
     
     self.refreshBtn.userInteractionEnabled = YES;
@@ -388,27 +326,61 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
-    NSString *url = request.URL.absoluteString;
+    NSString *temp = request.URL.absoluteString;
+    NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
         return NO;
     }
-//    NSLog(@"%@",url);
-    if ([url rangeOfString:@"/UserCenter/Login.aspx"].location != NSNotFound) {
-        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-        [self presentViewController:root animated:YES completion:^{
-            
-            [UIViewController ToRemoveSandBoxDate];
-        }];
+    if ([url rangeOfString:@"/usercenter/login.aspx"].location != NSNotFound) {
+        [UIViewController ToRemoveSandBoxDate];
         
-    }else if ([url rangeOfString:@"/UserCenter/AppAccountSwitcher.aspx"].location != NSNotFound) {
+        NSString *goUrl = [[NSString alloc] init];
+        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+            NSString *str = array[1];
+            if (str.length != 0) {
+                goUrl = str;
+            }
+        }
+        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+        
+        if ([str intValue] == 0) {
+            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            login.title = @"登陆";
+            login.goUrl = goUrl;
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }else if ([str intValue] == 1) {
+            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            login.isPhoneLogin = YES;
+            login.title = @"登陆";
+            login.goUrl = goUrl;
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }else if ([str intValue] == 2) {
+            LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            login.title = @"登陆";
+            login.goUrl = goUrl;
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }
+        
+        return NO;
+    }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
         NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
         NSLog(@"array:%@",array);
         [self changeWithUserInfo:array];
         return NO;
     }else{
-        NSRange range = [url rangeOfString:@"AppAlipay.aspx"];
+        NSRange range = [url rangeOfString:@"appalipay.aspx"];
 //        NSLog(@"%@",url);
         if (range.location != NSNotFound) {
             
@@ -740,6 +712,9 @@
     
 }
 
-
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_webViewProgressView removeFromSuperview];
+}
 
 @end

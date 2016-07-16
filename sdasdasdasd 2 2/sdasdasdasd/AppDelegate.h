@@ -16,5 +16,7 @@
 
 /**切换账号标志*/
 @property (strong,nonatomic) NSString * SwitchAccount;
+
+@property (nonatomic, strong) NSString *Agent;
 @end
 

@@ -36,9 +36,10 @@
 #import "PayModel.h"
 #import "MallMessage.h"
 #import "LeftMenuModel.h"
+#import "UIViewController+MonitorNetWork.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSString *Agent;
+
 
 @end
 
@@ -191,6 +192,7 @@
             
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
             
+            
             NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
             if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
                 LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
@@ -258,6 +260,11 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
             //写入
             [data writeToFile:filename atomically:YES];
+            
+        }else {
+            [UIViewController ToRemoveSandBoxDate];
+            [self resetUserAgent];
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
         NSLog(@"%@", error);
@@ -364,11 +371,11 @@
     //add my info to the new agent
     NSString *newAgent = nil;
     UserInfo * usaa = nil;
-    if ([AccountTool account]) {
-        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-        usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    };
+
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+    usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+
     
     NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
     

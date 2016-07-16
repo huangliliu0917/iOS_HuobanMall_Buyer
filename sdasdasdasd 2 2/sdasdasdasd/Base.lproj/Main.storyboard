@@ -109,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rAX-ee-kHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-646" y="-226"/>
+            <point key="canvasLocation" x="-660" y="-218"/>
         </scene>
         <!--Goods View Controller-->
         <scene sceneID="WwT-bJ-X7G">
@@ -955,9 +955,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无法收到验证码？" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHi-Di-zpv">
+                                        <rect key="frame" x="321" y="138" width="80" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="leading" secondItem="UiL-Fe-1mb" secondAttribute="trailing" constant="15" id="1RU-Fo-8S3"/>
+                                    <constraint firstItem="VHi-Di-zpv" firstAttribute="top" secondItem="nDF-Nk-ekg" secondAttribute="bottom" constant="8" id="3Ph-Nw-8aJ"/>
                                     <constraint firstAttribute="trailing" secondItem="BvI-Hi-sPK" secondAttribute="trailing" constant="13" id="4gJ-XV-nGG"/>
                                     <constraint firstItem="BvI-Hi-sPK" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="top" constant="30" id="NQG-Nh-g4e"/>
                                     <constraint firstItem="UiL-Fe-1mb" firstAttribute="leading" secondItem="BvI-Hi-sPK" secondAttribute="leading" id="Rse-e4-GIs"/>
@@ -965,6 +972,7 @@
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="trailing" secondItem="BvI-Hi-sPK" secondAttribute="trailing" id="X5Z-Ta-zbl"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="leading" secondItem="UiL-Fe-1mb" secondAttribute="trailing" constant="10" id="a0i-5v-tez"/>
                                     <constraint firstItem="UiL-Fe-1mb" firstAttribute="top" secondItem="BvI-Hi-sPK" secondAttribute="bottom" constant="10" id="gFa-gg-lfh"/>
+                                    <constraint firstItem="VHi-Di-zpv" firstAttribute="trailing" secondItem="nDF-Nk-ekg" secondAttribute="trailing" id="gcG-lB-86b"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="height" secondItem="UiL-Fe-1mb" secondAttribute="height" id="j5A-Ch-SBZ"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="top" secondItem="UiL-Fe-1mb" secondAttribute="top" id="nGd-RP-Kgg"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="leading" secondItem="UiL-Fe-1mb" secondAttribute="trailing" id="nLS-oh-6yi"/>
@@ -1022,10 +1030,39 @@
                                     <constraint firstAttribute="height" constant="100" id="kH2-sh-H6b"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9M-DC-Hwz">
+                                <rect key="frame" x="13" y="283" width="388" height="62"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjR-2X-A8N">
+                                        <rect key="frame" x="8" y="8" width="33" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="绑定手机后，可以快速找回支付密码，接受账户异常变动提醒" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEl-Ce-geO">
+                                        <rect key="frame" x="8" y="25" width="372" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="oEl-Ce-geO" firstAttribute="leading" secondItem="l9M-DC-Hwz" secondAttribute="leading" constant="8" id="HDt-i7-Pdj"/>
+                                    <constraint firstAttribute="trailing" secondItem="oEl-Ce-geO" secondAttribute="trailing" constant="8" id="Ifr-hW-4mm"/>
+                                    <constraint firstItem="mjR-2X-A8N" firstAttribute="leading" secondItem="l9M-DC-Hwz" secondAttribute="leading" constant="8" id="Xeo-a6-MYO"/>
+                                    <constraint firstAttribute="height" constant="62" id="f0u-Wg-p0a"/>
+                                    <constraint firstItem="mjR-2X-A8N" firstAttribute="top" secondItem="l9M-DC-Hwz" secondAttribute="top" constant="8" id="gel-7B-wq9"/>
+                                    <constraint firstItem="oEl-Ce-geO" firstAttribute="top" secondItem="mjR-2X-A8N" secondAttribute="bottom" constant="3" id="yZT-RM-xhu"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="l9M-DC-Hwz" secondAttribute="trailing" constant="13" id="676-R1-2ug"/>
+                            <constraint firstItem="l9M-DC-Hwz" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" constant="13" id="9Li-Nm-QWW"/>
                             <constraint firstAttribute="trailing" secondItem="arh-nc-uIR" secondAttribute="trailing" id="Nak-JQ-9cH"/>
+                            <constraint firstItem="l9M-DC-Hwz" firstAttribute="top" secondItem="OcG-7E-32k" secondAttribute="bottom" constant="8" id="RFQ-ed-MCl"/>
                             <constraint firstItem="H70-Tf-fQh" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" id="RcU-TI-xjt"/>
                             <constraint firstItem="arh-nc-uIR" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" id="UtI-c6-Eng"/>
                             <constraint firstItem="OcG-7E-32k" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" constant="13" id="X2a-2k-W0Q"/>
@@ -1042,13 +1079,15 @@
                         <outlet property="VerifyLable" destination="nDF-Nk-ekg" id="xAf-SJ-30K"/>
                         <outlet property="iphoneTextField" destination="BvI-Hi-sPK" id="F0V-Wu-dNH"/>
                         <outlet property="login" destination="OcG-7E-32k" id="1ar-Ql-fvR"/>
+                        <outlet property="phoneVerify" destination="VHi-Di-zpv" id="uhc-rb-mcx"/>
+                        <outlet property="warnView" destination="l9M-DC-Hwz" id="oks-Du-Hwn"/>
                         <outlet property="weixinLogin" destination="Yyj-ns-HSS" id="wBv-h9-c66"/>
                         <outlet property="weixinLoginBgView" destination="H70-Tf-fQh" id="GUF-hg-uMR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8dO-Xq-0jr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78" y="1500"/>
+            <point key="canvasLocation" x="-148" y="1411"/>
         </scene>
     </scenes>
     <resources>

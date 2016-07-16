@@ -36,7 +36,9 @@
     HomeViewController * home = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
 //    home.view.backgroundColor = [UIColor whiteColor];
     LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:home];
+    home.goUrl = _goUrl;
     self.centerViewController = navs;
+    
     
     //设置右侧视图控制器
     self.rightDrawerViewController = nil;

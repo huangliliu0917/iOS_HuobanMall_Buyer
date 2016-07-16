@@ -100,8 +100,6 @@
     
     [self LoginTest];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeixinQauth:) name:WeiXinQAuthSuccessNotigication object:nil];
-    
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
@@ -387,7 +385,7 @@
         }else{
             NSRange rangs = [url rangeOfString:@"?"];
             rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
-            NSString * urls = [NSDictionary ToSignUrlWithString:url];
+            NSString * urls = url;
             [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
                 
                 NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];

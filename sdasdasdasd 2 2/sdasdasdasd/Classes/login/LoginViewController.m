@@ -148,6 +148,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
     
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
     if ([str intValue] == 1) {
@@ -163,8 +164,21 @@
             AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             de.SwitchAccount = @"first";
             RootViewController * root = [[RootViewController alloc] init];
-            [UIApplication sharedApplication].keyWindow.rootViewController = root;
+            root.goUrl = _goUrl;
+            de.window.rootViewController = root;
+            [de.window makeKeyAndVisible];
+            
             [SVProgressHUD dismiss];
+//            if (_goUrl) {
+//                NSDictionary * objc = [NSDictionary dictionaryWithObject:_goUrl forKey:@"url"];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+//            }else {
+//                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+//                NSDictionary * objc = [NSDictionary dictionaryWithObject:ddd forKey:@"url"];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+//            }
+            
         });
     }
 }
@@ -298,6 +312,13 @@
     [url appendString:@"/weixin/LoginAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
         if ([json[@"code"] integerValue] == 200) {
+            
+            
+            user.nickname = json[@"data"][@"nickName"];
+            user.headimgurl = json[@"data"][@"headImgUrl"];
+            user.openid = json[@"data"][@"openId"];
+            user.relatedType = json[@"data"][@"relatedType"];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
@@ -314,10 +335,13 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
             //写入
             [data writeToFile:filename atomically:YES];
-            //登陆成功
-            [wself UserLoginSuccess];
             
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:user toFile:fileName];
+            [self UserLoginSuccess];
             
+            [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
 //        [MBProgressHUD hideHUD];

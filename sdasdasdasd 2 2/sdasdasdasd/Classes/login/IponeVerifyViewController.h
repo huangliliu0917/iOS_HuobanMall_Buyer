@@ -19,4 +19,7 @@
 
 @property (nonatomic, assign) BOOL isBundlPhone;
 
+
+@property (nonatomic, strong) NSString *goUrl;
+
 @end

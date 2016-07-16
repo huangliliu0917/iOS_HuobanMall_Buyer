@@ -324,17 +324,26 @@
     [_webViewProgressView setProgress:0 animated:YES];
     [self.navigationController.navigationBar addSubview:_webViewProgressView];
     
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     self.homeWebView.scalesPageToFit = YES;
     self.homeWebView.tag = 100;
     self.homeWebView.delegate = _webViewProgress;
-//    self.homeWebView.scrollView.bounces = NO;
-    [self.homeWebView loadRequest:req];
     
-    NSLog(@"dddurl: %@",urlStr);
+    
+    if (_goUrl) {
+        NSURL * urlStr = [NSURL URLWithString:_goUrl];
+        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        [self.homeWebView loadRequest:req];
+    }else {
+        
+        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+        NSURL * urlStr = [NSURL URLWithString:ddd];
+        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        [self.homeWebView loadRequest:req];
+    }
+//    self.homeWebView.scrollView.bounces = NO;
+    
+//    NSLog(@"dddurl: %@",urlStr);
     
     
     
@@ -356,6 +365,7 @@
     
     //集成刷新控件
     [self AddMjRefresh];
+    self.shareBtn.hidden = YES;
     
 //    [UIBarButtonItem alloc] initWithCustomView:self.refreshBtn],
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:self.shareBtn]];
@@ -363,8 +373,6 @@
     
     //左侧返回到首页
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeixinQauth) name:WeiXinQAuthSuccessNotigication object:nil];
     
     //切换账号
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
@@ -456,7 +464,7 @@
 - (void)switchUserInfoSuccess {
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
+    NSURL * urlStr = [NSURL URLWithString:ddd];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     [self.homeWebView loadRequest:req];
 }
@@ -484,6 +492,11 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
@@ -492,10 +505,11 @@
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    
-    
-    
+
     [self blackView];
+    
+    
+    
 }
 
 
@@ -617,16 +631,6 @@
 }
 
 
-
-- (void)WeixinQauth{
-    
-    NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:HomeUrl]];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
-}
-
-
-
 /**
  *  网页
  */
@@ -649,6 +653,9 @@
 
 - (void)LeftbackToHome:(NSNotification *) note{
     
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self BackToWebView];
+    
     NSString * backUrl = [note.userInfo objectForKey:@"url"];
     NSURL * newUrl = [NSURL URLWithString:backUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:newUrl];
@@ -656,11 +663,17 @@
 }
 
 - (void)CannelLoginBackToHome {
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:[NSDictionary ToSignUrlWithString:ddd]];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
+    AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    RootViewController * root = [[RootViewController alloc] init];
+    de.window.rootViewController = root;
+    [de.window makeKeyAndVisible];
+    
+//    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+//    NSURL * urlStr = [NSURL URLWithString:ddd];
+//    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//    [self.homeWebView loadRequest:req];
 }
 
 - (UIView *)ReturnNavPictureWithName:(NSString *)name andTwo:(NSString *)share{
@@ -735,6 +748,12 @@
                 self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
             }];
         }
+        NSString *str = [self.homeWebView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+        if (str.length != 0) {
+            self.shareBtn.hidden = NO;
+        }else {
+            self.shareBtn.hidden = YES;
+        }
     }
     
     _shareBtn.userInteractionEnabled = YES;
@@ -744,7 +763,8 @@
 
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSString *url = request.URL.absoluteString;
+    NSString *temp = request.URL.absoluteString;
+    NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
         return NO;
     }
@@ -753,8 +773,22 @@
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             return YES;
         }
-        if ([url rangeOfString:@"/UserCenter/Login.aspx"].location !=  NSNotFound) {
-             [UIViewController ToRemoveSandBoxDate];
+        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound) {
+            
+            NSString *goUrl = [[NSString alloc] init];
+            if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+                NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+                NSString *str = array[1];
+                if (str.length != 0) {
+                    goUrl = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
+                        goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
+                    }
+                }
+            }
+            
+            [UIViewController ToRemoveSandBoxDate];
+            
             UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
@@ -763,29 +797,35 @@
                 IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
                 UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
                 login.title = @"登陆";
+                login.goUrl = goUrl;
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                    [self BackToWebView];
                 }];
             }else if ([str intValue] == 1) {
                 IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
                 UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
                 login.isPhoneLogin = YES;
                 login.title = @"登陆";
+                login.goUrl = goUrl;
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                    [self BackToWebView];
                 }];
             }else if ([str intValue] == 2) {
                 LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
                 login.title = @"登陆";
+                login.goUrl = goUrl;
                 UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+                    [self BackToWebView];
                 }];
             }
             
             
             return NO;
-        }else if ([url rangeOfString:@"/UserCenter/BindingWeixin.aspx"].location != NSNotFound) {
+        }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
             
             if ([WXApi isWXAppInstalled]) {
                 [self WeiXinLog];
@@ -793,13 +833,13 @@
                 [SVProgressHUD showErrorWithStatus:@"绑定失败"];
             }
             return NO;
-        }else if ([url rangeOfString:@"/UserCenter/AppAccountSwitcher.aspx"].location != NSNotFound) {
+        }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
             
             NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
             NSLog(@"array:%@",array);
             [self changeWithUserInfo:array];
             return NO;
-        }else if([url rangeOfString:@"AppAlipay.aspx"].location != NSNotFound){
+        }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
          
                 
                 self.ServerPayUrl = [url copy];
@@ -919,7 +959,7 @@
             if (ran.location != NSNotFound) {
                 NSRange cc = NSMakeRange(ran.location+ran.length, 1);
                 newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
-                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSString * dddd = newUrl;
                 NSURL * urlStr = [NSURL URLWithString:dddd];
                 NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
                 [self.homeWebView loadRequest:req];
@@ -1341,11 +1381,14 @@
         //        NSLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
-            [self GetUserList1:userInfo.unionid];
             
+            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+
+            [self.homeWebView reload];
             
         }else {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
+            
+            [SVProgressHUD showErrorWithStatus:@"绑定失败"];
         }
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -1353,92 +1396,12 @@
     
 }
 
-- (void)GetUserList1:(NSString *)unionid{
-    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    parame[@"unionid"] = unionid;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/weixin/getuserlist"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        if ([json[@"code"] integerValue] == 200){
-            NSArray * account = [AccountModel objectArrayWithKeyValuesArray:json[@"data"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:account forKey:AccountList];
-            //结束编码
-            [archiver finishEncoding];
-            
-            
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
-            //写入
-            [data writeToFile:filename atomically:YES];
-            
-            /**
-             *  用户数据存到数组
-             */
-            NSMutableArray *userList = [NSMutableArray array];
-            NSArray *temp = json[@"data"];
-            for (NSDictionary *dic in temp) {
-                UserInfo *user = [[UserInfo alloc] init];
-                user.headimgurl = dic[@"wxHeadImg"];
-                user.nickname = dic[@"wxNickName"];
-                user.openid = dic[@"wxOpenId"];
-                user.unionid = dic[@"wxUnionId"];
-                user.relatedType = dic[@"relatedType"];
-                [userList addObject:user];
-                if (account.count == 1) {
-                    //                    [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"levelName"] forKey:HuoBanMallMemberLevel];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"userid"] forKey:HuoBanMallUserId];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"wxHeadImg"] forKey:IconHeadImage];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"userType"] forKey:MallUserType];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic[@"relatedType"] forKey:MallUserRelatedType];
-                    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-                    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-                    [NSKeyedArchiver archiveRootObject:user toFile:fileName];
-                }
-            }
-            if (account.count > 1) {
-                NSDictionary *dic = temp[1];
-                [[NSUserDefaults standardUserDefaults] setObject:dic[@"levelName"] forKey:HuoBanMallMemberLevel];
-                [[NSUserDefaults standardUserDefaults] setObject:dic[@"userid"] forKey:HuoBanMallUserId];
-                [[NSUserDefaults standardUserDefaults] setObject:dic[@"wxHeadImg"] forKey:IconHeadImage];
-                [[NSUserDefaults standardUserDefaults] setObject:dic[@"userType"] forKey:MallUserType];
-                [[NSUserDefaults standardUserDefaults] setObject:dic[@"relatedType"] forKey:MallUserRelatedType];
-                UserInfo *user = [[UserInfo alloc] init];
-                user.headimgurl = dic[@"wxHeadImg"];
-                user.nickname = dic[@"wxNickName"];
-                user.openid = dic[@"wxOpenId"];
-                user.unionid = dic[@"wxUnionId"];
-                user.relatedType = dic[@"relatedType"];
-                NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-                [NSKeyedArchiver archiveRootObject:user toFile:fileName];
-                
-            }
-            NSMutableData *userData = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
-            [userArchiver encodeObject:userList forKey:UserInfoList];
-            [data writeToFile:filename atomically:YES];
-            [userArchiver finishEncoding];
-            
-            NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
-            //写入
-            [userData writeToFile:filename1 atomically:YES];
-            
-            [self.homeWebView reload];
-            
-            [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
-        }
-    } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
-    }];
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_webViewProgressView removeFromSuperview];
 }
+
 
 
 @end

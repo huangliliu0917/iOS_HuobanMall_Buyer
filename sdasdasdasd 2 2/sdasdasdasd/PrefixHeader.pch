@@ -127,5 +127,6 @@
 
 #import "MJExtension.h"
 #import "NSDictionary+HuoBanMallSign.h"
+#import "MD5Encryption.h"
 
 #endif /* PrefixHeader_pch */
