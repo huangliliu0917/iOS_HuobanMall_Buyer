@@ -533,7 +533,7 @@
     
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchAccount" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchAccount" object:nil];
     }];
 }
 

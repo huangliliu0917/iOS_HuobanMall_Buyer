@@ -128,5 +128,5 @@
 #import "MJExtension.h"
 #import "NSDictionary+HuoBanMallSign.h"
 #import "MD5Encryption.h"
-
+#import <WebKit/WebKit.h>
 #endif /* PrefixHeader_pch */

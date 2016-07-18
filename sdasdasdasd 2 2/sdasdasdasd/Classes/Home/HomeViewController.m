@@ -73,7 +73,7 @@
 
 
 /**账号提升选秀*/
-@property (nonatomic,strong) UITableView * midtableView;
+//@property (nonatomic,strong) UITableView * midtableView;
 
 /**登陆后的背景遮罩*/
 @property (nonatomic,strong) UIView * backView;
@@ -376,7 +376,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
     
     //切换账号
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
@@ -473,25 +473,25 @@
 /**
  *  切换账号
  */
-- (void)ToSwitchAccount{
-    
-    [SVProgressHUD showErrorWithStatus:@"没有账号可以切换"];
-    
-    if (self.LocalAccounts.count>1) {
-        [self MildAlertView];
-    }
-}
+//- (void)ToSwitchAccount{
+//    
+//    [SVProgressHUD showErrorWithStatus:@"没有账号可以切换"];
+//    
+//    if (self.LocalAccounts.count>1) {
+//        [self MildAlertView];
+//    }
+//}
 
 
-- (void)blackView{
-    AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if ([de.SwitchAccount isEqualToString:@"first"]) {
-        if (self.LocalAccounts.count>1) {
-            [self MildAlertView];
-        }
-        de.SwitchAccount = @"xxx";
-    }
-}
+//- (void)blackView{
+//    AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    if ([de.SwitchAccount isEqualToString:@"first"]) {
+//        if (self.LocalAccounts.count>1) {
+//            [self MildAlertView];
+//        }
+//        de.SwitchAccount = @"xxx";
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -507,7 +507,7 @@
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
 
-    [self blackView];
+//    [self blackView];
     
     
     
@@ -517,27 +517,27 @@
 
 
 
-- (void)MildAlertView{
-    
-    UIView * backgroundView = [[UIView alloc] init];
-    _backView = backgroundView;
-    backgroundView.userInteractionEnabled = YES;
-    backgroundView.frame = CGRectMake(0, 0,SecrenWith,SecrenHeight);
-    backgroundView.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.800];
-    [self.view.window insertSubview:backgroundView aboveSubview:self.view];
-    
-    
-    
-    
-    CGFloat midTableH = 55 + 65 + (self.LocalAccounts.count>5?5:self.LocalAccounts.count) * 40;//
-    _midtableView = [[UITableView alloc] initWithFrame:CGRectMake((SecrenWith - 200)/ 2, (SecrenHeight - midTableH) / 2, 200, midTableH) style:UITableViewStylePlain];
-    _midtableView.dataSource = self;
-    _midtableView.delegate = self;
-    _midtableView.backgroundColor = [UIColor whiteColor];
-    _midtableView.layer.cornerRadius = 10;
-    _midtableView.scrollEnabled = NO;
-    [backgroundView addSubview:_midtableView];
-}
+//- (void)MildAlertView{
+//    
+//    UIView * backgroundView = [[UIView alloc] init];
+//    _backView = backgroundView;
+//    backgroundView.userInteractionEnabled = YES;
+//    backgroundView.frame = CGRectMake(0, 0,SecrenWith,SecrenHeight);
+//    backgroundView.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.800];
+//    [self.view.window insertSubview:backgroundView aboveSubview:self.view];
+//    
+//    
+//    
+//    
+//    CGFloat midTableH = 55 + 65 + (self.LocalAccounts.count>5?5:self.LocalAccounts.count) * 40;//
+//    _midtableView = [[UITableView alloc] initWithFrame:CGRectMake((SecrenWith - 200)/ 2, (SecrenHeight - midTableH) / 2, 200, midTableH) style:UITableViewStylePlain];
+//    _midtableView.dataSource = self;
+//    _midtableView.delegate = self;
+//    _midtableView.backgroundColor = [UIColor whiteColor];
+//    _midtableView.layer.cornerRadius = 10;
+//    _midtableView.scrollEnabled = NO;
+//    [backgroundView addSubview:_midtableView];
+//}
 
 #pragma mark tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
