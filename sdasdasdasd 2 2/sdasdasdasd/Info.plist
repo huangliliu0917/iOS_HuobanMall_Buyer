@@ -33,11 +33,18 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxaeda2d5603b12302</string>
 				<string>wb1000919385</string>
 				<string>wb1000919385</string>
 				<string>QQ41DE4C2E</string>
 				<string>tencent1105087534</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx16a5589cff4c76d5</string>
 			</array>
 		</dict>
 	</array>

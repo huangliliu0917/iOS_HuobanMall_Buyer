@@ -37,6 +37,7 @@
 #import "MallMessage.h"
 #import "LeftMenuModel.h"
 #import "UIViewController+MonitorNetWork.h"
+#import <SVProgressHUD.h>
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 
@@ -60,7 +61,7 @@
 
     [self setImage];
     
-    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     _maskLayer = [CALayer layer];
     [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
@@ -214,6 +215,9 @@
         
     } failure:^(NSError *error) {
 //        NSLog(@"%@", error);
+        [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
+        
+        
     }];
 }
 
@@ -224,7 +228,7 @@
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/Account/getAppUserInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-//        NSLog(@"%@", json);
+
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"unionId"];

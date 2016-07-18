@@ -928,7 +928,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="arh-nc-uIR">
-                                <rect key="frame" x="0.0" y="51" width="414" height="160"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="160"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BvI-Hi-sPK">
                                         <rect key="frame" x="13" y="30" width="388" height="45"/>
@@ -987,7 +987,7 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcG-7E-32k">
-                                <rect key="frame" x="13" y="231" width="388" height="44"/>
+                                <rect key="frame" x="13" y="200" width="388" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Jqh-vD-tYa"/>
                                 </constraints>
@@ -1031,7 +1031,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9M-DC-Hwz">
-                                <rect key="frame" x="13" y="283" width="388" height="62"/>
+                                <rect key="frame" x="13" y="252" width="388" height="62"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjR-2X-A8N">
                                         <rect key="frame" x="8" y="8" width="33" height="14"/>
@@ -1069,7 +1069,7 @@
                             <constraint firstItem="OcG-7E-32k" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="bottom" constant="20" id="lex-pE-89M"/>
                             <constraint firstAttribute="trailing" secondItem="H70-Tf-fQh" secondAttribute="trailing" id="mJM-qs-xuu"/>
                             <constraint firstAttribute="trailing" secondItem="OcG-7E-32k" secondAttribute="trailing" constant="13" id="mMv-5U-inZ"/>
-                            <constraint firstItem="arh-nc-uIR" firstAttribute="top" secondItem="IOj-lv-OHd" secondAttribute="bottom" constant="31" id="oGq-sS-OnX"/>
+                            <constraint firstItem="arh-nc-uIR" firstAttribute="top" secondItem="IOj-lv-OHd" secondAttribute="bottom" id="oGq-sS-OnX"/>
                             <constraint firstItem="B6V-Yp-cB6" firstAttribute="top" secondItem="H70-Tf-fQh" secondAttribute="bottom" id="pya-Hp-lU7"/>
                         </constraints>
                     </view>

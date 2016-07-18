@@ -177,6 +177,18 @@
         self.title = @"绑定手机";
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
         self.title = @"绑定手机";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"跳过" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            [SVProgressHUD dismiss];
+            [self.VerifyCode resignFirstResponder];
+            [self.iphoneTextField resignFirstResponder];
+            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            de.SwitchAccount = @"first";
+            
+            RootViewController * root = [[RootViewController alloc] init];
+            root.goUrl = _goUrl;
+            de.window.rootViewController = root;
+            [de.window makeKeyAndVisible];
+        }];
     }else {
         self.title = @"登录";
         self.messageLabel.hidden = NO;
@@ -266,18 +278,16 @@
             if ([json[@"code"] intValue] == 200) {
                 [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
 
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (_goUrl.length != 0) {
-                        NSDictionary * objc = [NSDictionary dictionaryWithObject:_goUrl forKey:@"url"];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-                    }else {
-                        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-                        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-                        NSDictionary * objc = [NSDictionary dictionaryWithObject:ddd forKey:@"url"];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-                    }
-//                    [SVProgressHUD dismiss];
-                }];
+                [SVProgressHUD dismiss];
+                [self.VerifyCode resignFirstResponder];
+                [self.iphoneTextField resignFirstResponder];
+                AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                de.SwitchAccount = @"first";
+                
+                RootViewController * root = [[RootViewController alloc] init];
+                root.goUrl = _goUrl;
+                de.window.rootViewController = root;
+                [de.window makeKeyAndVisible];
     
                 
             }else {
@@ -434,7 +444,7 @@
             de.window.rootViewController = root;
             [de.window makeKeyAndVisible];
             
-            [SVProgressHUD dismiss];
+
             
             
         });

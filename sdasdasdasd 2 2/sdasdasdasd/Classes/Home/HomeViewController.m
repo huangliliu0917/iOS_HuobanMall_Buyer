@@ -107,6 +107,7 @@
         _debugInfo = [NSMutableString string];
     }
     return _debugInfo;
+
 }
 
 
@@ -389,6 +390,8 @@
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
+    
+    WKWebView
 }
 
 /**
