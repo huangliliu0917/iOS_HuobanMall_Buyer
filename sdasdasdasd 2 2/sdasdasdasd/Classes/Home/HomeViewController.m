@@ -331,6 +331,7 @@
     self.homeWebView.delegate = _webViewProgress;
     
     
+    
     if (_goUrl) {
         NSURL * urlStr = [NSURL URLWithString:_goUrl];
         NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -382,7 +383,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
-    
     
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"getmsiteurlSuccess" object:nil];
@@ -1452,6 +1452,7 @@
     [super viewDidDisappear:animated];
     [_webViewProgressView removeFromSuperview];
 }
+
 
 
 

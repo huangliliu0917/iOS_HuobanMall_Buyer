@@ -35,9 +35,9 @@
 #import "RootViewController.h"
 #import "IponeVerifyViewController.h"
 
-@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
+@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate,WKUIDelegate,WKNavigationDelegate>
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) WKWebView *webView;
 /***/
 @property(nonatomic,strong) NSMutableString * debugInfo;
 
@@ -58,7 +58,9 @@
 @property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
 @property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
+
 @end
+
 
 @implementation PushWebViewController
 
@@ -105,28 +107,33 @@
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
 
-    _webViewProgress = [[NJKWebViewProgress alloc] init];
-    _webViewProgress.webViewProxyDelegate = self;
-    _webViewProgress.progressDelegate = self;
+//    _webViewProgress = [[NJKWebViewProgress alloc] init];
+//    _webViewProgress.webViewProxyDelegate = self;
+//    _webViewProgress.progressDelegate = self;
+//    
+//    CGRect navBounds = self.navigationController.navigationBar.bounds;
+//    CGRect barFrame = CGRectMake(0,
+//                                 navBounds.size.height - 2,
+//                                 navBounds.size.width,
+//                                 2);
+//    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+//    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+//    [_webViewProgressView setProgress:0 animated:YES];
+//    [self.navigationController.navigationBar addSubview:_webViewProgressView];
     
-    CGRect navBounds = self.navigationController.navigationBar.bounds;
-    CGRect barFrame = CGRectMake(0,
-                                 navBounds.size.height - 2,
-                                 navBounds.size.width,
-                                 2);
-    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [_webViewProgressView setProgress:0 animated:YES];
-    [self.navigationController.navigationBar addSubview:_webViewProgressView];
+    
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+    self.webView.UIDelegate = self;
+    self.webView.navigationDelegate = self;
+    [self.view addSubview:self.webView];
+    
+    
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    self.webView.scalesPageToFit = YES;
-    self.webView.delegate = _webViewProgress;
     self.webView.tag = 20;
-    //    self.homeBottonWebView.hidden = YES;
-    //    self.webView.scrollView.bounces = NO;
-    //    self.webView.scrollView.scrollEnabled = NO;
+    self.webView.scrollView.bounces = NO;
+    self.webView.scrollView.scrollEnabled = NO;
     [self.webView loadRequest:req];
     
     //加载刷新控件
@@ -249,55 +256,60 @@
     
     //1、创建分享参数
 #pragma mark 分享修改
-    NSString *str = [self.webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
     
-    NSArray *array = [str componentsSeparatedByString:@"^"];
-    if (array.count != 4) {
-        return;
-    }
-    //1、创建分享参数
-    NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
-    if (imageArray) {
-        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:array[1]
-                                         images:imageArray
-                                            url:[NSURL URLWithString:array[2]]
-                                          title:array[0]
-                                           type:SSDKContentTypeAuto];
-        //2、分享（可以弹出我们的分享菜单和编辑界面）
-        [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
-                                 items:nil
-                           shareParams:shareParams
-                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                       
-                       switch (state) {
-                           case SSDKResponseStateSuccess:
-                           {
-                               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
-                                                                                   message:nil
-                                                                                  delegate:nil
-                                                                         cancelButtonTitle:@"确定"
-                                                                         otherButtonTitles:nil];
-                               [alertView show];
-                               break;
-                           }
-                           case SSDKResponseStateFail:
-                           {
-                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                               message:[NSString stringWithFormat:@"%@",error]
-                                                                              delegate:nil
-                                                                     cancelButtonTitle:@"OK"
-                                                                     otherButtonTitles:nil, nil];
-                               [alert show];
-                               break;
-                           }
-                           default:
-                               break;
-                       }
-                       
-                   }];
+    [self.webView evaluateJavaScript:@"__getShareStr()" completionHandler:^(id _Nullable str, NSError * _Nullable error) {
         
-    }
+        NSArray *array = [str componentsSeparatedByString:@"^"];
+        if (array.count != 4) {
+            return;
+        }
+        //1、创建分享参数
+        NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
+        if (imageArray) {
+            NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+            [shareParams SSDKSetupShareParamsByText:array[1]
+                                             images:imageArray
+                                                url:[NSURL URLWithString:array[2]]
+                                              title:array[0]
+                                               type:SSDKContentTypeAuto];
+            //2、分享（可以弹出我们的分享菜单和编辑界面）
+            [ShareSDK showShareActionSheet:nil //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+                                     items:nil
+                               shareParams:shareParams
+                       onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                           
+                           switch (state) {
+                               case SSDKResponseStateSuccess:
+                               {
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                       message:nil
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"确定"
+                                                                             otherButtonTitles:nil];
+                                   [alertView show];
+                                   break;
+                               }
+                               case SSDKResponseStateFail:
+                               {
+                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                   message:[NSString stringWithFormat:@"%@",error]
+                                                                                  delegate:nil
+                                                                         cancelButtonTitle:@"OK"
+                                                                         otherButtonTitles:nil, nil];
+                                   [alert show];
+                                   break;
+                               }
+                               default:
+                                   break;
+                           }
+                           
+                       }];
+            
+        }
+    }];
+    
+
+    
 
     
 }
@@ -490,7 +502,9 @@
                     [dict addEntriesFromDictionary:dt];
                 }];
                 NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
-                [self.webView stringByEvaluatingJavaScriptFromString:js];
+                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable str , NSError * _Nullable error) {
+                    
+                }];
             }else{
                 [self MallAliPay:cc];
             }
@@ -727,5 +741,8 @@
     [super viewDidDisappear:animated];
     [_webViewProgressView removeFromSuperview];
 }
+
+#pragma mark wk
+
 
 @end
