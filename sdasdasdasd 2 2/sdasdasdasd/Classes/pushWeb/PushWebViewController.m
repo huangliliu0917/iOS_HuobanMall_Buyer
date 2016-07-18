@@ -55,8 +55,8 @@
 /**支付的url*/
 @property(nonatomic,strong) NSString * ServerPayUrl;
 
-@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
-@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
+//@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
+//@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
 
 @end
@@ -122,18 +122,16 @@
 //    [self.navigationController.navigationBar addSubview:_webViewProgressView];
     
     
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     [self.view addSubview:self.webView];
     
-    
-    
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     self.webView.tag = 20;
-    self.webView.scrollView.bounces = NO;
-    self.webView.scrollView.scrollEnabled = NO;
+//    self.webView.scrollView.bounces = NO;
+//    self.webView.scrollView.scrollEnabled = NO;
     [self.webView loadRequest:req];
     
     //加载刷新控件
@@ -315,153 +313,153 @@
 }
 
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    NSString *str = [webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
-    if (str.length != 0) {
-        self.shareBtn.hidden = NO;
-    }else {
-        self.shareBtn.hidden = YES;
-    }
-    
-    [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
-    
-    self.refreshBtn.userInteractionEnabled = YES;
-   
-    self.title = self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    _shareBtn.userInteractionEnabled = YES;
-     [self.webView.scrollView.mj_header endRefreshing];
-}
+//- (void)webViewDidFinishLoad:(UIWebView *)webView{
+//    
+//    NSString *str = [webView stringByEvaluatingJavaScriptFromString:@"__getShareStr()"];
+//    if (str.length != 0) {
+//        self.shareBtn.hidden = NO;
+//    }else {
+//        self.shareBtn.hidden = YES;
+//    }
+//    
+//    [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
+//    
+//    self.refreshBtn.userInteractionEnabled = YES;
+//   
+//    self.title = self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+//    _shareBtn.userInteractionEnabled = YES;
+//     [self.webView.scrollView.mj_header endRefreshing];
+//}
+//
+//- (void)webViewDidStartLoad:(UIWebView *)webView{
+//    
+//    _shareBtn.userInteractionEnabled = NO;
+//}
 
-- (void)webViewDidStartLoad:(UIWebView *)webView{
-    
-    _shareBtn.userInteractionEnabled = NO;
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    
-    NSString *temp = request.URL.absoluteString;
-    NSString *url = [temp lowercaseString];
-    if ([url isEqualToString:@"about:blank"]) {
-        return NO;
-    }
-    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
-        [UIViewController ToRemoveSandBoxDate];
-        
-        NSString *goUrl = [[NSString alloc] init];
-        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
-            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
-            NSString *str = array[1];
-            if (str.length != 0) {
-                goUrl = str;
-            }
-        }
-        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        
-        NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
-        
-        if ([str intValue] == 0) {
-            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-            login.title = @"登录";
-            login.goUrl = goUrl;
-            [self presentViewController:root animated:YES completion:^{
-                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            }];
-        }else if ([str intValue] == 1) {
-            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-            login.isPhoneLogin = YES;
-            login.title = @"登录";
-            login.goUrl = goUrl;
-            [self presentViewController:root animated:YES completion:^{
-                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            }];
-        }else if ([str intValue] == 2) {
-            LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            login.title = @"登录";
-            login.goUrl = goUrl;
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-            [self presentViewController:root animated:YES completion:^{
-                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            }];
-        }
-        
-        return NO;
-    }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
-        NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
-        NSLog(@"array:%@",array);
-        [self changeWithUserInfo:array];
-        return NO;
-    }else{
-        NSRange range = [url rangeOfString:@"appalipay.aspx"];
-//        NSLog(@"%@",url);
-        if (range.location != NSNotFound) {
-            
-            self.ServerPayUrl = [url copy];
-            NSRange trade_no = [url rangeOfString:@"trade_no="];
-            NSRange customerID = [url rangeOfString:@"customerID="];
-//            NSRange paymentType = [url rangeOfString:@"paymentType="];
-            NSRange trade_noRange = {trade_no.location + 9,customerID.location-trade_no.location-10};
-            NSString * trade_noss = [url substringWithRange:trade_noRange];//订单号
-            self.orderNo = trade_noss;
-//            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
-            // 1.得到data
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-            NSData *data = [NSData dataWithContentsOfFile:filename];
-            // 2.创建反归档对象
-            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            // 3.解码并存到数组中
-            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-            
-            
-            NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-            [url appendFormat:@"%@?orderid=%@",@"/order/GetOrderInfo",trade_noss];
-            
-            AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-            NSString * to = [NSDictionary ToSignUrlWithString:url];
-            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, id json) {
-//                NSLog(@"%@",json);
-                if ([json[@"code"] integerValue] == 200) {
-                    self.priceNumber = json[@"data"][@"Final_Amount"];
-//                    NSLog(@"%@",self.priceNumber);
-                    NSString * des =  json[@"data"][@"ToStr"]; //商品描述
-//                    NSLog(@"%@",json[@"data"][@"ToStr"]);
-                    self.proDes = [des copy];
-//                    NSLog(@"%@",self.proDes);
-                    if(namesArray.count == 1){
-                        PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
-                        self.paymodel = pay;
-                        if ([pay.payType integerValue] == 300) {//300微信
-                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
-                            aa.tag = 500;//单个微信支付
-                            [aa showInView:self.view];
-                        }
-                        if ([pay.payType integerValue] == 400) {//400支付宝
-                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝", nil];
-                            aa.tag = 700;//单个支付宝支付
-                            [aa showInView:self.view];
-                        }
-                    }else if(namesArray.count == 2){
-                        UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
-                        aa.tag = 900;//两个都有的支付
-                        [aa showInView:self.view];
-                    }
-                    
-                }
-                
-                
-            } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-                NSLog(@"%@",error.description);
-            }];
-
-            return NO;
-        }
-    }
-    
-    return YES;
-}
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+//    
+//    NSString *temp = request.URL.absoluteString;
+//    NSString *url = [temp lowercaseString];
+//    if ([url isEqualToString:@"about:blank"]) {
+//        return NO;
+//    }
+//    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
+//        [UIViewController ToRemoveSandBoxDate];
+//        
+//        NSString *goUrl = [[NSString alloc] init];
+//        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+//            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+//            NSString *str = array[1];
+//            if (str.length != 0) {
+//                goUrl = str;
+//            }
+//        }
+//        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        
+//        NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+//        
+//        if ([str intValue] == 0) {
+//            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+//            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+//            login.title = @"登录";
+//            login.goUrl = goUrl;
+//            [self presentViewController:root animated:YES completion:^{
+//                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+//            }];
+//        }else if ([str intValue] == 1) {
+//            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+//            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+//            login.isPhoneLogin = YES;
+//            login.title = @"登录";
+//            login.goUrl = goUrl;
+//            [self presentViewController:root animated:YES completion:^{
+//                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+//            }];
+//        }else if ([str intValue] == 2) {
+//            LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//            login.title = @"登录";
+//            login.goUrl = goUrl;
+//            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+//            [self presentViewController:root animated:YES completion:^{
+//                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+//            }];
+//        }
+//        
+//        return NO;
+//    }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
+//        NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
+//        NSLog(@"array:%@",array);
+//        [self changeWithUserInfo:array];
+//        return NO;
+//    }else{
+//        NSRange range = [url rangeOfString:@"appalipay.aspx"];
+////        NSLog(@"%@",url);
+//        if (range.location != NSNotFound) {
+//            
+//            self.ServerPayUrl = [url copy];
+//            NSRange trade_no = [url rangeOfString:@"trade_no="];
+//            NSRange customerID = [url rangeOfString:@"customerID="];
+////            NSRange paymentType = [url rangeOfString:@"paymentType="];
+//            NSRange trade_noRange = {trade_no.location + 9,customerID.location-trade_no.location-10};
+//            NSString * trade_noss = [url substringWithRange:trade_noRange];//订单号
+//            self.orderNo = trade_noss;
+////            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
+//            // 1.得到data
+//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//            NSData *data = [NSData dataWithContentsOfFile:filename];
+//            // 2.创建反归档对象
+//            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//            // 3.解码并存到数组中
+//            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+//            
+//            
+//            NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+//            [url appendFormat:@"%@?orderid=%@",@"/order/GetOrderInfo",trade_noss];
+//            
+//            AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+//            NSString * to = [NSDictionary ToSignUrlWithString:url];
+//            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, id json) {
+////                NSLog(@"%@",json);
+//                if ([json[@"code"] integerValue] == 200) {
+//                    self.priceNumber = json[@"data"][@"Final_Amount"];
+////                    NSLog(@"%@",self.priceNumber);
+//                    NSString * des =  json[@"data"][@"ToStr"]; //商品描述
+////                    NSLog(@"%@",json[@"data"][@"ToStr"]);
+//                    self.proDes = [des copy];
+////                    NSLog(@"%@",self.proDes);
+//                    if(namesArray.count == 1){
+//                        PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
+//                        self.paymodel = pay;
+//                        if ([pay.payType integerValue] == 300) {//300微信
+//                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
+//                            aa.tag = 500;//单个微信支付
+//                            [aa showInView:self.view];
+//                        }
+//                        if ([pay.payType integerValue] == 400) {//400支付宝
+//                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝", nil];
+//                            aa.tag = 700;//单个支付宝支付
+//                            [aa showInView:self.view];
+//                        }
+//                    }else if(namesArray.count == 2){
+//                        UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
+//                        aa.tag = 900;//两个都有的支付
+//                        [aa showInView:self.view];
+//                    }
+//                    
+//                }
+//                
+//                
+//            } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
+//                NSLog(@"%@",error.description);
+//            }];
+//
+//            return NO;
+//        }
+//    }
+//    
+//    return YES;
+//}
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -660,11 +658,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - NJKWebViewProgressDelegate
--(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-{
-    [_webViewProgressView setProgress:progress animated:YES];
-}
+//#pragma mark - NJKWebViewProgressDelegate
+//-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+//{
+//    [_webViewProgressView setProgress:progress animated:YES];
+//}
 
 
 #pragma mark 切换账号
@@ -739,10 +737,163 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [_webViewProgressView removeFromSuperview];
+//    [_webViewProgressView removeFromSuperview];
 }
 
 #pragma mark wk
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    AppDelegate *app =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+    webView.customUserAgent = [app returnNewUserAgent];
+    
+    NSString *temp = webView.URL.absoluteString;
+    NSString *url = [temp lowercaseString];
+    if ([url isEqualToString:@"about:blank"]) {
+         decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
+        [UIViewController ToRemoveSandBoxDate];
+        
+        NSString *goUrl = [[NSString alloc] init];
+        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+            NSString *str = array[1];
+            if (str.length != 0) {
+                goUrl = str;
+            }
+        }
+        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+        
+        if ([str intValue] == 0) {
+            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            login.title = @"登录";
+            login.goUrl = goUrl;
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }else if ([str intValue] == 1) {
+            IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            login.isPhoneLogin = YES;
+            login.title = @"登录";
+            login.goUrl = goUrl;
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }else if ([str intValue] == 2) {
+            LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            login.title = @"登录";
+            login.goUrl = goUrl;
+            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            [self presentViewController:root animated:YES completion:^{
+                [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            }];
+        }
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
+        NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
+        NSLog(@"array:%@",array);
+        [self changeWithUserInfo:array];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }else{
+        NSRange range = [url rangeOfString:@"appalipay.aspx"];
+        //        NSLog(@"%@",url);
+        if (range.location != NSNotFound) {
+            
+            self.ServerPayUrl = [url copy];
+            NSRange trade_no = [url rangeOfString:@"trade_no="];
+            NSRange customerID = [url rangeOfString:@"customerID="];
+            //            NSRange paymentType = [url rangeOfString:@"paymentType="];
+            NSRange trade_noRange = {trade_no.location + 9,customerID.location-trade_no.location-10};
+            NSString * trade_noss = [url substringWithRange:trade_noRange];//订单号
+            self.orderNo = trade_noss;
+            //            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
+            // 1.得到data
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+            NSData *data = [NSData dataWithContentsOfFile:filename];
+            // 2.创建反归档对象
+            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+            // 3.解码并存到数组中
+            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+            
+            
+            NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+            [url appendFormat:@"%@?orderid=%@",@"/order/GetOrderInfo",trade_noss];
+            
+            AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+            NSString * to = [NSDictionary ToSignUrlWithString:url];
+            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, id json) {
+                //                NSLog(@"%@",json);
+                if ([json[@"code"] integerValue] == 200) {
+                    self.priceNumber = json[@"data"][@"Final_Amount"];
+                    //                    NSLog(@"%@",self.priceNumber);
+                    NSString * des =  json[@"data"][@"ToStr"]; //商品描述
+                    //                    NSLog(@"%@",json[@"data"][@"ToStr"]);
+                    self.proDes = [des copy];
+                    //                    NSLog(@"%@",self.proDes);
+                    if(namesArray.count == 1){
+                        PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
+                        self.paymodel = pay;
+                        if ([pay.payType integerValue] == 300) {//300微信
+                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
+                            aa.tag = 500;//单个微信支付
+                            [aa showInView:self.view];
+                        }
+                        if ([pay.payType integerValue] == 400) {//400支付宝
+                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝", nil];
+                            aa.tag = 700;//单个支付宝支付
+                            [aa showInView:self.view];
+                        }
+                    }else if(namesArray.count == 2){
+                        UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
+                        aa.tag = 900;//两个都有的支付
+                        [aa showInView:self.view];
+                    }
+                    
+                }
+                
+                
+            } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
+                NSLog(@"%@",error.description);
+            }];
+            
+            decisionHandler(WKNavigationActionPolicyCancel);
+        }
+    }
+    
+    decisionHandler(WKNavigationActionPolicyAllow);
+
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+
+    [webView evaluateJavaScript:@"__getShareStr()" completionHandler:^(id _Nullable shareStr, NSError * _Nullable error) {
+        NSString *str = shareStr;
+        if (str.length != 0) {
+            self.shareBtn.hidden = NO;
+        }else {
+            self.shareBtn.hidden = YES;
+        }
+    }];
+    
+    [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
+    
+    self.refreshBtn.userInteractionEnabled = YES;
+    
+    [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        NSString *str = title;
+        self.title = str;
+    }];
+
+    _shareBtn.userInteractionEnabled = YES;
+    [self.webView.scrollView.mj_header endRefreshing];
+}
 
 
 @end

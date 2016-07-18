@@ -71,9 +71,9 @@
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    [self resetUserAgent];
+//    [self resetUserAgent];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
     
     return YES;
 }
@@ -267,7 +267,7 @@
             
         }else {
             [UIViewController ToRemoveSandBoxDate];
-            [self resetUserAgent];
+//            [self resetUserAgent];
             [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
@@ -380,7 +380,6 @@
     NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
     usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
 
-    
     NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
     
     
@@ -392,6 +391,21 @@
     
 }
 
+
+- (NSString *)returnNewUserAgent {
+    NSString *newAgent = nil;
+    UserInfo * usaa = nil;
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+    usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+    
+    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
+    
+    
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid]];
+    
+    return newAgent;
+}
 
 - (void)setImage {
     CGSize viewSize = self.window.bounds.size;

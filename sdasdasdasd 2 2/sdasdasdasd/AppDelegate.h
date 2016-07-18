@@ -18,5 +18,8 @@
 @property (strong,nonatomic) NSString * SwitchAccount;
 
 @property (nonatomic, strong) NSString *Agent;
+
+- (NSString *)returnNewUserAgent;
+
 @end
 
