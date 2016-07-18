@@ -31,6 +31,8 @@
 #import "AccountTool.h"
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
+#import "AppDelegate.h"
+#import "RootViewController.h"
 #import "IponeVerifyViewController.h"
 
 @interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate>
@@ -331,7 +333,7 @@
     if ([url isEqualToString:@"about:blank"]) {
         return NO;
     }
-    if ([url rangeOfString:@"/usercenter/login.aspx"].location != NSNotFound) {
+    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
         [UIViewController ToRemoveSandBoxDate];
         
         NSString *goUrl = [[NSString alloc] init];
@@ -700,7 +702,16 @@
             [data writeToFile:filename atomically:YES];
             
             [self.navigationController popViewControllerAnimated:YES];
-            [SVProgressHUD showSuccessWithStatus:@"账号切换成功"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
+            
+            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            de.SwitchAccount = @"first";
+            
+            RootViewController * root = [[RootViewController alloc] init];
+            de.window.rootViewController = root;
+            [de.window makeKeyAndVisible];
+            
         }else {
             [SVProgressHUD showErrorWithStatus:@"切换失败"];
         }

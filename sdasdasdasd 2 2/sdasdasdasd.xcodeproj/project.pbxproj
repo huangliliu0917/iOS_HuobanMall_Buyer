@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6042A6AA1D3CAF560030D895 /* WebKit.framework */; };
 		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
@@ -140,6 +141,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		ACF9CE19FF0913C78BBF377F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */,
 				EFA6D3C11C0451DE00B39B36 /* libsqlite3.tbd in Frameworks */,
 				EFA6D3BF1C0451D300B39B36 /* AdSupport.framework in Frameworks */,
 				EFA6D3BD1C0451CB00B39B36 /* ImageIO.framework in Frameworks */,
@@ -404,6 +407,7 @@
 		1F429BB19406C0FB208C120F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6042A6AA1D3CAF560030D895 /* WebKit.framework */,
 				B2CA2476854D5BB3A46CB1C3 /* libPods.a */,
 			);
 			name = Frameworks;

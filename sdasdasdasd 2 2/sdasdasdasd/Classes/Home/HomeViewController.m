@@ -92,6 +92,7 @@
 @property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
 @property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
+@property (nonatomic, assign) BOOL bingWeixin;
 
 @end
 
@@ -239,9 +240,9 @@
 
 - (void)shareSdkSha{
     
-    if(self.homeWebView.loading){
-        return;
-    }
+//    if(self.homeWebView.loading){
+//        return;
+//    }
 
     
     //1、创建分享参数
@@ -381,7 +382,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
+    
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"getmsiteurlSuccess" object:nil];
     
@@ -773,7 +774,7 @@
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             return YES;
         }
-        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound) {
+        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
             
             NSString *goUrl = [[NSString alloc] init];
             if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
@@ -785,6 +786,10 @@
                         goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
                     }
                 }
+            }else {
+                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+                goUrl = ddd;
             }
             
             [UIViewController ToRemoveSandBoxDate];
@@ -826,9 +831,12 @@
             
             return NO;
         }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
             
             if ([WXApi isWXAppInstalled]) {
+                self.bingWeixin = YES;
                 [self WeiXinLog];
+                
             }else {
                 [SVProgressHUD showErrorWithStatus:@"绑定失败"];
             }
@@ -1311,12 +1319,19 @@
 }
 - (void)OquthByWeiXinSuccess1:(NSNotification *) note{
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfoBuild" object:nil];
     NSLog(@"-=------------%@",note);
     
+    if (self.bingWeixin) {
+        
+        [self accessTokenWithCode1:note.userInfo[@"code"]];
+        
+        self.bingWeixin = NO;
+    }else {
+        return;
+    }
     
-    [self accessTokenWithCode1:note.userInfo[@"code"]];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfoBuild" object:nil];
     
 }
 
@@ -1381,6 +1396,39 @@
         //        NSLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"authorizeCode"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }else {
+                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:lefts forKey:LeftMenuModels];
+            //结束编码
+            [archiver finishEncoding];
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+            //写入
+            [data writeToFile:filename atomically:YES];
             
             [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
 
