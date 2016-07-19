@@ -434,12 +434,8 @@
         [self.iphoneTextField resignFirstResponder];
         [self dismissViewControllerAnimated:YES completion:^{
                 
-           
-
-        }];
+     }];
     }
-    
-    
 }
 
 

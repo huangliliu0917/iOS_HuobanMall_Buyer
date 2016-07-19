@@ -34,8 +34,6 @@
 #import <SSZipArchive.h>
 #import <SVProgressHUD.h>
 #import "UserInfo.h"
-#import <NJKWebViewProgress.h>
-#import <NJKWebViewProgressView.h>
 #import "AQuthModel.h"
 #import "AccountModel.h"
 #import "AccountTool.h"
@@ -43,7 +41,7 @@
 #import "LeftGroupModel.h"
 
 
-@interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate,WKUIDelegate,WKNavigationDelegate>
+@interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *homeWebView;
 
@@ -85,6 +83,7 @@
 
 @property(nonatomic,strong) PayModel * paymodel;
 
+@property (strong, nonatomic) UIProgressView *progressView;
 
 @property (nonatomic, assign) BOOL bingWeixin;
 
@@ -1260,6 +1259,18 @@
 - (void)resetHomeWebAgent {
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView.customUserAgent = app.userAgent;
+}
+
+/**
+ *  初始化进度条
+ */
+- (void)initWebViewProgress {
+    CGFloat progressBarHeight = 2.f;
+    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
+    self.progressView = [[UIProgressView alloc] initWithFrame:barFrame];
+    
+    
 }
 
 @end

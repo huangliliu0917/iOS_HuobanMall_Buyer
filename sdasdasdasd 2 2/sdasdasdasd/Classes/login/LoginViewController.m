@@ -142,33 +142,32 @@
 /**
  *  用户登录成功
  *
- *  @param note <#note description#>
+ *  @param note
  */
 - (void)UserLoginSuccess{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
-    
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
     if ([str intValue] == 1) {
         [SVProgressHUD dismiss];
         [self.view endEditing:NO];
-        IponeVerifyViewController *login = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-        login.isBundlPhone = YES;
-        [self.navigationController pushViewController:login animated:YES];
+        IponeVerifyViewController *bundle = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        bundle.isBundlPhone = YES;
+        bundle.goUrl = _goUrl;
+        [self.navigationController pushViewController:bundle animated:YES];
     }else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [SVProgressHUD dismiss];
+        
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [app resetUserAgent:_goUrl];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [SVProgressHUD dismiss];
         [self dismissViewControllerAnimated:YES completion:^{
             
-            
         }];
-        
     }
 }
+
 
 
 /**
@@ -328,7 +327,6 @@
             [NSKeyedArchiver archiveRootObject:user toFile:fileName];
             [self UserLoginSuccess];
             
-            [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
 //        [MBProgressHUD hideHUD];
