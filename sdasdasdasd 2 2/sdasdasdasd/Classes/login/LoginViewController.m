@@ -154,6 +154,8 @@
         IponeVerifyViewController *bundle = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
         bundle.isBundlPhone = YES;
         bundle.goUrl = _goUrl;
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app resetUserAgent:nil];
         [self.navigationController pushViewController:bundle animated:YES];
     }else {
         

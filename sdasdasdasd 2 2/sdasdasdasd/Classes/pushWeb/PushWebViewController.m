@@ -357,40 +357,6 @@
  *  商城支付宝支付
  */
 - (void)MallAliPay:(PayModel *)pay{
-    
-//    NSString *privateKey = pay.appKey;
-//    // @"MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAMCul0XS9X/cVMkmrSeaZXnSvrs/bK5EiZf3d3/lTwHx165wAX/UIz4AcZHbKkYKKzmZKrRsu3tLRKFuflooKSVmWxk2hmeMqRETPZ/t8rKf8UONZIpOlOXEmJ/rYwxhnMeVhbJJxsko2so/jc+XAPLyv0tsfoI/TsJuhaGQ569ZAgMBAAECgYAK4lHdOdtwS4vmiO7DC++rgAISJbUH6wsysGHpsZRS8cxTKDSNefg7ql6/9Hdg2XYznLlS08mLX2cTD2DHyvj38KtxLEhLP7MtgjFFeTJ5Ta1UuBRERcmy0xSLh2zayiSwGTM8Bwu7UD6LUSTGwrgRR2Gg4EDpSG08J5OCThKF4QJBAPOO6WKI/sEuoRDtcIJqtv58mc4RSmit/WszkvPlZrjNFDU6TrOEnPU0zi3f8scxpPxVYROBceGj362m+02G2I0CQQDKhlq4pIM2FLNoDP4mzEUyoXIwqn6vIsAv8n49Tr9QnBjCrKt8RiibhjSEvcYqM/1eocW0j2vUkqR17rNuVVz9AkBq+Z02gzdpwEJMPg3Jqnd/pViksuF8wtbo6/kimOKaTrEOg/KnVJrf9HaOnatzpDF0B0ghGhzb329SRWJhddXNAkAkjrgVmGyu+HGiGKZP7pOXHhl0u3H+vzEd9pHfEzXpoSO/EFgsKKXv3Pvh8jexKo1T5bPAchsu1gGl4B63jeUpAkBbgUalUpZWZ4Aii+Mfts+S2E5RooZfVFqVBIsK47hjcoqLw4JJenyjFu+Skl2jOQ8+I5y1Ggeg6fpBMr2rbVkf";
-//    
-//    Order *order = [[Order alloc] init];
-//    order.service = @"mobile.securitypay.pay";
-//    order.partner = pay.partnerId;
-//    order.inputCharset = @"utf-8";
-//    NSMutableString * urls = [NSMutableString stringWithString:MainUrl];
-//    [urls appendString:pay.notify];
-//    order.notifyURL = urls;
-//    order.tradeNO = self.orderNo;
-//    order.productName = self.proDes;;
-//    order.productDescription = self.proDes;;
-//    order.amount = [NSString stringWithFormat:@"%.2f",[self.priceNumber floatValue]];  //订单总金额，只能为整数，详见支付金额;
-//    order.paymentType = @"1";
-//    order.seller = pay.partnerId;
-//    //将商品信息拼接成字符串
-//    NSString *orderSpec = [order description];
-//    id<DataSigner> signer = CreateRSADataSigner(privateKey);
-//    NSString *signedString = [signer signString:orderSpec];
-//    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-//    NSDictionary *infoPlist =[NSDictionary dictionaryWithContentsOfFile:path];
-//    NSString * appScheme = [[[[infoPlist objectForKey:@"CFBundleURLTypes"] firstObject] objectForKey:@"CFBundleURLSchemes"] lastObject];
-//    
-//    //将签名成功字符串格式化为订单字符串,请严格按照该格式
-//    NSString *orderString = nil;
-//    if (signedString != nil) {
-//        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-//                       orderSpec, signedString, @"RSA"];
-//        
-//        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:nil];
-//    }
 
 }
 

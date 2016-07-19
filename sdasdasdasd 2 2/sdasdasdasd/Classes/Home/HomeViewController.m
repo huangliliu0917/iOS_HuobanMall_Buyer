@@ -46,7 +46,7 @@
 @property (strong, nonatomic) WKWebView *homeWebView;
 
 
-@property (strong, nonatomic) WKWebView *homeBottonWebView;
+@property (strong, nonatomic) UIWebView *homeBottonWebView;
 
 /***/
 @property(nonatomic,strong) NSMutableString * debugInfo;
@@ -311,10 +311,9 @@
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
     NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
-    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
+    self.homeBottonWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
     self.homeBottonWebView.tag = 20;
-    self.homeBottonWebView.UIDelegate = self;
-    self.homeBottonWebView.navigationDelegate = self;
+    self.homeBottonWebView.delegate = self;
     [self.homeBottonWebView loadRequest:Bottomreq];
     [self.view addSubview:self.homeBottonWebView];
     
@@ -534,7 +533,7 @@
 
 
 - (void)ocappCallJspoc{
-    [self.homeBottonWebView evaluateJavaScript:@"alert(1);" completionHandler:^(id _Nullable tempStr, NSError * _Nullable error) {
+    [self.homeWebView evaluateJavaScript:@"alert(1);" completionHandler:^(id _Nullable tempStr, NSError * _Nullable error) {
         
     }];
 }
@@ -610,7 +609,7 @@
                 }];
                 NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
 //                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
-                [self.homeBottonWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
+                [self.homeWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
                     
                 }];
             }else{
@@ -981,6 +980,58 @@
     [super viewDidDisappear:animated];
     [_progressView removeFromSuperview];
 }
+#pragma mark UIWebView
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString *temp = request.URL.absoluteString;
+    NSString *url = [temp lowercaseString];
+//    if(webView.tag == 20){
+    
+        NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+        if ([url isEqualToString:cc]) {
+            return YES;
+        }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
+            }else{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
+            }
+            return NO;
+        }else {
+            
+            NSRange range = [url rangeOfString:@"back"];
+            NSString * newUrls = nil;
+            if (range.location != NSNotFound) {
+                
+                newUrls = [url stringByReplacingCharactersInRange:range withString:@"back=1"];
+            }else{
+                newUrls = [NSString stringWithFormat:@"%@&back=1",url];
+            }
+            
+            NSRange ran = [newUrls rangeOfString:@"aspx"];
+            NSString * newUrl = nil;
+            if (ran.location != NSNotFound) {
+                NSRange cc = NSMakeRange(ran.location+ran.length, 1);
+                newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+                NSString * dddd = newUrl;
+                NSURL * urlStr = [NSURL URLWithString:dddd];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+               return NO;
+            }else {
+                //                newUrl = url;
+                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:url];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                return NO;
+            }
+        }
+        return NO;
+//    }
+}
 
 #pragma mark wkWebView
 
@@ -1157,51 +1208,52 @@
         }
         
         decisionHandler(WKNavigationResponsePolicyAllow);
-    }else if(webView.tag == 20){
-        
-        NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-        NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-        if ([url isEqualToString:cc]) {
-            decisionHandler(WKNavigationResponsePolicyAllow);
-        }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
-            }else{
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
-            }
-            decisionHandler(WKNavigationResponsePolicyCancel);
-        }else {
-            
-            NSRange range = [url rangeOfString:@"back"];
-            NSString * newUrls = nil;
-            if (range.location != NSNotFound) {
-                
-                newUrls = [url stringByReplacingCharactersInRange:range withString:@"back=1"];
-            }else{
-                newUrls = [NSString stringWithFormat:@"%@&back=1",url];
-            }
-            
-            NSRange ran = [newUrls rangeOfString:@"aspx"];
-            NSString * newUrl = nil;
-            if (ran.location != NSNotFound) {
-                NSRange cc = NSMakeRange(ran.location+ran.length, 1);
-                newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
-                NSString * dddd = newUrl;
-                NSURL * urlStr = [NSURL URLWithString:dddd];
-                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-                [self.homeWebView loadRequest:req];
-                decisionHandler(WKNavigationResponsePolicyCancel);
-            }else {
-                //                newUrl = url;
-                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
-                NSURL * urlStr = [NSURL URLWithString:url];
-                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-                [self.homeWebView loadRequest:req];
-                decisionHandler(WKNavigationResponsePolicyCancel);
-            }
-        }
-        decisionHandler(WKNavigationResponsePolicyCancel);
     }
+//        else if(webView.tag == 20){
+//
+//        NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//        NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+//        if ([url isEqualToString:cc]) {
+//            decisionHandler(WKNavigationResponsePolicyAllow);
+//        }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
+//            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
+//            }else{
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
+//            }
+//            decisionHandler(WKNavigationResponsePolicyCancel);
+//        }else {
+//            
+//            NSRange range = [url rangeOfString:@"back"];
+//            NSString * newUrls = nil;
+//            if (range.location != NSNotFound) {
+//                
+//                newUrls = [url stringByReplacingCharactersInRange:range withString:@"back=1"];
+//            }else{
+//                newUrls = [NSString stringWithFormat:@"%@&back=1",url];
+//            }
+//            
+//            NSRange ran = [newUrls rangeOfString:@"aspx"];
+//            NSString * newUrl = nil;
+//            if (ran.location != NSNotFound) {
+//                NSRange cc = NSMakeRange(ran.location+ran.length, 1);
+//                newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+//                NSString * dddd = newUrl;
+//                NSURL * urlStr = [NSURL URLWithString:dddd];
+//                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//                [self.homeWebView loadRequest:req];
+//                decisionHandler(WKNavigationResponsePolicyCancel);
+//            }else {
+//                //                newUrl = url;
+//                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+//                NSURL * urlStr = [NSURL URLWithString:url];
+//                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//                [self.homeWebView loadRequest:req];
+//                decisionHandler(WKNavigationResponsePolicyCancel);
+//            }
+//        }
+//        decisionHandler(WKNavigationResponsePolicyCancel);
+//    }
     
 }
 
