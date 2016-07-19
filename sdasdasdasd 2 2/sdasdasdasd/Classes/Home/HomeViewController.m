@@ -444,7 +444,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self.navigationController.navigationBar addSubview:_progressView];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -740,7 +740,7 @@
 - (void)dealloc{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    [self.homeWebView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 
 
@@ -960,7 +960,10 @@
             [data writeToFile:filename atomically:YES];
             
             [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
-
+            
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [app resetUserAgent:nil];
+            
             [self.homeWebView reload];
             
         }else {
@@ -976,6 +979,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [_progressView removeFromSuperview];
 }
 
 #pragma mark wkWebView
@@ -1256,6 +1260,7 @@
     
 }
 
+
 - (void)resetHomeWebAgent {
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView.customUserAgent = app.userAgent;
@@ -1273,7 +1278,7 @@
     self.progressView = [[UIProgressView alloc] initWithFrame:barFrame];
     self.progressView.tintColor = [UIColor blueColor];
     self.progressView.trackTintColor = HuoBanMallBuyNavColor;
-    [self.navigationController.navigationBar addSubview:_progressView];
+    
     
 }
 

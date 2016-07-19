@@ -55,6 +55,8 @@
 /**支付的url*/
 @property(nonatomic,strong) NSString * ServerPayUrl;
 
+@property (strong, nonatomic) UIProgressView *progressView;
+
 //@property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
 //@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
@@ -485,7 +487,7 @@
 }
 
 - (void)dealloc{
-    
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -556,7 +558,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-//    [_webViewProgressView removeFromSuperview];
+    [_progressView removeFromSuperview];
 }
 
 #pragma mark wk
@@ -726,6 +728,36 @@
 - (void)restPushWebAgent {
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.webView.customUserAgent = app.userAgent;
+}
+
+/**
+ *  初始化进度条
+ */
+- (void)initWebViewProgress {
+    
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    CGFloat progressBarHeight = 2.f;
+    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
+    self.progressView = [[UIProgressView alloc] initWithFrame:barFrame];
+    self.progressView.tintColor = [UIColor blueColor];
+    self.progressView.trackTintColor = HuoBanMallBuyNavColor;
+    [self.navigationController.navigationBar addSubview:_progressView];
+    
+}
+
+// 计算wkWebView进度条
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.webView && [keyPath isEqualToString:@"estimatedProgress"]) {
+        CGFloat newprogress = [[change objectForKey:NSKeyValueChangeNewKey] doubleValue];
+        if (newprogress == 1) {
+            self.progressView.hidden = YES;
+            [self.progressView setProgress:0 animated:NO];
+        }else {
+            self.progressView.hidden = NO;
+            [self.progressView setProgress:newprogress animated:YES];
+        }
+    }
 }
 
 @end
