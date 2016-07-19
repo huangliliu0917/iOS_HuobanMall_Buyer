@@ -5,7 +5,8 @@
 //  Created by lhb on 15/11/24.
 //  Copyright © 2015年 HT. All rights reserved.
 //
-
+#import "HomeViewController.h"
+#import "PushWebViewController.h"
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -19,7 +20,10 @@
 
 @property (nonatomic, strong) NSString *Agent;
 
-- (NSString *)returnNewUserAgent;
+@property (nonatomic, strong) NSString *userAgent;
+
+
+- (void)resetUserAgent:(NSString *) goUrl;
 
 @end
 

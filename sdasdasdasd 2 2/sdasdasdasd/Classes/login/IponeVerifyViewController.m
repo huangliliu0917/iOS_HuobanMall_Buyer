@@ -178,16 +178,11 @@
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
         self.title = @"绑定手机";
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"跳过" style:UIBarButtonItemStylePlain handler:^(id sender) {
-            [SVProgressHUD dismiss];
             [self.VerifyCode resignFirstResponder];
             [self.iphoneTextField resignFirstResponder];
-            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            de.SwitchAccount = @"first";
-            
-            RootViewController * root = [[RootViewController alloc] init];
-            root.goUrl = _goUrl;
-            de.window.rootViewController = root;
-            [de.window makeKeyAndVisible];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+            }];
         }];
     }else {
         self.title = @"登录";
@@ -281,13 +276,12 @@
                 [SVProgressHUD dismiss];
                 [self.VerifyCode resignFirstResponder];
                 [self.iphoneTextField resignFirstResponder];
-                AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                de.SwitchAccount = @"first";
-                
-                RootViewController * root = [[RootViewController alloc] init];
-                root.goUrl = _goUrl;
-                de.window.rootViewController = root;
-                [de.window makeKeyAndVisible];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if (_goUrl) {
+                        NSDictionary * objc = [NSDictionary dictionaryWithObject:_goUrl forKey:@"url"];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+                    }
+                }];
     
                 
             }else {
@@ -355,7 +349,6 @@
                 [wself toGetMainUrl];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
-                
                 [self ToGetShareMessage];
                 
                 [self UserLoginSuccess];
@@ -421,7 +414,7 @@
  */
 - (void)UserLoginSuccess{
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
+    
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
     if ([str intValue] == 1) {
         [SVProgressHUD dismiss];
@@ -431,23 +424,19 @@
         bundle.goUrl = _goUrl;
         [self.navigationController pushViewController:bundle animated:YES];
     }else {
+        
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app resetUserAgent:_goUrl];
+        
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-            [self.VerifyCode resignFirstResponder];
-            [self.iphoneTextField resignFirstResponder];
-            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            de.SwitchAccount = @"first";
-            
-            RootViewController * root = [[RootViewController alloc] init];
-            root.goUrl = _goUrl;
-            de.window.rootViewController = root;
-            [de.window makeKeyAndVisible];
-            
+        [SVProgressHUD dismiss];
+        [self.VerifyCode resignFirstResponder];
+        [self.iphoneTextField resignFirstResponder];
+        [self dismissViewControllerAnimated:YES completion:^{
+                
+           
 
-            
-            
-        });
+        }];
     }
     
     
@@ -625,6 +614,7 @@
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
             [NSKeyedArchiver archiveRootObject:user toFile:fileName];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
             [self UserLoginSuccess];
             
             [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];

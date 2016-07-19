@@ -106,21 +106,6 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
-
-//    _webViewProgress = [[NJKWebViewProgress alloc] init];
-//    _webViewProgress.webViewProxyDelegate = self;
-//    _webViewProgress.progressDelegate = self;
-//    
-//    CGRect navBounds = self.navigationController.navigationBar.bounds;
-//    CGRect barFrame = CGRectMake(0,
-//                                 navBounds.size.height - 2,
-//                                 navBounds.size.width,
-//                                 2);
-//    _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-//    _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-//    [_webViewProgressView setProgress:0 animated:YES];
-//    [self.navigationController.navigationBar addSubview:_webViewProgressView];
-    
     
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
     self.webView.UIDelegate = self;
@@ -130,8 +115,6 @@
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     self.webView.tag = 20;
-//    self.webView.scrollView.bounces = NO;
-//    self.webView.scrollView.scrollEnabled = NO;
     [self.webView loadRequest:req];
     
     //加载刷新控件
@@ -146,6 +129,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(back) name:@"payback" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restPushWebAgent) name:ResetAllWebAgent object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -658,13 +642,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//#pragma mark - NJKWebViewProgressDelegate
-//-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-//{
-//    [_webViewProgressView setProgress:progress animated:YES];
-//}
-
-
 #pragma mark 切换账号
 
 - (void)changeWithUserInfo:(NSArray *) array {
@@ -713,17 +690,12 @@
             //写入
             [data writeToFile:filename atomically:YES];
             
+            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [de resetUserAgent:nil];
+            
             [self.navigationController popViewControllerAnimated:YES];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
-            
-            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            de.SwitchAccount = @"first";
-            
-            RootViewController * root = [[RootViewController alloc] init];
-            de.window.rootViewController = root;
-            [de.window makeKeyAndVisible];
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
         }else {
             [SVProgressHUD showErrorWithStatus:@"切换失败"];
         }
@@ -742,15 +714,12 @@
 
 #pragma mark wk
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
-    AppDelegate *app =  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    webView.customUserAgent = [app returnNewUserAgent];
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
     NSString *temp = webView.URL.absoluteString;
     NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
-         decisionHandler(WKNavigationActionPolicyCancel);
+         decisionHandler(WKNavigationResponsePolicyCancel);
     }
     if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
         [UIViewController ToRemoveSandBoxDate];
@@ -794,12 +763,14 @@
             }];
         }
         
-        decisionHandler(WKNavigationActionPolicyCancel);
+        decisionHandler(WKNavigationResponsePolicyCancel);
     }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
         NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
         NSLog(@"array:%@",array);
         [self changeWithUserInfo:array];
-        decisionHandler(WKNavigationActionPolicyCancel);
+        decisionHandler(WKNavigationResponsePolicyCancel);
+    }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
+        [self.navigationController popViewControllerAnimated:YES];
     }else{
         NSRange range = [url rangeOfString:@"appalipay.aspx"];
         //        NSLog(@"%@",url);
@@ -863,11 +834,11 @@
                 NSLog(@"%@",error.description);
             }];
             
-            decisionHandler(WKNavigationActionPolicyCancel);
+            decisionHandler(WKNavigationResponsePolicyCancel);
         }
     }
     
-    decisionHandler(WKNavigationActionPolicyAllow);
+    decisionHandler(WKNavigationResponsePolicyAllow);
 
 }
 
@@ -895,5 +866,12 @@
     [self.webView.scrollView.mj_header endRefreshing];
 }
 
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
+    _shareBtn.userInteractionEnabled = NO;
+}
+- (void)restPushWebAgent {
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.webView.customUserAgent = app.userAgent;
+}
 
 @end

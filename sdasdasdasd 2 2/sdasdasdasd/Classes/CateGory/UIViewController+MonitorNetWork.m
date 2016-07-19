@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+MonitorNetWork.h"
+#import "AppDelegate.h"
 
 @implementation UIViewController (MonitorNetWork)
 
@@ -57,7 +58,8 @@
     
     
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
+    AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [de resetUserAgent:nil];
     
 //    [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
 //       

@@ -61,6 +61,7 @@
 
     [self setImage];
     
+    
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     _maskLayer = [CALayer layer];
@@ -71,9 +72,7 @@
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-//    [self resetUserAgent];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
+    [self resetUserAgent:nil];
     
     return YES;
 }
@@ -183,7 +182,6 @@
     [url appendString:@"/mall/getConfig"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-//        NSLog(@"%@" , json);
         if (json) {
             MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -214,7 +212,7 @@
         
         
     } failure:^(NSError *error) {
-//        NSLog(@"%@", error);
+
         [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
         
         
@@ -265,9 +263,9 @@
             //写入
             [data writeToFile:filename atomically:YES];
             
+            [self resetUserAgent:nil];
         }else {
             [UIViewController ToRemoveSandBoxDate];
-//            [self resetUserAgent];
             [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
@@ -366,7 +364,7 @@
 
 
 
-- (void) resetUserAgent {
+- (void)resetUserAgent:(NSString *) goUrl {
     
     
     // Do any additional setup after loading the view, typically from a nib.
@@ -385,27 +383,21 @@
     
     newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid]];
     
-    //regist the new agent
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
+    self.userAgent = newAgent;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ResetAllWebAgent object:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (goUrl) {
+            NSDictionary * objc = [NSDictionary dictionaryWithObject:goUrl forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+        }
+    });
     
 }
 
-
-- (NSString *)returnNewUserAgent {
-    NSString *newAgent = nil;
-    UserInfo * usaa = nil;
-    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-    usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    
-    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
-    
-    
-    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid]];
-    
-    return newAgent;
-}
 
 - (void)setImage {
     CGSize viewSize = self.window.bounds.size;

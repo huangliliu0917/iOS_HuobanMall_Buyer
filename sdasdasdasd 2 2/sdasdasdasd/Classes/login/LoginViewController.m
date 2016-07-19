@@ -159,27 +159,14 @@
         [self.navigationController pushViewController:login animated:YES];
     }else {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-            AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            de.SwitchAccount = @"first";
-            RootViewController * root = [[RootViewController alloc] init];
-            root.goUrl = _goUrl;
-            de.window.rootViewController = root;
-            [de.window makeKeyAndVisible];
+        [SVProgressHUD dismiss];
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app resetUserAgent:_goUrl];
+        [self dismissViewControllerAnimated:YES completion:^{
             
-            [SVProgressHUD dismiss];
-//            if (_goUrl) {
-//                NSDictionary * objc = [NSDictionary dictionaryWithObject:_goUrl forKey:@"url"];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-//            }else {
-//                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-//                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-//                NSDictionary * objc = [NSDictionary dictionaryWithObject:ddd forKey:@"url"];
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-//            }
             
-        });
+        }];
+        
     }
 }
 

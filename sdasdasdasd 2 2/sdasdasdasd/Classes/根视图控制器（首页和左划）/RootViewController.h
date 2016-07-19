@@ -10,6 +10,4 @@
 
 @interface RootViewController : MMDrawerController
 
-@property (nonatomic, strong) NSString *goUrl;
-
 @end
