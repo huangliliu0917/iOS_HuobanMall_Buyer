@@ -444,6 +444,66 @@
                      }];
 }
 
+/**
+ *  注册远程通知
+ */
+- (void)registRemoteNotification:(UIApplication *)application{
+    if (IsIos8) { //iOS 8 remoteNotification
+        UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }else{
+        
+        UIRemoteNotificationType type = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeNewsstandContentAvailability;
+        [application registerForRemoteNotificationTypes:type];
+        
+    }
+}
 
+/**
+ *  ios8
+ *
+ *  @param application          <#application description#>
+ *  @param notificationSettings <#notificationSettings description#>
+ */
+-(void)application:(UIApplication*)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
+    [application registerForRemoteNotifications];
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    //    LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
+}
+
+/**
+ *  获取deviceToken
+ */
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    
+    NSString * aa = [deviceToken hexadecimalString] ;
+    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+    //    AQuthModel * AQuth = [AccountTool account];
+    if ([login isEqualToString:Success]) {
+        
+        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:aa AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+            if (resultType == HTNoticeCenterSuccess) {
+                NSLog(@"Push  success");
+            }
+        }];
+    }
+    
+}
+
+- (void)getRemoteNotifocation:(NSDictionary *) userInfo {
+    
+    if (userInfo) {
+        NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
+        if (message.alertUrl.length) {
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:message.alertUrl forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GoNewUrl" object:nil userInfo:dic];
+        }
+    }
+    
+}
 
 @end
