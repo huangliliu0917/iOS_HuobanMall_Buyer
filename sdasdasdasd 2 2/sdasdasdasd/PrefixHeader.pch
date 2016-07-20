@@ -38,8 +38,8 @@
 
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.51flashmall.com"
-#define HuoBanMallBuyAppId @"huotuacf89c9231848c9f49"
+#define AppOriginUrl  @"http://mallapi.huobanmall.com" //@"http://mallapi.51flashmall.com"
+#define HuoBanMallBuyAppId @"app" //@"huotuacf89c9231848c9f49"
 #define HuoBanMallBuyAppSecrect @"0ad8abe244331aacf89c9231848c9f49"
 
 
