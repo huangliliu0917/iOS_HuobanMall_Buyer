@@ -65,7 +65,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"6530" //0504
 
 
 //友盟数据统计
@@ -79,8 +79,8 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx16a5589cff4c76d5"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+#define HuoBanMallBuyWeiXinAppId  @"wx5c8085c6edf32b7d"//ol@"wx16a5589cff4c76d5" fenmao@"wxaeda2d5603b12302"
+#define HuoBanMallShareSdkWeiXinSecret @"dd4d9c263b7f3a5406166f3e04482d2b" //ol@"d4624c36b6795d1d99dcf0547af5443d" fenmao @"8c3b660de36a3b3fb678ca865e31f0f3"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105087534"
 #define HuoBanMallShareSdkQQSecret @"eD2ASY9HzOIjrOL5"

@@ -42,7 +42,7 @@
 #import "NSData+NSDataDeal.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
-
+@property (nonatomic, strong) NSString *pushToken;
 
 @end
 
@@ -77,7 +77,7 @@
     [self resetUserAgent:nil];
     
     
-   
+    [self registRemoteNotification:application];
     
     return YES;
 }
@@ -468,8 +468,8 @@
 /**
  *  ios8
  *
- *  @param application          <#application description#>
- *  @param notificationSettings <#notificationSettings description#>
+ *  @param application
+ *  @param notificationSettings
  */
 -(void)application:(UIApplication*)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
     [application registerForRemoteNotifications];
@@ -486,6 +486,8 @@
     
     
     NSString * aa = [deviceToken hexadecimalString] ;
+    
+    self.pushToken = aa;
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
@@ -496,7 +498,6 @@
             }
         }];
     }
-    
 }
 
 - (void)getRemoteNotifocation:(NSDictionary *) userInfo {
