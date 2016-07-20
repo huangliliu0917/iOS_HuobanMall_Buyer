@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60025BC41D3F24940099A617 /* NSData+NSDataDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */; };
 		6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6042A6AA1D3CAF560030D895 /* WebKit.framework */; };
 		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
@@ -141,6 +142,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60025BC21D3F24940099A617 /* NSData+NSDataDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSDataDeal.h"; sourceTree = "<group>"; };
+		60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSDataDeal.m"; sourceTree = "<group>"; };
 		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
@@ -833,6 +836,8 @@
 		EF9D4C491C055FF900D005E8 /* 扩展 */ = {
 			isa = PBXGroup;
 			children = (
+				60025BC21D3F24940099A617 /* NSData+NSDataDeal.h */,
+				60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */,
 				60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */,
 				60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */,
 				EF42C11C1C08350500602E60 /* UITableView+CJ.h */,
@@ -1245,6 +1250,7 @@
 				EF9D4C8E1C055FF900D005E8 /* MJConst.m in Sources */,
 				EF9D4C651C055FF900D005E8 /* MyLoginView.m in Sources */,
 				EF9D4C721C055FF900D005E8 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				60025BC41D3F24940099A617 /* NSData+NSDataDeal.m in Sources */,
 				EF9D4C641C055FF900D005E8 /* LeftTableViewCell.m in Sources */,
 				EF9D4C741C055FF900D005E8 /* UIAlertView+AFNetworking.m in Sources */,
 				EF9D4C5E1C055FF900D005E8 /* HTLeftTableViewController.m in Sources */,
