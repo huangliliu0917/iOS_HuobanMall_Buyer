@@ -108,10 +108,11 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
-    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
+    self.webView.customUserAgent = app.userAgent;
     [self.view addSubview:self.webView];
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
@@ -453,7 +454,7 @@
 }
 
 - (void)dealloc{
-    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+//    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

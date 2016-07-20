@@ -95,7 +95,7 @@
             
             if ([json[@"code"] intValue] == 200) {
                 [SVProgressHUD showSuccessWithStatus:@"语音验证码发送成功"];
-
+                
             }else {
                 self.phoneVerify.userInteractionEnabled = YES;
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
@@ -181,7 +181,8 @@
             [self.VerifyCode resignFirstResponder];
             [self.iphoneTextField resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+                AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                [app resetUserAgent:_goUrl];
             }];
         }];
     }else {
@@ -377,6 +378,7 @@
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
     dispatch_source_set_event_handler(_timer, ^{
+        
         if(timeout<=0){ //倒计时结束，关闭
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -386,7 +388,6 @@
                 //                [captchaBtn setTitle:@"" forState:UIControlStateNormal];
                 //                [captchaBtn setBackgroundImage:[UIImage imageNamed:@"resent_icon"] forState:UIControlStateNormal];
                 self.VerifyLable.userInteractionEnabled = YES;
-                self.phoneVerify.hidden = NO;
             });
         }else{
             //            int minutes = timeout / 60;
@@ -399,10 +400,14 @@
                 [self.VerifyLable setText:[NSString stringWithFormat:@"%@秒重新发送",strTime]];
                 self.VerifyLable.userInteractionEnabled = NO;
                 
+                if (timeout <= 50) {
+                    self.phoneVerify.hidden = NO;
+                }
                 
             });
             timeout--;
         }
+        
     });
     dispatch_resume(_timer);
 }

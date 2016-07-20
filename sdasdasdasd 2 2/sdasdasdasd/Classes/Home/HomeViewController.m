@@ -299,13 +299,16 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
+//    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 50)];
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
+    self.homeWebView.customUserAgent = app.userAgent;
+//    self.homeWebView
     [self.view addSubview:self.homeWebView];
     
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];

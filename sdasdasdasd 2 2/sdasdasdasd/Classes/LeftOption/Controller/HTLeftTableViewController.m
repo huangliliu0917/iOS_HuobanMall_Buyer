@@ -263,7 +263,8 @@
  *  页面初始化
  */
 - (void)setup{
-    
+    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+    //    AQuthModel * AQuth = [AccountTool account];
     
     self.tableView.scrollEnabled = NO;
     MyLoginView * headView =  [[[NSBundle mainBundle] loadNibNamed:@"MyLoginView" owner:self options:nil] lastObject];
@@ -275,7 +276,15 @@
     
 
     NSString * headUrl =  [[NSUserDefaults standardUserDefaults] objectForKey:IconHeadImage];
-    [headView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+    
+    if ([login isEqualToString:Success]) {
+        
+        [headView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+        headView.firstLable.text = userInfor.nickname;
+    }else {
+        headView.iconView.image = [UIImage imageNamed:@"moren"];
+        headView.firstLable.text = @"未登陆";
+    }
     headView.iconView.layer.borderColor = [UIColor whiteColor].CGColor;
     headView.iconView.layer.cornerRadius = headView.iconView.frame.size.width*0.5;
     headView.secondLable.layer.cornerRadius = 3;
@@ -291,7 +300,6 @@
     self.tableView.tableHeaderView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     self.tableView.tableHeaderView = headView;
     
-    headView.firstLable.text = userInfor.nickname;
     
     NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
     headView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
@@ -305,9 +313,18 @@
     UserInfo * userInfor =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     
     NSString * headUrl =  [[NSUserDefaults standardUserDefaults] objectForKey:IconHeadImage];
-    [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
-    
-    _topHeadView.firstLable.text = userInfor.nickname;
+    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+    if ([login isEqualToString:Success]) {
+        
+        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+        _topHeadView.firstLable.text = userInfor.nickname;
+    }else {
+        _topHeadView.iconView.image = [UIImage imageNamed:@"moren"];
+        _topHeadView.firstLable.text = @"未登陆";
+    }
+//    [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+//    
+//    _topHeadView.firstLable.text = userInfor.nickname;
     
     NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
     _topHeadView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];

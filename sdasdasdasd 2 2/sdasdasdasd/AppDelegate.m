@@ -76,6 +76,9 @@
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     [self resetUserAgent:nil];
     
+    
+   
+    
     return YES;
 }
 
@@ -381,14 +384,21 @@
     usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     
     NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    if (!userID) {
+//    NSString *tempUserId = [(NSNumber*)userID  stringValue]
+    if ([NSString stringWithFormat:@"%@", userID].length == 0) {
         userID = @"";
     }
-    if (!usaa.unionid) {
+    if (usaa) {
+        if (usaa.unionid.length == 0) {
+            usaa.unionid = @"";
+        }
+        if (usaa.openid.length == 0) {
+            usaa.openid= @"";
+        }
+    }else {
+        usaa = [[UserInfo alloc] init];
+        usaa.openid = @"";
         usaa.unionid = @"";
-    }
-    if (!usaa.openid) {
-        usaa.openid= @"";
     }
     
     NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",userID, usaa.unionid, usaa.openid, SISSecret]];
@@ -450,16 +460,9 @@
  *  注册远程通知
  */
 - (void)registRemoteNotification:(UIApplication *)application{
-    if (IsIos8) { //iOS 8 remoteNotification
         UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
         UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
         [application registerUserNotificationSettings:settings];
-    }else{
-        
-        UIRemoteNotificationType type = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeNewsstandContentAvailability;
-        [application registerForRemoteNotificationTypes:type];
-        
-    }
 }
 
 /**

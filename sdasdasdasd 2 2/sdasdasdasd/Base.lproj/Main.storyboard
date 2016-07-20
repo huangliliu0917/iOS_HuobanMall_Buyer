@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wh6-OB-GmH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wh6-OB-GmH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -919,20 +919,29 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无法收到验证码？" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHi-Di-zpv">
-                                        <rect key="frame" x="321" y="138" width="80" height="12"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无法收到验证码？发送语音验证码" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHi-Di-zpv">
+                                        <rect key="frame" x="251" y="130" width="150" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="AyA-ok-uEz"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="AyA-ok-uEz"/>
+                                            </mask>
+                                        </variation>
                                     </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="leading" secondItem="UiL-Fe-1mb" secondAttribute="trailing" constant="15" id="1RU-Fo-8S3"/>
-                                    <constraint firstItem="VHi-Di-zpv" firstAttribute="top" secondItem="nDF-Nk-ekg" secondAttribute="bottom" constant="8" id="3Ph-Nw-8aJ"/>
+                                    <constraint firstItem="VHi-Di-zpv" firstAttribute="top" secondItem="nDF-Nk-ekg" secondAttribute="bottom" id="3Ph-Nw-8aJ"/>
                                     <constraint firstAttribute="trailing" secondItem="BvI-Hi-sPK" secondAttribute="trailing" constant="13" id="4gJ-XV-nGG"/>
                                     <constraint firstItem="BvI-Hi-sPK" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="top" constant="30" id="NQG-Nh-g4e"/>
                                     <constraint firstItem="UiL-Fe-1mb" firstAttribute="leading" secondItem="BvI-Hi-sPK" secondAttribute="leading" id="Rse-e4-GIs"/>
                                     <constraint firstItem="BvI-Hi-sPK" firstAttribute="leading" secondItem="arh-nc-uIR" secondAttribute="leading" constant="13" id="S0M-Zy-iJe"/>
+                                    <constraint firstAttribute="bottom" secondItem="VHi-Di-zpv" secondAttribute="bottom" id="Sjx-qE-uhC"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="trailing" secondItem="BvI-Hi-sPK" secondAttribute="trailing" id="X5Z-Ta-zbl"/>
                                     <constraint firstItem="nDF-Nk-ekg" firstAttribute="leading" secondItem="UiL-Fe-1mb" secondAttribute="trailing" constant="10" id="a0i-5v-tez"/>
                                     <constraint firstItem="UiL-Fe-1mb" firstAttribute="top" secondItem="BvI-Hi-sPK" secondAttribute="bottom" constant="10" id="gFa-gg-lfh"/>
