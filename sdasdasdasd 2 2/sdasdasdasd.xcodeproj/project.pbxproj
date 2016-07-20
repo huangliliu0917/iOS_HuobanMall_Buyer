@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		60025BC41D3F24940099A617 /* NSData+NSDataDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */; };
+		60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC71D3F250F0099A617 /* HTNoticeCenter.m */; };
+		60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC91D3F250F0099A617 /* NoticeMessage.m */; };
 		6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6042A6AA1D3CAF560030D895 /* WebKit.framework */; };
 		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
@@ -144,6 +146,10 @@
 /* Begin PBXFileReference section */
 		60025BC21D3F24940099A617 /* NSData+NSDataDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSDataDeal.h"; sourceTree = "<group>"; };
 		60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSDataDeal.m"; sourceTree = "<group>"; };
+		60025BC61D3F250F0099A617 /* HTNoticeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTNoticeCenter.h; sourceTree = "<group>"; };
+		60025BC71D3F250F0099A617 /* HTNoticeCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTNoticeCenter.m; sourceTree = "<group>"; };
+		60025BC81D3F250F0099A617 /* NoticeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMessage.h; sourceTree = "<group>"; };
+		60025BC91D3F250F0099A617 /* NoticeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeMessage.m; sourceTree = "<group>"; };
 		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
@@ -416,6 +422,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		60025BC51D3F250F0099A617 /* HTNoticeCenter */ = {
+			isa = PBXGroup;
+			children = (
+				60025BC61D3F250F0099A617 /* HTNoticeCenter.h */,
+				60025BC71D3F250F0099A617 /* HTNoticeCenter.m */,
+				60025BC81D3F250F0099A617 /* NoticeMessage.h */,
+				60025BC91D3F250F0099A617 /* NoticeMessage.m */,
+			);
+			name = HTNoticeCenter;
+			path = ../HTNoticeCenter;
+			sourceTree = "<group>";
+		};
 		A5F4EAC65F57CC0DED1FF178 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +473,7 @@
 				EF9D4C4E1C055FF900D005E8 /* pushWeb */,
 				EF9D4C511C055FF900D005E8 /* Setting */,
 				EF9D4C551C055FF900D005E8 /* 根视图控制器（首页和左划） */,
+				60025BC51D3F250F0099A617 /* HTNoticeCenter */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1296,7 +1315,9 @@
 				EF9D4C941C055FF900D005E8 /* MJTypeEncoding.m in Sources */,
 				EF9D4C781C055FF900D005E8 /* UIRefreshControl+AFNetworking.m in Sources */,
 				EF9D4C671C055FF900D005E8 /* AFHTTPRequestOperation.m in Sources */,
+				60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */,
 				EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */,
+				60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */,
 				EF9D4C6E1C055FF900D005E8 /* AFURLResponseSerialization.m in Sources */,
 				EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */,
 			);

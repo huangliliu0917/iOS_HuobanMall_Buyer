@@ -38,6 +38,8 @@
 #import "LeftMenuModel.h"
 #import "UIViewController+MonitorNetWork.h"
 #import <SVProgressHUD.h>
+#import "HTNoticeCenter.h"
+#import "NSData+NSDataDeal.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 
