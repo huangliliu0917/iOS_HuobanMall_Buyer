@@ -986,12 +986,16 @@
     
     NSString *temp = request.URL.absoluteString;
     NSString *url = [temp lowercaseString];
-//    if(webView.tag == 20){
+
     
         NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
         NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
         if ([url isEqualToString:cc]) {
             return YES;
+        }else if ([url rangeOfString:@"/js/easemob/im.html?"].location != NSNotFound){
+
+            [self.homeWebView loadRequest:request];
+            return NO;
         }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
@@ -1044,7 +1048,6 @@
     if ([url isEqualToString:@"about:blank"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
     }
-    
     if (webView.tag == 100) {
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             decisionHandler(WKNavigationResponsePolicyAllow);

@@ -377,11 +377,22 @@
     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
     usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-
-    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid, SISSecret]];
+    
+    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+    if (!userID) {
+        userID = @"";
+    }
+    if (!usaa.unionid) {
+        usaa.unionid = @"";
+    }
+    if (!usaa.openid) {
+        usaa.openid= @"";
+    }
+    
+    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",userID, usaa.unionid, usaa.openid, SISSecret]];
     
     
-    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, usaa.openid]];
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,userID, usaa.unionid, usaa.openid]];
     
     
     self.userAgent = newAgent;
