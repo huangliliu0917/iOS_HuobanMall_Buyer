@@ -38,9 +38,9 @@
 
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanmall.com" // //@"http://mallapi.51flashmall.com"
-#define HuoBanMallBuyAppId @"app" // //@"huotuacf89c9231848c9f49"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe" // //@"0ad8abe244331aacf89c9231848c9f49"
+#define AppOriginUrl @"http://mallapi.51flashmall.com"  // //@"http://mallapi.huobanmall.com"
+#define HuoBanMallBuyAppId @"huotuacf89c9231848c9f49" // //@"app"
+#define HuoBanMallBuyAppSecrect @"0ad8abe244331aacf89c9231848c9f49"  // //@"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -65,7 +65,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"6530" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
 
 
 //友盟数据统计
@@ -79,8 +79,8 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx16a5589cff4c76d5"// @"wxaeda2d5603b12302" //ol fenmao@"wxaeda2d5603b12302"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"// @"8c3b660de36a3b3fb678ca865e31f0f3" //ol fenmao @"8c3b660de36a3b3fb678ca865e31f0f3"
+#define HuoBanMallBuyWeiXinAppId @"wxaeda2d5603b12302"// @"wxaeda2d5603b12302" //ol@"wx16a5589cff4c76d5" fenmao
+#define HuoBanMallShareSdkWeiXinSecret @"8c3b660de36a3b3fb678ca865e31f0f3" // @"8c3b660de36a3b3fb678ca865e31f0f3" //ol@"d4624c36b6795d1d99dcf0547af5443d" fenmao
 //qq
 #define HuoBanMallShareSdkQQKey @"1105087534"
 #define HuoBanMallShareSdkQQSecret @"eD2ASY9HzOIjrOL5"
