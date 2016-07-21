@@ -621,6 +621,8 @@
             [self UserLoginSuccess];
             
             [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
+        }else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", json[@"msg"]]];
         }
     } failure:^(NSError *error) {
         NSLog(@"%@ --- ",error.description);
