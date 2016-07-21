@@ -707,7 +707,7 @@
     CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
     CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
     self.progressView = [[UIProgressView alloc] initWithFrame:barFrame];
-    self.progressView.tintColor = [UIColor blueColor];
+    self.progressView.tintColor = [UIColor greenColor];
     self.progressView.trackTintColor = HuoBanMallBuyNavColor;
     [self.navigationController.navigationBar addSubview:_progressView];
     
