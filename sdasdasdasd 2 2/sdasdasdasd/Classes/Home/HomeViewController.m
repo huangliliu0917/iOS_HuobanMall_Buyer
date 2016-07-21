@@ -1008,13 +1008,13 @@
             return NO;
         }else {
             
-            NSRange range = [url rangeOfString:@"back"];
+            NSRange range = [temp rangeOfString:@"back"];
             NSString * newUrls = nil;
             if (range.location != NSNotFound) {
                 
-                newUrls = [url stringByReplacingCharactersInRange:range withString:@"back=1"];
+                newUrls = [temp stringByReplacingCharactersInRange:range withString:@"back=1"];
             }else{
-                newUrls = [NSString stringWithFormat:@"%@&back=1",url];
+                newUrls = [NSString stringWithFormat:@"%@&back=1",temp];
             }
             
             NSRange ran = [newUrls rangeOfString:@"aspx"];
@@ -1028,11 +1028,7 @@
                 [self.homeWebView loadRequest:req];
                return NO;
             }else {
-                //                newUrl = url;
-                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
-                NSURL * urlStr = [NSURL URLWithString:url];
-                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-                [self.homeWebView loadRequest:req];
+                [self.homeWebView loadRequest:request];
                 return NO;
             }
         }
@@ -1048,6 +1044,7 @@
    
     NSString *temp = webView.URL.absoluteString;
     NSString *url = [temp lowercaseString];
+    
     if ([url isEqualToString:@"about:blank"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
     }
