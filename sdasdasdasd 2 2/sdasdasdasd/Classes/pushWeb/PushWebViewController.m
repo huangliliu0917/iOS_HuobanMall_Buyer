@@ -144,7 +144,8 @@
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
-
+    
+    [self.navigationController.navigationBar addSubview:_progressView];
 }
 
 
