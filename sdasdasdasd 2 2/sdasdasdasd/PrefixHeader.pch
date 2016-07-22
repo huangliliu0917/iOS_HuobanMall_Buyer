@@ -13,7 +13,7 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #define LWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
-#define LWNewFeatureImageCount 6
+#define LWNewFeatureImageCount 4
 
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
@@ -49,7 +49,7 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:1.000 green:0.435 blue:0.655 alpha:1.000]
+#define HuoBanMallBuyNavColor [UIColor blackColor]
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色

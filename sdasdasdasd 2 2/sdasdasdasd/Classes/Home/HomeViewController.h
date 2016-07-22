@@ -10,8 +10,6 @@
 
 @interface HomeViewController : UIViewController
 
-@property (nonatomic, strong) NSString *goUrl;
-
 - (void)resetHomeWebAgent;
 
 @end
