@@ -1153,12 +1153,12 @@
         }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
             
             
-            self.ServerPayUrl = [url copy];
-            NSRange trade_no = [url rangeOfString:@"trade_no="];
-            NSRange customerID = [url rangeOfString:@"customerID="];
+            self.ServerPayUrl = [temp copy];
+            NSRange trade_no = [temp rangeOfString:@"trade_no="];
+            NSRange customerID = [temp rangeOfString:@"customerID="];
             //            NSRange paymentType = [url rangeOfString:@"paymentType="];
             NSRange trade_noRange = {trade_no.location + 9,customerID.location-trade_no.location-10};
-            NSString * trade_noss = [url substringWithRange:trade_noRange];//订单号
+            NSString * trade_noss = [temp substringWithRange:trade_noRange];//订单号
             self.orderNo = trade_noss;
             //            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
             // 1.得到data
