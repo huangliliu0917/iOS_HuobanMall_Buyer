@@ -10,7 +10,6 @@
 
 @interface HomeViewController : UIViewController
 
-
 - (void)resetHomeWebAgent;
 
 @end
