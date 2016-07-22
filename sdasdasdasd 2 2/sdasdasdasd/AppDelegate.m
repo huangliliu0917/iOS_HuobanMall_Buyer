@@ -52,6 +52,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
     
+    UIApplication *app = [UIApplication sharedApplication];
+    app.applicationIconBadgeNumber = 0;
+    
     [self setupInit];
     [self myAppToInit];
     
@@ -389,10 +392,12 @@
         userID = @"";
     }
     if (usaa) {
-        if (usaa.unionid.length == 0) {
+        if (usaa.unionid) {
+        }else {
             usaa.unionid = @"";
         }
-        if (usaa.openid.length == 0) {
+        if (usaa.openid) {
+        }else {
             usaa.openid= @"";
         }
     }else {

@@ -87,6 +87,8 @@
 
 @property (nonatomic, assign) BOOL bingWeixin;
 
+@property (nonatomic, strong) NSString *bingWeixinUrl;
+
 @end
 
 
@@ -964,7 +966,13 @@
             [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
             
             AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            [app resetUserAgent:nil];
+            
+            if ([self.bingWeixinUrl isEqual:[NSNull class]]) {
+                
+                [app resetUserAgent:nil];
+            }else {
+                [app resetUserAgent:self.bingWeixinUrl];
+            }
             
             [self.homeWebView reload];
             
@@ -1109,9 +1117,26 @@
             
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
             
             if ([WXApi isWXAppInstalled]) {
+                
+                NSString *goUrl = [[NSString alloc] init];
+                if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+                    NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+                    NSString *str = array[1];
+                    if (str.length != 0) {
+                        goUrl = [str stringByRemovingPercentEncoding];
+                        if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
+                            goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
+                        }
+                    }
+                }else {
+                    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+                    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+                    goUrl = ddd;
+                }
+                self.bingWeixinUrl = goUrl;
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
                 self.bingWeixin = YES;
                 [self WeiXinLog];
                 
@@ -1212,51 +1237,6 @@
         
         decisionHandler(WKNavigationResponsePolicyAllow);
     }
-//        else if(webView.tag == 20){
-//
-//        NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-//        NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-//        if ([url isEqualToString:cc]) {
-//            decisionHandler(WKNavigationResponsePolicyAllow);
-//        }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
-//            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
-//            }else{
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
-//            }
-//            decisionHandler(WKNavigationResponsePolicyCancel);
-//        }else {
-//            
-//            NSRange range = [url rangeOfString:@"back"];
-//            NSString * newUrls = nil;
-//            if (range.location != NSNotFound) {
-//                
-//                newUrls = [url stringByReplacingCharactersInRange:range withString:@"back=1"];
-//            }else{
-//                newUrls = [NSString stringWithFormat:@"%@&back=1",url];
-//            }
-//            
-//            NSRange ran = [newUrls rangeOfString:@"aspx"];
-//            NSString * newUrl = nil;
-//            if (ran.location != NSNotFound) {
-//                NSRange cc = NSMakeRange(ran.location+ran.length, 1);
-//                newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
-//                NSString * dddd = newUrl;
-//                NSURL * urlStr = [NSURL URLWithString:dddd];
-//                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-//                [self.homeWebView loadRequest:req];
-//                decisionHandler(WKNavigationResponsePolicyCancel);
-//            }else {
-//                //                newUrl = url;
-//                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
-//                NSURL * urlStr = [NSURL URLWithString:url];
-//                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-//                [self.homeWebView loadRequest:req];
-//                decisionHandler(WKNavigationResponsePolicyCancel);
-//            }
-//        }
-//        decisionHandler(WKNavigationResponsePolicyCancel);
-//    }
     
 }
 

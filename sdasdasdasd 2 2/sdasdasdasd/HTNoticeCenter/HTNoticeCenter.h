@@ -11,13 +11,13 @@
 #import "NoticeMessage.h"
 
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081"
+#define NoticeCenterMainUrl @"http://api.open.huobanplus.com" //@"http://test.api.open.huobanplus.com:8081"
 
 /**网络  APP 标识*/
-#define NoticeCenterAppKey  @"app"
+#define NoticeCenterAppKey @"app" // @""@"huoban"
 
 /**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+#define NoticeCenterAppSecure @"21ff3104eb7a7bf3f2b663b8ab18eebe" //@"319ea9ad29ef4a50d6801c2f406dd208"
 
 
 /*
