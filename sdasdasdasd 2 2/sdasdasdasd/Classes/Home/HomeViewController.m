@@ -322,18 +322,12 @@
     [self.homeBottonWebView loadRequest:Bottomreq];
     [self.view addSubview:self.homeBottonWebView];
     
-    if (_goUrl) {
-        NSURL * urlStr = [NSURL URLWithString:_goUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-        [self.homeWebView loadRequest:req];
-    }else {
-        
-        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-        NSURL * urlStr = [NSURL URLWithString:ddd];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-        [self.homeWebView loadRequest:req];
-    }
+
+    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+    NSURL * urlStr = [NSURL URLWithString:ddd];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [self.homeWebView loadRequest:req];
 
     self.navigationController.navigationBar.alpha = 0;
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
