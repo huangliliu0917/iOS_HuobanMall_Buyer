@@ -1,10 +1,17 @@
-platform :ios, '7.0'
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'sdasdasdasd' do
+  # Uncomment this line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for sdasdasdasd
 
 pod 'SHXMLParser','1.1.0'
 #pod 'ASIHTTPRequest','1.8.1'
 pod 'SSToolkit', :git => 'https://github.com/soffes/sstoolkit.git', :commit => '1403f02cb98f8357f4b8e43c59d9c69d608d7bed'
 pod 'ConciseKit','0.1.2'
-pod 'SVProgressHUD', :head
+pod 'SVProgressHUD'
 pod 'BlocksKit','2.2.5'
 #pod 'MBProgressHUD','0.8'
 #pod 'CWPopup','1.2.4'
@@ -25,3 +32,16 @@ pod 'MKNetworkKit'
 pod 'MJRefresh'
 pod 'SSZipArchive'
 pod 'NJKWebViewProgress'
+
+
+  target 'sdasdasdasdTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'sdasdasdasdUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
