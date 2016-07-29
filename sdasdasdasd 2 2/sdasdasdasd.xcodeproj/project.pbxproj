@@ -14,8 +14,7 @@
 		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		70CE6C993C5EA4214E3834DF /* libPods-sdasdasdasdUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41E2BF2687D13CE3A8708C /* libPods-sdasdasdasdUITests.a */; };
-		85AB6DB158298018E0FA083B /* libPods-sdasdasdasd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D010A5F8BD61438DD111EE4 /* libPods-sdasdasdasd.a */; };
-		99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CA2476854D5BB3A46CB1C3 /* libPods.a */; };
+		A5ABAD583EAF5D812358EE78 /* libPods-sdasdasdasd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D010A5F8BD61438DD111EE4 /* libPods-sdasdasdasd.a */; };
 		AEDF1D33635CADDA117974F0 /* libPods-sdasdasdasdTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294BA303E2DC6426C4856943 /* libPods-sdasdasdasdTests.a */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
@@ -404,8 +403,7 @@
 				EFA6D3B11C04516E00B39B36 /* ShareSDKExtension.framework in Frameworks */,
 				EFA6D3AB1C04516E00B39B36 /* libWeChatSDK.a in Frameworks */,
 				EFA6D3AF1C04516E00B39B36 /* ShareSDK.framework in Frameworks */,
-				99555995DDA65FA17F1EF2D7 /* libPods.a in Frameworks */,
-				85AB6DB158298018E0FA083B /* libPods-sdasdasdasd.a in Frameworks */,
+				A5ABAD583EAF5D812358EE78 /* libPods-sdasdasdasd.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,8 +21,6 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import <MJRefresh.h>
-#import <NJKWebViewProgress.h>
-#import <NJKWebViewProgressView.h>
 #import "UserLoginTool.h"
 #import <SVProgressHUD.h>
 #import "UserInfo.h"
@@ -35,7 +33,7 @@
 #import "RootViewController.h"
 #import "IponeVerifyViewController.h"
 
-@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,NJKWebViewProgressDelegate,WKUIDelegate,WKNavigationDelegate>
+@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
 /***/
