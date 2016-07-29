@@ -46,7 +46,7 @@
 @property (strong, nonatomic) WKWebView *homeWebView;
 
 
-@property (strong, nonatomic) UIWebView *homeBottonWebView;
+@property (strong, nonatomic) WKWebView *homeBottonWebView;
 
 /***/
 @property(nonatomic,strong) NSMutableString * debugInfo;
@@ -316,9 +316,11 @@
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
     NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
-    self.homeBottonWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
+    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
     self.homeBottonWebView.tag = 20;
-    self.homeBottonWebView.delegate = self;
+    self.homeBottonWebView.UIDelegate = self;
+    self.homeBottonWebView.navigationDelegate = self;
+    self.homeBottonWebView.customUserAgent = app.userAgent;
     [self.homeBottonWebView loadRequest:Bottomreq];
     [self.view addSubview:self.homeBottonWebView];
     
@@ -1050,7 +1052,54 @@
     if ([url isEqualToString:@"about:blank"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
     }
-    if (webView.tag == 100) {
+    if (webView.tag == 20) {
+        NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+        if ([url isEqualToString:cc]) {
+            decisionHandler(WKNavigationResponsePolicyAllow);
+        }else if ([url rangeOfString:@"/js/easemob/im.html?"].location != NSNotFound){
+            
+            [self.homeWebView loadRequest:[NSURLRequest requestWithURL:webView.URL]];
+            decisionHandler(WKNavigationResponsePolicyCancel);
+        }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
+            }else{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
+            }
+            decisionHandler(WKNavigationResponsePolicyCancel);
+        }else {
+            
+            NSRange range = [temp rangeOfString:@"back"];
+            NSString * newUrls = nil;
+            if (range.location != NSNotFound) {
+                
+                newUrls = [temp stringByReplacingCharactersInRange:range withString:@"back=1"];
+            }else{
+                newUrls = [NSString stringWithFormat:@"%@&back=1",temp];
+            }
+            
+            NSRange ran = [newUrls rangeOfString:@"aspx"];
+            NSString * newUrl = nil;
+            if (ran.location != NSNotFound) {
+                NSRange cc = NSMakeRange(ran.location+ran.length, 1);
+                newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+                NSString * dddd = newUrl;
+                NSURL * urlStr = [NSURL URLWithString:dddd];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                decisionHandler(WKNavigationResponsePolicyCancel);
+            }else {
+                //                newUrl = url;
+                //                NSString * dddd = [NSDictionary ToSignUrlWithString:newUrl];
+                NSURL * urlStr = [NSURL URLWithString:temp];
+                NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+                [self.homeWebView loadRequest:req];
+                decisionHandler(WKNavigationResponsePolicyCancel);
+            }
+        }
+        decisionHandler(WKNavigationResponsePolicyCancel);
+    }else if (webView.tag == 100) {
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             decisionHandler(WKNavigationResponsePolicyAllow);
         }
@@ -1302,6 +1351,7 @@
 - (void)resetHomeWebAgent {
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView.customUserAgent = app.userAgent;
+    self.homeBottonWebView.customUserAgent = app.userAgent;
 }
 
 /**
