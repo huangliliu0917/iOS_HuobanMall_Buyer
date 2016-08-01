@@ -8,6 +8,7 @@
 
 #import "UIViewController+MonitorNetWork.h"
 #import "AppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
 
 @implementation UIViewController (MonitorNetWork)
 
@@ -56,16 +57,11 @@
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:HuoBanMallUserId];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:IconHeadImage];
     
-    
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
     
     AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [de resetUserAgent:nil];
     
-//    [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
-//       
-//        NSLog(@"%@",fileName);
-//        [fileManager removeItemAtPath:fileName error:nil];
-//    }];
  
 }
 @end
