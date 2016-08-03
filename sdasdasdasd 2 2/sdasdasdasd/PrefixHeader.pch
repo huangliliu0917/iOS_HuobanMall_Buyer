@@ -13,12 +13,12 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #define LWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
-#define LWNewFeatureImageCount 1
+#define LWNewFeatureImageCount 4
 
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"乡村来"
+#define MallName @"OL圈"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -38,9 +38,9 @@
 	
 
 //接口地址 .net
-#define AppOriginUrl @"http://mallapi.huobanmall.com"
+#define AppOriginUrl  @"http://mallapi.olquan.cn/"
 #define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe" 
+#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -49,7 +49,7 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:0.424 green:0.773 blue:0.106 alpha:1.000]
+#define HuoBanMallBuyNavColor [UIColor blackColor]
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
@@ -65,7 +65,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"6905" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"4471" //0504
 
 
 //友盟数据统计
@@ -73,17 +73,17 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"13df2f26bc5fc"
+#define HuoBanMallShareSdkAppId @"e81233c08013"
 //sina
-#define HuoBanMallShareSdkSinaKey @"404719112"
-#define HuoBanMallShareSdkSinaSecret @"eff87f24b2c5cce4aa3885a26871d0c2"
+#define HuoBanMallShareSdkSinaKey @"1000919385"
+#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx9f1532c551a66a61"
-#define HuoBanMallShareSdkWeiXinSecret @"c015c0f807a5a5a4247a0c87fdd0f5d7"
+#define HuoBanMallBuyWeiXinAppId @"wx16a5589cff4c76d5"
+#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
 //qq
-#define HuoBanMallShareSdkQQKey @"1105373387"
-#define HuoBanMallShareSdkQQSecret @"Bk9w4Mfsbsif87Xi"
+#define HuoBanMallShareSdkQQKey @"1105087534"
+#define HuoBanMallShareSdkQQSecret @"eD2ASY9HzOIjrOL5"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
