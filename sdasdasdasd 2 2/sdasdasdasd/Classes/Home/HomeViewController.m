@@ -8,7 +8,6 @@
 
 #import "HomeViewController.h"
 #import <BlocksKit+UIKit.h>
-#include <RESideMenu.h>
 #import <MJRefresh.h>
 #import "UIViewController+NAV.h"
 #import "LeftMenuModel.h"
