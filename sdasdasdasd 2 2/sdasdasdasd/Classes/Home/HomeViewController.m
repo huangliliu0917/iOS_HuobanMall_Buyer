@@ -1260,7 +1260,7 @@
             if (range.location != NSNotFound) {
                 UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
-                funWeb.funUrl = url;
+                funWeb.funUrl = temp;
                 [self.navigationController pushViewController:funWeb animated:YES];
                 decisionHandler(WKNavigationResponsePolicyCancel);
             }else{
