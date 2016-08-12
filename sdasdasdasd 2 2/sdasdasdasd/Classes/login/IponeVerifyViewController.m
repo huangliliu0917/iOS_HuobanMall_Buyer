@@ -26,6 +26,7 @@
 #import "MallMessage.h"
 #import "MBProgressHUD+MJ.h"
 #import "MD5Encryption.h"
+#import <ShareSDK/ShareSDK.h>
 
 @interface IponeVerifyViewController ()<WXApiDelegate>
 
@@ -453,12 +454,29 @@
  */
 - (void)WeiXinLog{
     
-    //构造SendAuthReq结构体
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo" ;
-    req.state = @"123" ;
-    //第三方向微信终端发送一个SendAuthReq消息结构
-    [WXApi sendAuthReq:req viewController:self delegate:self];
+//    //构造SendAuthReq结构体
+//    SendAuthReq* req =[[SendAuthReq alloc ] init];
+//    req.scope = @"snsapi_userinfo" ;
+//    req.state = @"123" ;
+//    //第三方向微信终端发送一个SendAuthReq消息结构
+//    [WXApi sendAuthReq:req viewController:self delegate:self];
+    __weak IponeVerifyViewController * wself = self;
+    [ShareSDK getUserInfo:SSDKPlatformTypeWechat onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+        if (state == SSDKResponseStateSuccess) {
+            
+            UserInfo * userInfo = [UserInfo objectWithKeyValues:user.rawData];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            //向服务端提供微信数据
+            [wself toPostWeiXinUserMessage:userInfo];
+            //获取主地址
+            [wself toGetMainUrl];
+            //微信授权成功后获取支付参数
+            [wself WeiXinLoginSuccessToGetPayParameter];
+            //获得用户账户列表
+        }
+    }];
 }
 
 

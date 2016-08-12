@@ -10,6 +10,7 @@
 
 @interface HomeViewController : UIViewController
 
+@property (nonatomic, strong) NSDictionary *openNotifacation;
 - (void)resetHomeWebAgent;
 
 @end

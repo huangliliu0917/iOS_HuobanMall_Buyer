@@ -8,6 +8,7 @@
 
 #import "UIViewController+MonitorNetWork.h"
 #import "AppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
 
 @implementation UIViewController (MonitorNetWork)
 
@@ -35,6 +36,8 @@
 }
 
 + (void)ToRemoveSandBoxDate{
+    
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
     
      NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 //    NSLog(@"xxxxxxxxxx===%@",path);

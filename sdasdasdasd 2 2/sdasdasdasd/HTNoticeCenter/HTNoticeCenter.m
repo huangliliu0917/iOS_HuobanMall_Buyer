@@ -51,7 +51,7 @@
     NSData * uslDate = [rowUrl dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[[NSString alloc] initWithData:uslDate encoding:NSUTF8StringEncoding]]];
     //(1)设置为POST请求
-    [request setHTTPMethod:@"PUT"];
+    [request setHTTPMethod:@"PUT"];   
     //(2)超时
     [request setTimeoutInterval:60];
     [request setValue:NoticeCenterAppKey forHTTPHeaderField:@"_user_key"];

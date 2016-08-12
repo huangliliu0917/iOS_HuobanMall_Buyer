@@ -38,6 +38,7 @@
 #import "AccountTool.h"
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
+#import "NoticeMessage.h"
 
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
@@ -358,6 +359,33 @@
     [self ToCheckDate];
     
     [self initWebViewProgress];
+    
+    
+    _openNotifacation = app.openNotifacation;
+    if (_openNotifacation) {
+        NSLog(@"%@", _openNotifacation);
+        NoticeMessage *message = [NoticeMessage objectWithKeyValues:_openNotifacation];
+        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
+            UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+            funWeb.funUrl = message.alertUrl;
+            [self.navigationController pushViewController:funWeb animated:YES];
+        }else if (![message.url isKindOfClass:[NSNull class]]) {
+            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
+            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+                funWeb.funUrl = message.url;
+                [self.navigationController pushViewController:funWeb animated:YES];
+            }]];
+            
+            [self presentViewController:aa animated:YES completion:nil];
+        }
+    }
+    
 }
 
 /**
