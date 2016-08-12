@@ -527,8 +527,10 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
+        [self sendTokenAndUserIdToSevern];
         
-        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:aa AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+    }else {
+        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:aa AndCustomerId:HuoBanMallBuyApp_Merchant_Id DealResult:^(HTNoticeCenterDealResult resultType) {
             if (resultType == HTNoticeCenterSuccess) {
                 NSLog(@"Push  success");
             }
@@ -559,6 +561,12 @@
     
 }
 
-
+- (void)sendTokenAndUserIdToSevern {
+    [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:self.pushToken AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+        if (resultType == HTNoticeCenterSuccess) {
+            NSLog(@"Push  success");
+        }
+    }];
+}
 
 @end

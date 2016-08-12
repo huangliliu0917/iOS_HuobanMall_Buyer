@@ -26,5 +26,7 @@
 
 - (void)resetUserAgent:(NSString *) goUrl;
 
+- (void)sendTokenAndUserIdToSevern;
+
 @end
 

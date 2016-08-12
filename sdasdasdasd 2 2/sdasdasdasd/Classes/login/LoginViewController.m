@@ -181,7 +181,7 @@
         
         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [app resetUserAgent:_goUrl];
-        
+        [app sendTokenAndUserIdToSevern];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [SVProgressHUD dismiss];
         [self dismissViewControllerAnimated:YES completion:^{

@@ -88,6 +88,51 @@
     
 }
 
+///deviceBinding/bindingTokenOrAlias/123
++ (void)HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:(NSString *)deviceToken AndCustomerId:(NSString *)CustomerId  DealResult:(void(^)(HTNoticeCenterDealResult resultType))Result{
+    
+    NSString * rowUrl = [NSString stringWithFormat:@"%@/deviceBinding/bindingTokenOrAlias/%@?token=%@",NoticeCenterMainUrl,CustomerId,deviceToken];
+    //2.构造Request
+    NSData * uslDate = [rowUrl dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[[NSString alloc] initWithData:uslDate encoding:NSUTF8StringEncoding]]];
+    //(1)设置为POST请求
+    [request setHTTPMethod:@"PUT"];
+    //(2)超时
+    [request setTimeoutInterval:60];
+    [request setValue:NoticeCenterAppKey forHTTPHeaderField:@"_user_key"];
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[dat timeIntervalSince1970]*1000;
+    NSString *timeString = [NSString stringWithFormat:@"%.f", a];
+    [request setValue:timeString forHTTPHeaderField:@"_user_random"];
+    NSString * head = [self HotTechAsignWith:NoticeCenterAppKey];
+    //(3)设置请求头
+    [request setAllHTTPHeaderFields:nil];
+    [request setValue:head forHTTPHeaderField:@"_user_secure"];
+    //3.构造Session
+    NSURLSession *session = [NSURLSession sharedSession];
+    //4.task
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        LWLog(@"%@",response);
+        if (!error) {
+            if (data) {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                LWLog(@"%@",dict);
+            }
+            //            dispatch_async(dispatch_get_main_queue(), ^{
+            //                Result(HTNoticeCenterSuccess);
+            //            });
+        }else{
+            //            LWLog(@"%s---registerDevicetoken: %@",__func__, [error description]);
+            //            dispatch_async(dispatch_get_main_queue(), ^{
+            //                Result(HTNoticeCenterFailure);
+            //            });
+        }
+    }];
+    //5.发起请求
+    [task resume];
+    
+}
+
 
 + (void)HTNoticeCenterToDealRemoteNoticeWithNotice:(NoticeMessage *)notice ResultNoticeCeterType:(void(^)(HTNoticeCenterNoticeType type))NoticeSuccess{
     
