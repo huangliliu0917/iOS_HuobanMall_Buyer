@@ -11,7 +11,7 @@
 #import "NoticeMessage.h"
 
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.olquan.cn/"
+#define NoticeCenterMainUrl @"http://api.open.huobanjia.com.cn/"
 
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
