@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ZHhuobanjia2016</string>
+				<string>womeiMP2016</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,10 +33,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wb4166445243</string>
-				<string>wb4166445243</string>
-				<string>QQ41E57786</string>
-				<string>tencent1105557382</string>
+				<string>wb178501671</string>
+				<string>wb178501671</string>
+				<string>QQ41E56D91</string>
+				<string>tencent1105554833</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxd11870350b554de1</string>
+				<string>wx36e0beeda776423c</string>
 			</array>
 		</dict>
 	</array>
@@ -82,7 +82,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>伙伴家</string>
+	<string>我美名品</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
