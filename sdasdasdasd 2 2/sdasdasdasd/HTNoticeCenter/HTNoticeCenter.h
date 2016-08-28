@@ -98,6 +98,7 @@ typedef NS_ENUM(NSUInteger, HTNoticeCenterErrorCode) {
 
 
 
++ (void)HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:(NSString *)deviceToken AndCustomerId:(NSString *)CustomerId  DealResult:(void(^)(HTNoticeCenterDealResult resultType))Result;
 
 
 /**

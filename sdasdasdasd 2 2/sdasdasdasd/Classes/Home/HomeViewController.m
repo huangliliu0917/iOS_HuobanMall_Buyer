@@ -38,6 +38,7 @@
 #import "AccountTool.h"
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
+#import "NoticeMessage.h"
 
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
@@ -358,6 +359,33 @@
     [self ToCheckDate];
     
     [self initWebViewProgress];
+    
+    
+    _openNotifacation = app.openNotifacation;
+    if (_openNotifacation) {
+        NSLog(@"%@", _openNotifacation);
+        NoticeMessage *message = [NoticeMessage objectWithKeyValues:_openNotifacation];
+        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
+            UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+            funWeb.funUrl = message.alertUrl;
+            [self.navigationController pushViewController:funWeb animated:YES];
+        }else if (![message.url isKindOfClass:[NSNull class]]) {
+            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
+            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+                funWeb.funUrl = message.url;
+                [self.navigationController pushViewController:funWeb animated:YES];
+            }]];
+            
+            [self presentViewController:aa animated:YES completion:nil];
+        }
+    }
+    
 }
 
 /**
@@ -1194,6 +1222,7 @@
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
             
+            __weak HomeViewController *wself = self;
             
             self.ServerPayUrl = [temp copy];
             NSRange trade_no = [temp rangeOfString:@"trade_no="];
@@ -1228,19 +1257,39 @@
                         PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
                         self.paymodel = pay;
                         if ([pay.payType integerValue] == 300) {//300微信
-                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"微信", nil];
-                            aa.tag = 500;//单个微信支付
-                            [aa showInView:self.view];
+                            
+                            UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                            [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                [wself weixinPay];
+                            }]];
+                            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                
+                            }]];
+                            [self presentViewController:aa animated:YES completion:nil];
                         }
                         if ([pay.payType integerValue] == 400) {//400支付宝
-                            UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝", nil];
-                            aa.tag = 700;//单个支付宝支付
-                            [aa showInView:self.view];
+                            UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                            [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                [wself zhifubaoPay];
+                            }]];
+                            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                
+                            }]];
+                            [self presentViewController:aa animated:YES completion:nil];
                         }
                     }else if(namesArray.count == 2){
-                        UIActionSheet * aa =  [[UIActionSheet alloc] initWithTitle:@"支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
-                        aa.tag = 900;//两个都有的支付
-                        [aa showInView:self.view];
+                        
+                        UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                        [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            [wself weixinPay];
+                        }]];
+                        [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            [wself zhifubaoPay];
+                        }]];
+                        [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            
+                        }]];
+                        [self presentViewController:aa animated:YES completion:nil];
                     }
                     
                 }
@@ -1381,6 +1430,55 @@
             [self.progressView setProgress:newprogress animated:YES];
         }
     }
+}
+
+#pragma mark 支付处理
+
+- (void)weixinPay {
+    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+    NSData *data = [NSData dataWithContentsOfFile:filename];
+    // 2.创建反归档对象
+    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    // 3.解码并存到数组中
+    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+    PayModel * paymodel =  namesArray[0];
+    if ([paymodel.payType integerValue] == 300) {
+        [self WeiChatPay:namesArray[0]];
+    }else{
+        [self WeiChatPay:namesArray[1]];//微信
+    }
+}
+
+- (void)zhifubaoPay {
+    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+    NSData *data = [NSData dataWithContentsOfFile:filename];
+    // 2.创建反归档对象
+    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    // 3.解码并存到数组中
+    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+ 
+        PayModel * paymodel =  namesArray[0];
+        PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
+        if (cc.webPagePay) {//网页支付
+            NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
+            NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
+            NSArray * arr = [par componentsSeparatedByString:@"&"];
+            __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+            [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
+                NSArray * aa = [obj componentsSeparatedByString:@"="];
+                NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
+                [dict addEntriesFromDictionary:dt];
+            }];
+            NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
+            //                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
+            [self.homeWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
+                
+            }];
+        }else{
+            [self MallAliPay:cc];
+        }
 }
 
 @end

@@ -40,9 +40,12 @@
 #import <SVProgressHUD.h>
 #import "HTNoticeCenter.h"
 #import "NSData+NSDataDeal.h"
+#import "PushWebViewController.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSString *pushToken;
+
+
 
 @end
 
@@ -86,8 +89,30 @@
     
     [self registRemoteNotification:application];
     
+    if (launchOptions) {
+        NSDictionary *dicRemote = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (dicRemote) {
+            NSLog(@"%@", _openNotifacation);
+            self.openNotifacation = [NSDictionary dictionary];
+            self.openNotifacation = dicRemote;
+        }
+    }
+    
     return YES;
 }
+//
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"%@", userInfo);
+
+    [self getRemoteNotifocation:userInfo];
+}
+
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    
+//    NSLog(@"%@", userInfo);
+//    
+//    [self getRemoteNotifocation:userInfo];
+//}
 
 
 /**
@@ -219,7 +244,13 @@
                 RootViewController * root = [[RootViewController alloc] init];
                 self.window.rootViewController = root;
                 [self.window makeKeyAndVisible];
+                
+                
+                
             }
+            
+            
+            
         }
         
         
@@ -500,8 +531,10 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
+        [self sendTokenAndUserIdToSevern];
         
-        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:aa AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+    }else {
+        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:aa AndCustomerId:HuoBanMallBuyApp_Merchant_Id DealResult:^(HTNoticeCenterDealResult resultType) {
             if (resultType == HTNoticeCenterSuccess) {
                 NSLog(@"Push  success");
             }
@@ -510,15 +543,34 @@
 }
 
 - (void)getRemoteNotifocation:(NSDictionary *) userInfo {
-    
+    NSLog(@"%@", userInfo);
     if (userInfo) {
         NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
-        if (message.alertUrl.length) {
+        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
             NSDictionary *dic = [NSDictionary dictionaryWithObject:message.alertUrl forKey:@"url"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GoNewUrl" object:nil userInfo:dic];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
+        }else if (![message.url isKindOfClass:[NSNull class]]) {
+            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
+            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
+            }]];
+            
+            [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
         }
     }
     
+}
+
+- (void)sendTokenAndUserIdToSevern {
+    [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:self.pushToken AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+        if (resultType == HTNoticeCenterSuccess) {
+            NSLog(@"Push  success");
+        }
+    }];
 }
 
 @end

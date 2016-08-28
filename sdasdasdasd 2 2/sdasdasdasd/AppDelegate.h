@@ -22,8 +22,11 @@
 
 @property (nonatomic, strong) NSString *userAgent;
 
+@property (nonatomic, strong) NSDictionary *openNotifacation;
 
 - (void)resetUserAgent:(NSString *) goUrl;
+
+- (void)sendTokenAndUserIdToSevern;
 
 @end
 

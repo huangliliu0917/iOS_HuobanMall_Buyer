@@ -37,6 +37,8 @@
 
 + (void)ToRemoveSandBoxDate{
     
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
+    
      NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 //    NSLog(@"xxxxxxxxxx===%@",path);
     NSFileManager * fileManager = [NSFileManager defaultManager];
