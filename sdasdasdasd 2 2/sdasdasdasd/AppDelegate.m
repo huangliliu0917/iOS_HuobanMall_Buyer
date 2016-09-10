@@ -40,6 +40,7 @@
 #import <SVProgressHUD.h>
 #import "HTNoticeCenter.h"
 #import "NSData+NSDataDeal.h"
+#import "LaunchViewController.h"
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSString *pushToken;
@@ -52,33 +53,38 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
     
-    
-    
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    
     app.statusBarStyle = UIStatusBarStyleLightContent;
     
+    
+    self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    
+    LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
+    self.window.rootViewController = launchViewController;
+    [self.window makeKeyAndVisible];
     [self setupInit];
     [self myAppToInit];
-    
-    
-    [self myAppGetConfig];
-    //微信支付
-    
-    
-
-    [self setImage];
-    
-    
+//
+//    [self setImage];
+//
+//    
+//    [self myAppGetConfig];
+//    //微信支付
+//    
+//    
+//
+//    
+//    
+//    
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    
-    _maskLayer = [CALayer layer];
-    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
-    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
-    [_window.layer addSublayer:_maskLayer];
-    self.maskLayer.hidden = YES;
-    
+//
+//    _maskLayer = [CALayer layer];
+//    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
+//    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
+//    [_window.layer addSublayer:_maskLayer];
+//    self.maskLayer.hidden = YES;
+//    
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     [self resetUserAgent:nil];
@@ -160,7 +166,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-//        NSLog(@"%@",json);
+        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];

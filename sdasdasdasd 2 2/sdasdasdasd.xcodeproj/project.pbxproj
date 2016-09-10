@@ -126,6 +126,7 @@
 		EFA6D3BD1C0451CB00B39B36 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3BC1C0451CB00B39B36 /* ImageIO.framework */; };
 		EFA6D3BF1C0451D300B39B36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3BE1C0451D300B39B36 /* AdSupport.framework */; };
 		EFA6D3C11C0451DE00B39B36 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */; };
+		EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -379,6 +380,8 @@
 		EFA6D3BC1C0451CB00B39B36 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		EFA6D3BE1C0451D300B39B36 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
 		FD414A393AF918D028562104 /* Pods-sdasdasdasdUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -484,6 +487,7 @@
 		EF9D4B1D1C055FF900D005E8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EFB0D8A21D826A4400D24FE4 /* HomeLuanch */,
 				EF9D4B1E1C055FF900D005E8 /* CateGory */,
 				EF9D4B251C055FF900D005E8 /* Home */,
 				EF9D4B2C1C055FF900D005E8 /* LeftOption */,
@@ -1066,6 +1070,15 @@
 			path = WeChatSDK;
 			sourceTree = "<group>";
 		};
+		EFB0D8A21D826A4400D24FE4 /* HomeLuanch */ = {
+			isa = PBXGroup;
+			children = (
+				EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */,
+				EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */,
+			);
+			path = HomeLuanch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1141,7 +1154,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = SC97784VSF;
+						DevelopmentTeam = YYBZ4386CR;
 					};
 					EFA6D36A1C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1398,6 +1411,7 @@
 				EF9D4C921C055FF900D005E8 /* MJMethod.m in Sources */,
 				EF9D4C8F1C055FF900D005E8 /* MJFoundation.m in Sources */,
 				EF9D4C9D1C055FF900D005E8 /* README.md in Sources */,
+				EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */,
 				EFA6D35A1C04514500B39B36 /* AppDelegate.m in Sources */,
 				EF9D4C991C055FF900D005E8 /* MMDrawerBarButtonItem.m in Sources */,
 				EF9D4C601C055FF900D005E8 /* LeftGroupModel.m in Sources */,
@@ -1591,7 +1605,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.olquanapp.ttds.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xem.xmbcustomerapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1628,7 +1642,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.olquanapp.ttds.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xem.xmbcustomerapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
