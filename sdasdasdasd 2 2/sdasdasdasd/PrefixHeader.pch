@@ -18,7 +18,7 @@
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"OL圈"
+#define MallName @"小美伴"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -38,7 +38,7 @@
 	
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.olquan.cn/"
+#define AppOriginUrl  @"http://mallapi.huobanmall.com"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
@@ -49,9 +49,9 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyNavColor [UIColor blackColor]
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:132/255.0 green:186/255.0 blue:67/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
+#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:132/255.0 green:186/255.0 blue:67/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
@@ -65,7 +65,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"4471" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"7753" //0504
 
 
 //友盟数据统计
@@ -73,17 +73,17 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"e81233c08013"
+#define HuoBanMallShareSdkAppId @"1251451bae91b"
 //sina
 #define HuoBanMallShareSdkSinaKey @"1000919385"
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx16a5589cff4c76d5"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+#define HuoBanMallBuyWeiXinAppId @"wx370887c68687f70f"
+#define HuoBanMallShareSdkWeiXinSecret @"9e6a8419d1d51890747bfa626553eacf"
 //qq
-#define HuoBanMallShareSdkQQKey @"1105087534"
-#define HuoBanMallShareSdkQQSecret @"eD2ASY9HzOIjrOL5"
+#define HuoBanMallShareSdkQQKey @"1105378160"
+#define HuoBanMallShareSdkQQSecret @"v6p6HgS39OHipPZL"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
