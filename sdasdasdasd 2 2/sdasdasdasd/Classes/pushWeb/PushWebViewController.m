@@ -123,6 +123,7 @@
     //加载刷新控件
     [self AddMjRefresh];
     
+    [self initWebViewProgress];
     
     self.shareBtn.hidden = YES;
  
