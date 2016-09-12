@@ -7,6 +7,8 @@
 //
 
 #import "UIViewController+MonitorNetWork.h"
+#import "AppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
 
 @implementation UIViewController (MonitorNetWork)
 
@@ -35,6 +37,8 @@
 
 + (void)ToRemoveSandBoxDate{
     
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
+    
      NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 //    NSLog(@"xxxxxxxxxx===%@",path);
     NSFileManager * fileManager = [NSFileManager defaultManager];
@@ -52,12 +56,14 @@
             NSLog(@"%@",error.description);
         }
     }
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:HuoBanMallUserId];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:IconHeadImage];
     
-//    [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
-//       
-//        NSLog(@"%@",fileName);
-//        [fileManager removeItemAtPath:fileName error:nil];
-//    }];
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
+    
+    AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [de resetUserAgent:nil];
+    
  
 }
 @end

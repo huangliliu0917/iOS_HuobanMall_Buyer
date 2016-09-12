@@ -27,6 +27,8 @@
 #import "LeftMenuModel.h"
 #import "MallMessage.h"
 #import "IponeVerifyViewController.h"
+#import <UIBarButtonItem+BlocksKit.h>
+#import <ShareSDK/ShareSDK.h>
 
 @interface LoginViewController ()<WXApiDelegate>
 
@@ -44,23 +46,33 @@
     
     self.image.contentMode = UIViewContentModeScaleAspectFit;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess2:) name:@"ToGetUserInfo" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WeiXinFailureToUserOrigin1) name:@"ToGetUserInfoError" object:nil];
+    
     
     [UIViewController MonitorNetWork];
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+        }];
+    }];
     
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+    
+    self.loginButton.layer.cornerRadius = 22;
 
 }
 
 
 
 - (void)OquthByWeiXinSuccess2:(NSNotification *) note{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
     [SVProgressHUD showWithStatus:@"登录中"];
     NSLog(@"-=------------%@",note);
 //    AQuthModel * account = [AccountTool account];
@@ -71,7 +83,6 @@
 //    }
     [self ToGetShareMessage];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
 }
 
 /**
@@ -81,7 +92,7 @@
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/mall/getConfig"];
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame[@"custo  merid"] = HuoBanMallBuyApp_Merchant_Id;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
         NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -121,34 +132,64 @@
  */
 - (void)WeiXinLog{
     
-    //构造SendAuthReq结构体
-    SendAuthReq* req =[[SendAuthReq alloc ] init];
-    req.scope = @"snsapi_userinfo" ;
-    req.state = @"123" ;
-    //第三方向微信终端发送一个SendAuthReq消息结构
-    [WXApi sendAuthReq:req viewController:self delegate:self];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess2:) name:@"ToGetUserInfo" object:nil];
+//    //构造SendAuthReq结构体
+//    SendAuthReq* req =[[SendAuthReq alloc ] init];
+//    req.scope = @"snsapi_userinfo" ;
+//    req.state = @"123" ;
+//    //第三方向微信终端发送一个SendAuthReq消息结构
+//    [WXApi sendAuthReq:req viewController:self delegate:self];
+    __weak LoginViewController * wself = self;
+    [ShareSDK getUserInfo:SSDKPlatformTypeWechat onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+        if (state == SSDKResponseStateSuccess) {
+            
+            UserInfo * userInfo = [UserInfo objectWithKeyValues:user.rawData];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            //向服务端提供微信数据
+            [wself toPostWeiXinUserMessage:userInfo];
+            //获取主地址
+            [wself toGetMainUrl];
+            //微信授权成功后获取支付参数
+            [wself WeiXinLoginSuccessToGetPayParameter];
+            //获得用户账户列表
+        }
+    }];
+    
 }
 
 /**
  *  用户登录成功
  *
- *  @param note <#note description#>
+ *  @param note
  */
 - (void)UserLoginSuccess{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
+    
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
-    
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [MBProgressHUD hideHUD];
+    if ([str intValue] == 1) {
+        [SVProgressHUD dismiss];
+        [self.view endEditing:NO];
+        IponeVerifyViewController *bundle = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        bundle.isBundlPhone = YES;
+        bundle.goUrl = _goUrl;
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app resetUserAgent:nil];
+        [self.navigationController pushViewController:bundle animated:YES];
+    }else {
         
-        AppDelegate * de = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        de.SwitchAccount = @"first";
-        RootViewController * root = [[RootViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = root;
-    });
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetUserAgent" object:nil];
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app resetUserAgent:_goUrl];
+        [app sendTokenAndUserIdToSevern];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [SVProgressHUD dismiss];
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
+
 
 
 /**
@@ -221,7 +262,7 @@
         //微信授权成功后获取支付参数
         [wself WeiXinLoginSuccessToGetPayParameter];
         //获得用户账户列表
-        [wself GetUserList:userInfo.unionid];
+
         
     } failure:^(NSError *error) {
         NSLog(@"%@",error.description);
@@ -279,6 +320,13 @@
     [url appendString:@"/weixin/LoginAuthorize"];
     [UserLoginTool loginRequestPost:url parame:parame success:^(id json) {
         if ([json[@"code"] integerValue] == 200) {
+            
+            
+            user.nickname = json[@"data"][@"nickName"];
+            user.headimgurl = json[@"data"][@"headImgUrl"];
+            user.openid = json[@"data"][@"openId"];
+            user.relatedType = json[@"data"][@"relatedType"];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
@@ -295,9 +343,11 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
             //写入
             [data writeToFile:filename atomically:YES];
-            //登陆成功
-            [wself UserLoginSuccess];
             
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:user toFile:fileName];
+            [self UserLoginSuccess];
             
         }
     } failure:^(NSError *error) {
@@ -307,63 +357,6 @@
    
 }
 
-- (void)GetUserList:(NSString *)unionid{
-    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    parame[@"unionid"] = unionid;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/weixin/getuserlist"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-            if ([json[@"code"] integerValue] == 200){
-            NSArray * account = [AccountModel objectArrayWithKeyValuesArray:json[@"data"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:account forKey:AccountList];
-            //结束编码
-            [archiver finishEncoding];
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:AccountList];
-            //写入
-            [data writeToFile:filename atomically:YES];
-                
-                
-                /**
-                 *  用户数据存到数组
-                 */
-                NSMutableArray *userList = [NSMutableArray array];
-                NSArray *temp = json[@"data"];
-                for (NSDictionary *dic in temp) {
-                    UserInfo *user = [[UserInfo alloc] init];
-                    user.headimgurl = dic[@"wxHeadImg"];
-                    user.nickname = dic[@"wxNickName"];
-                    user.openid = dic[@"wxOpenId"];
-                    user.unionid = dic[@"wxUnionId"];
-                    user.relatedType = dic[@"relatedType"];
-                    [userList addObject:user];
-                    if (account.count == 1) {
-                        [[NSUserDefaults standardUserDefaults]setObject:user.relatedType forKey:MallUserRelatedType];
-                    }
-                }
-                NSMutableData *userData = [[NSMutableData alloc] init];
-                //创建归档辅助类
-                NSKeyedArchiver *userArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:userData];
-                [userArchiver encodeObject:userList forKey:UserInfoList];
-                [data writeToFile:filename atomically:YES];
-                [userArchiver finishEncoding];
-                
-                NSArray *array1 =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString * filename1 = [[array1 objectAtIndex:0] stringByAppendingPathComponent:UserInfoList];
-                //写入
-                [userData writeToFile:filename1 atomically:YES];
-                
-                
-        }
-    } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
-    }];
-}
 
 /**
  *  微信授权成功后获取支付参数

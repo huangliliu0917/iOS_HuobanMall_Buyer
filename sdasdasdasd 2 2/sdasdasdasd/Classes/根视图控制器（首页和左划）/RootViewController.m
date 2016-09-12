@@ -33,10 +33,11 @@
     
     //设置中间视图控制器
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    HomeViewController * home = [storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    HomeViewController * home = [[HomeViewController alloc] init];
 //    home.view.backgroundColor = [UIColor whiteColor];
     LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:home];
     self.centerViewController = navs;
+    
     
     //设置右侧视图控制器
     self.rightDrawerViewController = nil;

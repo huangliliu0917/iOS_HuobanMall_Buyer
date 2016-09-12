@@ -34,13 +34,29 @@
 #import "UserLoginTool.h"
 #import "NSDictionary+HuoBanMallSign.h"
 #import "PayModel.h"
-#import "HTNoticeCenter.h"
+
+
 #import "NoticeMessage.h"
+
+
+
+#import "MallMessage.h"
+#import "LeftMenuModel.h"
+#import "UIViewController+MonitorNetWork.h"
+#import <SVProgressHUD.h>
+#import "HTNoticeCenter.h"
 #import "NSData+NSDataDeal.h"
+
+#import "PushWebViewController.h"
+
+#import "LaunchViewController.h"
+
 
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSString *Agent;
+@property (nonatomic, strong) NSString *pushToken;
+
+
 
 @end
 
@@ -50,43 +66,53 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
     
+    UIApplication *app = [UIApplication sharedApplication];
+    app.applicationIconBadgeNumber = 0;
+    app.statusBarStyle = UIStatusBarStyleLightContent;
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    
+    LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
+    self.window.rootViewController = launchViewController;
+    [self.window makeKeyAndVisible];
     [self setupInit];
     [self myAppToInit];
-    //微信支付
-    [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:@"行装"];
-    
-
-    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-    //    AQuthModel * AQuth = [AccountTool account];
-    if ([login isEqualToString:Success]) {
-        //初始化接口
-        
-        RootViewController * root = [[RootViewController alloc] init];
-        self.window.rootViewController = root;
-        [self.window makeKeyAndVisible];
-    }else{
-        
-//        UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        LWNewFeatureController * cc = [[LWNewFeatureController alloc] init];
-        self.window.rootViewController = cc;
-        [self.window makeKeyAndVisible];
-    }
-    
-    
-    
-    
-    _maskLayer = [CALayer layer];
-    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
-    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
-    [_window.layer addSublayer:_maskLayer];
-    self.maskLayer.hidden = YES;
-    
+//
+//    [self setImage];
+//
+//    
+//    [self myAppGetConfig];
+//    //微信支付
+//    
+//    
+//
+//    
+//    
+//    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+//
+//    _maskLayer = [CALayer layer];
+//    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
+//    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
+//    [_window.layer addSublayer:_maskLayer];
+//    self.maskLayer.hidden = YES;
+//    
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    [self resetUserAgent];
+    [self resetUserAgent:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetUserAgent) name:@"resetUserAgent" object:nil];
+    
+    [self registRemoteNotification:application];
+    
+    if (launchOptions) {
+        NSDictionary *dicRemote = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (dicRemote) {
+            NSLog(@"%@", _openNotifacation);
+            self.openNotifacation = [NSDictionary dictionary];
+            self.openNotifacation = dicRemote;
+        }
+    }
     
     [self registRemoteNotification:application];
     
@@ -95,6 +121,19 @@
     
     return YES;
 }
+//
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"%@", userInfo);
+
+    [self getRemoteNotifocation:userInfo];
+}
+
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    
+//    NSLog(@"%@", userInfo);
+//    
+//    [self getRemoteNotifocation:userInfo];
+//}
 
 
 /**
@@ -167,7 +206,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-//        NSLog(@"%@",json);
+        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
@@ -190,6 +229,113 @@
     
 }
 
+/**
+ *  getconfig接口
+ */
+- (void)myAppGetConfig {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
+    [url appendString:@"/mall/getConfig"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        if (json) {
+            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
+            [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
+            
+            [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
+            
+            
+            NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+            if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+                LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+                self.window.rootViewController = new;
+                [self.window makeKeyAndVisible];
+                [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+            }else {
+                NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+                //    AQuthModel * AQuth = [AccountTool account];
+                if ([login isEqualToString:Success]) {
+                    [self myAppGetUserInfo];
+                }
+                RootViewController * root = [[RootViewController alloc] init];
+                self.window.rootViewController = root;
+                [self.window makeKeyAndVisible];
+                
+                
+                
+            }
+            
+            
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+
+        [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
+        
+        
+    }];
+}
+
+- (void)myAppGetUserInfo {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"userid"] = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId]];
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
+    [url appendString:@"/Account/getAppUserInfo"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+
+        if ([json[@"code"] integerValue] == 200) {
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"unionId"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }else {
+                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:lefts forKey:LeftMenuModels];
+            //结束编码
+            [archiver finishEncoding];
+            
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
+            //写入
+            [data writeToFile:filename atomically:YES];
+            
+            [self resetUserAgent:nil];
+        }else {
+            [UIViewController ToRemoveSandBoxDate];
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
+}
 
 -(void) onResp:(BaseResp*)resp
 {
@@ -282,7 +428,7 @@
 
 
 
-- (void) resetUserAgent {
+- (void)resetUserAgent:(NSString *) goUrl {
     
     
     // Do any additional setup after loading the view, typically from a nib.
@@ -291,55 +437,107 @@
     //add my info to the new agent
     NSString *newAgent = nil;
     UserInfo * usaa = nil;
-    if ([AccountTool account]) {
-        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-        usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    };
+
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+    usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     
-    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid, SISSecret]];
+    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+//    NSString *tempUserId = [(NSNumber*)userID  stringValue]
+    if ([NSString stringWithFormat:@"%@", userID].length == 0) {
+        userID = @"";
+    }
+    if (usaa) {
+        if (usaa.unionid) {
+        }else {
+            usaa.unionid = @"";
+        }
+        if (usaa.openid) {
+        }else {
+            usaa.openid= @"";
+        }
+    }else {
+        usaa = [[UserInfo alloc] init];
+        usaa.openid = @"";
+        usaa.unionid = @"";
+    }
+    
+    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",userID, usaa.unionid, usaa.openid, SISSecret]];
     
     
-    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@;",str,[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId], usaa.unionid]];
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,userID, usaa.unionid, usaa.openid]];
     
-    //regist the new agent
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
     
+    self.userAgent = newAgent;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ResetAllWebAgent object:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        if (goUrl) {
+            NSDictionary * objc = [NSDictionary dictionaryWithObject:goUrl forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+        }
+    });
     
 }
 
 
-/***************************************************/
+- (void)setImage {
+    CGSize viewSize = self.window.bounds.size;
+    NSString *viewOrientation = @"Portrait";    //横屏请设置成 @"Landscape"
+    NSString *launchImage = nil;
+    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+    for (NSDictionary* dict in imagesDict)
+    {
+        CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+        
+        if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
+        {
+            launchImage = dict[@"UILaunchImageName"];
+        }
+    }
+    UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
+    launchView.frame = self.window.bounds;
+    launchView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.window addSubview:launchView];
+    [UIView animateWithDuration:2.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         launchView.alpha = 0.0f;
+                         launchView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1);
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         [launchView removeFromSuperview];
+                         
+                     }];
+}
 
 /**
  *  注册远程通知
  */
 - (void)registRemoteNotification:(UIApplication *)application{
-    if (IsIos8) { //iOS 8 remoteNotification
         UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
         UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
         [application registerUserNotificationSettings:settings];
-    }else{
-        
-        UIRemoteNotificationType type = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeNewsstandContentAvailability;
-        [application registerForRemoteNotificationTypes:type];
-        
-    }
 }
 
 /**
  *  ios8
  *
- *  @param application          <#application description#>
- *  @param notificationSettings <#notificationSettings description#>
+ *  @param application
+ *  @param notificationSettings
  */
 -(void)application:(UIApplication*)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
     [application registerForRemoteNotifications];
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-//    LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
+    //    LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
 }
 
 /**
@@ -349,29 +547,55 @@
     
     
     NSString * aa = [deviceToken hexadecimalString] ;
+    
+    self.pushToken = aa;
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     //    AQuthModel * AQuth = [AccountTool account];
     if ([login isEqualToString:Success]) {
+        [self sendTokenAndUserIdToSevern];
         
-        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:aa AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+    }else {
+        [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:aa AndCustomerId:HuoBanMallBuyApp_Merchant_Id DealResult:^(HTNoticeCenterDealResult resultType) {
             if (resultType == HTNoticeCenterSuccess) {
                 NSLog(@"Push  success");
             }
         }];
     }
-    
 }
 
 - (void)getRemoteNotifocation:(NSDictionary *) userInfo {
-    
+    NSLog(@"%@", userInfo);
     if (userInfo) {
         NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
-        if (message.alertUrl.length) {
+        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
             NSDictionary *dic = [NSDictionary dictionaryWithObject:message.alertUrl forKey:@"url"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GoNewUrl" object:nil userInfo:dic];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
+        }else if (![message.url isKindOfClass:[NSNull class]]) {
+            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
+            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
+            }]];
+            
+            [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
         }
     }
     
+}
+
+
+
+
+- (void)sendTokenAndUserIdToSevern {
+    [HTNoticeCenter HTNoticeCenterRegisterToServerWithDeviceToken:self.pushToken AndUserId:[[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId] DealResult:^(HTNoticeCenterDealResult resultType) {
+        if (resultType == HTNoticeCenterSuccess) {
+            NSLog(@"Push  success");
+        }
+    }];
+
 }
 
 @end

@@ -14,7 +14,12 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *weixinLogin;
 
-@property (weak, nonatomic) IBOutlet UIButton *visiLogin;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *visiCenter;
+
+@property (nonatomic, assign) BOOL isPhoneLogin;
+
+@property (nonatomic, assign) BOOL isBundlPhone;
+
+
+@property (nonatomic, strong) NSString *goUrl;
 
 @end

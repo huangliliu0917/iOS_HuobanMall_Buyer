@@ -5,7 +5,8 @@
 //  Created by lhb on 15/11/24.
 //  Copyright © 2015年 HT. All rights reserved.
 //
-
+#import "HomeViewController.h"
+#import "PushWebViewController.h"
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -16,5 +17,16 @@
 
 /**切换账号标志*/
 @property (strong,nonatomic) NSString * SwitchAccount;
+
+@property (nonatomic, strong) NSString *Agent;
+
+@property (nonatomic, strong) NSString *userAgent;
+
+@property (nonatomic, strong) NSDictionary *openNotifacation;
+
+- (void)resetUserAgent:(NSString *) goUrl;
+
+- (void)sendTokenAndUserIdToSevern;
+
 @end
 

@@ -10,4 +10,6 @@
 
 @interface RootViewController : MMDrawerController
 
+@property (nonatomic, strong) NSDictionary *openNotifacation;
+
 @end

@@ -11,13 +11,15 @@
 #import "NoticeMessage.h"
 
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081/"
+
+#define NoticeCenterMainUrl @"http://api.open.huobanmall.com/"
 
 /**网络  APP 标识*/
-#define NoticeCenterAppKey  @"_demo"
+#define NoticeCenterAppKey  @"app"
 
 /**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"1f2f3f4f5f6f7f8f"
+#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+
 
 
 /*
@@ -97,6 +99,9 @@ typedef NS_ENUM(NSUInteger, HTNoticeCenterErrorCode) {
 + (void)HTNoticeCenterRegisterToServerWithDeviceToken:(NSString *)deviceToken AndUserId:(NSString *)UserId  DealResult:(void(^)(HTNoticeCenterDealResult resultType))Result;
 
 
+
+
++ (void)HTNoticeCenterRegisterToServerWithDeviceTokenWithNoUserInfo:(NSString *)deviceToken AndCustomerId:(NSString *)CustomerId  DealResult:(void(^)(HTNoticeCenterDealResult resultType))Result;
 
 
 
