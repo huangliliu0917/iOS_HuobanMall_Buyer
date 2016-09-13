@@ -35,12 +35,22 @@
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
+/**消息中心  网络接口*/
+
+#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081/"
+
+/**网络  APP 标识*/
+#define NoticeCenterAppKey  @"huoban"
+
+/**网络  APP 签名秘药*/
+#define NoticeCenterAppSecure  @"319ea9ad29ef4a50d6801c2f406dd208"
+
 	
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanmall.com"
-#define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+#define AppOriginUrl  @"http://mallapi.51flashmall.com/"
+#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"
+#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"
 
 
 
