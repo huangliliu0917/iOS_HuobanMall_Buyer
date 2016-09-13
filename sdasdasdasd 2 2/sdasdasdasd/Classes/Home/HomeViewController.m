@@ -1396,7 +1396,7 @@
         completionHandler(YES);
     }])];
     [alertController addAction:([UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler(YES);
+        completionHandler(NO);
     }])];    [self presentViewController:alertController animated:YES completion:nil];
 }
 
