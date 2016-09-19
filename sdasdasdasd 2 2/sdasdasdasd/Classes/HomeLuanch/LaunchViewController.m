@@ -252,6 +252,8 @@
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
         
+        [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
+        
         
         NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
         if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {

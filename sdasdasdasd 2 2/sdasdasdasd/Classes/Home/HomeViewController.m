@@ -39,6 +39,7 @@
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
 #import "NoticeMessage.h"
+#import <SDWebImage/SDWebImageManager.h>
 
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
@@ -392,6 +393,7 @@
             [self presentViewController:aa animated:YES completion:nil];
         }
     }
+    
     
 }
 
@@ -1348,7 +1350,7 @@
     if (webView.tag == 100) {
         
         [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            self.title = title;
+            self.navigationItem.title = title;
         }];
         
         if (_showBackArrows) {//返回按钮

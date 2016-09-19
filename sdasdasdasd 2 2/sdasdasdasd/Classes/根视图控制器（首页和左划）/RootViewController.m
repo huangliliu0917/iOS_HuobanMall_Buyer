@@ -14,7 +14,10 @@
 #import "HomeViewController.h"
 #import "MallTabbarViewController.h"
 #import "TabBarModel.h"
-@interface RootViewController ()
+#import <SDWebImage/SDWebImageManager.h>
+#import <SVProgressHUD.h>
+@interface RootViewController ()<UITabBarControllerDelegate>
+
 
 @property (nonatomic, strong) NSMutableArray *controllerArray;
 
@@ -28,24 +31,46 @@
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     //设置左侧控制器
+    MallTabbarViewController *tabbar = [[MallTabbarViewController alloc] init];
+    
     
     self.controllerArray = [NSMutableArray array];
-    for (int i = 0; i < self.tabbarArray.count;  i++) {
-        HomeViewController * home = [[HomeViewController alloc] init];
-        
-        
-    }
+    NSString *imageHostUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"mallResourceURL"];
     
+    for (int i = 0; i < self.tabbarArray.count;  i++) {
+        
+        TabBarModel *model = self.tabbarArray[i];
+        
+        HomeViewController * home = [[HomeViewController alloc] init];
+        tabbar.delegate = self;
+        home.openUrl = model.linkUrl;
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (error) {
+            }
+            if (image) {
+                
+                UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(30, 30) ] tag:0];
+                home.tabBarItem = item;
+            }
+        }];
+        
+        LWNavigationController * nav = [[LWNavigationController alloc] initWithRootViewController:home];
+        
+        [tabbar addChildViewController:nav];
+    }
+
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;
 
     //设置中间视图控制器
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    HomeViewController * home = [[HomeViewController alloc] init];
+
+//    HomeViewController * home = [[HomeViewController alloc] init];
 //    home.view.backgroundColor = [UIColor whiteColor];
-    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:home];
-    self.centerViewController = navs;
+//    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:home];
+    self.centerViewController = tabbar;
     
     
     //设置右侧视图控制器
@@ -79,6 +104,92 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+-(UIImage *)imageCompressForSize:(UIImage *)sourceImage targetSize:(CGSize)size{
+    
+    UIImage *newImage = nil;
+    
+    CGSize imageSize = sourceImage.size;
+    
+    CGFloat width = imageSize.width;
+    
+    CGFloat height = imageSize.height;
+    
+    CGFloat targetWidth = size.width;
+    
+    CGFloat targetHeight = size.height;
+    
+    CGFloat scaleFactor = 0.0;
+    
+    CGFloat scaledWidth = targetWidth;
+    
+    CGFloat scaledHeight = targetHeight;
+    
+    CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
+    
+    if(CGSizeEqualToSize(imageSize, size) == NO){
+        
+        CGFloat widthFactor = targetWidth / width;
+        
+        CGFloat heightFactor = targetHeight / height;
+        
+        if(widthFactor > heightFactor){
+            
+            scaleFactor = widthFactor;
+            
+        }
+        
+        else{
+            
+            scaleFactor = heightFactor;
+            
+        }
+        
+        scaledWidth = width * scaleFactor;
+        
+        scaledHeight = height * scaleFactor;
+        
+        if(widthFactor > heightFactor){
+            
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+            
+        }else if(widthFactor < heightFactor){
+            
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+            
+        }
+        
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, 3.0);
+    
+    CGRect thumbnailRect = CGRectZero;
+    
+    thumbnailRect.origin = thumbnailPoint;
+    
+    thumbnailRect.size.width = scaledWidth;
+    
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(newImage == nil){
+        
+        NSLog(@"scale image fail");
+        
+    }
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+    
+}
+
 
 
 @end
