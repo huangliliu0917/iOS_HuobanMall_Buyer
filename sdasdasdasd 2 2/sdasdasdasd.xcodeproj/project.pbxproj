@@ -14,6 +14,8 @@
 		607B85C31CEC897600482E40 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		607B85C61CEC8D5500482E40 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		607B85C91CEC8FF800482E40 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		608E629E1D87CE4000C1C7C2 /* MallTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608E629D1D87CE4000C1C7C2 /* MallTabbarViewController.m */; };
+		608E62A11D87CE5C00C1C7C2 /* TabBarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 608E62A01D87CE5C00C1C7C2 /* TabBarModel.m */; };
 		60C84F5D1D36153B0087D7BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */; };
 		70CE6C993C5EA4214E3834DF /* libPods-sdasdasdasdUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41E2BF2687D13CE3A8708C /* libPods-sdasdasdasdUITests.a */; };
@@ -159,6 +161,10 @@
 		60025BC81D3F250F0099A617 /* NoticeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMessage.h; sourceTree = "<group>"; };
 		60025BC91D3F250F0099A617 /* NoticeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeMessage.m; sourceTree = "<group>"; };
 		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		608E629C1D87CE4000C1C7C2 /* MallTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallTabbarViewController.h; sourceTree = "<group>"; };
+		608E629D1D87CE4000C1C7C2 /* MallTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallTabbarViewController.m; sourceTree = "<group>"; };
+		608E629F1D87CE5C00C1C7C2 /* TabBarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarModel.h; sourceTree = "<group>"; };
+		608E62A01D87CE5C00C1C7C2 /* TabBarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarModel.m; sourceTree = "<group>"; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		71102946ED3002A8D4DEC64B /* Pods-sdasdasdasdUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -456,6 +462,17 @@
 			path = ../HTNoticeCenter;
 			sourceTree = "<group>";
 		};
+		608E629B1D87CE2800C1C7C2 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				608E629C1D87CE4000C1C7C2 /* MallTabbarViewController.h */,
+				608E629D1D87CE4000C1C7C2 /* MallTabbarViewController.m */,
+				608E629F1D87CE5C00C1C7C2 /* TabBarModel.h */,
+				608E62A01D87CE5C00C1C7C2 /* TabBarModel.m */,
+			);
+			path = Tabbar;
+			sourceTree = "<group>";
+		};
 		A5F4EAC65F57CC0DED1FF178 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +507,7 @@
 		EF9D4B1D1C055FF900D005E8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				608E629B1D87CE2800C1C7C2 /* Tabbar */,
 				EFB0D8A21D826A4400D24FE4 /* HomeLuanch */,
 				EF9D4B1E1C055FF900D005E8 /* CateGory */,
 				EF9D4B251C055FF900D005E8 /* Home */,
@@ -1433,6 +1451,7 @@
 				EF9D4C5B1C055FF900D005E8 /* HomeViewController.m in Sources */,
 				EF9D4C6D1C055FF900D005E8 /* AFURLRequestSerialization.m in Sources */,
 				EF9D4C751C055FF900D005E8 /* UIButton+AFNetworking.m in Sources */,
+				608E629E1D87CE4000C1C7C2 /* MallTabbarViewController.m in Sources */,
 				EF9D4C9B1C055FF900D005E8 /* MMDrawerVisualState.m in Sources */,
 				EF9D4C941C055FF900D005E8 /* MJTypeEncoding.m in Sources */,
 				EF9D4C781C055FF900D005E8 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1440,6 +1459,7 @@
 				60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */,
 				EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */,
 				60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */,
+				608E62A11D87CE5C00C1C7C2 /* TabBarModel.m in Sources */,
 				EF9D4C6E1C055FF900D005E8 /* AFURLResponseSerialization.m in Sources */,
 				EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */,
 			);

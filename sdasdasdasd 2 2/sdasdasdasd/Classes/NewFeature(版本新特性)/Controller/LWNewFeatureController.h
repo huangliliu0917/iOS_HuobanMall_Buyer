@@ -10,4 +10,6 @@
 
 @interface LWNewFeatureController : UIViewController
 
+@property (nonatomic, strong) NSArray *tabbarArray;
+
 @end

@@ -24,6 +24,7 @@
 #import "UserInfo.h"
 #import <SVProgressHUD.h>
 #import "AccountModel.h"
+#import <BlocksKit/UIView+BlocksKit.h>
 #import "IponeVerifyViewController.h"
 
 @interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate,WXApiDelegate>
@@ -281,9 +282,16 @@
         
         [headView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
         headView.firstLable.text = userInfor.nickname;
+        headView.userInteractionEnabled = NO;
+        
     }else {
         headView.iconView.image = [UIImage imageNamed:@"moren"];
         headView.firstLable.text = @"未登陆";
+        headView.userInteractionEnabled = YES;
+        __weak HTLeftTableViewController *wself = self;
+        [headView bk_whenTapped:^{
+            [wself backToTabbarAndGoLogin];
+        }];
     }
     headView.iconView.layer.borderColor = [UIColor whiteColor].CGColor;
     headView.iconView.layer.cornerRadius = headView.iconView.frame.size.width*0.5;
@@ -544,6 +552,8 @@
 
 
 
+
+
 #pragma mark topView
 
 - (void)MyLoginViewToSwitchAccount:(MyLoginView *)view{
@@ -559,9 +569,17 @@
 }
 
 
-#pragma mark 微信授权登录
+#pragma mark 未登陆返回并点击登录
 
 
+- (void)backToTabbarAndGoLogin {
+    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"backAndGoLogin" object:nil];
+        
+    }];
+}
 
 
 

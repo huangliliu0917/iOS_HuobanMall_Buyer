@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSDictionary *openNotifacation;
 
+@property (nonatomic, strong) NSArray *tabbarArray;
+
 @end

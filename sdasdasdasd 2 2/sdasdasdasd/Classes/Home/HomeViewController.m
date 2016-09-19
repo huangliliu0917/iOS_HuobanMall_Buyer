@@ -358,6 +358,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToNewUrlFormRemoteNotifcation:) name:@"GoNewUrl" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotoLoginController) name:@"backAndGoLogin" object:nil];
+    
+    
     [UIViewController MonitorNetWork];
     
     [self ToCheckDate];
@@ -858,7 +861,7 @@
  */
 -(void)getUserInfo1:(AQuthModel*)aquth
 {
-    __weak HomeViewController * wself = self;
+
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
@@ -1497,6 +1500,48 @@
     funWeb.funUrl = url;
     [self.navigationController pushViewController:funWeb animated:YES];
 }
+
+#pragma mark 登录修改
+
+- (void)gotoLoginController {
+    [UIViewController ToRemoveSandBoxDate];
+    
+    UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+    
+    if ([str intValue] == 0) {
+        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }else if ([str intValue] == 1) {
+        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        login.isPhoneLogin = YES;
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }else if ([str intValue] == 2) {
+        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }
+}
+
+
 
 @end
 

@@ -12,7 +12,11 @@
 #import "HTLeftTableViewController.h"
 #import "LWNavigationController.h"
 #import "HomeViewController.h"
+#import "MallTabbarViewController.h"
+#import "TabBarModel.h"
 @interface RootViewController ()
+
+@property (nonatomic, strong) NSMutableArray *controllerArray;
 
 @end
 
@@ -25,12 +29,17 @@
     
     //设置左侧控制器
     
-//    LWNavigationController * nav = [[LWNavigationController alloc] initWithRootViewController: [[HTLeftTableViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+    self.controllerArray = [NSMutableArray array];
+    for (int i = 0; i < self.tabbarArray.count;  i++) {
+        HomeViewController * home = [[HomeViewController alloc] init];
+        
+        
+    }
+    
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;
-    
-    
+
     //设置中间视图控制器
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     HomeViewController * home = [[HomeViewController alloc] init];
