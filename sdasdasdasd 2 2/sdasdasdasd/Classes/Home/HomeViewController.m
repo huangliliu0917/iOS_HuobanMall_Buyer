@@ -90,6 +90,10 @@
 
 @property (nonatomic, strong) NSString *bingWeixinUrl;
 
+
+/***1.5.4修改 用于识别当前加载的页面是否是首页***/
+@property (nonatomic, strong) NSString *homeWebUrl;
+
 @end
 
 
@@ -306,7 +310,7 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 50)];
+    self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 )];
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
@@ -317,20 +321,19 @@
 
     
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
-    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
-    self.homeBottonWebView.tag = 20;
-    self.homeBottonWebView.UIDelegate = self;
-    self.homeBottonWebView.navigationDelegate = self;
-    self.homeBottonWebView.customUserAgent = app.userAgent;
-    [self.homeBottonWebView loadRequest:Bottomreq];
-    [self.view addSubview:self.homeBottonWebView];
-    
+//    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+//    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
+//    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
+//    self.homeBottonWebView.tag = 20;
+//    self.homeBottonWebView.UIDelegate = self;
+//    self.homeBottonWebView.navigationDelegate = self;
+//    self.homeBottonWebView.customUserAgent = app.userAgent;
+//    [self.homeBottonWebView loadRequest:Bottomreq];
+//    [self.view addSubview:self.homeBottonWebView];
 
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:ddd];
+
+    self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     [self.homeWebView loadRequest:req];
 
@@ -481,7 +484,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar addSubview:_progressView];
+    self.tabBarController.tabBar.hidden = NO;
 }
+
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -1022,6 +1027,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [_progressView removeFromSuperview];
+    
 }
 #pragma mark UIWebView
 
@@ -1314,25 +1320,15 @@
             
         }else{
             
-            NSRange range = [url rangeOfString:@"__newframe"];
-            if (range.location != NSNotFound) {
+//            NSRange range = [url rangeOfString:@"__newframe"];
+            if (![temp isEqualToString:self.homeWebUrl]) {
                 UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
                 funWeb.funUrl = temp;
                 [self.navigationController pushViewController:funWeb animated:YES];
+                self.tabBarController.tabBar.hidden = YES;
                 decisionHandler(WKNavigationResponsePolicyCancel);
-            }else{
-                
-                NSRange range = [url rangeOfString:@"back"];
-                if (range.location != NSNotFound) {
-                    self.showBackArrows = YES;
-                }else{
-                    self.showBackArrows = NO;
-                }
-                decisionHandler(WKNavigationResponsePolicyAllow);
             }
-            
-            
         }
         
         decisionHandler(WKNavigationResponsePolicyAllow);
@@ -1353,16 +1349,16 @@
             self.navigationItem.title = title;
         }];
         
-        if (_showBackArrows) {//返回按钮
-            
-            [UIView animateWithDuration:0.05 animations:^{
-                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
-            }];
-        }else{
-            [UIView animateWithDuration:0.05 animations:^{
-                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
-            }];
-        }
+//        if (_showBackArrows) {//返回按钮
+//            
+//            [UIView animateWithDuration:0.05 animations:^{
+//                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
+//            }];
+//        }else{
+//            [UIView animateWithDuration:0.05 animations:^{
+//                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
+//            }];
+//        }
         
         [webView evaluateJavaScript:@"__getShareStr()" completionHandler:^(id _Nullable shareStr, NSError * _Nullable error) {
             
