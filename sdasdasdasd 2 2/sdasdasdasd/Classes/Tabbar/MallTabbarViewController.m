@@ -9,6 +9,7 @@
 #import "MallTabbarViewController.h"
 #import "PushWebViewController.h"
 #import "LWNavigationController.h"
+#import "HomeViewController.h"
 
 @interface MallTabbarViewController ()
 
@@ -63,10 +64,21 @@
         
         LWNavigationController *nav = self.childViewControllers[self.selectedIndex];
         
-        PushWebViewController *push = [[PushWebViewController alloc] init];
-        push.funUrl=backUrl;
-        [nav pushViewController:push animated:YES];
+        TabBarModel *model = self.tabbarArray[self.selectedIndex];
 
+        NSString *compareUrl = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], model.linkUrl];
+        
+        if ([backUrl.lowercaseString rangeOfString:compareUrl.lowercaseString].location != NSNotFound) {
+            
+            HomeViewController *home = nav.viewControllers[0];
+            NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:backUrl]];
+            [home.homeWebView loadRequest:req];
+        }else {
+        
+            PushWebViewController *push = [[PushWebViewController alloc] init];
+            push.funUrl=backUrl;
+            [nav pushViewController:push animated:YES];
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
     }else {
         [self CannelLoginBackToHome];

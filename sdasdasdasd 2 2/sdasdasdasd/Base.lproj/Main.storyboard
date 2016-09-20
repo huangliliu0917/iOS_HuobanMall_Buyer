@@ -1058,12 +1058,12 @@
                             <constraint firstItem="5iC-iA-09o" firstAttribute="width" secondItem="OcG-7E-32k" secondAttribute="width" id="DUc-Zi-xMf"/>
                             <constraint firstAttribute="trailing" secondItem="arh-nc-uIR" secondAttribute="trailing" id="Nak-JQ-9cH"/>
                             <constraint firstItem="arh-nc-uIR" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" id="UtI-c6-Eng"/>
-                            <constraint firstItem="OcG-7E-32k" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" constant="50" id="X2a-2k-W0Q"/>
+                            <constraint firstItem="OcG-7E-32k" firstAttribute="leading" secondItem="uVM-3l-yP9" secondAttribute="leading" constant="40" id="X2a-2k-W0Q"/>
                             <constraint firstItem="soR-dp-zYF" firstAttribute="height" secondItem="OcG-7E-32k" secondAttribute="height" id="YzA-Ce-hOJ"/>
                             <constraint firstItem="5iC-iA-09o" firstAttribute="leading" secondItem="OcG-7E-32k" secondAttribute="leading" id="gtO-I4-10i"/>
                             <constraint firstItem="soR-dp-zYF" firstAttribute="top" secondItem="5iC-iA-09o" secondAttribute="bottom" id="k1l-4c-opB"/>
                             <constraint firstItem="OcG-7E-32k" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="bottom" constant="60" id="lex-pE-89M"/>
-                            <constraint firstAttribute="trailing" secondItem="OcG-7E-32k" secondAttribute="trailing" constant="50" id="mMv-5U-inZ"/>
+                            <constraint firstAttribute="trailing" secondItem="OcG-7E-32k" secondAttribute="trailing" constant="40" id="mMv-5U-inZ"/>
                             <constraint firstItem="arh-nc-uIR" firstAttribute="top" secondItem="IOj-lv-OHd" secondAttribute="bottom" constant="50" id="oGq-sS-OnX"/>
                             <constraint firstItem="5iC-iA-09o" firstAttribute="top" secondItem="OcG-7E-32k" secondAttribute="bottom" id="pDR-Ma-XTl"/>
                             <constraint firstItem="VHi-Di-zpv" firstAttribute="top" secondItem="arh-nc-uIR" secondAttribute="bottom" constant="15" id="ran-Hb-AAH"/>

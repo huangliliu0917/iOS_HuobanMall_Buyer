@@ -44,7 +44,7 @@
 
 @interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
-@property (strong, nonatomic) WKWebView *homeWebView;
+
 
 
 @property (strong, nonatomic) WKWebView *homeBottonWebView;
@@ -1312,11 +1312,16 @@
 //            NSRange range = [url rangeOfString:@"__newframe"];
             if (![temp isEqualToString:self.homeWebUrl]) {
 //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-                funWeb.funUrl = temp;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                self.tabBarController.tabBar.hidden = YES;
-                decisionHandler(WKNavigationResponsePolicyCancel);
+                if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
+                    decisionHandler(WKNavigationResponsePolicyAllow);
+                }else {
+                    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                    funWeb.funUrl = temp;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    self.tabBarController.tabBar.hidden = YES;
+                    decisionHandler(WKNavigationResponsePolicyCancel);
+                    
+                }
             }
         }
         

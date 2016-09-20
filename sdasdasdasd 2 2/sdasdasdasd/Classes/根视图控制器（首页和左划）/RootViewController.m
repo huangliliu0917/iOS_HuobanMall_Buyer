@@ -32,7 +32,7 @@
     
     //设置左侧控制器
     MallTabbarViewController *tabbar = [[MallTabbarViewController alloc] init];
-    
+    tabbar.tabbarArray = self.tabbarArray;
     
     self.controllerArray = [NSMutableArray array];
     NSString *imageHostUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"mallResourceURL"];

@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) NSArray *tabbarArray;
 
+//@property (nonatomic, strong) NSArray 
+
 @end
