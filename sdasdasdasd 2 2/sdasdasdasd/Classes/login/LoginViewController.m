@@ -35,6 +35,7 @@
 - (IBAction)loginBtnClick:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (strong, nonatomic) IBOutlet UIView *bgView;
 
 @end
 
@@ -66,8 +67,9 @@
     
     
     
-    self.loginButton.layer.cornerRadius = 22;
-
+    self.loginButton.layer.cornerRadius = 8;
+    
+    self.bgView.layer.cornerRadius = 15;
 }
 
 

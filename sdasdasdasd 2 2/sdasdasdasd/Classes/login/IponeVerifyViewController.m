@@ -115,6 +115,10 @@
     self.login.layer.cornerRadius = 5;
     
     
+    self.weixinLogin.layer.cornerRadius = 5;
+    self.weixinLogin.layer.borderColor = [UIColor colorWithWhite:0.5803 alpha:1].CGColor;
+    self.weixinLogin.layer.borderWidth = 1;
+    
     [self.VerifyLable bk_whenTapped:^{
         
         self.VerifyLable.userInteractionEnabled = NO;
@@ -175,6 +179,7 @@
         self.loginWarning.hidden = YES;
         self.warnView.hidden = NO;
         self.weixinLoginBgView.hidden = YES;
+        self.weixinLogin.hidden = YES;
         self.title = @"绑定手机";
         [self.login setTitle:@"绑定" forState:UIControlStateNormal];
         self.title = @"绑定手机";
@@ -204,6 +209,7 @@
         if (_isPhoneLogin) {
             self.title = @"手机登录";
             self.weixinLoginBgView.hidden = YES;
+            self.weixinLogin.hidden = YES;
         }else {
             
             self.weixinLoginBgView.hidden = NO;
