@@ -320,7 +320,7 @@
     [self.view addSubview:self.homeWebView];
 
     
-    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    
 //    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
 //    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
 //    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
@@ -331,11 +331,7 @@
 //    [self.homeBottonWebView loadRequest:Bottomreq];
 //    [self.view addSubview:self.homeBottonWebView];
 
-
-    self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
-    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
+    
 
     self.navigationController.navigationBar.alpha = 0;
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
@@ -406,6 +402,7 @@
     [self.navigationController.navigationBar addSubview:_progressView];
     [self.navigationController setNavigationBarHidden:NO  animated:YES];
     self.tabBarController.tabBar.hidden = NO;
+
 }
 
 /**
@@ -495,11 +492,16 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    
+  
+    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [self.homeWebView loadRequest:req];
     
 }
 

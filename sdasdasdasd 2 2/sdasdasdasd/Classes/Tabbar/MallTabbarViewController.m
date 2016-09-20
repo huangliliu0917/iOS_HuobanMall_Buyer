@@ -46,8 +46,9 @@
 }
 
 - (void)CannelLoginBackToHome {
-    
+    LWNavigationController *nav = self.childViewControllers[self.selectedIndex];
     [self setSelectedIndex:0];
+    [nav popToRootViewControllerAnimated:YES];
 }
 
 
