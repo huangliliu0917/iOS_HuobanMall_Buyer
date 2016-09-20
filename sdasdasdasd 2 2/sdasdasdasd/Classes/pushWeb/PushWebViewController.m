@@ -106,6 +106,9 @@
 
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+//    self.navigationController.navigationBar.alpha = 0;
+//    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
+    
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
@@ -140,7 +143,8 @@
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.tabBarController.tabBar.hidden = YES;
     
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
@@ -608,7 +612,8 @@
         [self changeWithUserInfo:array];
         decisionHandler(WKNavigationResponsePolicyCancel);
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
-        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
+        decisionHandler(WKNavigationResponsePolicyAllow);
     }else{
         NSRange range = [url rangeOfString:@"appalipay.aspx"];
         //        NSLog(@"%@",url);

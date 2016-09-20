@@ -60,7 +60,7 @@
         
         [tabbar addChildViewController:nav];
     }
-
+    
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;
@@ -69,7 +69,7 @@
 
 //    HomeViewController * home = [[HomeViewController alloc] init];
 //    home.view.backgroundColor = [UIColor whiteColor];
-//    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:home];
+//    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:tabbar];
     self.centerViewController = tabbar;
     
     

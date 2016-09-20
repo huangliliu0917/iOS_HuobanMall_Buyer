@@ -349,14 +349,14 @@
 
     
     //左侧返回到首页
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
+    
     
     //切换账号
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetHomeWebAgent) name:ResetAllWebAgent object:nil];
     
@@ -398,6 +398,14 @@
     }
     
     
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar addSubview:_progressView];
+    [self.navigationController setNavigationBarHidden:NO  animated:YES];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 /**
@@ -481,11 +489,7 @@
 
 
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar addSubview:_progressView];
-    self.tabBarController.tabBar.hidden = NO;
-}
+
 
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -520,33 +524,16 @@
     }];
 }
 
-- (void)LeftbackToHome:(NSNotification *) note{
-    
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    [self BackToWebView];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"backToHomeView" object:nil];
-    
-    NSString * backUrl = [note.userInfo objectForKey:@"url"];
-    if (backUrl) {
-        NSURL * newUrl = [NSURL URLWithString:backUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:newUrl];
-        [self.homeWebView loadRequest:req];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
-    }else {
-        [self CannelLoginBackToHome];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
-    }
-}
 
-- (void)CannelLoginBackToHome {
-    
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:ddd];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
-}
+
+//- (void)CannelLoginBackToHome {
+//    
+//    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+//    NSURL * urlStr = [NSURL URLWithString:ddd];
+//    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//    [self.homeWebView loadRequest:req];
+//}
 
 - (UIView *)ReturnNavPictureWithName:(NSString *)name andTwo:(NSString *)share{
  
@@ -1322,8 +1309,8 @@
             
 //            NSRange range = [url rangeOfString:@"__newframe"];
             if (![temp isEqualToString:self.homeWebUrl]) {
-                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
+//                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                 funWeb.funUrl = temp;
                 [self.navigationController pushViewController:funWeb animated:YES];
                 self.tabBarController.tabBar.hidden = YES;

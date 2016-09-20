@@ -7,6 +7,8 @@
 //
 
 #import "MallTabbarViewController.h"
+#import "PushWebViewController.h"
+#import "LWNavigationController.h"
 
 @interface MallTabbarViewController ()
 
@@ -16,8 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.alpha = 0;
+    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,14 +45,33 @@
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)CannelLoginBackToHome {
+    
+    [self setSelectedIndex:0];
 }
-*/
+
+
+- (void)LeftbackToHome:(NSNotification *) note{
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"backToHomeView" object:nil];
+    
+    NSString * backUrl = [note.userInfo objectForKey:@"url"];
+    if (backUrl) {
+        
+        
+        LWNavigationController *nav = self.childViewControllers[self.selectedIndex];
+        
+        PushWebViewController *push = [[PushWebViewController alloc] init];
+        push.funUrl=backUrl;
+        [nav pushViewController:push animated:YES];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
+    }else {
+        [self CannelLoginBackToHome];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
+    }
+}
+
 
 @end
