@@ -314,8 +314,6 @@
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
-
-    self.homeWebView.customUserAgent = app.userAgent;
 //    self.homeWebView
     [self.view addSubview:self.homeWebView];
 
@@ -402,7 +400,10 @@
     [self.navigationController.navigationBar addSubview:_progressView];
     [self.navigationController setNavigationBarHidden:NO  animated:YES];
     self.tabBarController.tabBar.hidden = NO;
-
+    
+    
+    
+    
 }
 
 /**
@@ -496,7 +497,8 @@
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     
-  
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.homeWebView.customUserAgent = app.userAgent;
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
     NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];

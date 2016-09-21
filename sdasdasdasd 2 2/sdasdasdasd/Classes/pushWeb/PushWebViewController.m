@@ -546,8 +546,6 @@
          decisionHandler(WKNavigationResponsePolicyCancel);
     }
     if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
-        [UIViewController ToRemoveSandBoxDate];
-        
         NSString *goUrl = [[NSString alloc] init];
         if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
             NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
@@ -563,6 +561,8 @@
             NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
             goUrl = ddd;
         }
+        
+        [UIViewController ToRemoveSandBoxDate];
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
         NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
@@ -614,10 +614,8 @@
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
 //        [self.navigationController popViewControllerAnimated:YES];
         decisionHandler(WKNavigationResponsePolicyAllow);
-    }else{
-        NSRange range = [url rangeOfString:@"appalipay.aspx"];
-        //        NSLog(@"%@",url);
-        if (range.location != NSNotFound) {
+    }else if ([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
+        
             
             __weak PushWebViewController *wself = self;
             
@@ -700,7 +698,22 @@
             }];
             
             decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }else {
+        if (![temp isEqualToString:self.funUrl]) {
+            //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString]) {
+                decisionHandler(WKNavigationResponsePolicyAllow);
+            }else {
+                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                funWeb.funUrl = temp;
+                [self.navigationController pushViewController:funWeb animated:YES];
+                self.tabBarController.tabBar.hidden = YES;
+                decisionHandler(WKNavigationResponsePolicyCancel);
+                
+            }
         }
+
     }
     
     decisionHandler(WKNavigationResponsePolicyAllow);
