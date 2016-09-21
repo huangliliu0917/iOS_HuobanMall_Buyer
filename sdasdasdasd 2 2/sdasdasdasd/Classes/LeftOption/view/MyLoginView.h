@@ -24,7 +24,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
 @property (weak, nonatomic) IBOutlet UILabel *firstLable;
-@property (weak, nonatomic) IBOutlet UILabel *secondLable;
+@property (weak, nonatomic) IBOutlet UILabel *secondLable1;
+@property (strong, nonatomic) IBOutlet UILabel *secondLable2;
+@property (strong, nonatomic) IBOutlet UILabel *secondLable3;
 /**按钮view*/
 @property (weak, nonatomic) IBOutlet UIView *myButton;
 

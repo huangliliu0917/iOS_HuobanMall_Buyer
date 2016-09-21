@@ -91,7 +91,9 @@
                 <outlet property="firstLable" destination="sLX-wy-lg8" id="PER-Xv-jsf"/>
                 <outlet property="iconView" destination="kbj-Lj-egw" id="2NH-6O-TfQ"/>
                 <outlet property="myButton" destination="BoG-0D-SXj" id="gX4-eh-rkW"/>
-                <outlet property="secondLable" destination="l6i-aw-DtN" id="n6S-Sw-6iH"/>
+                <outlet property="secondLable1" destination="l6i-aw-DtN" id="j38-w2-mXl"/>
+                <outlet property="secondLable2" destination="skH-nH-ZSj" id="GyR-bx-XJi"/>
+                <outlet property="secondLable3" destination="38P-Tq-Wzg" id="lgb-yW-bBe"/>
             </connections>
             <point key="canvasLocation" x="395.5" y="351"/>
         </view>

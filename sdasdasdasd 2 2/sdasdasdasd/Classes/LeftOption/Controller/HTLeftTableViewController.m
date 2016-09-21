@@ -132,7 +132,7 @@
 //        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
-            _topHeadView.secondLable.text = json[@"data"][@"levelName"];
+//            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
             if ([json[@"data"][@"menusCode"] integerValue] == 1) {
                 
                 NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
@@ -295,22 +295,38 @@
     }
     headView.iconView.layer.borderColor = [UIColor whiteColor].CGColor;
     headView.iconView.layer.cornerRadius = headView.iconView.frame.size.width*0.5;
-    headView.secondLable.layer.cornerRadius = 3;
-    headView.secondLable.layer.masksToBounds = YES;
-    headView.secondLable.backgroundColor = [UIColor whiteColor];
+    headView.secondLable1.layer.cornerRadius = 3;
+    headView.secondLable1.layer.masksToBounds = YES;
+    headView.secondLable1.backgroundColor = [UIColor whiteColor];
+    
+    headView.secondLable2.layer.cornerRadius = 3;
+    headView.secondLable2.layer.masksToBounds = YES;
+    headView.secondLable2.backgroundColor = [UIColor whiteColor];
+    
+    headView.secondLable3.layer.cornerRadius = 3;
+    headView.secondLable3.layer.masksToBounds = YES;
+    headView.secondLable3.backgroundColor = [UIColor whiteColor];
+    
     headView.iconView.layer.masksToBounds = YES;
     headView.iconView.layer.borderWidth = 2;
-    headView.secondLable.textColor =  HuoBanMallBuyNavColor;
+    headView.secondLable1.textColor = HuoBanMallBuyNavColor;
+    headView.secondLable2.textColor = HuoBanMallBuyNavColor;
+    headView.secondLable3.textColor = HuoBanMallBuyNavColor;
     CGFloat HeadViewW =  SecrenWith * SplitScreenRate;
     CGFloat HeadViewH = 114;
     headView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     headView.backgroundColor = HuoBanMallBuyNavColor;
     self.tableView.tableHeaderView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
-    self.tableView.tableHeaderView = headView;
+    self.tableView.tableHeaderView = headView; 
     
     
-    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
-    headView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
+//    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
+//    NSArray *levelArray = [level componentsSeparatedByString:@"&"];
+//    for (int i = 0; i < levelArray.count; i++) {
+//        UILabel *label = (UILabel *)[self.view viewWithTag:100+i];
+//        label.text = [NSString stringWithFormat:@" %@ ",levelArray[i]];
+//    }
+
     self.tableView.tableFooterView = [[UIView alloc] init];
 //    [self.view layoutIfNeeded];
 }
@@ -335,7 +351,13 @@
 //    _topHeadView.firstLable.text = userInfor.nickname;
     
     NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
-    _topHeadView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
+    NSArray *levelArray = [level componentsSeparatedByString:@"&"];
+    for (int i = 0; i < levelArray.count; i++) {
+        NSString *temp = levelArray[i];
+        UILabel *label = (UILabel *)[self.view viewWithTag:100+i];
+        label.text = [NSString stringWithFormat:@" %@ ",temp];
+    }
+    
 }
 
 - (void)accountLogin:(UIButton *) btn{
