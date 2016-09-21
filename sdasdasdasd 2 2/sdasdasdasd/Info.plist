@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.xem.xmbcustomerapp</string>
+				<string>guangzhouhuaan</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,8 +35,8 @@
 			<array>
 				<string>wb1000919385</string>
 				<string>wb1000919385</string>
-				<string>QQ41DE4C2E</string>
-				<string>tencent1105087534</string>
+				<string>QQ41E4F41F</string>
+				<string>tencent1105523743</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx370887c68687f70f</string>
+				<string>wx6314b2e8ad73b168</string>
 			</array>
 		</dict>
 	</array>
@@ -82,7 +82,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>小美伴</string>
+	<string>桦桉灯饰</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
