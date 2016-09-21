@@ -10,12 +10,12 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 //腾讯开放平台（对应QQ和QQ空间）SDK头文件
-#import <TencentOpenAPI/QQApiInterface.h>
-#import <TencentOpenAPI/TencentOAuth.h>
+//#import <TencentOpenAPI/QQApiInterface.h>
+//#import <TencentOpenAPI/TencentOAuth.h>
 //微信SDK头文件
 #import "WXApi.h"
 //新浪微博SDK头文件
-#import "WeiboSDK.h"
+//#import "WeiboSDK.h"
 #import "HuoBanTabBarController.h"
 #import "HTLeftTableViewController.h"
 #import "LWNavigationController.h"
@@ -149,18 +149,14 @@
     [ShareSDK registerApp:HuoBanMallShareSdkAppId
      
           activePlatforms:@[
-                            @(SSDKPlatformTypeSinaWeibo),
-                            @(SSDKPlatformTypeWechat),
-                            @(SSDKPlatformTypeQQ)]
+                            
+                            @(SSDKPlatformTypeWechat)]
                  onImport:^(SSDKPlatformType platformType)
      {
          switch (platformType)
          {
              case SSDKPlatformTypeWechat:
                  [ShareSDKConnector connectWeChat:[WXApi class]];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
                  break;
              default:
                  break;
@@ -171,21 +167,9 @@
          
          switch (platformType)
          {
-             case SSDKPlatformTypeSinaWeibo:
-                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
-                 [appInfo SSDKSetupSinaWeiboByAppKey:HuoBanMallShareSdkSinaKey
-                                           appSecret:HuoBanMallShareSdkSinaSecret
-                                         redirectUri:HuoBanMallShareSdkSinaRedirectUri
-                                            authType:SSDKAuthTypeBoth];
-                 break;
              case SSDKPlatformTypeWechat:
                  [appInfo SSDKSetupWeChatByAppId:HuoBanMallBuyWeiXinAppId
                                        appSecret:HuoBanMallShareSdkWeiXinSecret];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [appInfo SSDKSetupQQByAppId:HuoBanMallShareSdkQQKey
-                                      appKey:HuoBanMallShareSdkQQSecret
-                                    authType:SSDKAuthTypeBoth];
                  break;
              default:
                  break;
