@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>HTFanmorehaigou</string>
+				<string>com.xem.xmbcustomerapp</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,10 +33,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wb1994677353</string>
-				<string>wb1994677353</string>
-				<string>QQ60625E4</string>
-				<string>tencent101066212</string>
+				<string>wb1000919385</string>
+				<string>wb1000919385</string>
+				<string>QQ41DE4C2E</string>
+				<string>tencent1105087534</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,12 +44,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxe6c5fb423ca4a637</string>
+				<string>wx370887c68687f70f</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>3</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiV2</string>
@@ -81,10 +81,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>需要您的同意才能使用摄像头</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>需要您的同意才能访问相册</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -97,5 +93,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要您的同意才能访问相册</string>
+	<key>NSCameraUsageDescription</key>
+	<string>需要您的同意才能使用摄像头</string>
 </dict>
 </plist>
