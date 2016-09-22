@@ -82,7 +82,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>需要您的同意才能使用摄像头</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要您的同意才能访问相册</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
