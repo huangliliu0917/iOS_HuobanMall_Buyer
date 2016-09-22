@@ -66,7 +66,9 @@
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
         usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
 //    };
-    [signUrl appendFormat:@"&unionid=%@",usaa.unionid];
+    if (usaa.unionid.length) {
+        [signUrl appendFormat:@"&unionid=%@",usaa.unionid];
+    }
     NSRange new = [signUrl rangeOfString:@"?"];
     
     if (new.location != NSNotFound) {
