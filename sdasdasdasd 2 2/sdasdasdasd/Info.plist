@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>需要您的同意才能使用摄像头</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要您的同意才能访问相册</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -25,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.xem.xmbcustomerapp</string>
+				<string>guangzhouhuaan</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,8 +39,8 @@
 			<array>
 				<string>wb1000919385</string>
 				<string>wb1000919385</string>
-				<string>QQ41DE4C2E</string>
-				<string>tencent1105087534</string>
+				<string>QQ41E4F41F</string>
+				<string>tencent1105523743</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,12 +48,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx370887c68687f70f</string>
+				<string>wx6314b2e8ad73b168</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiV2</string>
@@ -81,10 +85,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>需要您的同意才能使用摄像头</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>需要您的同意才能访问相册</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
