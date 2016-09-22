@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>guangzhouhuaan</string>
+				<string>HTFanmorehaigou</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,10 +33,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wb1000919385</string>
-				<string>wb1000919385</string>
-				<string>QQ41E4F41F</string>
-				<string>tencent1105523743</string>
+				<string>wb1994677353</string>
+				<string>wb1994677353</string>
+				<string>QQ60625E4</string>
+				<string>tencent101066212</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx6314b2e8ad73b168</string>
+				<string>wxe6c5fb423ca4a637</string>
 			</array>
 		</dict>
 	</array>
