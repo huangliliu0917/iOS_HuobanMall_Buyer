@@ -74,7 +74,7 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"19b4b4d45192"
+#define HuoBanMallShareSdkAppId @"175864c07ce23"
 //sina
 #define HuoBanMallShareSdkSinaKey @"1994677353"
 #define HuoBanMallShareSdkSinaSecret @"0783d8dd1f0eb5a45687cde79aa10108"
