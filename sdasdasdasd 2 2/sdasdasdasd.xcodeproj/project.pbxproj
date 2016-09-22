@@ -159,6 +159,7 @@
 		60025BC81D3F250F0099A617 /* NoticeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMessage.h; sourceTree = "<group>"; };
 		60025BC91D3F250F0099A617 /* NoticeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeMessage.m; sourceTree = "<group>"; };
 		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		6047EC181D93C8C900167912 /* sdasdasdasd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sdasdasdasd.entitlements; sourceTree = "<group>"; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		71102946ED3002A8D4DEC64B /* Pods-sdasdasdasdUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -965,6 +966,7 @@
 		EFA6D3541C04514500B39B36 /* sdasdasdasd */ = {
 			isa = PBXGroup;
 			children = (
+				6047EC181D93C8C900167912 /* sdasdasdasd.entitlements */,
 				EF9D4B1D1C055FF900D005E8 /* Classes */,
 				EFA6D3881C04516E00B39B36 /* libraries */,
 				EFA6D3581C04514500B39B36 /* AppDelegate.h */,
@@ -1158,6 +1160,11 @@
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = U9B3995C94;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					EFA6D36A1C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1586,7 +1593,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = U9B3995C94;
 				ENABLE_BITCODE = NO;
@@ -1624,7 +1632,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = U9B3995C94;
 				ENABLE_BITCODE = NO;
