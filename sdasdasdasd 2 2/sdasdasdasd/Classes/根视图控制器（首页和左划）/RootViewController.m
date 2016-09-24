@@ -44,6 +44,15 @@
         HomeViewController * home = [[HomeViewController alloc] init];
         tabbar.delegate = self;
         home.openUrl = model.linkUrl;
+        
+        if ([model.name isEqualToString:@"客服"]) {
+            home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+        }
+        
+        if ([model.linkUrl rangeOfString:@"/index.aspx?back"].location != NSNotFound) {
+            tabbar.HomePage = i;
+        }
+        
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {

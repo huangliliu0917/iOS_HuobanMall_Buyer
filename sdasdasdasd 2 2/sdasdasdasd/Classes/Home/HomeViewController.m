@@ -1,4 +1,4 @@
-
+ 
 //  HomeViewController.m
 //  HuoBanMallBuy
 //
@@ -500,7 +500,20 @@
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView.customUserAgent = app.userAgent;
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+    NSString * webChennel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+    if ([self.openUrl isEqualToString:webChennel]) {
+        NSString *temp = [webChennel stringByReplacingOccurrencesOfString:@"{goodid}"withString:@"0"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"{orderid}"withString:@"0"];
+        NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+        if ([NSString stringWithFormat:@"%@", userId].length != 0) {
+            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
+        }else {
+            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
+        }
+        
+    }else {
+        self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+    }
     NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     [self.homeWebView loadRequest:req];
@@ -1309,6 +1322,8 @@
             
             
             
+        }else if ([url rangeOfString:@"im.html"].location != NSNotFound){
+            decisionHandler(WKNavigationResponsePolicyAllow);
         }else{
             
 //            NSRange range = [url rangeOfString:@"__newframe"];

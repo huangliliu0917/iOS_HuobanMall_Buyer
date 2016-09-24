@@ -422,29 +422,36 @@
     if (models.menu_url) {
         [url appendString:models.menu_url];
     }
-    
-    //绑定微信
-    if ([models.menu_name isEqualToString:@"绑定微信"]) {
+    if ([models.menu_name isEqualToString:@"首页"]) {
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+        }];
         
-    }else if ([models.menu_name isEqualToString:@"绑定手机"]){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
-//        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     }else {
-        //业务逻辑(胖子写的)
-        if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
-            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-        }else{
-            NSRange rangs = [url rangeOfString:@"?"];
-            rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
-            NSString * urls = url;
-            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-                
-                NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-            }];
+        //绑定微信
+        if ([models.menu_name isEqualToString:@"绑定微信"]) {
+            
+        }else if ([models.menu_name isEqualToString:@"绑定手机"]){
+            //        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
+            //        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+        }else {
+            //业务逻辑(胖子写的)
+            if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
+                [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+            }else{
+                NSRange rangs = [url rangeOfString:@"?"];
+                rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
+                NSString * urls = url;
+                [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+                    
+                    NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+                }];
+            }
         }
     }
-    
+
 }
 
 

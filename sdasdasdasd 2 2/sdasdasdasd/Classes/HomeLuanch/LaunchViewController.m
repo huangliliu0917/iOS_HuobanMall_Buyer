@@ -116,6 +116,12 @@
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
             
+            NSString *webchannel = json[@"webchannel"];
+            if (webchannel.length) {
+                [[NSUserDefaults standardUserDefaults] setObject:[webchannel stringByRemovingPercentEncoding] forKey:@"KeFuWebchannel"];
+            }
+            
+            
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
             
             

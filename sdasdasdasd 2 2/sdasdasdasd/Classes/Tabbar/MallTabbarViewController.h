@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSArray *tabbarArray;
 
+@property (nonatomic, assign) NSInteger HomePage;
+
 //@property (nonatomic, strong) NSArray 
 
 @end

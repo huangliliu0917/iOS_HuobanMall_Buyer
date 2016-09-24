@@ -109,9 +109,10 @@
 //    self.navigationController.navigationBar.alpha = 0;
 //    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
-   [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin,NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin,NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 10)];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height - 15)];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.customUserAgent = app.userAgent;
