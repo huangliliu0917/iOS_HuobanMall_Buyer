@@ -70,6 +70,7 @@
         [tabbar addChildViewController:nav];
     }
     
+    tabbar.selectedIndex = tabbar.HomePage;
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;
