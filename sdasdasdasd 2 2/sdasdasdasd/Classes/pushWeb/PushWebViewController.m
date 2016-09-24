@@ -32,6 +32,8 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "IponeVerifyViewController.h"
+#import "NSDictionary+ConfirmSign.h"
+
 
 @interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
@@ -637,50 +639,38 @@
             NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
             
             
-            NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
-            [url appendFormat:@"%@?orderid=%@",@"/order/GetOrderInfo",trade_noss];
-            
-            AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-            NSString * to = [NSDictionary ToSignUrlWithString:url];
-            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, id json) {
-                //                NSLog(@"%@",json);
-                if ([json[@"code"] integerValue] == 200) {
-                    self.priceNumber = json[@"data"][@"Final_Amount"];
-                    //                    NSLog(@"%@",self.priceNumber);
-                    NSString * des =  json[@"data"][@"ToStr"]; //商品描述
-                    //                    NSLog(@"%@",json[@"data"][@"ToStr"]);
-                    self.proDes = [des copy];
-                    //                    NSLog(@"%@",self.proDes);
-                    if(namesArray.count == 1){
-                        PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
-                        self.paymodel = pay;
-                        if ([pay.payType integerValue] == 300) {//300微信
-                            
-                            UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                            [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                [wself weixinPay];
-                            }]];
-                            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                                
-                            }]];
-                            [self presentViewController:aa animated:YES completion:nil];
-                        }
-                        if ([pay.payType integerValue] == 400) {//400支付宝
-                            UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                            [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                [wself zhifubaoPay];
-                            }]];
-                            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                                
-                            }]];
-                            [self presentViewController:aa animated:YES completion:nil];
-                        }
-                    }else if(namesArray.count == 2){
-                        
+        NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
+        [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
+        
+        
+        
+        
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        NSString * to = [NSDictionary ToSignUrlWithString:url];
+        [SVProgressHUD show];
+        [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, NSDictionary *  json) {
+            NSLog(@"%@xxxxxxx---%@",json,trade_noss);
+            [SVProgressHUD dismiss];
+            if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
+                
+                self.priceNumber = json[@"data"][@"finalamount"];
+                NSString * des =  json[@"data"][@"name"]; //商品描述
+                self.proDes = [des copy];
+                if(namesArray.count == 1){
+                    PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
+                    self.paymodel = pay;
+                    if ([pay.payType integerValue] == 300) {//300微信
                         UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                         [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [wself weixinPay];
                         }]];
+                        [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            
+                        }]];
+                        [self presentViewController:aa animated:YES completion:nil];
+                    }
+                    if ([pay.payType integerValue] == 400) {//400支付宝
+                        UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                         [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [wself zhifubaoPay];
                         }]];
@@ -689,16 +679,39 @@
                         }]];
                         [self presentViewController:aa animated:YES completion:nil];
                     }
+                }else if(namesArray.count == 2){
                     
+                    UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                    [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [wself weixinPay];
+                    }]];
+                    [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [wself zhifubaoPay];
+                    }]];
+                    [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }]];
+                    [self presentViewController:aa animated:YES completion:nil];
                 }
                 
                 
-            } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-                NSLog(@"%@",error.description);
-            }];
+                
+            }else{
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:@"获取订单信息异常，请重新提交订单" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction * action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                [alert addAction:action];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
             
-            decisionHandler(WKNavigationResponsePolicyCancel);
+            
+            
+        } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
+            LWLog(@"%@",error.description);
+        }];
         
+        decisionHandler(WKNavigationResponsePolicyCancel);
     }else {
         if (![temp isEqualToString:self.funUrl]) {
             //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

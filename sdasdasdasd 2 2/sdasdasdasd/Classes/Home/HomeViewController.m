@@ -41,8 +41,10 @@
 #import "NoticeMessage.h"
 #import <SDWebImage/SDWebImageManager.h>
 
+#import "NSDictionary+ConfirmSign.h"
 
-@interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
+
+@interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate,WXApiDelegate>
 
 
 
@@ -1261,22 +1263,27 @@
             NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
             
             
-            NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-            [url appendFormat:@"%@?orderid=%@",@"/order/GetOrderInfo",trade_noss];
+            NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
+            [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
+            
+            
+            
             
             AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
             NSString * to = [NSDictionary ToSignUrlWithString:url];
-            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, id json) {
-                if ([json[@"code"] integerValue] == 200) {
-                    self.priceNumber = json[@"data"][@"Final_Amount"];
-                    NSString * des =  json[@"data"][@"ToStr"]; //商品描述
-                    self.proDes = des;
+            [SVProgressHUD show];
+            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, NSDictionary *  json) {
+                NSLog(@"%@xxxxxxx---%@",json,trade_noss);
+                [SVProgressHUD dismiss];
+                if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
                     
+                    self.priceNumber = json[@"data"][@"finalamount"];
+                    NSString * des =  json[@"data"][@"name"]; //商品描述
+                    self.proDes = [des copy];
                     if(namesArray.count == 1){
                         PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
                         self.paymodel = pay;
                         if ([pay.payType integerValue] == 300) {//300微信
-                            
                             UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                             [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 [wself weixinPay];
@@ -1311,17 +1318,24 @@
                         [self presentViewController:aa animated:YES completion:nil];
                     }
                     
+                    
+                    
+                }else{
+                    UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:@"获取订单信息异常，请重新提交订单" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction * action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }];
+                    [alert addAction:action];
+                    [self presentViewController:alert animated:YES completion:nil];
                 }
                 
                 
+                
             } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-                NSLog(@"%@",error.description);
+                LWLog(@"%@",error.description);
             }];
             
             decisionHandler(WKNavigationResponsePolicyCancel);
-            
-            
-            
         }else if ([url rangeOfString:@"im.html"].location != NSNotFound){
             decisionHandler(WKNavigationResponsePolicyAllow);
         }else{

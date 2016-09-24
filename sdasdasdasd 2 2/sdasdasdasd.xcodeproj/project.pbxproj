@@ -10,6 +10,7 @@
 		60025BC41D3F24940099A617 /* NSData+NSDataDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC31D3F24940099A617 /* NSData+NSDataDeal.m */; };
 		60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC71D3F250F0099A617 /* HTNoticeCenter.m */; };
 		60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 60025BC91D3F250F0099A617 /* NoticeMessage.m */; };
+		60329CA21D967628002AD71F /* NSDictionary+ConfirmSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 60329CA11D967628002AD71F /* NSDictionary+ConfirmSign.m */; };
 		6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6042A6AA1D3CAF560030D895 /* WebKit.framework */; };
 		607B85C31CEC897600482E40 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		607B85C61CEC8D5500482E40 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -157,6 +158,8 @@
 		60025BC71D3F250F0099A617 /* HTNoticeCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTNoticeCenter.m; sourceTree = "<group>"; };
 		60025BC81D3F250F0099A617 /* NoticeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeMessage.h; sourceTree = "<group>"; };
 		60025BC91D3F250F0099A617 /* NoticeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeMessage.m; sourceTree = "<group>"; };
+		60329CA01D967628002AD71F /* NSDictionary+ConfirmSign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+ConfirmSign.h"; sourceTree = "<group>"; };
+		60329CA11D967628002AD71F /* NSDictionary+ConfirmSign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+ConfirmSign.m"; sourceTree = "<group>"; };
 		6042A6AA1D3CAF560030D895 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		608E629C1D87CE4000C1C7C2 /* MallTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallTabbarViewController.h; sourceTree = "<group>"; };
 		608E629D1D87CE4000C1C7C2 /* MallTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallTabbarViewController.m; sourceTree = "<group>"; };
@@ -571,6 +574,8 @@
 		EF9D4B1E1C055FF900D005E8 /* CateGory */ = {
 			isa = PBXGroup;
 			children = (
+				60329CA01D967628002AD71F /* NSDictionary+ConfirmSign.h */,
+				60329CA11D967628002AD71F /* NSDictionary+ConfirmSign.m */,
 				EF9D4B1F1C055FF900D005E8 /* UIBarButtonItem+LHB.h */,
 				EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */,
 				EF9D4B211C055FF900D005E8 /* UIImage+LHB.h */,
@@ -1424,6 +1429,7 @@
 				EF9D4C961C055FF900D005E8 /* NSObject+MJKeyValue.m in Sources */,
 				EF9D4CAB1C055FF900D005E8 /* HuoBanTabBarController.m in Sources */,
 				EF9D4CB21C055FF900D005E8 /* MBProgressHUD+MJ.m in Sources */,
+				60329CA21D967628002AD71F /* NSDictionary+ConfirmSign.m in Sources */,
 				EF9D4CB41C055FF900D005E8 /* MBProgressHUD.m in Sources */,
 				EF9D4CB11C055FF900D005E8 /* UserLoginTool.m in Sources */,
 				EF9D4C611C055FF900D005E8 /* LeftMenuModel.m in Sources */,

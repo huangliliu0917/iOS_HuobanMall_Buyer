@@ -145,4 +145,10 @@
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
 #import "HTNoticeCenter.h"
+
+#ifdef DEBUG
+#define LWLog(...) NSLog(__VA_ARGS__)
+#else
+#define LWLog(...)
+#endif
 #endif /* PrefixHeader_pch */
