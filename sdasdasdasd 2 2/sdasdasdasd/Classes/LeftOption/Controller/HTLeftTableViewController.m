@@ -36,7 +36,7 @@
 
 
 /**头像*/
-@property(nonatomic,strong) UIImageView * iconView;
+//@property(nonatomic,strong) UIImageView * iconView;
 /**顶部登录按钮*/
 @property(nonatomic,strong) UIButton * logingBtn;
 @property(nonatomic,strong) NSMutableArray * groupArray;
@@ -307,8 +307,10 @@
     headView.secondLable3.layer.masksToBounds = YES;
     headView.secondLable3.backgroundColor = [UIColor whiteColor];
     
-    headView.iconView.layer.masksToBounds = YES;
+//    headView.iconView.layer.masksToBounds = YES;
     headView.iconView.layer.borderWidth = 2;
+    
+    
     headView.secondLable1.textColor = HuoBanMallBuyNavColor;
     headView.secondLable2.textColor = HuoBanMallBuyNavColor;
     headView.secondLable3.textColor = HuoBanMallBuyNavColor;
@@ -340,11 +342,13 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     if ([login isEqualToString:Success]) {
         
-        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil options:SDWebImageRetryFailed];
         _topHeadView.firstLable.text = userInfor.nickname;
+        _topHeadView.userInteractionEnabled = NO;
     }else {
         _topHeadView.iconView.image = [UIImage imageNamed:@"moren"];
         _topHeadView.firstLable.text = @"未登陆";
+        _topHeadView.userInteractionEnabled = YES;
     }
 //    [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
 //    

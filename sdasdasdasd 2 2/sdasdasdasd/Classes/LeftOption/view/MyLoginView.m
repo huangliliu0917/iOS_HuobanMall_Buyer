@@ -25,7 +25,7 @@
     self.secondLable1.adjustsFontSizeToFitWidth = YES;
     self.secondLable2.adjustsFontSizeToFitWidth = YES;
     self.secondLable3.adjustsFontSizeToFitWidth = YES;
-    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
+//    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     
     
 }
