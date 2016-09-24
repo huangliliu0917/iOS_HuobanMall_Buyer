@@ -21,9 +21,11 @@
 @implementation MyLoginView
 
 - (void)awakeFromNib{
-    
-    self.secondLable.adjustsFontSizeToFitWidth = YES;
-    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
+    [super awakeFromNib];
+    self.secondLable1.adjustsFontSizeToFitWidth = YES;
+    self.secondLable2.adjustsFontSizeToFitWidth = YES;
+    self.secondLable3.adjustsFontSizeToFitWidth = YES;
+//    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     
     
 }

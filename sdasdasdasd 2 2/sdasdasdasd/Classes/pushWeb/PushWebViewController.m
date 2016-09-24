@@ -106,9 +106,13 @@
 
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.alpha = 0;
+//    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
+    
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin,NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height - 15)];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.customUserAgent = app.userAgent;
@@ -140,13 +144,19 @@
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.tabBarController.tabBar.hidden = YES;
     
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     
     [self.navigationController.navigationBar addSubview:_progressView];
+    
+    [self.webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        NSString *str = title;
+        self.title = str;
+    }];
 }
 
 
@@ -268,22 +278,16 @@
                            switch (state) {
                                case SSDKResponseStateSuccess:
                                {
-                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
-                                                                                       message:nil
-                                                                                      delegate:nil
-                                                                             cancelButtonTitle:@"确定"
-                                                                             otherButtonTitles:nil];
-                                   [alertView show];
+                                   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                                   [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+                                   [self presentViewController:alert animated:YES completion:nil];
                                    break;
                                }
                                case SSDKResponseStateFail:
                                {
-                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                                   message:[NSString stringWithFormat:@"%@",error]
-                                                                                  delegate:nil
-                                                                         cancelButtonTitle:@"OK"
-                                                                         otherButtonTitles:nil, nil];
-                                   [alert show];
+                                   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享失败" message:[NSString stringWithFormat:@"%@",error] preferredStyle:UIAlertControllerStyleAlert];
+                                   [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                                   [self presentViewController:alert animated:YES completion:nil];
                                    break;
                                }
                                default:
@@ -300,64 +304,64 @@
 
 
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-
-    if (actionSheet.tag == 500) {//单个微信支付
-        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-        NSData *data = [NSData dataWithContentsOfFile:filename];
-        // 2.创建反归档对象
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        // 3.解码并存到数组中
-        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-        [self WeiChatPay:namesArray[0]];
-    }else if (actionSheet.tag == 700){// 单个支付宝支付
-        //NSLog(@"支付宝%ld",(long)buttonIndex);
-//        [self MallAliPay:self.paymodel];
-    }else if(actionSheet.tag == 900){//两个都有的支付
-        //0
-        //1
-        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-        NSData *data = [NSData dataWithContentsOfFile:filename];
-        // 2.创建反归档对象
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        // 3.解码并存到数组中
-        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-        if (buttonIndex==0) {//支付宝
-            PayModel * paymodel =  namesArray[0];
-            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
-            if (cc.webPagePay) {//网页支付
-                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
-                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
-                NSArray * arr = [par componentsSeparatedByString:@"&"];
-                 __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
-                   NSArray * aa = [obj componentsSeparatedByString:@"="];
-                   NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
-                    [dict addEntriesFromDictionary:dt];
-                }];
-                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
-                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable str , NSError * _Nullable error) {
-                    
-                }];
-            }else{
-                [self MallAliPay:cc];
-            }
-        }
-        if (buttonIndex==1) {//微信
-            PayModel * paymodel =  namesArray[0];
-            if ([paymodel.payType integerValue] == 300) {
-                [self WeiChatPay:namesArray[0]];
-            }else{
-                [self WeiChatPay:namesArray[1]];//微信
-            }
-            
-        }
-        
-    }
-    
-}
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+//
+//    if (actionSheet.tag == 500) {//单个微信支付
+//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//        NSData *data = [NSData dataWithContentsOfFile:filename];
+//        // 2.创建反归档对象
+//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        // 3.解码并存到数组中
+//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+//        [self WeiChatPay:namesArray[0]];
+//    }else if (actionSheet.tag == 700){// 单个支付宝支付
+//        //NSLog(@"支付宝%ld",(long)buttonIndex);
+////        [self MallAliPay:self.paymodel];
+//    }else if(actionSheet.tag == 900){//两个都有的支付
+//        //0
+//        //1
+//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//        NSData *data = [NSData dataWithContentsOfFile:filename];
+//        // 2.创建反归档对象
+//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        // 3.解码并存到数组中
+//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+//        if (buttonIndex==0) {//支付宝
+//            PayModel * paymodel =  namesArray[0];
+//            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
+//            if (cc.webPagePay) {//网页支付
+//                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
+//                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
+//                NSArray * arr = [par componentsSeparatedByString:@"&"];
+//                 __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+//                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
+//                   NSArray * aa = [obj componentsSeparatedByString:@"="];
+//                   NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
+//                    [dict addEntriesFromDictionary:dt];
+//                }];
+//                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
+//                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable str , NSError * _Nullable error) {
+//                    
+//                }];
+//            }else{
+//                [self MallAliPay:cc];
+//            }
+//        }
+//        if (buttonIndex==1) {//微信
+//            PayModel * paymodel =  namesArray[0];
+//            if ([paymodel.payType integerValue] == 300) {
+//                [self WeiChatPay:namesArray[0]];
+//            }else{
+//                [self WeiChatPay:namesArray[1]];//微信
+//            }
+//            
+//        }
+//        
+//    }
+//    
+//}
 /**
  *  商城支付宝支付
  */
@@ -542,8 +546,6 @@
          decisionHandler(WKNavigationResponsePolicyCancel);
     }
     if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
-        [UIViewController ToRemoveSandBoxDate];
-        
         NSString *goUrl = [[NSString alloc] init];
         if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
             NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
@@ -559,6 +561,8 @@
             NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
             goUrl = ddd;
         }
+        
+        [UIViewController ToRemoveSandBoxDate];
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
         NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
@@ -608,11 +612,10 @@
         [self changeWithUserInfo:array];
         decisionHandler(WKNavigationResponsePolicyCancel);
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
-        [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        NSRange range = [url rangeOfString:@"appalipay.aspx"];
-        //        NSLog(@"%@",url);
-        if (range.location != NSNotFound) {
+//        [self.navigationController popViewControllerAnimated:YES];
+        decisionHandler(WKNavigationResponsePolicyAllow);
+    }else if ([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
+        
             
             __weak PushWebViewController *wself = self;
             
@@ -695,7 +698,23 @@
             }];
             
             decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }else {
+        if (![temp isEqualToString:self.funUrl]) {
+            //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString]) {
+                decisionHandler(WKNavigationResponsePolicyAllow);
+            }else {
+                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                funWeb.funUrl = temp;
+                [self.navigationController pushViewController:funWeb animated:YES];
+                self.tabBarController.tabBar.hidden = YES;
+                self.navigationItem.title = nil;
+                decisionHandler(WKNavigationResponsePolicyCancel);
+                
+            }
         }
+
     }
     
     decisionHandler(WKNavigationResponsePolicyAllow);
@@ -749,7 +768,7 @@
         completionHandler(YES);
     }])];
     [alertController addAction:([UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler(YES);
+        completionHandler(NO);
     }])];    [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -804,7 +823,7 @@
  */
 -(void)getUserInfo1:(AQuthModel*)aquth
 {
-    __weak PushWebViewController * wself = self;
+
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
@@ -813,7 +832,7 @@
         UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
         //向服务端提供微信数据
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo]    ;
         UserInfo *userLocal = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
         
         [self bindWeixinWithUserInfo:userInfo AndUnionid:userLocal.unionid  AndRefreshToken:aquth.refresh_token];

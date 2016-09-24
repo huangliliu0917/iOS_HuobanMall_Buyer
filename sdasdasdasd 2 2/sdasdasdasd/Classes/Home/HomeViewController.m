@@ -1,4 +1,4 @@
-
+ 
 //  HomeViewController.m
 //  HuoBanMallBuy
 //
@@ -39,11 +39,12 @@
 #import "LeftMenuModel.h"
 #import "LeftGroupModel.h"
 #import "NoticeMessage.h"
+#import <SDWebImage/SDWebImageManager.h>
 
 
-@interface HomeViewController()<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
+@interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
-@property (strong, nonatomic) WKWebView *homeWebView;
+
 
 
 @property (strong, nonatomic) WKWebView *homeBottonWebView;
@@ -88,6 +89,10 @@
 @property (nonatomic, assign) BOOL bingWeixin;
 
 @property (nonatomic, strong) NSString *bingWeixinUrl;
+
+
+/***1.5.4修改 用于识别当前加载的页面是否是首页***/
+@property (nonatomic, strong) NSString *homeWebUrl;
 
 @end
 
@@ -267,22 +272,20 @@
                            switch (state) {
                                case SSDKResponseStateSuccess:
                                {
-                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
-                                                                                       message:nil
-                                                                                      delegate:nil
-                                                                             cancelButtonTitle:@"确定"
-                                                                             otherButtonTitles:nil];
-                                   [alertView show];
+                                   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                                   [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+                                   [self presentViewController:alert animated:YES completion:nil];
+                                   
+//
                                    break;
                                }
                                case SSDKResponseStateFail:
                                {
-                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                                   message:[NSString stringWithFormat:@"%@",error]
-                                                                                  delegate:nil
-                                                                         cancelButtonTitle:@"OK"
-                                                                         otherButtonTitles:nil, nil];
-                                   [alert show];
+                                   
+                                   UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享失败" message:[NSString stringWithFormat:@"%@",error] preferredStyle:UIAlertControllerStyleAlert];
+                                   [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                                   [self presentViewController:alert animated:YES completion:nil];
+                                   
                                    break;
                                }
                                default:
@@ -305,33 +308,26 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 50)];
+    self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 )];
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
-
-    self.homeWebView.customUserAgent = app.userAgent;
 //    self.homeWebView
     [self.view addSubview:self.homeWebView];
 
     
-    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
-    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
-    self.homeBottonWebView.tag = 20;
-    self.homeBottonWebView.UIDelegate = self;
-    self.homeBottonWebView.navigationDelegate = self;
-    self.homeBottonWebView.customUserAgent = app.userAgent;
-    [self.homeBottonWebView loadRequest:Bottomreq];
-    [self.view addSubview:self.homeBottonWebView];
     
+//    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+//    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
+//    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
+//    self.homeBottonWebView.tag = 20;
+//    self.homeBottonWebView.UIDelegate = self;
+//    self.homeBottonWebView.navigationDelegate = self;
+//    self.homeBottonWebView.customUserAgent = app.userAgent;
+//    [self.homeBottonWebView loadRequest:Bottomreq];
+//    [self.view addSubview:self.homeBottonWebView];
 
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:ddd];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
+    
 
     self.navigationController.navigationBar.alpha = 0;
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
@@ -345,18 +341,21 @@
 
     
     //左侧返回到首页
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
+    
     
     //切换账号
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetHomeWebAgent) name:ResetAllWebAgent object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToNewUrlFormRemoteNotifcation:) name:@"GoNewUrl" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotoLoginController) name:@"backAndGoLogin" object:nil];
+    
     
     [UIViewController MonitorNetWork];
     
@@ -389,6 +388,21 @@
             [self presentViewController:aa animated:YES completion:nil];
         }
     }
+    
+    
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar addSubview:_progressView];
+    [self.navigationController setNavigationBarHidden:NO  animated:YES];
+    self.tabBarController.tabBar.hidden = NO;
+    
+    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        self.navigationItem.title = title;
+    }];
+    
     
 }
 
@@ -473,19 +487,36 @@
 
 
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar addSubview:_progressView];
-}
+
+
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.homeWebView.customUserAgent = app.userAgent;
+    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSString * webChennel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+    if ([self.openUrl isEqualToString:webChennel]) {
+        NSString *temp = [webChennel stringByReplacingOccurrencesOfString:@"{goodid}"withString:@"0"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"{orderid}"withString:@"0"];
+        NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+        if ([NSString stringWithFormat:@"%@", userId].length != 0) {
+            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
+        }else {
+            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
+        }
+        
+    }else {
+        self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+    }
+    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [self.homeWebView loadRequest:req];
     
 }
 
@@ -510,33 +541,16 @@
     }];
 }
 
-- (void)LeftbackToHome:(NSNotification *) note{
-    
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    [self BackToWebView];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"backToHomeView" object:nil];
-    
-    NSString * backUrl = [note.userInfo objectForKey:@"url"];
-    if (backUrl) {
-        NSURL * newUrl = [NSURL URLWithString:backUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:newUrl];
-        [self.homeWebView loadRequest:req];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
-    }else {
-        [self CannelLoginBackToHome];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LeftbackToHome:) name:@"backToHomeView" object:nil];
-    }
-}
 
-- (void)CannelLoginBackToHome {
-    
-    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-    NSURL * urlStr = [NSURL URLWithString:ddd];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
-}
+
+//- (void)CannelLoginBackToHome {
+//    
+//    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//    NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+//    NSURL * urlStr = [NSURL URLWithString:ddd];
+//    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//    [self.homeWebView loadRequest:req];
+//}
 
 - (UIView *)ReturnNavPictureWithName:(NSString *)name andTwo:(NSString *)share{
  
@@ -602,65 +616,65 @@
     
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if (actionSheet.tag == 500) {//单个微信支付
-        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-        NSData *data = [NSData dataWithContentsOfFile:filename];
-        // 2.创建反归档对象
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        // 3.解码并存到数组中
-        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-        [self WeiChatPay:namesArray[0]];
-    }else if (actionSheet.tag == 700){// 单个支付宝支付
-        //NSLog(@"支付宝%ld",(long)buttonIndex);
-        //        [self MallAliPay:self.paymodel];
-    }else if(actionSheet.tag == 900){//两个都有的支付
-        //0
-        //1
-        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-        NSData *data = [NSData dataWithContentsOfFile:filename];
-        // 2.创建反归档对象
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        // 3.解码并存到数组中
-        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-        if (buttonIndex==0) {//支付宝
-            PayModel * paymodel =  namesArray[0];
-            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
-            if (cc.webPagePay) {//网页支付
-                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
-                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
-                NSArray * arr = [par componentsSeparatedByString:@"&"];
-                __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
-                    NSArray * aa = [obj componentsSeparatedByString:@"="];
-                    NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
-                    [dict addEntriesFromDictionary:dt];
-                }];
-                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
-//                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
-                [self.homeWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
-                    
-                }];
-            }else{
-                [self MallAliPay:cc];
-            }
-        }
-        if (buttonIndex==1) {//微信
-            PayModel * paymodel =  namesArray[0];
-            if ([paymodel.payType integerValue] == 300) {
-                [self WeiChatPay:namesArray[0]];
-            }else{
-                [self WeiChatPay:namesArray[1]];//微信
-            }
-            
-        }
-        
-    }
-    
-}
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    
+//    if (actionSheet.tag == 500) {//单个微信支付
+//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//        NSData *data = [NSData dataWithContentsOfFile:filename];
+//        // 2.创建反归档对象
+//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        // 3.解码并存到数组中
+//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+//        [self WeiChatPay:namesArray[0]];
+//    }else if (actionSheet.tag == 700){// 单个支付宝支付
+//        //NSLog(@"支付宝%ld",(long)buttonIndex);
+//        //        [self MallAliPay:self.paymodel];
+//    }else if(actionSheet.tag == 900){//两个都有的支付
+//        //0
+//        //1
+//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//        NSData *data = [NSData dataWithContentsOfFile:filename];
+//        // 2.创建反归档对象
+//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        // 3.解码并存到数组中
+//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+//        if (buttonIndex==0) {//支付宝
+//            PayModel * paymodel =  namesArray[0];
+//            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
+//            if (cc.webPagePay) {//网页支付
+//                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
+//                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
+//                NSArray * arr = [par componentsSeparatedByString:@"&"];
+//                __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+//                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
+//                    NSArray * aa = [obj componentsSeparatedByString:@"="];
+//                    NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
+//                    [dict addEntriesFromDictionary:dt];
+//                }];
+//                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
+////                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
+//                [self.homeWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
+//                    
+//                }];
+//            }else{
+//                [self MallAliPay:cc];
+//            }
+//        }
+//        if (buttonIndex==1) {//微信
+//            PayModel * paymodel =  namesArray[0];
+//            if ([paymodel.payType integerValue] == 300) {
+//                [self WeiChatPay:namesArray[0]];
+//            }else{
+//                [self WeiChatPay:namesArray[1]];//微信
+//            }
+//            
+//        }
+//        
+//    }
+//    
+//}
 
 /**
  *  商城支付宝支付
@@ -858,7 +872,7 @@
  */
 -(void)getUserInfo1:(AQuthModel*)aquth
 {
-    __weak HomeViewController * wself = self;
+
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
@@ -1017,6 +1031,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [_progressView removeFromSuperview];
+    
 }
 #pragma mark UIWebView
 
@@ -1307,27 +1322,25 @@
             
             
             
+        }else if ([url rangeOfString:@"im.html"].location != NSNotFound){
+            decisionHandler(WKNavigationResponsePolicyAllow);
         }else{
             
-            NSRange range = [url rangeOfString:@"__newframe"];
-            if (range.location != NSNotFound) {
-                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
-                funWeb.funUrl = temp;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                decisionHandler(WKNavigationResponsePolicyCancel);
-            }else{
-                
-                NSRange range = [url rangeOfString:@"back"];
-                if (range.location != NSNotFound) {
-                    self.showBackArrows = YES;
-                }else{
-                    self.showBackArrows = NO;
+//            NSRange range = [url rangeOfString:@"__newframe"];
+            if (![temp isEqualToString:self.homeWebUrl]) {
+//                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
+                    decisionHandler(WKNavigationResponsePolicyAllow);
+                }else {
+                    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                    funWeb.funUrl = temp;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    self.tabBarController.tabBar.hidden = YES;
+                    self.navigationItem.title = nil;
+                    decisionHandler(WKNavigationResponsePolicyCancel);
+                    
                 }
-                decisionHandler(WKNavigationResponsePolicyAllow);
             }
-            
-            
         }
         
         decisionHandler(WKNavigationResponsePolicyAllow);
@@ -1345,19 +1358,19 @@
     if (webView.tag == 100) {
         
         [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            self.title = title;
+            self.navigationItem.title = title;
         }];
         
-        if (_showBackArrows) {//返回按钮
-            
-            [UIView animateWithDuration:0.05 animations:^{
-                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
-            }];
-        }else{
-            [UIView animateWithDuration:0.05 animations:^{
-                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
-            }];
-        }
+//        if (_showBackArrows) {//返回按钮
+//            
+//            [UIView animateWithDuration:0.05 animations:^{
+//                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
+//            }];
+//        }else{
+//            [UIView animateWithDuration:0.05 animations:^{
+//                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
+//            }];
+//        }
         
         [webView evaluateJavaScript:@"__getShareStr()" completionHandler:^(id _Nullable shareStr, NSError * _Nullable error) {
             
@@ -1497,6 +1510,48 @@
     funWeb.funUrl = url;
     [self.navigationController pushViewController:funWeb animated:YES];
 }
+
+#pragma mark 登录修改
+
+- (void)gotoLoginController {
+    [UIViewController ToRemoveSandBoxDate];
+    
+    UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+    
+    if ([str intValue] == 0) {
+        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }else if ([str intValue] == 1) {
+        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        login.isPhoneLogin = YES;
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }else if ([str intValue] == 2) {
+        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        login.title = @"登录";
+//        login.goUrl = goUrl;
+        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+        [self presentViewController:root animated:YES completion:^{
+            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+            [self BackToWebView];
+        }];
+    }
+}
+
+
 
 @end
 

@@ -10,15 +10,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "NoticeMessage.h"
 
-/**消息中心  网络接口*/
-
-#define NoticeCenterMainUrl @"http://api.open.huobanmall.com/"
-
-/**网络  APP 标识*/
-#define NoticeCenterAppKey  @"app"
-
-/**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
 
 

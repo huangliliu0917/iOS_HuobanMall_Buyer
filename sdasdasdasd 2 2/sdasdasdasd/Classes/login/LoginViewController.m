@@ -35,6 +35,7 @@
 - (IBAction)loginBtnClick:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (strong, nonatomic) IBOutlet UIView *bgView;
 
 @end
 
@@ -56,8 +57,9 @@
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
         [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+            
         }];
     }];
     
@@ -65,8 +67,9 @@
     
     
     
-    self.loginButton.layer.cornerRadius = 22;
-
+    self.loginButton.layer.cornerRadius = 8;
+    
+    self.bgView.layer.cornerRadius = 15;
 }
 
 

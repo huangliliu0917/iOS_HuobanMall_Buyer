@@ -17,6 +17,7 @@
 #import "LeftMenuModel.h"
 #import "UserInfo.h"
 #import "UIViewController+MonitorNetWork.h"
+#import "TabBarModel.h"
 
 @interface LaunchViewController ()
 
@@ -30,6 +31,7 @@
     [self setImage];
     
     [self myAppGetConfig];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,27 +116,16 @@
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
             
+            NSString *webchannel = json[@"webchannel"];
+            if (webchannel.length) {
+                [[NSUserDefaults standardUserDefaults] setObject:[webchannel stringByRemovingPercentEncoding] forKey:@"KeFuWebchannel"];
+            }
+            
+            
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
             
             
-            NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-            if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
-                LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
-                
-                
-                [UIApplication sharedApplication].keyWindow.rootViewController = new;
-//                [self.window makeKeyAndVisible];
-                [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
-            }else {
-                NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-                //    AQuthModel * AQuth = [AccountTool account];
-                if ([login isEqualToString:Success]) {
-                    [self myAppGetUserInfo];
-                }
-                RootViewController * root = [[RootViewController alloc] init];
-                [UIApplication sharedApplication].keyWindow.rootViewController = root;
-//                [self.window makeKeyAndVisible];
-            }
+            [self getButtomTabbarData];
         }
         
         
@@ -253,5 +244,48 @@
     });
     
 }
+
+#pragma mark 获取底部导航数据
+
+- (void)getButtomTabbarData {
+    NSString *url = [NSString stringWithFormat:@"%@merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+
+        NSArray *array = json[@"widgets"];
+        NSDictionary *dic = array[0];
+        NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
+        
+        
+        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+            new.tabbarArray = temp;
+            
+            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+        }else {
+            NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+            //    AQuthModel * AQuth = [AccountTool account];
+            if ([login isEqualToString:Success]) {
+                [self myAppGetUserInfo];
+            }
+            RootViewController * root = [[RootViewController alloc] init];
+            root.tabbarArray = temp;
+            [UIApplication sharedApplication].keyWindow.rootViewController = root;
+    
+        }
+        
+        
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+
 
 @end

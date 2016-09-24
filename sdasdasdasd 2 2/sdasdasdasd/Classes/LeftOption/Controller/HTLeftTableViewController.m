@@ -24,6 +24,7 @@
 #import "UserInfo.h"
 #import <SVProgressHUD.h>
 #import "AccountModel.h"
+#import <BlocksKit/UIView+BlocksKit.h>
 #import "IponeVerifyViewController.h"
 
 @interface HTLeftTableViewController ()<NSXMLParserDelegate,MyLoginViewDelegate,UIAlertViewDelegate,WXApiDelegate>
@@ -35,7 +36,7 @@
 
 
 /**头像*/
-@property(nonatomic,strong) UIImageView * iconView;
+//@property(nonatomic,strong) UIImageView * iconView;
 /**顶部登录按钮*/
 @property(nonatomic,strong) UIButton * logingBtn;
 @property(nonatomic,strong) NSMutableArray * groupArray;
@@ -131,7 +132,7 @@
 //        NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
-            _topHeadView.secondLable.text = json[@"data"][@"levelName"];
+//            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
             if ([json[@"data"][@"menusCode"] integerValue] == 1) {
                 
                 NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
@@ -281,28 +282,53 @@
         
         [headView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
         headView.firstLable.text = userInfor.nickname;
+        headView.userInteractionEnabled = NO;
+        
     }else {
         headView.iconView.image = [UIImage imageNamed:@"moren"];
         headView.firstLable.text = @"未登陆";
+        headView.userInteractionEnabled = YES;
+        __weak HTLeftTableViewController *wself = self;
+        [headView bk_whenTapped:^{
+            [wself backToTabbarAndGoLogin];
+        }];
     }
     headView.iconView.layer.borderColor = [UIColor whiteColor].CGColor;
     headView.iconView.layer.cornerRadius = headView.iconView.frame.size.width*0.5;
-    headView.secondLable.layer.cornerRadius = 3;
-    headView.secondLable.layer.masksToBounds = YES;
-    headView.secondLable.backgroundColor = [UIColor whiteColor];
-    headView.iconView.layer.masksToBounds = YES;
+    headView.secondLable1.layer.cornerRadius = 3;
+    headView.secondLable1.layer.masksToBounds = YES;
+    headView.secondLable1.backgroundColor = [UIColor whiteColor];
+    
+    headView.secondLable2.layer.cornerRadius = 3;
+    headView.secondLable2.layer.masksToBounds = YES;
+    headView.secondLable2.backgroundColor = [UIColor whiteColor];
+    
+    headView.secondLable3.layer.cornerRadius = 3;
+    headView.secondLable3.layer.masksToBounds = YES;
+    headView.secondLable3.backgroundColor = [UIColor whiteColor];
+    
+//    headView.iconView.layer.masksToBounds = YES;
     headView.iconView.layer.borderWidth = 2;
-    headView.secondLable.textColor =  HuoBanMallBuyNavColor;
+    
+    
+    headView.secondLable1.textColor = HuoBanMallBuyNavColor;
+    headView.secondLable2.textColor = HuoBanMallBuyNavColor;
+    headView.secondLable3.textColor = HuoBanMallBuyNavColor;
     CGFloat HeadViewW =  SecrenWith * SplitScreenRate;
     CGFloat HeadViewH = 114;
     headView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     headView.backgroundColor = HuoBanMallBuyNavColor;
     self.tableView.tableHeaderView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
-    self.tableView.tableHeaderView = headView;
+    self.tableView.tableHeaderView = headView; 
     
     
-    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
-    headView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
+//    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
+//    NSArray *levelArray = [level componentsSeparatedByString:@"&"];
+//    for (int i = 0; i < levelArray.count; i++) {
+//        UILabel *label = (UILabel *)[self.view viewWithTag:100+i];
+//        label.text = [NSString stringWithFormat:@" %@ ",levelArray[i]];
+//    }
+
     self.tableView.tableFooterView = [[UIView alloc] init];
 //    [self.view layoutIfNeeded];
 }
@@ -316,18 +342,26 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     if ([login isEqualToString:Success]) {
         
-        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
+        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil options:SDWebImageRetryFailed];
         _topHeadView.firstLable.text = userInfor.nickname;
+        _topHeadView.userInteractionEnabled = NO;
     }else {
         _topHeadView.iconView.image = [UIImage imageNamed:@"moren"];
         _topHeadView.firstLable.text = @"未登陆";
+        _topHeadView.userInteractionEnabled = YES;
     }
 //    [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil completed:nil];
 //    
 //    _topHeadView.firstLable.text = userInfor.nickname;
     
     NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
-    _topHeadView.secondLable.text = [NSString stringWithFormat:@" %@ ",level];
+    NSArray *levelArray = [level componentsSeparatedByString:@"&"];
+    for (int i = 0; i < levelArray.count; i++) {
+        NSString *temp = levelArray[i];
+        UILabel *label = (UILabel *)[self.view viewWithTag:100+i];
+        label.text = [NSString stringWithFormat:@" %@ ",temp];
+    }
+    
 }
 
 - (void)accountLogin:(UIButton *) btn{
@@ -388,29 +422,36 @@
     if (models.menu_url) {
         [url appendString:models.menu_url];
     }
-    
-    //绑定微信
-    if ([models.menu_name isEqualToString:@"绑定微信"]) {
+    if ([models.menu_name isEqualToString:@"首页"]) {
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+        }];
         
-    }else if ([models.menu_name isEqualToString:@"绑定手机"]){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
-//        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     }else {
-        //业务逻辑(胖子写的)
-        if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
-            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-        }else{
-            NSRange rangs = [url rangeOfString:@"?"];
-            rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
-            NSString * urls = url;
-            [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-                
-                NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-            }];
+        //绑定微信
+        if ([models.menu_name isEqualToString:@"绑定微信"]) {
+            
+        }else if ([models.menu_name isEqualToString:@"绑定手机"]){
+            //        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToIponeVerifyViewController" object:nil];
+            //        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+        }else {
+            //业务逻辑(胖子写的)
+            if ([models.menu_url isEqualToString:@"http://www.dzd.com"]) {
+                [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+            }else{
+                NSRange rangs = [url rangeOfString:@"?"];
+                rangs.location != NSNotFound?[url appendFormat:@"&back=1"]:[url appendFormat:@"?back=1"];
+                NSString * urls = url;
+                [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+                    
+                    NSDictionary * objc = [NSDictionary dictionaryWithObject:urls forKey:@"url"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
+                }];
+            }
         }
     }
-    
+
 }
 
 
@@ -544,6 +585,8 @@
 
 
 
+
+
 #pragma mark topView
 
 - (void)MyLoginViewToSwitchAccount:(MyLoginView *)view{
@@ -559,9 +602,17 @@
 }
 
 
-#pragma mark 微信授权登录
+#pragma mark 未登陆返回并点击登录
 
 
+- (void)backToTabbarAndGoLogin {
+    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"backAndGoLogin" object:nil];
+        
+    }];
+}
 
 
 

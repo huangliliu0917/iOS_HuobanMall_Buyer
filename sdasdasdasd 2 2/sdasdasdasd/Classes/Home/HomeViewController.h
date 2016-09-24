@@ -10,7 +10,13 @@
 
 @interface HomeViewController : UIViewController
 
+@property (nonatomic, strong) NSString *openUrl;
+
+@property (nonatomic, strong) NSString *tabbarImage;
+
 @property (nonatomic, strong) NSDictionary *openNotifacation;
+
+@property (strong, nonatomic) WKWebView *homeWebView;
 - (void)resetHomeWebAgent;
 
 @end

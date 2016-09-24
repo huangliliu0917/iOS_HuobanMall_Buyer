@@ -174,6 +174,7 @@
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     RootViewController * root = [[RootViewController alloc] init];
+    root.tabbarArray = self.tabbarArray;
     window.rootViewController = root;
     [window makeKeyAndVisible];
 
