@@ -712,7 +712,7 @@
         }];
         
         decisionHandler(WKNavigationResponsePolicyCancel);
-    }else {
+    } else {
         if (![temp isEqualToString:self.funUrl]) {
             //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString]) {
