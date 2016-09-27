@@ -178,6 +178,7 @@
 		60A216AD1D925B5500A0FF1D /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		60A216AE1D925B5500A0FF1D /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
 		60A216AF1D925B5500A0FF1D /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		60B449601D9A0BB7008B5F60 /* sdasdasdasd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sdasdasdasd.entitlements; sourceTree = "<group>"; };
 		60F11ACB1C194D480026DA33 /* NSString+EXTERN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EXTERN.h"; sourceTree = "<group>"; };
 		60F11ACC1C194D480026DA33 /* NSString+EXTERN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EXTERN.m"; sourceTree = "<group>"; };
 		71102946ED3002A8D4DEC64B /* Pods-sdasdasdasdUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1031,6 +1032,7 @@
 		EFA6D3541C04514500B39B36 /* sdasdasdasd */ = {
 			isa = PBXGroup;
 			children = (
+				60B449601D9A0BB7008B5F60 /* sdasdasdasd.entitlements */,
 				EF9D4B1D1C055FF900D005E8 /* Classes */,
 				EFA6D3581C04514500B39B36 /* AppDelegate.h */,
 				EFA6D3591C04514500B39B36 /* AppDelegate.m */,
