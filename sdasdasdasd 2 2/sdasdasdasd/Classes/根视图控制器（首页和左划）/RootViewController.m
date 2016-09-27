@@ -65,16 +65,16 @@
             }
         }];
         
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (error) {
-            }
-            if (image) {
-                
-                home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(30, 30) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            }
-        }];
+//        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            
+//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//            if (error) {
+//            }
+//            if (image) {
+//                
+//                home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(30, 30) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//            }
+//        }];
         
         
         

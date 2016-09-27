@@ -506,15 +506,28 @@
     if ([self.openUrl isEqualToString:webChennel]) {
         NSString *temp = [webChennel stringByReplacingOccurrencesOfString:@"{goodid}"withString:@"0"];
         temp = [temp stringByReplacingOccurrencesOfString:@"{orderid}"withString:@"0"];
-        NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-        if ([NSString stringWithFormat:@"%@", userId].length != 0) {
-            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
+        
+        NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+        if ([login isEqualToString:Success]) {
+            NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+            if ([NSString stringWithFormat:@"%@", userId].length != 0) {
+                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
+            }else {
+                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
+            }
         }else {
             self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
         }
         
+        
+        
     }else {
-        self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+        if ([self.openUrl rangeOfString:@"http://"].location != NSNotFound) {
+            self.homeWebUrl = self.openUrl;
+        }else {
+            
+            self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+        }
     }
     NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -1332,7 +1345,7 @@
                 
                 
             } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-                LWLog(@"%@",error.description);
+//                LWLog(@"%@",error.description);
             }];
             
             decisionHandler(WKNavigationResponsePolicyCancel);

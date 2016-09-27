@@ -708,7 +708,7 @@
             
             
         } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-            LWLog(@"%@",error.description);
+//            LWLog(@"%@",error.description);
         }];
         
         decisionHandler(WKNavigationResponsePolicyCancel);
