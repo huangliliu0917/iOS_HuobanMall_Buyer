@@ -13,12 +13,12 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #define LWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
-#define LWNewFeatureImageCount 4
+#define LWNewFeatureImageCount 3
 
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"行装商城"
+#define MallName @"桦桉灯饰"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -30,13 +30,13 @@
 
 //java
 // 店中店
-#define SISSecret @"08afd6f9ae0c6017d105b4ce580de885"
+#define SISSecret @"08afd6f9ae0c6017d105b4ce580de885" //店中店签名
 
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.outfit.ren/"
+#define NoticeCenterMainUrl @"http://api.open.huobanplus.com/"
 
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
@@ -44,11 +44,11 @@
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
-
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.outfit.ren"
+#define AppOriginUrl  @"http://mallapi.huobanmall.com"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -57,9 +57,9 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000]
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:16/255.0 green:112/255.0 blue:204/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
+#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:132/255.0 green:186/255.0 blue:67/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
@@ -73,7 +73,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"7768" //0504
 
 
 //友盟数据统计
@@ -81,17 +81,17 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"be89777c387c"
+#define HuoBanMallShareSdkAppId @"1251451bae91b"
 //sina
-#define HuoBanMallShareSdkSinaKey @"1862469055"
-#define HuoBanMallShareSdkSinaSecret @"07ebe0f450679806a23c1bcc7627f4dc"
+#define HuoBanMallShareSdkSinaKey @"513333273"
+#define HuoBanMallShareSdkSinaSecret @"7423457f2f8062e3c1ed6953213fd990"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+#define HuoBanMallBuyWeiXinAppId @"wx6314b2e8ad73b168"
+#define HuoBanMallShareSdkWeiXinSecret @"9af7ac1383e777b506c56c2d850ce204"
 //qq
-#define HuoBanMallShareSdkQQKey @"1104945838"
-#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
+#define HuoBanMallShareSdkQQKey @"1105523743"
+#define HuoBanMallShareSdkQQSecret @"MfAAkeRPEdtnNIma"
 
 
 #define IsIos8 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0)
@@ -141,4 +141,5 @@
 #import "MD5Encryption.h"
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
+#import "HTNoticeCenter.h"
 #endif /* PrefixHeader_pch */
