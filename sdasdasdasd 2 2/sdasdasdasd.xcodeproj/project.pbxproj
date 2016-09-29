@@ -1159,7 +1159,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = Z67FS4TZE2;
+						DevelopmentTeam = 96GEC3X62W;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1598,17 +1598,11 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z67FS4TZE2;
+				DEVELOPMENT_TEAM = 96GEC3X62W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/Optional",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/Required",
@@ -1622,15 +1616,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hangzhou.huotu.huaanzhaoming;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1645,17 +1633,11 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z67FS4TZE2;
+				DEVELOPMENT_TEAM = 96GEC3X62W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/QQSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/Optional",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/Required",
@@ -1669,15 +1651,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/lib/libraries/extends/WeChatSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/SinaWeiboSDK",
-					"$(PROJECT_DIR)/sdasdasdasd/Classes/libraries/extends/WeChatSDK",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hangzhou.huotu.huaanzhaoming;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
