@@ -74,7 +74,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-        //        NSLog(@"%@",json);
+                NSLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
@@ -109,6 +109,7 @@
     [url appendString:@"/mall/getConfig"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
+        NSLog(@"%@",json);
         if (json) {
             MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -248,12 +249,14 @@
 #pragma mark 获取底部导航数据
 
 - (void)getButtomTabbarData {
-    NSString *url = [NSString stringWithFormat:@"%@merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
 
+        
+        NSLog(@"json");
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];

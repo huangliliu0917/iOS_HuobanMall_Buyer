@@ -223,7 +223,7 @@
             [self.weixinLogin bk_whenTapped:^{
                 
                 if ([WXApi isWXAppInstalled]) {
-                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
+//                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess:) name:@"ToGetUserInfo" object:nil];
                     [self WeiXinLog];
                 }
             }];
