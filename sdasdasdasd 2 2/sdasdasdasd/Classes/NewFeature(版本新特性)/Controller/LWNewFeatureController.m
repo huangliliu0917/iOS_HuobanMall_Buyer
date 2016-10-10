@@ -146,7 +146,7 @@
 
     //设置尺寸
     CGFloat centerX = imageView.frame.size.width*0.5;
-    CGFloat centerY = imageView.frame.size.height*0.9;
+    CGFloat centerY = imageView.frame.size.height*0.85;
     startButton.center = CGPointMake(centerX,centerY);
 //    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;

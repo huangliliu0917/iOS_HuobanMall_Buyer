@@ -13,11 +13,12 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #define LWColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
-#define LWNewFeatureImageCount 3
+#define LWNewFeatureImageCount 4
+
 
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
-#define MallName @"悦铭荟"
+#define MallName @"行装商城"
 #define SplitScreenRate  0.85    //左侧侧拉分屏比率
 #define TopScreenRate  0.146    //左侧Top分屏比率
 #define UserQaquthAccountFlag @"UserQaquthAccountFlag" //用户授权登录帐号表识
@@ -35,7 +36,7 @@
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.huobanplus.com/"
+#define NoticeCenterMainUrl @"http://api.open.outfit.ren/"
 
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
@@ -45,7 +46,7 @@
 
 
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanmall.com"
+#define AppOriginUrl  @"http://mallapi.outfit.ren"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 
@@ -56,7 +57,7 @@
 /****************************************************/
 
 
-#define HuoBanMallBuyNavColor [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255 alpha:1.000]
+#define HuoBanMallBuyNavColor [UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000]
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
@@ -72,7 +73,7 @@
 
 //伙伴商城商户信息
 
-#define HuoBanMallBuyApp_Merchant_Id @"7201" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
 
 
 //友盟数据统计
@@ -80,14 +81,14 @@
 #define HuoBanMallUMengSecret @"123"
 
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"179a24d1819ca"
+#define HuoBanMallShareSdkAppId @"be89777c387c"
 //sina
-#define HuoBanMallShareSdkSinaKey @"179a24d1819ca"
-#define HuoBanMallShareSdkSinaSecret @"984f64b832a1368c9d0f231f3ecd3f24"
+#define HuoBanMallShareSdkSinaKey @"1862469055"
+#define HuoBanMallShareSdkSinaSecret @"07ebe0f450679806a23c1bcc7627f4dc"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx39ef6860ee9f6449"
-#define HuoBanMallShareSdkWeiXinSecret @"8367882db56f00d4138bc589fac35271"
+#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
+#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
 //qq
 #define HuoBanMallShareSdkQQKey @"1104945838"
 #define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
