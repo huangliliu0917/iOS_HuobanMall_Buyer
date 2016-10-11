@@ -60,7 +60,7 @@
             }
             if (image) {
                 
-                UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(30, 30) ] tag:0];
+                UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
                 home.tabBarItem = item;
             }
         }];
