@@ -254,15 +254,13 @@
         if (array.count != 4) {
             return;
         }
-        NSString *temp = [self toCutew:array[2]];
-        
         //1、创建分享参数
         NSArray* imageArray = @[[NSURL URLWithString:array[3]]];
         if (imageArray) {
             NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
             [shareParams SSDKSetupShareParamsByText:array[1]
                                              images:imageArray
-                                                url:[NSURL URLWithString:temp]
+                                                url:[NSURL URLWithString:array[2]]
                                               title:array[0]
                                                type:SSDKContentTypeAuto];
             //2、分享（可以弹出我们的分享菜单和编辑界面）
