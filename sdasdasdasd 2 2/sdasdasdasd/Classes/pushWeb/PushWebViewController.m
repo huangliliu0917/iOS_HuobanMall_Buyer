@@ -105,21 +105,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
+    self.view.backgroundColor = [UIColor redColor];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    
+    NSLog(@"%@",NSStringFromCGRect(self.view.frame));
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.navigationController.navigationBar.alpha = 0;
 //    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
-    
+    self.tabBarController.tabBar.hidden = YES;
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin,NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height - 15)];
+    self.webView = [[WKWebView alloc] init];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.customUserAgent = app.userAgent;
-    [self.view addSubview:self.webView];
-
+//    [self.view addSubview:self.webView];
+    self.view = _webView;
     
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -147,8 +151,8 @@
     [super viewWillAppear:animated];
     
 //    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.tabBarController.tabBar.hidden = YES;
     
+//    NSLog(@"%@",NSStringFromCGRect(self.view.frame));
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
@@ -161,6 +165,13 @@
     }];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    self.webView.frame = self.view.frame;
+    
+    
+//    NSLog(@"%@",NSStringFromCGRect(self.view.frame));
+}
 
 - (void)AddMjRefresh{
     // 添加下拉刷新控件
@@ -618,7 +629,7 @@
         decisionHandler(WKNavigationResponsePolicyAllow);
     }else if ([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
         
-            
+//            decisionHandler(WKNavigationResponsePolicyCancel);
             __weak PushWebViewController *wself = self;
             
             self.ServerPayUrl = [temp copy];

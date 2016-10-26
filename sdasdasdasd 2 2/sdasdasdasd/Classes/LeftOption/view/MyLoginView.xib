@@ -13,8 +13,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-0D-SXj">
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLX-wy-lg8">
-                            <frame key="frameInset" minX="62" minY="10" width="36" height="22"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLX-wy-lg8">
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -95,7 +94,7 @@
                 <outlet property="secondLable2" destination="skH-nH-ZSj" id="GyR-bx-XJi"/>
                 <outlet property="secondLable3" destination="38P-Tq-Wzg" id="lgb-yW-bBe"/>
             </connections>
-            <point key="canvasLocation" x="395.5" y="351"/>
+            <point key="canvasLocation" x="163" y="-60"/>
         </view>
     </objects>
     <resources>

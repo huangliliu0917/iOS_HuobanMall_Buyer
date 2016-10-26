@@ -28,6 +28,7 @@
 //    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     
     
+    
 }
 
 - (IBAction)SwitchAccount:(id)sender {
@@ -38,5 +39,11 @@
     }
 }
 
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    self.iconView.layer.cornerRadius = self.iconView.frame.size.height * 0.5;
+    self.iconView.layer.masksToBounds = YES;
+}
 
 @end
