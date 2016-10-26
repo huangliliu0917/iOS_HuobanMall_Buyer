@@ -1037,10 +1037,11 @@
             NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
             [dict addEntriesFromDictionary:dt];
         }];
-        NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
+        
+        NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],[NSString stringWithFormat:@"'%@'",dict[@"trade_no"]]];
         //                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
-        [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
-            
+        [self.webView evaluateJavaScript:js completionHandler:^(NSString * _Nullable js, NSError * _Nullable error) {
+             
         }];
     }else{
         [self MallAliPay:cc];
