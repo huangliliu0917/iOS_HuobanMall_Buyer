@@ -113,7 +113,7 @@
     
     self.login.backgroundColor = HuoBanMallBuyNavColor;
     self.login.layer.cornerRadius = 5;
-    
+    self.login.layer.borderColor = [UIColor colorWithRed:(59/255.0) green:(59/255.0) blue:(59/255.0) alpha:1].CGColor;
     
     self.weixinLogin.layer.cornerRadius = 5;
     self.weixinLogin.layer.borderColor = [UIColor colorWithWhite:0.5803 alpha:1].CGColor;

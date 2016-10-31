@@ -83,7 +83,7 @@
 //        
 //    }else{
 //        
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 //    }
 //    [UIApplication sharedApplication] setStatusBar
 }

@@ -12,6 +12,7 @@
 
 - (void)_initNavBackgroundColor
 {
+    
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

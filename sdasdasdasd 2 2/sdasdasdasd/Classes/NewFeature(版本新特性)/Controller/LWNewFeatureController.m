@@ -49,7 +49,7 @@
     //1、创建scrollView
     [self setupScrollView];
     //2、添加  pageControll
-//    [self setupPageControll];ToGetUserInfoError
+    [self setupPageControll];//ToGetUserInfoError
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
@@ -161,7 +161,8 @@
 //    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
     [startButton setTitle:@"开始体验" forState:UIControlStateNormal];
-    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [startButton setTitleColor:[UIColor colorWithRed:59/255.0 green:59/255.0 blue:59/255.0 alpha:1] forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
 }

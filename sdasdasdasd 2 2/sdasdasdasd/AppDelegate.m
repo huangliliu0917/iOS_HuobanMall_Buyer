@@ -66,9 +66,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
     
+    
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    app.statusBarStyle = UIStatusBarStyleLightContent;
+//    app.statusBarStyle = UIStatusBarStyleLightContent;
     
     
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];

@@ -297,15 +297,15 @@
     headView.iconView.layer.cornerRadius = headView.iconView.frame.size.width*0.5;
     headView.secondLable1.layer.cornerRadius = 3;
     headView.secondLable1.layer.masksToBounds = YES;
-    headView.secondLable1.backgroundColor = [UIColor whiteColor];
+//    headView.secondLable1.backgroundColor = [UIColor whiteColor];
     
     headView.secondLable2.layer.cornerRadius = 3;
     headView.secondLable2.layer.masksToBounds = YES;
-    headView.secondLable2.backgroundColor = [UIColor whiteColor];
+//    headView.secondLable2.backgroundColor = [UIColor whiteColor];
     
     headView.secondLable3.layer.cornerRadius = 3;
     headView.secondLable3.layer.masksToBounds = YES;
-    headView.secondLable3.backgroundColor = [UIColor whiteColor];
+//    headView.secondLable3.backgroundColor = [UIColor whiteColor];
     
 //    headView.iconView.layer.masksToBounds = YES;
     headView.iconView.layer.borderWidth = 2;
