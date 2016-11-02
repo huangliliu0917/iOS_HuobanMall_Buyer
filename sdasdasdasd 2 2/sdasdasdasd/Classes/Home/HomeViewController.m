@@ -308,12 +308,14 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.homeWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 )];
+    WKWebView * wk  = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 )];
+    self.homeWebView = wk;
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
 //    self.homeWebView
-    [self.view addSubview:self.homeWebView];
+    self.view = wk;
+//    [self.view addSubview:self.homeWebView];
 
     
     
