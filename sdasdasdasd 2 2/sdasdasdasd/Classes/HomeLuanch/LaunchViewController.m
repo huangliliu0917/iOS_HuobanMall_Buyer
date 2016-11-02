@@ -256,7 +256,7 @@
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
 
         
-        NSLog(@"json");
+//        NSLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
@@ -265,7 +265,7 @@
         
         
         NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-        if ((localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) && LWNewFeatureImageCount != 0) {
+        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
             LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
             new.tabbarArray = temp;
             

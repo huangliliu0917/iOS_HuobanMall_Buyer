@@ -49,7 +49,11 @@
     //1、创建scrollView
     [self setupScrollView];
     //2、添加  pageControll
-    [self setupPageControll];//ToGetUserInfoError
+    
+    if(LWNewFeatureImageCount>1){
+        [self setupPageControll];//ToGetUserInfoError
+ 
+    }
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
@@ -111,8 +115,26 @@
         UIImageView * imageView = [[UIImageView alloc] init];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         
+        if(LWNewFeatureImageCount == 1){
+            CGSize viewSize = CGSizeMake(ScreenWidth, ScreenHeight);
+            NSString *viewOrientation = @"Portrait";    //横屏请设置成 @"Landscape"
+            NSString *launchImage = nil;
+            NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+            for (NSDictionary* dict in imagesDict)
+            {
+                CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+                
+                if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
+                {
+                    launchImage = dict[@"UILaunchImageName"];
+                }
+            }
+            NSLog(@"%@",launchImage);
+            imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
+        }else{
+           imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"newfeature_0%d_414x736",index+1]];
+        }
         
-        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"newfeature_0%d_414x736",index+1]];
         //设置scorllview的frame
         CGFloat imageX = index * scrollW;
         CGFloat imageY = 0;

@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.olquanapp.ttds.ios</string>
+				<string>com.zhujunzhi.zjz</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx776ef947adaff9ba</string>
+				<string>wx76bd81d45f4933fa</string>
 			</array>
 		</dict>
 	</array>

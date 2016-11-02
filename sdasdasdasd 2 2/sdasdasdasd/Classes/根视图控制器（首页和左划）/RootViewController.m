@@ -41,6 +41,9 @@
         
         TabBarModel *model = self.tabbarArray[i];
         
+        
+        model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
+//        NSLog(@"%@",model.linkUrl);
         HomeViewController * home = [[HomeViewController alloc] init];
         tabbar.delegate = self;
         home.openUrl = model.linkUrl;
@@ -65,16 +68,16 @@
             }
         }];
         
-//        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//            
-//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-//            if (error) {
-//            }
-//            if (image) {
-//                
-//                home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(30, 30) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//            }
-//        }];
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (error) {
+            }
+            if (image) {
+                
+                home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            }
+        }];
         
         
         
