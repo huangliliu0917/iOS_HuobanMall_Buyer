@@ -83,7 +83,7 @@
 //    [self setImage];
 //
 //    
-//    [self myAppGetConfig];
+//    [self myAppGetUserInfo];
 //    //微信支付
 //    
 //    
@@ -237,9 +237,11 @@
             
             NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
             if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+//                [self myAppGetUserInfo];
                 LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
                 self.window.rootViewController = new;
                 [self.window makeKeyAndVisible];
+                
                 [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
             }else {
                 NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
@@ -270,12 +272,14 @@
 
 - (void)myAppGetUserInfo {
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
-    parame[@"userid"] = [NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId]];
+    
+    NSString * localuserid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+    parame[@"userid"] = [NSString stringWithFormat:@"%@", localuserid.length?localuserid:@"0"];
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/Account/getAppUserInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-
+        NSLog(@"myAppGetUserInfo%@",json);
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"unionId"];

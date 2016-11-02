@@ -138,7 +138,7 @@
                 NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
                 [wself.groupArray removeAllObjects];
                 [wself toGroupsByTime:lefts];
-                [wself.tableView reloadData];
+                
                 NSMutableData *data = [[NSMutableData alloc] init];
                 //创建归档辅助类
                 NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -150,6 +150,7 @@
                 NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
                 //写入
                 [data writeToFile:filename atomically:YES];
+                [wself.tableView reloadData];
             }else{
                 [wself.groupArray removeAllObjects];
                 [wself toDivLefrMenue];
