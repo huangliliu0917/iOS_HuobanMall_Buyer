@@ -726,7 +726,7 @@
     } else {
         if (![temp isEqualToString:self.funUrl]) {
             //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString]) {
+            if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
                 PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
