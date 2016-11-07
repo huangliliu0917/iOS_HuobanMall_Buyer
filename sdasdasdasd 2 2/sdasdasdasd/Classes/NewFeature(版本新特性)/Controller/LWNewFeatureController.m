@@ -129,7 +129,7 @@
                     launchImage = dict[@"UILaunchImageName"];
                 }
             }
-            NSLog(@"%@",launchImage);
+            LWLog(@"%@",launchImage);
             imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
         }else{
            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"newfeature_0%d_414x736",index+1]];

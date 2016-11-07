@@ -67,7 +67,7 @@
     }
     
 
-//    [NavBar setBarTintColor:HuoBanMallBuyNavColor];
+    [NavBar setBarTintColor:HuoBanMallBuyNavColor];
 //    //设置标题样式
     NSMutableDictionary * textAttr = [NSMutableDictionary dictionary];
     textAttr[NSForegroundColorAttributeName] = TopNavTitleViewTitleColor;

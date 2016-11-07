@@ -129,7 +129,7 @@
     [url appendString:@"/weixin/UpdateLeftInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(NSDictionary* json) {
         
-//        NSLog(@"%@",json);
+        LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
 //            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
@@ -151,15 +151,16 @@
                 //写入
                 [data writeToFile:filename atomically:YES];
                 [wself.tableView reloadData];
-            }else{
-                [wself.groupArray removeAllObjects];
-                [wself toDivLefrMenue];
-                [wself.tableView reloadData];
-                
             }
+//            }else{
+//                [wself.groupArray removeAllObjects];
+//                [wself toDivLefrMenue];
+//                [wself.tableView reloadData];
+//                
+//            }
         }
     } failure:^(NSError *error) {
-//        NSLog(@"%@",error.description);
+//        LWLog(@"%@",error.description);
     }];
     
     [self setHeadViewLabelsAndImage];
@@ -367,7 +368,7 @@
 
 - (void)accountLogin:(UIButton *) btn{
     
-//    NSLog(@"点击登陆");
+//    LWLog(@"点击登陆");
    
 }
 
@@ -404,7 +405,7 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
 //    NSString *unsavedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update/icon"];
 //    NSString * imageUrl = [NSString stringWithFormat:@"%@/%@",unsavedPath,models.menu_icon];
-//    NSLog(@"%@",imageUrl);
+//    LWLog(@"%@",imageUrl);
 //    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:imageUrl];
     
 //    UIImage *savedImages = [savedImage imageCompressForWidth:savedImage targetWidth:44];

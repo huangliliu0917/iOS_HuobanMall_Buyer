@@ -40,20 +40,20 @@
     [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
     
      NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-//    NSLog(@"xxxxxxxxxx===%@",path);
+//    LWLog(@"xxxxxxxxxx===%@",path);
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSArray * fileName = [fileManager contentsOfDirectoryAtPath:path error:nil];
     
     for (int i = 0; i<fileName.count; i++) {
         NSString * cc = [fileName[i] copy];
-//        NSLog(@"xxxxxxxxxx===%@",cc);
+//        LWLog(@"xxxxxxxxxx===%@",cc);
         NSError * error = nil;
         
         
         [fileManager removeItemAtPath:[path stringByAppendingPathComponent:cc] error:&error];
         if (error) {
             
-            NSLog(@"%@",error.description);
+            LWLog(@"%@",error.description);
         }
     }
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:HuoBanMallUserId];

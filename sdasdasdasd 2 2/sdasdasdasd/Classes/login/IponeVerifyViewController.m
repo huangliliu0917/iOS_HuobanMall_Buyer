@@ -65,6 +65,7 @@
     self.messageLabel.hidden = YES;
     
     
+    [self.VerifyLable setTextColor:ButtonTitleColor];
     
     self.phoneVerify.userInteractionEnabled = YES;
     [self.phoneVerify bk_whenTapped:^{
@@ -406,7 +407,7 @@
                 //设置界面的按钮显示 根据自己需求设置
                 //                NSLog(@"____%@",strTime);
                 self.VerifyLable.backgroundColor = [UIColor lightGrayColor];
-                [self.VerifyLable setText:[NSString stringWithFormat:@"%@秒重新发送",strTime]];
+                [self.VerifyLable setText:[NSString stringWithFormat:@"%@秒",strTime]];
                 self.VerifyLable.userInteractionEnabled = NO;
                 
                 if (timeout <= 50) {

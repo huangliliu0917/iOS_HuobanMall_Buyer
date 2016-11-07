@@ -69,11 +69,11 @@
     
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    app.statusBarStyle = UIStatusBarStyleLightContent;
+    app.statusBarStyle = UIStatusBarStyleDefault;
     
     
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    
+    self.window.backgroundColor = [UIColor whiteColor];
     LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
     self.window.rootViewController = launchViewController;
     [self.window makeKeyAndVisible];
@@ -124,7 +124,7 @@
 }
 //
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"%@", userInfo);
+//    NSLog(@"%@", userInfo);
 
     [self getRemoteNotifocation:userInfo];
 }
@@ -191,7 +191,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-        NSLog(@"%@",json);
+//        NSLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
@@ -279,7 +279,7 @@
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/Account/getAppUserInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        NSLog(@"myAppGetUserInfo%@",json);
+//        NSLog(@"myAppGetUserInfo%@",json);
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"unionId"];
@@ -322,7 +322,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@", error);
+//        NSLog(@"%@", error);
     }];
 }
 

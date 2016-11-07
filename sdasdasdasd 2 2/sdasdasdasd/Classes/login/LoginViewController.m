@@ -77,7 +77,7 @@
 - (void)OquthByWeiXinSuccess2:(NSNotification *) note{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfo" object:nil];
     [SVProgressHUD showWithStatus:@"登录中"];
-    NSLog(@"-=------------%@",note);
+    LWLog(@"-=------------%@",note);
 //    AQuthModel * account = [AccountTool account];
 //    if (account.refresh_token.length) {
 //        [self toRefreshaccess_token];
@@ -102,7 +102,7 @@
         NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
         [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
     
     
@@ -210,13 +210,13 @@
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
-//        NSLog(@"accessTokenWithCode%@",json);
+//        LWLog(@"accessTokenWithCode%@",json);
         AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
 }
 
@@ -237,7 +237,7 @@
         //获取用户信息
         [wself getUserInfo:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
 }
 
@@ -268,7 +268,7 @@
 
         
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
     
 }
@@ -296,7 +296,7 @@
             
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
 }
 
@@ -355,7 +355,7 @@
         }
     } failure:^(NSError *error) {
 //        [MBProgressHUD hideHUD];
-         NSLog(@"%@ --- ",error.description);
+         LWLog(@"%@ --- ",error.description);
     }];
    
 }
@@ -385,7 +385,7 @@
             [data writeToFile:filename atomically:YES];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
     
 }

@@ -40,7 +40,7 @@
 #import "LeftGroupModel.h"
 #import "NoticeMessage.h"
 #import <SDWebImage/SDWebImageManager.h>
-
+#import "WKCookieSyncManager.h"
 #import "NSDictionary+ConfirmSign.h"
 
 
@@ -307,16 +307,23 @@
 //    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    WKWebView * wk  = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 )];
+    
+    WKWebViewConfiguration * internalConfig = [[WKWebViewConfiguration alloc] init];
+    WKCookieSyncManager * ma = [WKCookieSyncManager shareInstance];
+    internalConfig.processPool = ma.processPool;
+    WKWebView * wk  = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64-49 ) configuration:internalConfig];
+    
+    
     self.homeWebView = wk;
     self.homeWebView.navigationDelegate = self;
     self.homeWebView.UIDelegate = self;
     self.homeWebView.tag = 100;
 //    self.homeWebView
-    self.view = wk;
-//    [self.view addSubview:self.homeWebView];
-
+//    self.view = wk;
+    [self.view addSubview:self.homeWebView];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
 //    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
@@ -368,7 +375,7 @@
     
     _openNotifacation = app.openNotifacation;
     if (_openNotifacation) {
-        NSLog(@"%@", _openNotifacation);
+//        LWLog(@"%@", _openNotifacation);
         NoticeMessage *message = [NoticeMessage objectWithKeyValues:_openNotifacation];
         if (![message.alertUrl isKindOfClass:[NSNull class]]) {
             UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -420,7 +427,7 @@
     dict[@"datapacketversion"] = AppVersion;
     NSMutableDictionary * aa =  [NSDictionary asignWithMutableDictionary:dict];
     [UserLoginTool loginRequestGet:cc parame:aa success:^(id json) {
-//        NSLog(@"%@",json);
+//        LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200 && [json[@"data"][@"updateData"] integerValue] == 1 ) {
             //数据包版本号
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"version"] forKey:DatePackageVersion];
@@ -428,7 +435,7 @@
             [wself ToGetDownDateWithDateSource:json[@"data"][@"downloadUrl"] andverson:json[@"version"]];
         }
     } failure:^(NSError *error) {
-//         NSLog(@"%@",error.description);
+//         LWLog(@"%@",error.description);
     }];
     
 }
@@ -459,15 +466,15 @@
         NSArray * fileName = [manage contentsOfDirectoryAtPath:cc error:nil];
         [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
             
-//            NSLog(@"dasdasdasdasdasd====%@",fileName);
+//            LWLog(@"dasdasdasdasdasd====%@",fileName);
         }];
         
         
     } downloadFailure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     } progress:^(float progress) {
-         NSLog(@"xxxxxx%f",progress);
+         LWLog(@"xxxxxx%f",progress);
     }];
     
 }
@@ -528,6 +535,10 @@
             
             self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
         }
+    }
+    NSString * del = self.homeWebUrl;
+    if ([del rangeOfString:@"back=1"].location == NSNotFound) {
+        self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
     }
     NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -643,7 +654,7 @@
 //        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
 //        [self WeiChatPay:namesArray[0]];
 //    }else if (actionSheet.tag == 700){// 单个支付宝支付
-//        //NSLog(@"支付宝%ld",(long)buttonIndex);
+//        //LWLog(@"支付宝%ld",(long)buttonIndex);
 //        //        [self MallAliPay:self.paymodel];
 //    }else if(actionSheet.tag == 900){//两个都有的支付
 //        //0
@@ -718,7 +729,7 @@
         req.sign                = [dict objectForKey:@"sign"];
         [WXApi sendReq:req];
     }else{
-        NSLog(@"提示信息----微信预支付失败");
+        LWLog(@"提示信息----微信预支付失败");
     }
 }
 
@@ -752,7 +763,7 @@
         //获取prepayId（预支付交易会话标识）
         NSString * prePayid = nil;
         prePayid  = [payManager sendPrepay:params];
-//        NSLog(@"xcaccasc%@",[payManager getDebugifo]);
+//        LWLog(@"xcaccasc%@",[payManager getDebugifo]);
         if ( prePayid != nil) {
             //获取到prepayid后进行第二次签名
             NSString    *package, *time_stamp, *nonce_str;
@@ -817,7 +828,7 @@
     [url appendString:@"/Account/getAppUserInfo"];
     
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        NSLog(@"%@", json);
+        LWLog(@"%@", json);
         
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
@@ -892,7 +903,7 @@
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
     [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
-        //        NSLog(@"%@",json);
+        //        LWLog(@"%@",json);
         UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
         //向服务端提供微信数据
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -902,14 +913,14 @@
         [self bindWeixinWithUserInfo:userInfo AndUnionid:userLocal.unionid  AndRefreshToken:aquth.refresh_token];
         
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
     
 }
 - (void)OquthByWeiXinSuccess1:(NSNotification *) note{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToGetUserInfoBuild" object:nil];
-    NSLog(@"-=------------%@",note);
+    LWLog(@"-=------------%@",note);
     
     if (self.bingWeixin) {
         
@@ -932,13 +943,13 @@
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",HuoBanMallBuyWeiXinAppId,HuoBanMallShareSdkWeiXinSecret,code];
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
-        NSLog(@"accessTokenWithCode%@",json);
+        LWLog(@"accessTokenWithCode%@",json);
         AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
 }
 /**
@@ -956,7 +967,7 @@
         //获取用户信息
         [wself getUserInfo1:aquth];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+        LWLog(@"%@",error.description);
     }];
 }
 
@@ -982,7 +993,7 @@
     [url appendString:@"/Account/bindWeixin"];
     
     [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
-        //        NSLog(@"%@",json);
+        //        LWLog(@"%@",json);
         if ([json[@"code"] intValue] == 200) {
             
             UserInfo * userInfo = [[UserInfo alloc] init];
@@ -1037,7 +1048,7 @@
             [SVProgressHUD showErrorWithStatus:@"绑定失败"];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+        LWLog(@"%@",error);
     }];
     
 }
@@ -1251,7 +1262,7 @@
         }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
             
             NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
-            NSLog(@"array:%@",array);
+            LWLog(@"array:%@",array);
             [self changeWithUserInfo:array];
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
@@ -1286,7 +1297,7 @@
             NSString * to = [NSDictionary ToSignUrlWithString:url];
             [SVProgressHUD show];
             [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, NSDictionary *  json) {
-                NSLog(@"%@xxxxxxx---%@",json,trade_noss);
+                LWLog(@"%@xxxxxxx---%@",json,trade_noss);
                 [SVProgressHUD dismiss];
                 if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
                     
@@ -1350,6 +1361,12 @@
             
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if ([url rangeOfString:@"im.html"].location != NSNotFound || [url rangeOfString:@"/webChannel.html"].location != NSNotFound){
+//            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+//            funWeb.funUrl = temp;
+//            [self.navigationController pushViewController:funWeb animated:YES];
+//            self.tabBarController.tabBar.hidden = YES;
+//            self.navigationItem.title = nil;
+//            decisionHandler(WKNavigationResponsePolicyCancel);
             decisionHandler(WKNavigationResponsePolicyAllow);
         }else{
             

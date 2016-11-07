@@ -21,11 +21,13 @@
 
 + (void)loginRequestGet:(NSString *)urlStr parame:(NSMutableDictionary *)params success:(void (^)(id json))success failure:(void (^)(NSError *error))failure{
     
+    
     AFHTTPRequestOperationManager * manager  = [AFHTTPRequestOperationManager manager];
     [manager GET:urlStr parameters:params success:^void(AFHTTPRequestOperation * request, id json) {
        success(json);
-//        NSLog(@"%@",request);
+        NSLog(@"%@",request);
     } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
+        NSLog(@"%@",reponse);
         failure(error);
     }];
 }

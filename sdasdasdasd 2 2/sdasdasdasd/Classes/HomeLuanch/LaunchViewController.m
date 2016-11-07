@@ -21,6 +21,9 @@
 
 @interface LaunchViewController ()
 
+
+@property(nonatomic,strong) UIButton * btn;
+
 @end
 
 @implementation LaunchViewController
@@ -30,8 +33,42 @@
     // Do any additional setup after loading the view.
     [self setImage];
     
+    
+    [self AddButtonToRefresh];
+    
     [self myAppGetConfig];
     
+    
+    
+    
+}
+
+
+- (void)AddButtonToRefresh{
+    
+    UIButton * startButton = [[UIButton alloc] init];
+    _btn = startButton;
+    startButton.hidden = YES;
+    [startButton setTitle:@"重新进入" forState:UIControlStateNormal];
+    [startButton setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
+    //设置尺寸
+    CGFloat centerX = ScreenWidth * 0.5;
+    CGFloat centerY = ScreenHeight * 0.9;
+    startButton.center = CGPointMake(centerX,centerY);
+    //    startButton.layer.borderWidth = 1;
+    startButton.layer.cornerRadius = 5;
+    startButton.layer.masksToBounds =YES;
+    startButton.backgroundColor = HuoBanMallBuyNavColor;
+    startButton.layer.borderColor = [UIColor blackColor].CGColor;
+    [startButton becomeFirstResponder];
+    startButton.bounds = (CGRect){CGPointZero,{SecrenWith*2/4,44}};
+    [startButton addTarget:self action:@selector(startButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:startButton];
+}
+
+- (void)startButtonClick{
+    
+    [self myAppGetConfig];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +91,7 @@
             launchImage = dict[@"UILaunchImageName"];
         }
     }
-    NSLog(@"%@",launchImage);
+    LWLog(@"%@",launchImage);
     UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:launchImage]];
     launchView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     launchView.contentMode = UIViewContentModeScaleAspectFit;
@@ -74,7 +111,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-                NSLog(@"%@",json);
+                LWLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
@@ -109,7 +146,7 @@
     [url appendString:@"/mall/getConfig"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-        NSLog(@"%@",json);
+        LWLog(@"myAppGetConfig%@",json);
         if (json) {
             MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -133,6 +170,18 @@
     } failure:^(NSError *error) {
         
         [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
+        __weak LaunchViewController * wself = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [wself myAppGetConfig];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                wself.btn.hidden = NO;
+            });
+        });
+        
+        
+        
         
         
     }];
@@ -188,7 +237,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@", error);
+        LWLog(@"%@", error);
     }];
 }
 
@@ -256,7 +305,7 @@
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
 
         
-//        NSLog(@"%@",json);
+//        LWLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
@@ -286,7 +335,7 @@
         
         
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+        LWLog(@"%@",error);
     }];
 }
 

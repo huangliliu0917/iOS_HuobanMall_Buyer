@@ -35,19 +35,20 @@
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
-#define LWNewFeatureImageCount 3
+
 /*
  *艺福堂茶商城
  */
+#define LWNewFeatureImageCount 3
 #define MallName @"艺福堂茶商城"
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.efuton.com/"
+#define NoticeCenterMainUrl @"http://api.open.efuton.com"
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.efuton.com/"
+#define AppOriginUrl  @"http://mallapi.efuton.com"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //ShareSDk数据统计
@@ -69,11 +70,12 @@
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255 alpha:1.000])
 
+#define ButtonTitleColor ([UIColor blackColor])
 #define BudleId @"Efuton.hangzhou.cn"
-/*
- *竹君子商城
- */
-//#define MallName @"竹君子"
+///*
+// *竹君子商城
+// */
+//#define MallName @"竹君纸商城"
 //
 //#define LWNewFeatureImageCount 1   //引导图个数
 //
@@ -108,8 +110,8 @@
 //#define BottomTaBarButtonTitleColor ([UIColor redColor])
 ////设置底部tabar按钮选中时文字的颜色
 //#define TopNavTitleViewTitleColor ([UIColor whiteColor])
-
-
+//
+//#define BudleId @"com.zhujunzhi.zjz"
 
 
 #define IsIos9 ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 9.0)
@@ -181,4 +183,12 @@
 #import "MD5Encryption.h"
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
+
+#ifdef DEBUG
+#define LWLog(...) NSLog(__VA_ARGS__)
+#else
+#define LWLog(...)
+#endif
+
+
 #endif /* PrefixHeader_pch */

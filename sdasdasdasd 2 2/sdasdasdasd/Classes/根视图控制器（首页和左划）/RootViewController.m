@@ -86,6 +86,7 @@
         [tabbar addChildViewController:nav];
     }
     [tabbar.tabBar setTintColor:[UIColor blackColor]];
+    [tabbar.tabBar setBarTintColor:[UIColor whiteColor]];
     tabbar.selectedIndex = tabbar.HomePage;
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
