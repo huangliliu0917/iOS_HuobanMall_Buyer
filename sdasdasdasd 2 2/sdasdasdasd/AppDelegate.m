@@ -191,7 +191,7 @@
     [url appendString:@"/mall/Init"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
-//        NSLog(@"myAppToInit%@",json);
+        LWLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
              [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];

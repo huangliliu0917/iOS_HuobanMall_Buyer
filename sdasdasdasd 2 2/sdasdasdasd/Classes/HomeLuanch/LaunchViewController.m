@@ -99,40 +99,40 @@
 
 }
 
-
-/**
- *  app初始化接口
- */
-- (void)myAppToInit{
-    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/mall/Init"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        
-                LWLog(@"myAppToInit%@",json);
-        if ([json[@"code"] integerValue] == 200) {
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
-            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:payType forKey:PayTypeflat];
-            //结束编码
-            [archiver finishEncoding];
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-            //写入
-            [data writeToFile:filename atomically:YES];
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-    
-}
+//
+///**
+// *  app初始化接口
+// */
+//- (void)myAppToInit{
+//    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+//    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+//    parame = [NSDictionary asignWithMutableDictionary:parame];
+//    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+//    [url appendString:@"/mall/Init"];
+//    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+//        
+//                LWLog(@"myAppToInit%@",json);
+//        if ([json[@"code"] integerValue] == 200) {
+//            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
+//            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+//            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+//            NSMutableData *data = [[NSMutableData alloc] init];
+//            //创建归档辅助类
+//            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//            //编码
+//            [archiver encodeObject:payType forKey:PayTypeflat];
+//            //结束编码
+//            [archiver finishEncoding];
+//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//            //写入
+//            [data writeToFile:filename atomically:YES];
+//        }
+//    } failure:^(NSError *error) {
+//        
+//    }];
+//    
+//}
 
 
 /**
@@ -302,10 +302,11 @@
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
+    __weak LaunchViewController * wself = self;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
 
         
-//        LWLog(@"%@",json);
+        LWLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
@@ -317,7 +318,7 @@
         if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
             LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
             new.tabbarArray = temp;
-            
+            [wself myAppToInit];
             [UIApplication sharedApplication].keyWindow.rootViewController = new;
             
             [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
@@ -339,5 +340,38 @@
     }];
 }
 
+/**
+ *  app初始化接口
+ */
+- (void)myAppToInit{
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/mall/Init"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        LWLog(@"myAppToInit%@",json);
+        if ([json[@"code"] integerValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:payType forKey:PayTypeflat];
+            //结束编码
+            [archiver finishEncoding];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+            //写入
+            [data writeToFile:filename atomically:YES];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 
 @end
