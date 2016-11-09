@@ -526,7 +526,7 @@
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    //    LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
+        LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
 }
 
 /**
@@ -534,6 +534,8 @@
  */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     
+    
+    LWLog(@"%@",deviceToken);
     
     NSString * aa = [deviceToken hexadecimalString] ;
     
