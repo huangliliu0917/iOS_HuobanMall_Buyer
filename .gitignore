@@ -5,3 +5,4 @@ xcuserdata
 *.lock
 .DS_Store
 Images.xcassets
+InfoPlist.strings
