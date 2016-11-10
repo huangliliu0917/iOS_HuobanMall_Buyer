@@ -4,4 +4,4 @@ Pods
 xcuserdata
 *.lock
 .DS_Store
-
+Images.xcassets
