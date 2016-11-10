@@ -34,7 +34,7 @@
 #import "IponeVerifyViewController.h"
 #import "NSDictionary+ConfirmSign.h"
 #import "WKCookieSyncManager.h"
-
+#import "AlipayViewController.h"
 @interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
@@ -130,7 +130,7 @@
 //    [self.view addSubview:self.webView];
     self.view = _webView;
     
-    
+ 
     
     //加载刷新控件
     [self AddMjRefresh];
@@ -152,9 +152,13 @@
 {
     [super viewWillAppear:animated];
     
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.webView.frame = self.view.frame;
+    NSURL * urlStr = [NSURL URLWithString:_funUrl];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    self.webView.tag = 20;
+    [self.webView loadRequest:req];
     
-//    LWLog(@"%@",NSStringFromCGRect(self.view.frame));
+    
     RootViewController * root = (RootViewController *)self.mm_drawerController;
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
@@ -170,10 +174,10 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 //    self.webView.frame = self.view.frame;
-    NSURL * urlStr = [NSURL URLWithString:_funUrl];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    self.webView.tag = 20;
-    [self.webView loadRequest:req];
+//    NSURL * urlStr = [NSURL URLWithString:_funUrl];
+//    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+//    self.webView.tag = 20;
+//    [self.webView loadRequest:req];
     
 //    LWLog(@"%@",NSStringFromCGRect(self.view.frame));
 }
@@ -560,6 +564,7 @@
     
     
     NSString *temp = webView.URL.absoluteString;
+    LWLog(@"decidePolicyForNavigationResponse%@",temp);
     NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
          decisionHandler(WKNavigationResponsePolicyCancel);
@@ -633,6 +638,12 @@
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
 //        [self.navigationController popViewControllerAnimated:YES];
         decisionHandler(WKNavigationResponsePolicyAllow);
+    }else if([url rangeOfString:@"mredirectv2.aspx"].location != NSNotFound ){
+         decisionHandler(WKNavigationResponsePolicyCancel);
+        AlipayViewController * vc = [[AlipayViewController alloc] init];
+        vc.aliPayNewUrl = url;
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }else if ([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
         
             decisionHandler(WKNavigationResponsePolicyCancel);
@@ -662,11 +673,10 @@
         
         
         
-        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
         NSString * to = [NSDictionary ToSignUrlWithString:url];
         [SVProgressHUD show];
-        [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, NSDictionary *  json) {
-//            LWLog(@"%@xxxxxxx---%@",json,trade_noss);
+        [manager GET:to parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable json) {
             [SVProgressHUD dismiss];
             if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
                 
@@ -721,12 +731,10 @@
                 [alert addAction:action];
                 [self presentViewController:alert animated:YES completion:nil];
             }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            
-            
-        } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-//            LWLog(@"%@",error.description);
         }];
+
         
         decisionHandler(WKNavigationResponsePolicyCancel);
     } else {

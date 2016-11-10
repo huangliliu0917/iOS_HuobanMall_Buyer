@@ -27,7 +27,7 @@
 #import "LeftMenuModel.h"
 #import "IponeVerifyViewController.h"
 #import "LoginViewController.h"
-
+#import "TabBarModel.h"
 
 @interface LWNewFeatureController ()<UIScrollViewDelegate,WXApiDelegate>
 
@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self myAppGetConfig];
     self.view.userInteractionEnabled = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -64,6 +64,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -82,7 +85,7 @@
     UIPageControl *pageControll = [[UIPageControl alloc] init];
     pageControll.numberOfPages = LWNewFeatureImageCount;
     CGFloat padgeX = self.view.frame.size.width * 0.5;
-    CGFloat padgeY = self.view.frame.size.height - 35;
+    CGFloat padgeY = self.view.frame.size.height - 15;
     pageControll.center = CGPointMake(padgeX, padgeY);
     pageControll.userInteractionEnabled = NO;
     pageControll.bounds = CGRectMake(0, 0, 60, 40);
@@ -168,7 +171,7 @@
 
     //设置尺寸
     CGFloat centerX = imageView.frame.size.width*0.5;
-    CGFloat centerY = imageView.frame.size.height*0.85;
+    CGFloat centerY = imageView.frame.size.height*0.9;
     startButton.center = CGPointMake(centerX,centerY);
 //    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;
@@ -214,8 +217,95 @@
     CGFloat x =  scrollView.contentOffset.x;
     double padgeDouble = x / scrollView.frame.size.width;
     int padgeInt = (int)(padgeDouble + 0.5);
+    
+    
     self.padgeControl.currentPage = padgeInt;
  
+}
+
+/**
+ *  getconfig接口
+ */
+- (void)myAppGetConfig {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
+    [url appendString:@"/mall/getConfig"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        LWLog(@"myAppGetConfig%@",json);
+        if (json) {
+            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
+            [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
+            NSString *webchannel = json[@"webchannel"];
+            if (webchannel.length) {
+                [[NSUserDefaults standardUserDefaults] setObject:[webchannel stringByRemovingPercentEncoding] forKey:@"KeFuWebchannel"];
+            }
+            [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
+            [self getButtomTabbarData];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
+//        __weak LaunchViewController * wself = self;
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            
+//            [wself myAppGetConfig];
+//            
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                wself.btn.hidden = NO;
+//            });
+//        });
+    }];
+}
+#pragma mark 获取底部导航数据
+
+- (void)getButtomTabbarData {
+    NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    __weak LWNewFeatureController * wself = self;
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        
+        LWLog(@"%@",json);
+        NSArray *array = json[@"widgets"];
+        NSDictionary *dic = array[0];
+        NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
+        [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
+        wself.tabbarArray = temp;
+//        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+//        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+//            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+//            new.tabbarArray = temp;
+//            [wself myAppToInit];
+//            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+//        }
+//        else {
+//            NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+//            //    AQuthModel * AQuth = [AccountTool account];
+//            if ([login isEqualToString:Success]) {
+//                [self myAppGetUserInfo];
+//            }
+//            RootViewController * root = [[RootViewController alloc] init];
+//            root.tabbarArray = temp;
+//            [UIApplication sharedApplication].keyWindow.rootViewController = root;
+//            
+//        }
+        
+        
+    } failure:^(NSError *error) {
+        LWLog(@"%@",error);
+    }];
 }
 
 @end

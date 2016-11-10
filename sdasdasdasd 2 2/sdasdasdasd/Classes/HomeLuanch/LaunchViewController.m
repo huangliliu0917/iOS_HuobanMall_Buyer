@@ -13,7 +13,7 @@
 #import "WXApi.h"
 #import "LWNewFeatureController.h"
 #import "RootViewController.h"
-#import <SVProgressHUD.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "LeftMenuModel.h"
 #import "UserInfo.h"
 #import "UIViewController+MonitorNetWork.h"
@@ -36,9 +36,39 @@
     
     [self AddButtonToRefresh];
     
-    [self myAppGetConfig];
+//    [self myAppGetConfig];
     
     
+    AFNetworkReachabilityManager * Reachability = [AFNetworkReachabilityManager sharedManager];
+    
+    [Reachability startMonitoring];
+    
+    NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
+    if (Reachability.networkReachabilityStatus > 0) {
+        [self myAppGetConfig];
+    
+    }
+    
+    [Reachability setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        if (!(status == 0) || (status == -1)) {
+            //                [self myAppGetConfig];
+//            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+//            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+            //            new.tabbarArray = temp;
+             [self myAppToInit];
+             [self myAppGetConfig];
+//            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+            
+            
+        }else{
+            
+            NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
+        }
+    }];
+    
+    
+
     
     
 }
@@ -153,16 +183,11 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
-            
             NSString *webchannel = json[@"webchannel"];
             if (webchannel.length) {
                 [[NSUserDefaults standardUserDefaults] setObject:[webchannel stringByRemovingPercentEncoding] forKey:@"KeFuWebchannel"];
             }
-            
-            
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
-            
-            
             [self getButtomTabbarData];
         }
         
@@ -179,12 +204,7 @@
                 wself.btn.hidden = NO;
             });
         });
-        
-        
-        
-        
-        
-    }];
+      }];
 }
 
 - (void)myAppGetUserInfo {

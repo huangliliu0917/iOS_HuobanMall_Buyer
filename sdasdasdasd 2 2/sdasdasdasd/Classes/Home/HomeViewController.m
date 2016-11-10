@@ -326,18 +326,50 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
-//    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-//    NSURLRequest * Bottomreq = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:cc]];
-//    self.homeBottonWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, _homeWebView.frame.size.height, ScreenWidth, 50)];
-//    self.homeBottonWebView.tag = 20;
-//    self.homeBottonWebView.UIDelegate = self;
-//    self.homeBottonWebView.navigationDelegate = self;
-//    self.homeBottonWebView.customUserAgent = app.userAgent;
-//    [self.homeBottonWebView loadRequest:Bottomreq];
-//    [self.view addSubview:self.homeBottonWebView];
-
+//    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.homeWebView.customUserAgent = app.userAgent;
+    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSString * webChennel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+    if ([self.openUrl isEqualToString:webChennel]) {
+        NSString *temp = [webChennel stringByReplacingOccurrencesOfString:@"{goodid}"withString:@"0"];
+        temp = [temp stringByReplacingOccurrencesOfString:@"{orderid}"withString:@"0"];
+        
+        NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+        if ([login isEqualToString:Success]) {
+            NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
+            if ([NSString stringWithFormat:@"%@", userId].length != 0) {
+                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
+            }else {
+                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
+            }
+        }else {
+            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
+        }
+        
+        
+        
+    }else {
+        if ([self.openUrl rangeOfString:@"http://"].location != NSNotFound) {
+            self.homeWebUrl = self.openUrl;
+        }else {
+            
+            self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
+        }
+    }
+    NSString * del = self.homeWebUrl;
+    if ([del rangeOfString:@"back=1"].location == NSNotFound) {
+        self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
+    }
+    
+    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == NSNotFound) {
+        NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        [self.homeWebView loadRequest:req];
+    }
     
 
+    
+//UserCenter/Index.aspx
     self.navigationController.navigationBar.alpha = 0;
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
@@ -455,27 +487,27 @@
 
 
 - (void)ToGetDownDateWithDateSource:(NSString *) url andverson:(NSString *)ver{
-    [UserLoginTool loginRequestDateGet:url parame:nil downloadSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSString *savedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update.zip"];
-        NSString *unsavedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update"];
-        NSString * cc = [NSString stringWithFormat:@"%@/icon",unsavedPath];
-        
-        [SSZipArchive unzipFileAtPath:savedPath toDestination: unsavedPath];
-        NSFileManager * manage = [NSFileManager defaultManager];
-        NSArray * fileName = [manage contentsOfDirectoryAtPath:cc error:nil];
-        [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
-            
-//            LWLog(@"dasdasdasdasdasd====%@",fileName);
-        }];
-        
-        
-    } downloadFailure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        LWLog(@"%@",error.description);
-    } progress:^(float progress) {
-         LWLog(@"xxxxxx%f",progress);
-    }];
+//    [UserLoginTool loginRequestDateGet:url parame:nil downloadSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSString *savedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update.zip"];
+//        NSString *unsavedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update"];
+//        NSString * cc = [NSString stringWithFormat:@"%@/icon",unsavedPath];
+//        
+//        [SSZipArchive unzipFileAtPath:savedPath toDestination: unsavedPath];
+//        NSFileManager * manage = [NSFileManager defaultManager];
+//        NSArray * fileName = [manage contentsOfDirectoryAtPath:cc error:nil];
+//        [fileName enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
+//            
+////            LWLog(@"dasdasdasdasdasd====%@",fileName);
+//        }];
+//        
+//        
+//    } downloadFailure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//        LWLog(@"%@",error.description);
+//    } progress:^(float progress) {
+//         LWLog(@"xxxxxx%f",progress);
+//    }];
     
 }
 
@@ -506,43 +538,11 @@
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     
-    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.homeWebView.customUserAgent = app.userAgent;
-    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * webChennel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
-    if ([self.openUrl isEqualToString:webChennel]) {
-        NSString *temp = [webChennel stringByReplacingOccurrencesOfString:@"{goodid}"withString:@"0"];
-        temp = [temp stringByReplacingOccurrencesOfString:@"{orderid}"withString:@"0"];
-        
-        NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-        if ([login isEqualToString:Success]) {
-            NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-            if ([NSString stringWithFormat:@"%@", userId].length != 0) {
-                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:[NSString stringWithFormat:@"%@", userId]];
-            }else {
-                self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
-            }
-        }else {
-            self.homeWebUrl = [temp stringByReplacingOccurrencesOfString:@"{userid}" withString:@"0"];
-        }
-        
-        
-        
-    }else {
-        if ([self.openUrl rangeOfString:@"http://"].location != NSNotFound) {
-            self.homeWebUrl = self.openUrl;
-        }else {
-            
-            self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
-        }
+    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound) {
+        NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        [self.homeWebView loadRequest:req];
     }
-    NSString * del = self.homeWebUrl;
-    if ([del rangeOfString:@"back=1"].location == NSNotFound) {
-        self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
-    }
-    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-    [self.homeWebView loadRequest:req];
     
 }
 
@@ -1064,6 +1064,8 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *temp = request.URL.absoluteString;
+    
+    LWLog(@"%@",temp);
     NSString *url = [temp lowercaseString];
 
     
@@ -1119,6 +1121,7 @@
     
    
     NSString *temp = webView.URL.absoluteString;
+    LWLog(@"%@",temp);
     NSString *url = [temp lowercaseString];
     
     if ([url isEqualToString:@"about:blank"]) {
@@ -1293,11 +1296,10 @@
             
             
             
-            AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
             NSString * to = [NSDictionary ToSignUrlWithString:url];
             [SVProgressHUD show];
-            [manager GET:to parameters:nil success:^void(AFHTTPRequestOperation * requset, NSDictionary *  json) {
-                LWLog(@"%@xxxxxxx---%@",json,trade_noss);
+            [manager GET:to parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable json) {
                 [SVProgressHUD dismiss];
                 if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
                     
@@ -1352,11 +1354,8 @@
                     [alert addAction:action];
                     [self presentViewController:alert animated:YES completion:nil];
                 }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
-                
-                
-            } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-//                LWLog(@"%@",error.description);
             }];
             
             decisionHandler(WKNavigationResponsePolicyCancel);

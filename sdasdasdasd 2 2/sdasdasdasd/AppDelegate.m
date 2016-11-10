@@ -72,6 +72,7 @@
     app.statusBarStyle = UIStatusBarStyleDefault;
     
     
+    
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.window.backgroundColor = [UIColor whiteColor];
     LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
@@ -224,17 +225,13 @@
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/mall/getConfig"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        
         if (json) {
             MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
-            
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
-            
-            
             NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
             if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
 //                [self myAppGetUserInfo];

@@ -17,7 +17,7 @@ pod 'SDWebImage'
 pod 'SSZipArchive'
 pod 'MKNetworkKit'
 pod 'MJRefresh'
-
+pod 'AFNetworking'
   target 'sdasdasdasdTests' do
     inherit! :search_paths
     # Pods for testing
