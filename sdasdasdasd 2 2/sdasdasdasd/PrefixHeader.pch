@@ -150,9 +150,9 @@
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define TopNavTitleViewTitleColor ([UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255 alpha:1.000])
+#define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
-#define ButtonTitleColor ([UIColor blackColor])
+#define ButtonTitleColor ([UIColor whiteColor])
 #define BudleId @"com.huobanmall.fycy"
 
 

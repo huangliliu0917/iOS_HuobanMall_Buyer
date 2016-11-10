@@ -69,7 +69,7 @@
     
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    app.statusBarStyle = UIStatusBarStyleDefault;
+    app.statusBarStyle = UIStatusBarStyleLightContent;
     
     
     
@@ -80,6 +80,8 @@
     [self.window makeKeyAndVisible];
     [self setupInit];
     [self myAppToInit];
+    
+    
 //
 //    [self setImage];
 //

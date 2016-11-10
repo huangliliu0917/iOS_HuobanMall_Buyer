@@ -361,7 +361,8 @@
         self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
     }
     
-    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == NSNotFound) {
+    
+    if (([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == NSNotFound) &&([[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location == NSNotFound)) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
         NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
         [self.homeWebView loadRequest:req];
@@ -538,7 +539,7 @@
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     
-    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound) {
+    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound || [[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
         NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
         [self.homeWebView loadRequest:req];

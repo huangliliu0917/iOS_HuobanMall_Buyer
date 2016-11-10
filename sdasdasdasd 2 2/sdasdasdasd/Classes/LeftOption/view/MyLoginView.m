@@ -27,7 +27,20 @@
     self.secondLable3.adjustsFontSizeToFitWidth = YES;
 //    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
     
+    [self.secondLable1 setTextColor:HuoBanMallBuyNavColor];
+    [self.secondLable2 setTextColor:HuoBanMallBuyNavColor];
+    [self.secondLable3 setTextColor:HuoBanMallBuyNavColor];
     
+//    NSString * color = [NSString stringWithFormat:@"%@",HuoBanMallBuyNavColor];
+    
+    
+    if(CGColorEqualToColor(HuoBanMallBuyNavColor.CGColor,[UIColor whiteColor].CGColor)){
+        self.secondLable1.backgroundColor = [UIColor blackColor];
+        self.secondLable2.backgroundColor = [UIColor blackColor];
+        self.secondLable3.backgroundColor = [UIColor blackColor];
+        
+        self.firstLable.textColor = [UIColor blackColor];
+    }
     
 }
 

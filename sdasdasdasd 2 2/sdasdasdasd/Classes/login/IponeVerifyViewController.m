@@ -164,7 +164,7 @@
     
     
     
-    
+    [self.login setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
     
 }
 
