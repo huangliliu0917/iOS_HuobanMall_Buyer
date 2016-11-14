@@ -118,7 +118,7 @@
 
 
 /*
- *艺福堂茶商城
+ *风雅长赢商城
  */
 #define LWNewFeatureImageCount 4
 #define MallName @"风雅长赢商城"
@@ -140,7 +140,7 @@
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
 #define HuoBanMallBuyWeiXinAppId @"wxf97261f007244a3b"
-#define HuoBanMallShareSdkWeiXinSecret @"5d0f1986e2e737a5b7e8e59cdf8d6ab5"
+#define HuoBanMallShareSdkWeiXinSecret @"a9a5f60ae279f69c8771340995bc75c0"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105503405"
 #define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
