@@ -187,7 +187,7 @@
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
     [startButton setTitle:@"开始体验" forState:UIControlStateNormal];
     
-    [startButton setTitleColor:[UIColor colorWithRed:59/255.0 green:59/255.0 blue:59/255.0 alpha:1] forState:UIControlStateNormal];
+    [startButton setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     
 }
