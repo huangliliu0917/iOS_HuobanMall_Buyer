@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.huobanmall.fycy</string>
+				<string>com.xem.meibameixueapp</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxf97261f007244a3b</string>
+				<string>wxb51b3a57b0ba7ff7</string>
 			</array>
 		</dict>
 	</array>
