@@ -181,13 +181,13 @@
 #define HuoBanMallBuyWeiXinAppId @"wxb51b3a57b0ba7ff7"
 #define HuoBanMallShareSdkWeiXinSecret @"4a680e9a07edeecbced7a622537be3a4"
 //qq
-#define HuoBanMallShareSdkQQKey @"1105503405"
-#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
+#define HuoBanMallShareSdkQQKey @"1105829128"
+#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
 #define HuoBanMallBuyApp_Merchant_Id @"7938" //0504
 
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:81/255.0 green:174/255.0 blue:244/255 alpha:1.000])
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:81/255.0 green:174/255.0 blue:244/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255 alpha:1.000])
+#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
