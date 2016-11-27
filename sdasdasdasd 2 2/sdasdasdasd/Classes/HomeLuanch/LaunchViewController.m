@@ -45,6 +45,7 @@
     
     NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
     if (Reachability.networkReachabilityStatus > 0) {
+        [self myAppToInit];
         [self myAppGetConfig];
     
     }
