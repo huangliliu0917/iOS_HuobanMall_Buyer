@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.xem.meibameixueapp</string>
+				<string>com.huobanmall.yjg</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,12 +42,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxb51b3a57b0ba7ff7</string>
+				<string>wxdf0858e90ff75ed6</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiV2</string>

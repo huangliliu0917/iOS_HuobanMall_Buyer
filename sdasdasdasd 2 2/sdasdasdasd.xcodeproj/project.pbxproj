@@ -1065,7 +1065,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = YYBZ4386CR;
+						DevelopmentTeam = 776EL8FWS6;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1487,7 +1487,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YYBZ4386CR;
+				DEVELOPMENT_TEAM = 776EL8FWS6;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1507,7 +1507,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xem.meibameixueapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmall.yjg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1522,7 +1522,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = YYBZ4386CR;
+				DEVELOPMENT_TEAM = 776EL8FWS6;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1542,7 +1542,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xem.meibameixueapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmall.yjg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

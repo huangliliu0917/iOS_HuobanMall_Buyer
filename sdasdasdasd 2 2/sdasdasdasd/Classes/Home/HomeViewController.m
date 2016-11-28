@@ -356,10 +356,10 @@
             self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
         }
     }
-    NSString * del = self.homeWebUrl;
-    if ([del rangeOfString:@"back=1"].location == NSNotFound) {
-        self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
-    }
+    //NSString * del = self.homeWebUrl;
+    //if ([del rangeOfString:@"back=1"].location == NSNotFound) {
+     //   self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
+    //}
     
     
     if (([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == NSNotFound) &&([[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location == NSNotFound)) {

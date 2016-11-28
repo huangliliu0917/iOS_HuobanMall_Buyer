@@ -157,10 +157,10 @@
 
 
 /*
- *风雅长赢商城
+ *美芭商城
  */
-#define LWNewFeatureImageCount 4
-#define MallName @"美芭商城"
+#define LWNewFeatureImageCount 3
+#define MallName @"易居购"
 /**消息中心  网络接口*/
 #define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
 /**网络  APP 标识*/
@@ -178,14 +178,14 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxb51b3a57b0ba7ff7"
-#define HuoBanMallShareSdkWeiXinSecret @"4a680e9a07edeecbced7a622537be3a4"
+#define HuoBanMallBuyWeiXinAppId @"wxdf0858e90ff75ed6"
+#define HuoBanMallShareSdkWeiXinSecret @"22578ef2f4329ddb014ff27a480b1430"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
-#define HuoBanMallBuyApp_Merchant_Id @"7938" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"7924" //0504
 
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:81/255.0 green:174/255.0 blue:244/255.0 alpha:1.000])
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:255/255.0 green:0/255.0 blue:20/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
