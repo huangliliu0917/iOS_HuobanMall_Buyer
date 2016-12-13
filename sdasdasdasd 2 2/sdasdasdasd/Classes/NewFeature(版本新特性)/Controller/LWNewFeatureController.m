@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self myAppGetConfig];
+    //[self myAppGetConfig];
     self.view.userInteractionEnabled = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -50,14 +50,14 @@
     [self setupScrollView];
     //2、添加  pageControll
     
-    if(LWNewFeatureImageCount>1){
-        [self setupPageControll];//ToGetUserInfoError
+   
+    [self setupPageControll];
  
-    }
+    
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    [UIViewController MonitorNetWork];
+//    [UIViewController MonitorNetWork];
     
 }
 

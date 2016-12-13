@@ -34,10 +34,13 @@
     [self setImage];
     
     
-    [self AddButtonToRefresh];
+    //[self AddButtonToRefresh];
     
 //    [self myAppGetConfig];
     
+    
+    
+
     
     AFNetworkReachabilityManager * Reachability = [AFNetworkReachabilityManager sharedManager];
     
@@ -45,25 +48,24 @@
     
     NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
     if (Reachability.networkReachabilityStatus > 0) {
-        [self myAppGetConfig];
+        
+        
+        [self myAppToInit];
     
     }
     
     [Reachability setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
         if (!(status == 0) || (status == -1)) {
-            //                [self myAppGetConfig];
-//            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
-//            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
-            //            new.tabbarArray = temp;
+
              [self myAppToInit];
-             [self myAppGetConfig];
-//            [UIApplication sharedApplication].keyWindow.rootViewController = new;
-            
-            
+
         }else{
-            
-            NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
+           
+            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"网络异常" message:@"当前设备网络异常，请检查当前设备网络" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+            [vc addAction:ac];
+            [self presentViewController:vc animated:YES completion:nil];
         }
     }];
     
@@ -195,15 +197,15 @@
     } failure:^(NSError *error) {
         
         [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
-        __weak LaunchViewController * wself = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            [wself myAppGetConfig];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                wself.btn.hidden = NO;
-            });
-        });
+//        __weak LaunchViewController * wself = self;
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            
+//            [wself myAppGetConfig];
+//            
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                wself.btn.hidden = NO;
+//            });
+//        });
       }];
 }
 
@@ -338,7 +340,7 @@
         if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
             LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
             new.tabbarArray = temp;
-            [wself myAppToInit];
+            //[wself myAppToInit];
             [UIApplication sharedApplication].keyWindow.rootViewController = new;
             
             [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
@@ -387,9 +389,11 @@
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
             //写入
             [data writeToFile:filename atomically:YES];
+            
+            [self myAppGetConfig];
         }
     } failure:^(NSError *error) {
-        
+        LWLog(@"%@",error.description);
     }];
     
 }

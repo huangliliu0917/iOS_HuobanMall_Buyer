@@ -79,7 +79,7 @@
     self.window.rootViewController = launchViewController;
     [self.window makeKeyAndVisible];
     [self setupInit];
-    [self myAppToInit];
+//    [self myAppToInit];
     
     
 //

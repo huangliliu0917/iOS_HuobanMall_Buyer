@@ -102,16 +102,6 @@
     [self LoginTest];
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-}
-
-
-/**
- *  更新左侧菜单
- *
- *  @param animated
- */
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
     
     __weak HTLeftTableViewController * wself = self;
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
@@ -131,8 +121,8 @@
         
         LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
-           [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
-//            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            //            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
             if ([json[@"data"][@"menusCode"] integerValue] == 1) {
                 
                 NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
@@ -152,16 +142,24 @@
                 [data writeToFile:filename atomically:YES];
                 [wself.tableView reloadData];
             }
-//            }else{
-//                [wself.groupArray removeAllObjects];
-//                [wself toDivLefrMenue];
-//                [wself.tableView reloadData];
-//                
-//            }
+
         }
     } failure:^(NSError *error) {
-//        LWLog(@"%@",error.description);
+        //        LWLog(@"%@",error.description);
     }];
+
+    
+}
+
+
+/**
+ *  更新左侧菜单
+ *
+ *  @param animated
+ */
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
     
     [self setHeadViewLabelsAndImage];
 }
