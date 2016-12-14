@@ -198,8 +198,8 @@
 /*
  *美芭商城
  */
-#define LWNewFeatureImageCount 3
-#define MallName @"易居购"
+#define LWNewFeatureImageCount 0
+#define MallName @"密托福"
 /**消息中心  网络接口*/
 #define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
 /**网络  APP 标识*/

@@ -338,7 +338,7 @@
         
         
         NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+        if (LWNewFeatureImageCount && (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO)) {
             LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
             new.tabbarArray = temp;
             //[wself myAppToInit];
