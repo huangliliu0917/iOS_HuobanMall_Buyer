@@ -142,17 +142,23 @@
                 [data writeToFile:filename atomically:YES];
                 [wself.tableView reloadData];
             }
-            //            }else{
-            //                [wself.groupArray removeAllObjects];
-            //                [wself toDivLefrMenue];
-            //                [wself.tableView reloadData];
-            //
-            //            }
+
         }
     } failure:^(NSError *error) {
         //        LWLog(@"%@",error.description);
     }];
 
+}
+
+
+/**
+ *  更新左侧菜单
+ *
+ *  @param animated
+ */
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
 }
 
 

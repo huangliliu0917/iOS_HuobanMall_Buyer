@@ -48,7 +48,7 @@
         tabbar.delegate = self;
         home.openUrl = model.linkUrl;
         
-        if ([model.name isEqualToString:@"客服"]) {
+        if ([model.linkUrl isEqualToString:@"{QQ}"]) {
             home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
         }
         
