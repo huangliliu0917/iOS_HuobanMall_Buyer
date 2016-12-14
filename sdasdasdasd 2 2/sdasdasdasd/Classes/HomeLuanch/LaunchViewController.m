@@ -51,7 +51,7 @@
         
         
         [self myAppToInit];
-        [self myAppGetConfig];
+        //[self myAppGetConfig];
     
     }
     
@@ -325,7 +325,7 @@
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
-    __weak LaunchViewController * wself = self;
+    //__weak LaunchViewController * wself = self;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
 
         
@@ -338,7 +338,7 @@
         
         
         NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-        if (LWNewFeatureImageCount && (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO)) {
+        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
             LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
             new.tabbarArray = temp;
             //[wself myAppToInit];
