@@ -151,15 +151,6 @@
 }
 
 
-/**
- *  更新左侧菜单
- *
- *  @param animated
- */
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
 
 
 /**
