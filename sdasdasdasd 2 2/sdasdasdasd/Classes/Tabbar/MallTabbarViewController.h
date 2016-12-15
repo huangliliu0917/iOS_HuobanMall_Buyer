@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "TabBarModel.h"
 
+
+
+
+
 @interface MallTabbarViewController : UITabBarController
 
 @property (nonatomic, strong) NSArray *tabbarArray;

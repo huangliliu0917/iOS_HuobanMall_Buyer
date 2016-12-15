@@ -325,6 +325,10 @@
     [self.view addSubview:self.homeWebView];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    LWLog(@"%@",self.openUrl);
+    
+    
+    
     
 //    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.homeWebView.customUserAgent = app.userAgent;
@@ -362,11 +366,11 @@
     //}
     
     
-    if (([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == NSNotFound) &&([[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location == NSNotFound)) {
-        NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-        [self.homeWebView loadRequest:req];
-    }
+    //if (([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == //NSNotFound) &&([[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location == NSNotFound)) {
+       // NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+       // NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+       // [self.homeWebView loadRequest:req];
+    //}
     
 
     
@@ -440,6 +444,35 @@
     [self.navigationController.navigationBar addSubview:_progressView];
     [self.navigationController setNavigationBarHidden:NO  animated:YES];
     self.tabBarController.tabBar.hidden = NO;
+    
+   
+    
+    NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    [self.homeWebView loadRequest:req];
+    if ([self.openUrl isEqualToString:@"{QQ}"]) {
+        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
+        {
+            self.tabBarController.selectedIndex = 0;
+            //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
+            NSString *QQ = @"1543278513";
+            //调用QQ客户端,发起QQ临时会话
+            NSString *url = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",QQ];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        }else{
+            
+            
+            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"错误提醒" message:@"当前设备没有安装QQ,请按照后使用" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.tabBarController.selectedIndex = 0;
+            }];
+            [vc addAction:ac];
+            [self presentViewController:vc animated:YES completion:nil];
+        }
+        
+        
+    }
     
     [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
         self.navigationItem.title = title;
@@ -539,11 +572,11 @@
     [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     
-    if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound || [[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location != NSNotFound) {
-        NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-        [self.homeWebView loadRequest:req];
-    }
+    //if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound || [[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location != NSNotFound) {
+        //NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+        //NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        //[self.homeWebView loadRequest:req];
+    //}
     
 }
 

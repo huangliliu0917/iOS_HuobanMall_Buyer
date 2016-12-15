@@ -21,9 +21,15 @@
 
 @property (nonatomic, strong) NSMutableArray *controllerArray;
 
+@property (nonatomic, assign) int index;
+
 @end
 
 @implementation RootViewController
+
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,6 +38,7 @@
     
     //设置左侧控制器
     MallTabbarViewController *tabbar = [[MallTabbarViewController alloc] init];
+    tabbar.delegate = self;
     tabbar.tabbarArray = self.tabbarArray;
     
     self.controllerArray = [NSMutableArray array];
@@ -43,13 +50,15 @@
         
         
         model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
-//        NSLog(@"%@",model.linkUrl);
         HomeViewController * home = [[HomeViewController alloc] init];
         tabbar.delegate = self;
         home.openUrl = model.linkUrl;
-        
         if ([model.linkUrl isEqualToString:@"{QQ}"]) {
-            home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+            self.index = i;
+            NSString * kefu = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+            if(kefu.length > 0){
+               home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"]; 
+            }
         }
         
         if ([model.linkUrl rangeOfString:@"/index.aspx?back"].location != NSNotFound) {

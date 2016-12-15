@@ -55,6 +55,7 @@
 }
 
 
+
 - (void)LeftbackToHome:(NSNotification *) note{
     
     
@@ -68,6 +69,7 @@
         
         TabBarModel *model = self.tabbarArray[self.selectedIndex];
 
+        LWLog(@"%@",model.linkUrl);
         NSString *compareUrl = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], model.linkUrl];
         
         if ([backUrl.lowercaseString rangeOfString:compareUrl.lowercaseString].location != NSNotFound) {

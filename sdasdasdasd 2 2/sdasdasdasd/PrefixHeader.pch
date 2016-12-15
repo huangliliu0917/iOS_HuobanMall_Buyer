@@ -198,8 +198,8 @@
 /*
  *美芭商城
  */
-#define LWNewFeatureImageCount 3
-#define MallName @"易居购"
+#define LWNewFeatureImageCount 0
+#define MallName @"仁人荟商城"
 /**消息中心  网络接口*/
 #define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
 /**网络  APP 标识*/
@@ -207,31 +207,31 @@
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.51flashmall.com"
+#define AppOriginUrl  @"http://mallapi.huobanmall.com"
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"1919f620207d0"
+#define HuoBanMallShareSdkAppId @"19ef3cedc4f5d"
 //sina
 #define HuoBanMallShareSdkSinaKey @"1000919385"
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxdf0858e90ff75ed6"
-#define HuoBanMallShareSdkWeiXinSecret @"22578ef2f4329ddb014ff27a480b1430"
+#define HuoBanMallBuyWeiXinAppId @"wxf2b5f91109f6d9aa"
+#define HuoBanMallShareSdkWeiXinSecret @"e0f14636e82d844b747747cdc3cb8e20"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"7994" //0504
 
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:255/255.0 green:0/255.0 blue:20/255.0 alpha:1.000])
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:44/255.0 green:115/255.0 blue:143/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
 #define ButtonTitleColor ([UIColor whiteColor])
-#define BudleId @"com.xem.meibameixueapp"
+#define BudleId @"com.huobanmall.rrh"
 
 
 
