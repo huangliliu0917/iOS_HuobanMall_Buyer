@@ -51,8 +51,7 @@
         
         
         [self myAppToInit];
-        [self myAppGetConfig];
-    
+           
     }
     
     [Reachability setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
