@@ -554,25 +554,23 @@
 }
 
 - (void)getRemoteNotifocation:(NSDictionary *) userInfo {
-    NSLog(@"%@", userInfo);
-    if (userInfo) {
-        NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
-        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
+    if (!userInfo) {
+        return;
+    }
+    NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
+    LWLog(@"xxxxxx%@---%@",message.alertUrl,message.url);
+    UIAlertController *aa = [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"][@"title"] message:userInfo[@"aps"][@"alert"][@"body"] preferredStyle:UIAlertControllerStyleAlert];
+    [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if(message.alertUrl.length){
             NSDictionary *dic = [NSDictionary dictionaryWithObject:message.alertUrl forKey:@"url"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
-        }else if (![message.url isKindOfClass:[NSNull class]]) {
-            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
-            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }]];
-            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
-            }]];
-            
-            [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
+        }else if (message.url.length){
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
         }
-    }
+        
+    }]];
+    [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
     
 }
 
