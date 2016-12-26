@@ -16,6 +16,8 @@
 #import "TabBarModel.h"
 #import <SDWebImage/SDWebImageManager.h>
 #import <SVProgressHUD.h>
+#import "IponeVerifyViewController.h"
+
 @interface RootViewController ()<UITabBarControllerDelegate>
 
 
@@ -25,6 +27,28 @@
 
 @implementation RootViewController
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
+    
+  
+    LWLog(@"xxxx");
+//    NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
+//    //    AQuthModel * AQuth = [AccountTool account];
+//    if (![login isEqualToString:Success]) {
+//        
+//       
+//        IponeVerifyViewController *login = [ [UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+//        UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+//        login.isPhoneLogin = YES;
+//        login.title = @"登录";
+//        login.goUrl = nil;
+//        [self presentViewController:root animated:YES completion:^{
+//            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
+//        }];
+//        return NO;
+//    }
+    
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -43,7 +67,7 @@
         
         
         model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
-//        NSLog(@"%@",model.linkUrl);
+        LWLog(@"%@",model.linkUrl);
         HomeViewController * home = [[HomeViewController alloc] init];
         tabbar.delegate = self;
         home.openUrl = model.linkUrl;
@@ -55,7 +79,6 @@
         if ([model.linkUrl rangeOfString:@"/index.aspx?back"].location != NSNotFound) {
             tabbar.HomePage = i;
         }
-        
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
@@ -88,6 +111,8 @@
     [tabbar.tabBar setTintColor:[UIColor blackColor]];
     [tabbar.tabBar setBarTintColor:[UIColor whiteColor]];
     tabbar.selectedIndex = tabbar.HomePage;
+    
+    tabbar.delegate = self;
     
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;

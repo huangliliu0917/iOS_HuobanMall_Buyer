@@ -51,7 +51,7 @@
         
         
         [self myAppToInit];
-        [self myAppGetConfig];
+//        [self myAppGetConfig];
     
     }
     
@@ -337,15 +337,15 @@
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
         
-        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
-            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
-            new.tabbarArray = temp;
-            //[wself myAppToInit];
-            [UIApplication sharedApplication].keyWindow.rootViewController = new;
-            
-            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
-        }else {
+//        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+//        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+//            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+//            new.tabbarArray = temp;
+//            //[wself myAppToInit];
+//            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+//        }else {
             NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
             //    AQuthModel * AQuth = [AccountTool account];
             if ([login isEqualToString:Success]) {
@@ -355,7 +355,7 @@
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
     
-        }
+//        }
         
         
     } failure:^(NSError *error) {
