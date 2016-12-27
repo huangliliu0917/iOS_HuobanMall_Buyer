@@ -16,6 +16,11 @@
 #import "TabBarModel.h"
 #import <SDWebImage/SDWebImageManager.h>
 #import <SVProgressHUD.h>
+#import "IponeVerifyViewController.h"
+#import "KeFuViewController.h"
+
+
+
 @interface RootViewController ()<UITabBarControllerDelegate>
 
 
@@ -25,10 +30,29 @@
 
 @implementation RootViewController
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
+    
+    
+    if ([viewController isKindOfClass:[KeFuViewController class]]) {
+        
+        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
+        {
+            //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
+            NSString *QQ = @"3029739786";
+            //调用QQ客户端,发起QQ临时会话
+            NSString *url = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",QQ];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        }
+        
+        return NO;
+    }
+    
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     //设置左侧控制器
     MallTabbarViewController *tabbar = [[MallTabbarViewController alloc] init];
@@ -43,60 +67,91 @@
         
         
         model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
-//        NSLog(@"%@",model.linkUrl);
-        HomeViewController * home = [[HomeViewController alloc] init];
-        tabbar.delegate = self;
-        home.openUrl = model.linkUrl;
+        LWLog(@"%@",model.linkUrl);
         
-        if ([model.linkUrl isEqualToString:@"{QQ}"]) {
-            home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+        if (IsNotOpenPayKeFu && [model.linkUrl isEqualToString:@"{QQ}"]) {
+            
+            if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]]){
+                KeFuViewController * vc = [[KeFuViewController alloc] init];
+                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    
+                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                    if (error) {
+                    }
+                    if (image) {
+                        
+                        UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
+                        vc.tabBarItem = item;
+                    }
+                }];
+                
+                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    
+                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                    if (error) {
+                    }
+                    if (image) {
+                        
+                        vc.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                    }
+                }];
+                [tabbar addChildViewController:vc];
+            }
+            
+            
+        }else{
+            
+            HomeViewController * home = [[HomeViewController alloc] init];
+            tabbar.delegate = self;
+            home.openUrl = model.linkUrl;
+            if ([model.linkUrl isEqualToString:@"{QQ}"]) {
+                home.openUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+            }
+            if ([model.linkUrl rangeOfString:@"/index.aspx?back"].location != NSNotFound) {
+                tabbar.HomePage = i;
+            }
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                if (error) {
+                }
+                if (image) {
+                    
+                    UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
+                    home.tabBarItem = item;
+                }
+            }];
+            
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                if (error) {
+                }
+                if (image) {
+                    
+                    home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                }
+            }];
+            LWNavigationController * nav = [[LWNavigationController alloc] initWithRootViewController:home];
+            [tabbar addChildViewController:nav];
+            
         }
         
-        if ([model.linkUrl rangeOfString:@"/index.aspx?back"].location != NSNotFound) {
-            tabbar.HomePage = i;
-        }
-        
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (error) {
-            }
-            if (image) {
-                
-                UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
-                home.tabBarItem = item;
-            }
-        }];
-        
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            if (error) {
-            }
-            if (image) {
-                
-                home.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            }
-        }];
-        
-        
-        
-        LWNavigationController * nav = [[LWNavigationController alloc] initWithRootViewController:home];
-        
-        [tabbar addChildViewController:nav];
     }
     [tabbar.tabBar setTintColor:[UIColor blackColor]];
     [tabbar.tabBar setBarTintColor:[UIColor whiteColor]];
     tabbar.selectedIndex = tabbar.HomePage;
     
+    tabbar.delegate = self;
+    
     HTLeftTableViewController * left = [[HTLeftTableViewController alloc] init];
     self.leftDrawerViewController = left;
-
+    
     //设置中间视图控制器
-
-//    HomeViewController * home = [[HomeViewController alloc] init];
-//    home.view.backgroundColor = [UIColor whiteColor];
-//    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:tabbar];
+    
+    //    HomeViewController * home = [[HomeViewController alloc] init];
+    //    home.view.backgroundColor = [UIColor whiteColor];
+    //    LWNavigationController * navs = [[LWNavigationController alloc] initWithRootViewController:tabbar];
     self.centerViewController = tabbar;
     
     
@@ -105,7 +160,7 @@
     
     //设置测拉宽度
     self.maximumLeftDrawerWidth = [UIScreen mainScreen].bounds.size.width * SplitScreenRate;
-//    self.maximumRightDrawerWidth = 0;
+    //    self.maximumRightDrawerWidth = 0;
     
     //设置手势范围
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
@@ -118,7 +173,7 @@
         if (block != nil) {
             block(drawerController,drawerSide,percentVisible);
         }
-
+        
     }];
     
     [self setShowsShadow:NO];

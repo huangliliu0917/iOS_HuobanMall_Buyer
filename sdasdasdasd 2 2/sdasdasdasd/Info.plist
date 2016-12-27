@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.huobanmall.yjg</string>
+				<string>com.huobanmall.mtf</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxdf0858e90ff75ed6</string>
+				<string>wx9b449156b8358326</string>
 			</array>
 		</dict>
 	</array>

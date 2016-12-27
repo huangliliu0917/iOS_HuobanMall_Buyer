@@ -401,7 +401,7 @@
     
     [UIViewController MonitorNetWork];
     
-    [self ToCheckDate];
+//    [self ToCheckDate];
     
     [self initWebViewProgress];
     

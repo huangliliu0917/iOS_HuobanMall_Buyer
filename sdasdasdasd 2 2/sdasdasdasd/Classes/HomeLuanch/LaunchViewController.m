@@ -63,10 +63,10 @@
 
         }else{
            
-            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"网络异常" message:@"当前设备网络异常，请检查当前设备网络" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-            [vc addAction:ac];
-            [self presentViewController:vc animated:YES completion:nil];
+//            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"网络异常" message:@"当前设备网络异常，请检查当前设备网络" preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+//            [vc addAction:ac];
+//            [self presentViewController:vc animated:YES completion:nil];
         }
     }];
     
@@ -337,15 +337,15 @@
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
         
-        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
-            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
-            new.tabbarArray = temp;
-            //[wself myAppToInit];
-            [UIApplication sharedApplication].keyWindow.rootViewController = new;
-            
-            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
-        }else {
+//        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+//        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+//            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+//            new.tabbarArray = temp;
+//            //[wself myAppToInit];
+//            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+//            
+//            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+//        }else {
             NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
             //    AQuthModel * AQuth = [AccountTool account];
             if ([login isEqualToString:Success]) {
@@ -355,7 +355,7 @@
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
     
-        }
+       
         
         
     } failure:^(NSError *error) {
