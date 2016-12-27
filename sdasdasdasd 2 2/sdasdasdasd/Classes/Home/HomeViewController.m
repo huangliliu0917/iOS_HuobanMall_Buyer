@@ -1063,7 +1063,7 @@
 #pragma mark UIWebView
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
+    LWLog(@"shouldStartLoadWithRequest");
     NSString *temp = request.URL.absoluteString;
     
     LWLog(@"%@",temp);
@@ -1120,7 +1120,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
     
-   
+   LWLog(@"decidePolicyForNavigationResponse");
     NSString *temp = webView.URL.absoluteString;
     LWLog(@"%@",temp);
     NSString *url = [temp lowercaseString];
@@ -1394,6 +1394,7 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
+     LWLog(@"didFinishNavigation");
     [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
     
     self.refreshBtn.userInteractionEnabled = YES;
@@ -1436,10 +1437,13 @@
 
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
+    
+    LWLog(@"didStartProvisionalNavigation");
     _shareBtn.userInteractionEnabled = NO;
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    LWLog(@"runJavaScriptAlertPanelWithMessage");
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:([UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         completionHandler();
@@ -1449,6 +1453,8 @@
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(nonnull NSString *)message initiatedByFrame:(nonnull WKFrameInfo *)frame completionHandler:(nonnull void (^)(BOOL))completionHandler {
+    
+    LWLog(@"runJavaScriptConfirmPanelWithMessage");
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:([UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         completionHandler(YES);

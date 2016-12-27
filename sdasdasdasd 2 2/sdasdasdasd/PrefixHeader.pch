@@ -211,7 +211,7 @@
 #define HuoBanMallBuyAppId @"app"
 #define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"1919f620207d0"
+#define HuoBanMallShareSdkAppId @"1a4305ae04924"
 //sina
 #define HuoBanMallShareSdkSinaKey @"1000919385"
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
