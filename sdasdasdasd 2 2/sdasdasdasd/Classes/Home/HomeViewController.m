@@ -1425,6 +1425,7 @@
                 self.shareBtn.hidden = YES;
             }
         }];
+        LWLog(@"xxxx");
         
     }
     
