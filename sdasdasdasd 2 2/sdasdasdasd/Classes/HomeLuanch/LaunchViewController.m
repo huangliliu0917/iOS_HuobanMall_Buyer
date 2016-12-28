@@ -36,7 +36,7 @@
     
     //[self AddButtonToRefresh];
     
-//    [self myAppGetConfig];
+     [self getMallBaseInfo];
     
     
     
@@ -392,6 +392,28 @@
             [data writeToFile:filename atomically:YES];
             
             [self myAppGetConfig];
+        }
+    } failure:^(NSError *error) {
+        LWLog(@"%@",error.description);
+    }];
+    
+}
+
+/**
+ *  app初始化接口
+ */
+- (void)getMallBaseInfo{
+    NSString *url = [NSString stringWithFormat:@"%@/buyerSeller/api/goods/getMallBaseInfo?customerId=%@",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    LWLog(@"%@",url);
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        LWLog(@"getMallBaseInfo%@",json);
+        if ([json[@"code"] integerValue] == 200) {
+            
         }
     } failure:^(NSError *error) {
         LWLog(@"%@",error.description);

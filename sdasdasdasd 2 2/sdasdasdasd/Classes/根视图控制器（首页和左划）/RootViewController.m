@@ -37,6 +37,11 @@
         
         if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
         {
+            
+            
+            
+            
+            
             //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
             NSString *QQ = @"3029739786";
             //调用QQ客户端,发起QQ临时会话
