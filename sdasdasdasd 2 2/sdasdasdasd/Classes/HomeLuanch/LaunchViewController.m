@@ -36,7 +36,7 @@
     
     //[self AddButtonToRefresh];
     
-     [self getMallBaseInfo];
+    
     
     
     
@@ -356,7 +356,7 @@
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
     
        
-        
+            [self getMallBaseInfo];
         
     } failure:^(NSError *error) {
         LWLog(@"%@",error);
@@ -410,10 +410,12 @@
     parame = [NSDictionary asignWithMutableDictionary:parame];
 
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        
         LWLog(@"getMallBaseInfo%@",json);
-        if ([json[@"code"] integerValue] == 200) {
-            
+        if ([json[@"resultCode"] integerValue] == 200) {
+            NSString * webqq =  [json[@"data"][@"clientQQ"] copy];
+            if (webqq.length) {
+                [[NSUserDefaults standardUserDefaults] setObject:webqq forKey:@"webqq"];
+            }
         }
     } failure:^(NSError *error) {
         LWLog(@"%@",error.description);
