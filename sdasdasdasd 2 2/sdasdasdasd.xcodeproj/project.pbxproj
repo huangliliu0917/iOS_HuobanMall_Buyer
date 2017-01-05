@@ -113,6 +113,7 @@
 		EFA6D3BF1C0451D300B39B36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3BE1C0451D300B39B36 /* AdSupport.framework */; };
 		EFA6D3C11C0451DE00B39B36 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */; };
 		EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */; };
+		EFFD3DB31E12153A000FA9FE /* KeFuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -327,6 +328,8 @@
 		EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		EFFD3DB11E12153A000FA9FE /* KeFuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeFuViewController.h; sourceTree = "<group>"; };
+		EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeFuViewController.m; sourceTree = "<group>"; };
 		FD414A393AF918D028562104 /* Pods-sdasdasdasdUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -902,6 +905,8 @@
 			children = (
 				EF9D4C561C055FF900D005E8 /* RootViewController.h */,
 				EF9D4C571C055FF900D005E8 /* RootViewController.m */,
+				EFFD3DB11E12153A000FA9FE /* KeFuViewController.h */,
+				EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */,
 			);
 			path = "根视图控制器（首页和左划）";
 			sourceTree = "<group>";
@@ -1309,6 +1314,7 @@
 				EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */,
 				EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */,
 				EF9D4C9C1C055FF900D005E8 /* UIViewController+MMDrawerController.m in Sources */,
+				EFFD3DB31E12153A000FA9FE /* KeFuViewController.m in Sources */,
 				EF9D4C5C1C055FF900D005E8 /* MidTabelViewCell.m in Sources */,
 				EF2D83D31DD2CF23008F0ED5 /* AlipayViewController.m in Sources */,
 				EF9D4CB01C055FF900D005E8 /* LWNewFeatureController.m in Sources */,

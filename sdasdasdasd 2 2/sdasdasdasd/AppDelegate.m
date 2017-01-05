@@ -1,3 +1,6 @@
+
+
+
 //
 //  AppDelegate.m
 //  sdasdasdasd
@@ -79,29 +82,29 @@
     self.window.rootViewController = launchViewController;
     [self.window makeKeyAndVisible];
     [self setupInit];
-//    [self myAppToInit];
+    //    [self myAppToInit];
     
     
-//
-//    [self setImage];
-//
-//    
-//    [self myAppGetUserInfo];
-//    //微信支付
-//    
-//    
-//
-//    
-//    
-//    
+    //
+    //    [self setImage];
+    //
+    //
+    //    [self myAppGetUserInfo];
+    //    //微信支付
+    //
+    //
+    //
+    //
+    //
+    //
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//
-//    _maskLayer = [CALayer layer];
-//    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
-//    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
-//    [_window.layer addSublayer:_maskLayer];
-//    self.maskLayer.hidden = YES;
-//    
+    //
+    //    _maskLayer = [CALayer layer];
+    //    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
+    //    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
+    //    [_window.layer addSublayer:_maskLayer];
+    //    self.maskLayer.hidden = YES;
+    //
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     [self resetUserAgent:nil];
@@ -127,15 +130,15 @@
 }
 //
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    NSLog(@"%@", userInfo);
-
+    //    NSLog(@"%@", userInfo);
+    
     [self getRemoteNotifocation:userInfo];
 }
 
 //- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    
+//
 //    NSLog(@"%@", userInfo);
-//    
+//
 //    [self getRemoteNotifocation:userInfo];
 //}
 
@@ -197,7 +200,7 @@
         LWLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
-             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
@@ -236,7 +239,7 @@
             [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
             NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
             if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
-//                [self myAppGetUserInfo];
+                //                [self myAppGetUserInfo];
                 LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
                 self.window.rootViewController = new;
                 [self.window makeKeyAndVisible];
@@ -262,7 +265,7 @@
         
         
     } failure:^(NSError *error) {
-
+        
         [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
         
         
@@ -278,7 +281,7 @@
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/Account/getAppUserInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-//        NSLog(@"myAppGetUserInfo%@",json);
+        //        NSLog(@"myAppGetUserInfo%@",json);
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"unionId"];
@@ -321,7 +324,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
         }
     } failure:^(NSError *error) {
-//        NSLog(@"%@", error);
+        //        NSLog(@"%@", error);
     }];
 }
 
@@ -339,7 +342,7 @@
         SendAuthResp *aresp = (SendAuthResp *)resp;
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
-//            NSLog(@"----%@",code);
+            //            NSLog(@"----%@",code);
             //授权成功的code
             NSDictionary * dict = @{@"code":code};
             NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
@@ -393,7 +396,7 @@
     
     NSString *string =[url absoluteString];
     NSLog(@"%@",string);
-   
+    
     return [WXApi handleOpenURL:url delegate:self];
 }
 
@@ -401,7 +404,7 @@
     
     NSString *string =[url absoluteString];
     NSLog(@"%@",string);
-   
+    
     return [WXApi handleOpenURL:url delegate:self];
     
 }
@@ -425,13 +428,13 @@
     //add my info to the new agent
     NSString *newAgent = nil;
     UserInfo * usaa = nil;
-
+    
     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
     usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
     
     NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-//    NSString *tempUserId = [(NSNumber*)userID  stringValue]
+    //    NSString *tempUserId = [(NSNumber*)userID  stringValue]
     if ([NSString stringWithFormat:@"%@", userID].length == 0) {
         userID = @"";
     }
@@ -509,9 +512,9 @@
  *  注册远程通知
  */
 - (void)registRemoteNotification:(UIApplication *)application{
-        UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-        UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
-        [application registerUserNotificationSettings:settings];
+    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
+    [application registerUserNotificationSettings:settings];
 }
 
 /**
@@ -525,7 +528,7 @@
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-        LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
+    LWLog(@"注册推送服务时，发生以下错误： %@",error.description);
 }
 
 /**
@@ -554,25 +557,23 @@
 }
 
 - (void)getRemoteNotifocation:(NSDictionary *) userInfo {
-    NSLog(@"%@", userInfo);
-    if (userInfo) {
-        NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
-        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
+    if (!userInfo) {
+        return;
+    }
+    NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
+    LWLog(@"xxxxxx%@---%@",message.alertUrl,message.url);
+    UIAlertController *aa = [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"][@"title"] message:userInfo[@"aps"][@"alert"][@"body"] preferredStyle:UIAlertControllerStyleAlert];
+    [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if(message.alertUrl.length){
             NSDictionary *dic = [NSDictionary dictionaryWithObject:message.alertUrl forKey:@"url"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
-        }else if (![message.url isKindOfClass:[NSNull class]]) {
-            UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
-            [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }]];
-            [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
-            }]];
-            
-            [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
+        }else if (message.url.length){
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:message.url forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:dic];
         }
-    }
+        
+    }]];
+    [self.window.rootViewController presentViewController:aa animated:YES completion:nil];
     
 }
 
@@ -585,7 +586,8 @@
             NSLog(@"Push  success");
         }
     }];
-
+    
 }
 
 @end
+

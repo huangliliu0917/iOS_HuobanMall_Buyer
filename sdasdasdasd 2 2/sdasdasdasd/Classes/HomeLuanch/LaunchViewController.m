@@ -36,7 +36,7 @@
     
     //[self AddButtonToRefresh];
     
-//    [self myAppGetConfig];
+    
     
     
     
@@ -346,6 +346,8 @@
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
     
+       
+            [self getMallBaseInfo];
         
         
         
@@ -383,6 +385,30 @@
             [data writeToFile:filename atomically:YES];
             
             [self myAppGetConfig];
+        }
+    } failure:^(NSError *error) {
+        LWLog(@"%@",error.description);
+    }];
+    
+}
+
+/**
+ *  app初始化接口
+ */
+- (void)getMallBaseInfo{
+    NSString *url = [NSString stringWithFormat:@"%@/buyerSeller/api/goods/getMallBaseInfo?customerId=%@",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    LWLog(@"%@",url);
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        LWLog(@"getMallBaseInfo%@",json);
+        if ([json[@"resultCode"] integerValue] == 200) {
+            NSString * webqq =  [json[@"data"][@"clientQQ"] copy];
+            if (webqq.length) {
+                [[NSUserDefaults standardUserDefaults] setObject:webqq forKey:@"webqq"];
+            }
         }
     } failure:^(NSError *error) {
         LWLog(@"%@",error.description);
