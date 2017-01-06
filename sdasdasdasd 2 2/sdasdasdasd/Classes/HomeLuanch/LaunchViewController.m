@@ -131,40 +131,7 @@
 
 }
 
-//
-///**
-// *  app初始化接口
-// */
-//- (void)myAppToInit{
-//    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
-//    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
-//    parame = [NSDictionary asignWithMutableDictionary:parame];
-//    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-//    [url appendString:@"/mall/Init"];
-//    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-//        
-//                LWLog(@"myAppToInit%@",json);
-//        if ([json[@"code"] integerValue] == 200) {
-//            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
-//            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
-//            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
-//            NSMutableData *data = [[NSMutableData alloc] init];
-//            //创建归档辅助类
-//            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-//            //编码
-//            [archiver encodeObject:payType forKey:PayTypeflat];
-//            //结束编码
-//            [archiver finishEncoding];
-//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//            //写入
-//            [data writeToFile:filename atomically:YES];
-//        }
-//    } failure:^(NSError *error) {
-//        
-//    }];
-//    
-//}
+
 
 
 /**
@@ -372,6 +339,10 @@
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            
+            LWLog(@"%lu",(unsigned long)payType.count);
+            
+            LWLog(@"%@", [payType objectAtIndex:0]);
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -385,6 +356,18 @@
             [data writeToFile:filename atomically:YES];
             
             [self myAppGetConfig];
+            
+            
+            // 1.得到data
+            NSArray *arrays =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filenames = [[arrays objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+            NSData *datas = [NSData dataWithContentsOfFile:filenames];
+            // 2.创建反归档对象
+            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:datas];
+            // 3.解码并存到数组中
+            NSArray *namesArrays = [unArchiver decodeObjectForKey:PayTypeflat];
+            
+            LWLog(@"%lu",(unsigned long)namesArrays.count);
         }
     } failure:^(NSError *error) {
         LWLog(@"%@",error.description);

@@ -146,6 +146,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(back) name:@"payback" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restPushWebAgent) name:ResetAllWebAgent object:nil];
+    
+    
+    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+    NSData *data = [NSData dataWithContentsOfFile:filename];
+    // 2.创建反归档对象
+    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    // 3.解码并存到数组中
+    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+    
+    LWLog(@"%lu",(unsigned long)namesArray.count);
+
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -666,7 +679,7 @@
             // 3.解码并存到数组中
             NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
             
-            
+        LWLog(@"%lu",(unsigned long)namesArray.count);
         NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
         [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
         

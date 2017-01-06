@@ -166,6 +166,43 @@
     
     [self.login setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
     
+    [self myAppToInit];
+    
+}
+
+
+/**
+ *  app初始化接口
+ */
+- (void)myAppToInit{
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/mall/Init"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        
+        LWLog(@"myAppToInit%@",json);
+        if ([json[@"code"] integerValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            NSMutableData *data = [[NSMutableData alloc] init];
+            //创建归档辅助类
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            //编码
+            [archiver encodeObject:payType forKey:PayTypeflat];
+            //结束编码
+            [archiver finishEncoding];
+            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+            //写入
+            [data writeToFile:filename atomically:YES];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
 }
 
 
@@ -667,6 +704,8 @@
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSString * cc = [NSString stringWithFormat:@"%@%@",AppOriginUrl,@"/PayConfig"];
     [UserLoginTool loginRequestGet:cc parame:parame success:^(id json) {
+        
+        LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"]];
             NSMutableData *data = [[NSMutableData alloc] init];

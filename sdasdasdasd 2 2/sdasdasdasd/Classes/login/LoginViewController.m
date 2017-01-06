@@ -370,6 +370,8 @@
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSString * cc = [NSString stringWithFormat:@"%@%@",AppOriginUrl,@"/PayConfig"];
     [UserLoginTool loginRequestGet:cc parame:parame success:^(id json) {
+        
+        LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"]];
             NSMutableData *data = [[NSMutableData alloc] init];
