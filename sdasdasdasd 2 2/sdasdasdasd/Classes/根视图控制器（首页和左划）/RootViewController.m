@@ -79,7 +79,7 @@
         model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
         LWLog(@"%@",model.linkUrl);
         
-        if (IsNotOpenPayKeFu && [model.linkUrl isEqualToString:@"{QQ}"]) {
+        if ([model.linkUrl isEqualToString:@"{QQ}"]) {
             
             if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]]){
                 KeFuViewController * vc = [[KeFuViewController alloc] init];

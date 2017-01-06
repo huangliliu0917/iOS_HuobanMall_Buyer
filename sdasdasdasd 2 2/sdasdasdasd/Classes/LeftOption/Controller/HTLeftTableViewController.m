@@ -316,13 +316,13 @@
     headView.secondLable2.textColor = HuoBanMallBuyNavColor;
     headView.secondLable3.textColor = HuoBanMallBuyNavColor;
     CGFloat HeadViewW =  SecrenWith * SplitScreenRate;
-    CGFloat HeadViewH = 114;
+    CGFloat HeadViewH = 130;
     headView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     headView.backgroundColor = HuoBanMallBuyNavColor;
     self.tableView.tableHeaderView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     self.tableView.tableHeaderView = headView; 
     
-    
+//    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
 //    NSString * level = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallMemberLevel];
 //    NSArray *levelArray = [level componentsSeparatedByString:@"&"];
 //    for (int i = 0; i < levelArray.count; i++) {
@@ -468,6 +468,11 @@
     return 0;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 50;
+}
 
 #pragma mark - 加载XML
 
