@@ -246,9 +246,9 @@
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanmall.com"
+#define AppOriginUrl  @"http://cosytest.51flashmall.com"
 #define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+#define HuoBanMallBuyAppSecrect @"69a23e06215920c5fa8108cf218f3d6a"
 //ShareSDk数据统计
 #define HuoBanMallShareSdkAppId @"1a99b09235260"
 //sina
