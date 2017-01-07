@@ -729,6 +729,15 @@
                         [wself zhifubaoPay];
                     }]];
                     [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                        
+                        
+                        MallMessage * mess =  [MallMessage getMallMessage];
+                        LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",mess.mall_site,HuoBanMallBuyApp_Merchant_Id]);
+                        funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
+                        [self.navigationController pushViewController:funWeb animated:YES];
+                        
+                        
                         
                     }]];
                     [self presentViewController:aa animated:YES completion:nil];

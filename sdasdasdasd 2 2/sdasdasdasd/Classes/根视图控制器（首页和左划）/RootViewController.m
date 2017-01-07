@@ -79,33 +79,46 @@
         model.linkUrl = [model.linkUrl stringByReplacingOccurrencesOfString:@"{CustomerID}" withString:HuoBanMallBuyApp_Merchant_Id];
         LWLog(@"%@",model.linkUrl);
         
-        if ([model.linkUrl isEqualToString:@"{QQ}"]) {
+        
+        
+        NSString * webchannel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];
+        
+        
+        
+        //是qq 且 webchannel 没值
+        if ([model.linkUrl isEqualToString:@"{QQ}"] && !webchannel.length) {
             
-            if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]]){
-                KeFuViewController * vc = [[KeFuViewController alloc] init];
-                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                    
-                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                    if (error) {
-                    }
-                    if (image) {
+            
+            NSString * webqq = [[NSUserDefaults standardUserDefaults] objectForKey:@"webqq"];
+            
+            if (webqq.length) {
+                if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]]){
+                    KeFuViewController * vc = [[KeFuViewController alloc] init];
+                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.imageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                         
-                        UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
-                        vc.tabBarItem = item;
-                    }
-                }];
-                
-                [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                        if (error) {
+                        }
+                        if (image) {
+                            
+                            UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:model.name image:[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] tag:0];
+                            vc.tabBarItem = item;
+                        }
+                    }];
                     
-                } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                    if (error) {
-                    }
-                    if (image) {
+                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",imageHostUrl,model.heightImageUrl]] options:SDWebImageTransformAnimatedImage progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                         
-                        vc.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                    }
-                }];
-                [tabbar addChildViewController:vc];
+                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                        if (error) {
+                        }
+                        if (image) {
+                            
+                            vc.tabBarItem.selectedImage = [[self imageCompressForSize:image targetSize:CGSizeMake(24, 24) ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                        }
+                    }];
+                    [tabbar addChildViewController:vc];
+                }
+
             }
             
             
