@@ -1372,6 +1372,13 @@
             self.navigationItem.title = title;
         }];
         
+        
+        [webView evaluateJavaScript:@"easemobMessage.getMessageNum()" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+            LWLog(@"xxxxx%@",title);
+        }];
+        
+        
+        
         //        if (_showBackArrows) {//返回按钮
         //
         //            [UIView animateWithDuration:0.05 animations:^{
