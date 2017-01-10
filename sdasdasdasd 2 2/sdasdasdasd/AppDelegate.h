@@ -8,6 +8,11 @@
 #import "HomeViewController.h"
 #import "PushWebViewController.h"
 #import <UIKit/UIKit.h>
+#import "PayModel.h"
+
+
+
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -27,6 +32,13 @@
 - (void)resetUserAgent:(NSString *) goUrl;
 
 - (void)sendTokenAndUserIdToSevern;
+
+
+@property (nonatomic, strong) NSArray <PayModel *> * payConfig;
+
+
+
+
 
 @end
 

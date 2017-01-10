@@ -37,6 +37,9 @@
 #import "UserLoginTool.h"
 #import "NSDictionary+HuoBanMallSign.h"
 #import "PayModel.h"
+#import "PushWebViewController.h"
+#import "NSString+Des.h"
+#import "MallMessage.h"
 
 
 #import "NoticeMessage.h"
@@ -135,12 +138,58 @@
     [self getRemoteNotifocation:userInfo];
 }
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//
-//    NSLog(@"%@", userInfo);
-//
-//    [self getRemoteNotifocation:userInfo];
-//}
+/**支付宝支付回调*/
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    
+   
+   
+    NSString *string =[url absoluteString];
+    NSLog(@"--%s---%@",__func__,string);
+    if ([url.host isEqualToString:@"safepay"]) {
+        // 支付跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            
+            NSDictionary * orderDic =  [NSString dictionaryWithJsonString:resultDic[@"result"]];
+            if([resultDic[@"resultStatus"] intValue] == 9000){
+
+                MallMessage * mess =  [MallMessage getMallMessage];
+                
+                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=%@",mess.mall_site,HuoBanMallBuyApp_Merchant_Id,orderDic[@"alipay_trade_app_pay_response"][@"out_trade_no"]];
+                LWLog(@"%@",url);
+                
+                //支付成功通知
+                NSDictionary * parame = @{@"url":url};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
+           
+                
+            }
+            
+        }];
+        // 授权跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            // 解析 auth code
+            NSString *result = resultDic[@"result"];
+            NSString *authCode = nil;
+            if (result.length>0) {
+                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+                for (NSString *subResult in resultArr) {
+                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+                        authCode = [subResult substringFromIndex:10];
+                        break;
+                    }
+                }
+            }
+            NSLog(@"授权结果 authCode = %@", authCode?:@"");
+        }];
+    }else{
+        return [WXApi handleOpenURL:url delegate:self];
+    }
+    return YES;
+}
+
 
 
 /**
@@ -183,117 +232,6 @@
          }
      }];
     
-}
-
-
-
-
-/**
- *  getconfig接口
- */
-- (void)myAppGetConfig {
-    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
-    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
-    [url appendString:@"/mall/getConfig"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        if (json) {
-            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
-            [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
-            [WXApi registerApp:HuoBanMallBuyWeiXinAppId withDescription:mallmodel.mall_name];
-            NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
-            if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
-                //                [self myAppGetUserInfo];
-                LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
-                self.window.rootViewController = new;
-                [self.window makeKeyAndVisible];
-                
-                [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
-            }else {
-                NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
-                //    AQuthModel * AQuth = [AccountTool account];
-                if ([login isEqualToString:Success]) {
-                    [self myAppGetUserInfo];
-                }
-                RootViewController * root = [[RootViewController alloc] init];
-                self.window.rootViewController = root;
-                [self.window makeKeyAndVisible];
-                
-                
-                
-            }
-            
-            
-            
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-        [SVProgressHUD showErrorWithStatus:@"网络异常请检查网络"];
-        
-        
-    }];
-}
-
-- (void)myAppGetUserInfo {
-    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
-    
-    NSString * localuserid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    parame[@"userid"] = [NSString stringWithFormat:@"%@", localuserid.length?localuserid:@"0"];
-    parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
-    [url appendString:@"/Account/getAppUserInfo"];
-    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        //        NSLog(@"myAppGetUserInfo%@",json);
-        if ([json[@"code"] integerValue] == 200) {
-            UserInfo * userInfo = [[UserInfo alloc] init];
-            userInfo.unionid = json[@"data"][@"unionId"];
-            userInfo.nickname = json[@"data"][@"nickName"];
-            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
-            userInfo.openid = json[@"data"][@"openId"];
-            
-            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
-            
-            
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
-            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
-                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
-            }else {
-                [[NSUserDefaults standardUserDefaults] setObject:@"21321321" forKey:IconHeadImage];
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
-            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:lefts forKey:LeftMenuModels];
-            //结束编码
-            [archiver finishEncoding];
-            
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:LeftMenuModels];
-            //写入
-            [data writeToFile:filename atomically:YES];
-            
-            [self resetUserAgent:nil];
-        }else {
-            [UIViewController ToRemoveSandBoxDate];
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-        }
-    } failure:^(NSError *error) {
-        //        NSLog(@"%@", error);
-    }];
 }
 
 -(void) onResp:(BaseResp*)resp
@@ -348,8 +286,13 @@
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
                 break;
         }
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+//        //支付成功通知
+//        NSDictionary * parame = @{@"url":url};
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"paysuccesstoWeb" object:parame];
+        
+//        [UIAlertController  alertControllerWithTitle:@"支付成功" message:nil preferredStyle:(UIAlertControllerStyle)]
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alert show];
     }
 }
 
@@ -368,17 +311,13 @@
     return [WXApi handleOpenURL:url delegate:self];
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options{
-    
-    NSString *string =[url absoluteString];
-    NSLog(@"%@",string);
-    
-    return [WXApi handleOpenURL:url delegate:self];
-    
-}
+
 /*************************************************************************************/
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    
+    
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
     
@@ -528,7 +467,7 @@
     if (!userInfo) {
         return;
     }
-    NoticeMessage *message = [NoticeMessage objectWithKeyValues:userInfo];
+    NoticeMessage *message = [NoticeMessage mj_objectWithKeyValues:userInfo];
     LWLog(@"xxxxxx%@---%@",message.alertUrl,message.url);
     UIAlertController *aa = [UIAlertController alertControllerWithTitle:userInfo[@"aps"][@"alert"][@"title"] message:userInfo[@"aps"][@"alert"][@"body"] preferredStyle:UIAlertControllerStyleAlert];
     [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

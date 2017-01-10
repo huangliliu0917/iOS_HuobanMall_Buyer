@@ -49,16 +49,16 @@
     NSLog(@"AFNetworkReachabilityManager－－%ld",(long)Reachability.networkReachabilityStatus);
     if (Reachability.networkReachabilityStatus > 0) {
         
-        
-        [self myAppToInit];
+        [self NewMyAppToInit];
+        //[self myAppToInit];
            
     }
     
     [Reachability setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
         if (!(status == 0) || (status == -1)) {
-
-             [self myAppToInit];
+            [self NewMyAppToInit];
+             //[self myAppToInit];
 
         }else{
            
@@ -147,7 +147,7 @@
         
         LWLog(@"myAppGetConfig%@",json);
         if (json) {
-            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+            MallMessage * mallmodel = [MallMessage mj_objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
@@ -206,7 +206,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -298,7 +298,7 @@
         LWLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
-        NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
+        NSArray *temp = [TabBarModel  mj_objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
         
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
@@ -326,6 +326,63 @@
 /**
  *  app初始化接口
  */
+- (void)NewMyAppToInit{
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/mall/InitMall"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        LWLog(@"myAppToInit%@",json);
+        if ([json[@"code"] integerValue] == 200) {
+            //登录方式
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
+            //站点地址
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            //支付信息
+            NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            LWLog(@"%lu",(unsigned long)payType.count);
+            
+            PayModel * dd = [payType objectAtIndex:0];
+            PayModel * ee = [payType objectAtIndex:1];
+            
+            LWLog(@"%@", [dd mj_keyValues] );
+            LWLog(@"%@", [ee mj_keyValues]);
+            
+            
+            
+            AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            de.payConfig = payType;
+//            NSMutableData *data = [[NSMutableData alloc] init];
+//            //创建归档辅助类
+//            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//            //编码
+//            [archiver encodeObject:payType forKey:PayTypeflat];
+//            //结束编码
+//            [archiver finishEncoding];
+//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//            //写入
+//            [data writeToFile:filename atomically:YES];
+            
+            
+            
+
+            
+            
+            
+            [self myAppGetConfig];
+        }
+    } failure:^(NSError *error) {
+        LWLog(@"%@",error.description);
+    }];
+    
+}
+
+
+/**
+ *  app初始化接口
+ */
 - (void)myAppToInit{
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
@@ -338,7 +395,7 @@
         if ([json[@"code"] integerValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
-            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+            NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
             
             LWLog(@"%lu",(unsigned long)payType.count);
             
@@ -366,7 +423,6 @@
             NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:datas];
             // 3.解码并存到数组中
             NSArray *namesArrays = [unArchiver decodeObjectForKey:PayTypeflat];
-            
             LWLog(@"%lu",(unsigned long)namesArrays.count);
         }
     } failure:^(NSError *error) {

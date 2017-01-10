@@ -106,7 +106,7 @@
     
     if (_debugInfo == nil) {
         
-        _debugInfo = [NSMutableString string];
+        _debugInfo = [[NSMutableString alloc] init];
     }
     return _debugInfo;
     
@@ -410,7 +410,7 @@
     _openNotifacation = app.openNotifacation;
     if (_openNotifacation) {
         //        LWLog(@"%@", _openNotifacation);
-        NoticeMessage *message = [NoticeMessage objectWithKeyValues:_openNotifacation];
+        NoticeMessage *message = [NoticeMessage mj_objectWithKeyValues:_openNotifacation];
         if (![message.alertUrl isKindOfClass:[NSNull class]]) {
             UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
@@ -447,33 +447,33 @@
     NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
     [self.homeWebView loadRequest:req];
-    if ([self.openUrl isEqualToString:@"{QQ}"]) {
-        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
-        {
-            self.tabBarController.selectedIndex = 0;
-            //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
-            NSString *QQ = @"1543278513";
-            //调用QQ客户端,发起QQ临时会话
-            NSString *url = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",QQ];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-        }else{
-            
-            
-            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"错误提醒" message:@"当前设备没有安装QQ,请按照后使用" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                self.tabBarController.selectedIndex = 0;
-            }];
-            [vc addAction:ac];
-            [self presentViewController:vc animated:YES completion:nil];
-        }
-        
-        
-    }
+//    if ([self.openUrl isEqualToString:@"{QQ}"]) {
+//        if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
+//        {
+//            self.tabBarController.selectedIndex = 0;
+//            //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
+//            NSString *QQ = @"1543278513";
+//            //调用QQ客户端,发起QQ临时会话
+//            NSString *url = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",QQ];
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+//        }else{
+//            
+//            
+//            UIAlertController * vc = [UIAlertController alertControllerWithTitle:@"错误提醒" message:@"当前设备没有安装QQ,请按照后使用" preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//                self.tabBarController.selectedIndex = 0;
+//            }];
+//            [vc addAction:ac];
+//            [self presentViewController:vc animated:YES completion:nil];
+//        }
+//        
+//        
+//    }
     
-    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-        self.navigationItem.title = title;
-    }];
+//    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+//        self.navigationItem.title = title;
+//    }];
     
     
 }
@@ -673,65 +673,6 @@
     
 }
 
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-//
-//    if (actionSheet.tag == 500) {//单个微信支付
-//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//        NSData *data = [NSData dataWithContentsOfFile:filename];
-//        // 2.创建反归档对象
-//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//        // 3.解码并存到数组中
-//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-//        [self WeiChatPay:namesArray[0]];
-//    }else if (actionSheet.tag == 700){// 单个支付宝支付
-//        //LWLog(@"支付宝%ld",(long)buttonIndex);
-//        //        [self MallAliPay:self.paymodel];
-//    }else if(actionSheet.tag == 900){//两个都有的支付
-//        //0
-//        //1
-//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//        NSData *data = [NSData dataWithContentsOfFile:filename];
-//        // 2.创建反归档对象
-//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//        // 3.解码并存到数组中
-//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-//        if (buttonIndex==0) {//支付宝
-//            PayModel * paymodel =  namesArray[0];
-//            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
-//            if (cc.webPagePay) {//网页支付
-//                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
-//                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
-//                NSArray * arr = [par componentsSeparatedByString:@"&"];
-//                __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-//                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
-//                    NSArray * aa = [obj componentsSeparatedByString:@"="];
-//                    NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
-//                    [dict addEntriesFromDictionary:dt];
-//                }];
-//                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
-////                [self.homeWebView stringByEvaluatingJavaScriptFromString:js];
-//                [self.homeWebView evaluateJavaScript:js completionHandler:^(id _Nullable js, NSError * _Nullable error) {
-//
-//                }];
-//            }else{
-//                [self MallAliPay:cc];
-//            }
-//        }
-//        if (buttonIndex==1) {//微信
-//            PayModel * paymodel =  namesArray[0];
-//            if ([paymodel.payType integerValue] == 300) {
-//                [self WeiChatPay:namesArray[0]];
-//            }else{
-//                [self WeiChatPay:namesArray[1]];//微信
-//            }
-//
-//        }
-//
-//    }
-//
-//}
 
 /**
  *  商城支付宝支付
@@ -883,7 +824,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -935,7 +876,7 @@
     parame[@"openid"] = aquth.openid;
     [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
         //        LWLog(@"%@",json);
-        UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
+        UserInfo * userInfo = [UserInfo mj_objectWithKeyValues:json];
         //向服务端提供微信数据
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
@@ -975,7 +916,7 @@
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
         LWLog(@"accessTokenWithCode%@",json);
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
@@ -993,7 +934,7 @@
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
     [UserLoginTool loginRequestGet:ss parame:nil success:^(id json) {
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
@@ -1047,7 +988,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -1312,13 +1253,8 @@
             self.orderNo = trade_noss;
             //            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
             // 1.得到data
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-            NSData *data = [NSData dataWithContentsOfFile:filename];
-            // 2.创建反归档对象
-            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            // 3.解码并存到数组中
-            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+            AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            NSArray *namesArray = de.payConfig;
             
             
             NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
@@ -1533,13 +1469,8 @@
 #pragma mark 支付处理
 
 - (void)weixinPay {
-    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-    NSData *data = [NSData dataWithContentsOfFile:filename];
-    // 2.创建反归档对象
-    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    // 3.解码并存到数组中
-    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+    AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *namesArray = de.payConfig;
     PayModel * paymodel =  namesArray[0];
     if ([paymodel.payType integerValue] == 300) {
         [self WeiChatPay:namesArray[0]];
@@ -1549,13 +1480,8 @@
 }
 
 - (void)zhifubaoPay {
-    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-    NSData *data = [NSData dataWithContentsOfFile:filename];
-    // 2.创建反归档对象
-    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    // 3.解码并存到数组中
-    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+    AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *namesArray = de.payConfig;
     
     PayModel * paymodel =  namesArray[0];
     PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
@@ -1582,7 +1508,8 @@
 
 - (void)goToNewUrlFormRemoteNotifcation:(NSNotification *) notification {
     
-    [[NSNotificationCenter defaultCenter] removeObserver:@"GoNewUrl"];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GoNewUrl" object:nil];
     
     NSString *url = notification.userInfo[@"url"];
     

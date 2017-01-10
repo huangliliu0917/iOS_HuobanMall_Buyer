@@ -236,7 +236,7 @@
         
         LWLog(@"myAppGetConfig%@",json);
         if (json) {
-            MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+            MallMessage * mallmodel = [MallMessage mj_objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
@@ -278,7 +278,7 @@
         LWLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
-        NSArray *temp = [TabBarModel  objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
+        NSArray *temp = [TabBarModel  mj_objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         wself.tabbarArray = temp;
 //        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];

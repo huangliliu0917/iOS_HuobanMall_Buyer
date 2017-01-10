@@ -166,7 +166,7 @@
     
     [self.login setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
     
-    [self myAppToInit];
+    [self NewMyAppToInit];
     
 }
 
@@ -174,36 +174,41 @@
 /**
  *  app初始化接口
  */
-- (void)myAppToInit{
+- (void)NewMyAppToInit{
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
-    [url appendString:@"/mall/Init"];
+    [url appendString:@"/mall/InitMall"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        
         LWLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
+            //登录方式
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
+            //站点地址
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
-            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
-            NSMutableData *data = [[NSMutableData alloc] init];
-            //创建归档辅助类
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            //编码
-            [archiver encodeObject:payType forKey:PayTypeflat];
-            //结束编码
-            [archiver finishEncoding];
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-            //写入
-            [data writeToFile:filename atomically:YES];
+//            //支付信息
+//            NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
+//            LWLog(@"%lu",(unsigned long)payType.count);
+//            LWLog(@"%@", [payType objectAtIndex:0]);
+//            NSMutableData *data = [[NSMutableData alloc] init];
+//            //创建归档辅助类
+//            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//            //编码
+//            [archiver encodeObject:payType forKey:PayTypeflat];
+//            //结束编码
+//            [archiver finishEncoding];
+//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//            //写入
+//            [data writeToFile:filename atomically:YES];
         }
     } failure:^(NSError *error) {
-        
+        LWLog(@"%@",error.description);
     }];
     
 }
+
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -380,7 +385,7 @@
                 
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
                 [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-                NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+                NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
                 NSMutableData *data = [[NSMutableData alloc] init];
                 //创建归档辅助类
                 NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -510,7 +515,7 @@
     [ShareSDK getUserInfo:SSDKPlatformTypeWechat onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
             
-            UserInfo * userInfo = [UserInfo objectWithKeyValues:user.rawData];
+            UserInfo * userInfo = [UserInfo mj_objectWithKeyValues:user.rawData];
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
             [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
@@ -542,7 +547,7 @@
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
         //        NSLog(@"accessTokenWithCode%@",json);
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo:aquth];
@@ -563,7 +568,7 @@
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
     [UserLoginTool loginRequestGet:ss parame:nil success:^(id json) {
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo:aquth];
@@ -585,7 +590,7 @@
     parame[@"access_token"] = aquth.access_token;
     parame[@"openid"] = aquth.openid;
     [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
-        UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
+        UserInfo * userInfo = [UserInfo mj_objectWithKeyValues:json];
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
         [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
@@ -665,7 +670,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -702,12 +707,12 @@
     //    NSString * url = [NSString stringWithFormat:@"http://mallapi.huobanj.cn/PayConfig?customerId=%@",HuoBanMallBuyApp_Merchant_Id];
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame = [NSDictionary asignWithMutableDictionary:parame];
-    NSString * cc = [NSString stringWithFormat:@"%@%@",AppOriginUrl,@"/PayConfig"];
+    NSString * cc = [NSString stringWithFormat:@"%@%@",AppOriginUrl,@"/PayConfig/IndexMall"];
     [UserLoginTool loginRequestGet:cc parame:parame success:^(id json) {
         
         LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
-            NSArray * payType = [PayModel objectArrayWithKeyValuesArray:json[@"data"]];
+            NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -750,7 +755,7 @@
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-        MallMessage * mallmodel = [MallMessage objectWithKeyValues:json];
+        MallMessage * mallmodel = [MallMessage mj_objectWithKeyValues:json];
         NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
         [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];

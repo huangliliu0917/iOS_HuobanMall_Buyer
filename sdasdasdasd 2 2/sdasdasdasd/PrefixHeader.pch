@@ -240,15 +240,15 @@
 #define LWNewFeatureImageCount 0
 #define MallName @"小月儿商城"
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
+#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081"
 /**网络  APP 标识*/
-#define NoticeCenterAppKey  @"app"
+#define NoticeCenterAppKey  @"huoban"
 /**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+#define NoticeCenterAppSecure  @"319ea9ad29ef4a50d6801c2f406dd208"
 //接口地址 .net
-#define AppOriginUrl  @"http://cosytest.51flashmall.com"
-#define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"69a23e06215920c5fa8108cf218f3d6a"
+#define AppOriginUrl  @"http://mallapi.51flashmall.com"
+#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"
+#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"
 //ShareSDk数据统计
 #define HuoBanMallShareSdkAppId @"1a99b09235260"
 //sina
@@ -256,12 +256,12 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxb6b6a11ac6d6a300"
+#define HuoBanMallBuyWeiXinAppId @"wx8ba33b7341047b58"
 #define HuoBanMallShareSdkWeiXinSecret @"8a813f5dbeac761a4dd40fecda56a28d"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
-#define HuoBanMallBuyApp_Merchant_Id @"8047" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
 
 #define HuoBanMallBuyNavColor ([UIColor colorWithRed:229/255.0 green:15/255.0 blue:113/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
@@ -270,7 +270,7 @@
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
 #define ButtonTitleColor ([UIColor whiteColor])
-#define BudleId @"com.huobanmall.xiaoyer"
+#define BudleId @"newfanmore2015"
 
 
 
@@ -344,6 +344,10 @@
 #import "MD5Encryption.h"
 #import <WebKit/WebKit.h>
 #import "AppDelegate.h"
+#import "NSString+Des.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
+#import "RSADataSigner.h"
 
 #ifdef DEBUG
 #define LWLog(...) NSLog(__VA_ARGS__)

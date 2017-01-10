@@ -125,7 +125,7 @@
             //            _topHeadView.secondLable1.text = json[@"data"][@"levelName"];
             if ([json[@"data"][@"menusCode"] integerValue] == 1) {
                 
-                NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+                NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
                 [wself.groupArray removeAllObjects];
                 [wself toGroupsByTime:lefts];
                 

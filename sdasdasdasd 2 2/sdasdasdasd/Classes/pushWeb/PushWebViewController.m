@@ -35,7 +35,7 @@
 #import "NSDictionary+ConfirmSign.h"
 #import "WKCookieSyncManager.h"
 #import "AlipayViewController.h"
-@interface PushWebViewController ()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
+@interface PushWebViewController ()<WXApiDelegate,UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
 /***/
@@ -143,23 +143,14 @@
     [UIViewController MonitorNetWork];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(back) name:@"payback" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payCuccess:) name:@"payback" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restPushWebAgent) name:ResetAllWebAgent object:nil];
-    
-    
-    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-    NSData *data = [NSData dataWithContentsOfFile:filename];
-    // 2.创建反归档对象
-    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    // 3.解码并存到数组中
-    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-    
-    LWLog(@"%lu",(unsigned long)namesArray.count);
 
     
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -337,71 +328,130 @@
     }];
 }
 
+- (void)payCuccess:(NSNotification *)note{
+    
+    LWLog(@"%@",note);
+    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+    funWeb.funUrl = note.object[@"url"];
+    [self.navigationController pushViewController:funWeb animated:YES];
+    
+    
+}
 
-
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-//
-//    if (actionSheet.tag == 500) {//单个微信支付
-//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//        NSData *data = [NSData dataWithContentsOfFile:filename];
-//        // 2.创建反归档对象
-//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//        // 3.解码并存到数组中
-//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-//        [self WeiChatPay:namesArray[0]];
-//    }else if (actionSheet.tag == 700){// 单个支付宝支付
-//        //LWLog(@"支付宝%ld",(long)buttonIndex);
-////        [self MallAliPay:self.paymodel];
-//    }else if(actionSheet.tag == 900){//两个都有的支付
-//        //0
-//        //1
-//        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//        NSData *data = [NSData dataWithContentsOfFile:filename];
-//        // 2.创建反归档对象
-//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//        // 3.解码并存到数组中
-//        NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-//        if (buttonIndex==0) {//支付宝
-//            PayModel * paymodel =  namesArray[0];
-//            PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
-//            if (cc.webPagePay) {//网页支付
-//                NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
-//                NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
-//                NSArray * arr = [par componentsSeparatedByString:@"&"];
-//                 __block NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-//                [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *stop) {
-//                   NSArray * aa = [obj componentsSeparatedByString:@"="];
-//                   NSDictionary * dt = [NSDictionary dictionaryWithObject:aa[1] forKey:aa[0]];
-//                    [dict addEntriesFromDictionary:dt];
-//                }];
-//                NSString * js = [NSString stringWithFormat:@"utils.Go2Payment(%@, %@, 1, false)",dict[@"customerID"],dict[@"trade_no"]];
-//                [self.webView evaluateJavaScript:js completionHandler:^(id _Nullable str , NSError * _Nullable error) {
-//                    
-//                }];
-//            }else{
-//                [self MallAliPay:cc];
-//            }
-//        }
-//        if (buttonIndex==1) {//微信
-//            PayModel * paymodel =  namesArray[0];
-//            if ([paymodel.payType integerValue] == 300) {
-//                [self WeiChatPay:namesArray[0]];
-//            }else{
-//                [self WeiChatPay:namesArray[1]];//微信
-//            }
-//            
-//        }
-//        
-//    }
-//    
-//}
 /**
  *  商城支付宝支付
  */
 - (void)MallAliPay:(PayModel *)pay{
+    [self doAlipayPay:pay];
+}
 
+//
+//选中商品调用支付宝极简支付
+//
+- (void)doAlipayPay:(PayModel *)pay
+{
+    //重要说明
+    //这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
+    //真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
+    //防止商户私密数据泄露，造成不必要的资金损失，及面临各种安全风险；
+    /*============================================================================*/
+    /*=======================需要填写商户app申请的===================================*/
+    /*============================================================================*/
+    NSString *appID = pay.appId;
+    
+    // 如下私钥，rsa2PrivateKey 或者 rsaPrivateKey 只需要填入一个
+    // 如果商户两个都设置了，优先使用 rsa2PrivateKey
+    // rsa2PrivateKey 可以保证商户交易在更加安全的环境下进行，建议使用 rsa2PrivateKey
+    // 获取 rsa2PrivateKey，建议使用支付宝提供的公私钥生成工具生成，
+    // 工具地址：https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=106097&docType=1
+    NSString *rsa2PrivateKey = @"";
+    NSString *rsaPrivateKey = pay.appKey;
+    /*============================================================================*/
+    /*============================================================================*/
+    /*============================================================================*/
+    
+    //partner和seller获取失败,提示
+    if ([appID length] == 0 ||
+        ([rsa2PrivateKey length] == 0 && [rsaPrivateKey length] == 0))
+    {
+        
+        UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"提示" message:@"缺少appId或者私钥。" preferredStyle:UIAlertControllerStyleAlert];
+        [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+           
+        }]];
+        [self presentViewController:aa animated:YES completion:nil];
+        return;
+    }
+    
+    /*
+     *生成订单信息及签名
+     */
+    //将商品信息赋予AlixPayOrder的成员变量
+    Order* order = [Order new];
+    
+    // NOTE: app_id设置
+    order.app_id = appID;
+    
+    // NOTE: 支付接口名称
+    order.method = @"alipay.trade.app.pay";
+    
+    // NOTE: 参数编码格式
+    order.charset = @"utf-8";
+    
+    // NOTE: 当前时间点
+    NSDateFormatter* formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    order.timestamp = [formatter stringFromDate:[NSDate date]];
+    
+    // NOTE: 支付版本
+    order.version = @"1.0";
+    
+    // NOTE: sign_type 根据商户设置的私钥来决定
+    order.sign_type = (rsa2PrivateKey.length > 1)?@"RSA2":@"RSA";
+    
+    NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSMutableString * urls = [NSMutableString stringWithString:uraaa];
+    [urls appendString:pay.notify];
+    order.notify_url = urls;
+    
+    
+    // NOTE: 商品数据
+    order.biz_content = [BizContent new];
+    order.biz_content.body = [self proDes];
+    order.biz_content.subject = [self orderNo];
+    order.biz_content.out_trade_no = [self orderNo]; //订单ID（由商家自行制定）
+    order.biz_content.timeout_express = @"30m"; //超时时间设置
+    order.biz_content.total_amount = [self priceNumber]; //商品价格
+
+    //将商品信息拼接成字符串
+    NSString *orderInfo = [order orderInfoEncoded:NO];
+    NSString *orderInfoEncoded = [order orderInfoEncoded:YES];
+    NSLog(@"orderSpec = %@",orderInfo);
+    
+    // NOTE: 获取私钥并将商户信息签名，外部商户的加签过程请务必放在服务端，防止公私钥数据泄露；
+    //       需要遵循RSA签名规范，并将签名字符串base64编码和UrlEncode
+    NSString *signedString = nil;
+    RSADataSigner* signer = [[RSADataSigner alloc] initWithPrivateKey:((rsa2PrivateKey.length > 1)?rsa2PrivateKey:rsaPrivateKey)];
+    if ((rsa2PrivateKey.length > 1)) {
+        signedString = [signer signString:orderInfo withRSA2:YES];
+    } else {
+        signedString = [signer signString:orderInfo withRSA2:NO];
+    }
+    
+    // NOTE: 如果加签成功，则继续执行支付
+    if (signedString != nil) {
+        //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
+        NSString *appScheme = BudleId;
+        
+        // NOTE: 将签名成功字符串格式化为订单字符串,请严格按照该格式
+        NSString *orderString = [NSString stringWithFormat:@"%@&sign=%@",
+                                 orderInfoEncoded, signedString];
+        
+        // NOTE: 调用支付结果开始支付
+        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            NSLog(@"reslut = %@",resultDic);
+        }];
+    }
 }
 
 
@@ -535,7 +585,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -671,14 +721,16 @@
             self.orderNo = trade_noss;
             //            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
             // 1.得到data
-            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-            NSData *data = [NSData dataWithContentsOfFile:filename];
-            // 2.创建反归档对象
-            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            // 3.解码并存到数组中
-            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-            
+//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
+//            NSData *data = [NSData dataWithContentsOfFile:filename];
+//            // 2.创建反归档对象
+//            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//            // 3.解码并存到数组中
+//            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+        
+        AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        NSArray *namesArray = de.payConfig;
         LWLog(@"%lu",(unsigned long)namesArray.count);
         NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
         [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
@@ -693,10 +745,11 @@
             [SVProgressHUD dismiss];
             if(([json[@"code"] integerValue] == 200) && ([json[@"data"] HuoTuPayInfoConfConfirmWithOrderId:trade_noss])){
                 
+                LWLog(@"%@",json);
                 self.priceNumber = json[@"data"][@"finalamount"];
                 NSString * des =  json[@"data"][@"name"]; //商品描述
                 self.proDes = [des copy];
-                if(namesArray.count == 1){
+                if(namesArray.count == 1){ // 1种支付方式
                     PayModel * pay =  namesArray.firstObject;  //300微信  400支付宝
                     self.paymodel = pay;
                     if ([pay.payType integerValue] == 300) {//300微信
@@ -709,7 +762,7 @@
                         }]];
                         [self presentViewController:aa animated:YES completion:nil];
                     }
-                    if ([pay.payType integerValue] == 400) {//400支付宝
+                    if ([pay.payType integerValue] == 1 || [pay.payType integerValue] == 11) {//11 支付宝 和 1
                         UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                         [aa addAction:[UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [wself zhifubaoPay];
@@ -719,7 +772,7 @@
                         }]];
                         [self presentViewController:aa animated:YES completion:nil];
                     }
-                }else if(namesArray.count == 2){
+                }else if(namesArray.count == 2){ //2 种支付方式
                     
                     UIAlertController *aa =[UIAlertController alertControllerWithTitle:@"支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                     [aa addAction:[UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -893,7 +946,7 @@
     parame[@"openid"] = aquth.openid;
     [UserLoginTool loginRequestGet:@"https://api.weixin.qq.com/sns/userinfo" parame:parame success:^(id json) {
         //        LWLog(@"%@",json);
-        UserInfo * userInfo = [UserInfo objectWithKeyValues:json];
+        UserInfo * userInfo = [UserInfo mj_objectWithKeyValues:json];
         //向服务端提供微信数据
         NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo]    ;
@@ -933,7 +986,7 @@
     [UserLoginTool loginRequestGet:url parame:nil success:^(id json) {
         
         LWLog(@"accessTokenWithCode%@",json);
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
@@ -951,7 +1004,7 @@
     AQuthModel * mode = [AccountTool account];
     NSString * ss = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%@&grant_type=refresh_token&refresh_token=%@",HuoBanMallBuyWeiXinAppId,mode.refresh_token];
     [UserLoginTool loginRequestGet:ss parame:nil success:^(id json) {
-        AQuthModel * aquth = [AQuthModel objectWithKeyValues:json];
+        AQuthModel * aquth = [AQuthModel mj_objectWithKeyValues:json];
         [AccountTool saveAccount:aquth];
         //获取用户信息
         [wself getUserInfo1:aquth];
@@ -1005,7 +1058,7 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
-            NSArray * lefts = [LeftMenuModel objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
+            NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
@@ -1040,14 +1093,12 @@
 
 #pragma mark 支付处理
 
+/**
+ 微信支付
+ */
 - (void)weixinPay {
-    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-    NSData *data = [NSData dataWithContentsOfFile:filename];
-    // 2.创建反归档对象
-    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    // 3.解码并存到数组中
-    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
+    AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *namesArray = de.payConfig;
     PayModel * paymodel =  namesArray[0];
     if ([paymodel.payType integerValue] == 300) {
         [self WeiChatPay:namesArray[0]];
@@ -1056,17 +1107,16 @@
     }
 }
 
+
+/**
+ 支付宝支付
+ */
 - (void)zhifubaoPay {
-    NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-    NSData *data = [NSData dataWithContentsOfFile:filename];
-    // 2.创建反归档对象
-    NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    // 3.解码并存到数组中
-    NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-    
+    AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *namesArray = de.payConfig;
+
     PayModel * paymodel =  namesArray[0];
-    PayModel *cc =  [paymodel.payType integerValue] == 400?namesArray[0]:namesArray[1];
+    PayModel *cc =  [paymodel.payType integerValue] == 300?namesArray[1]:namesArray[0];
     if (cc.webPagePay) {//网页支付
         NSRange parameRange = [self.ServerPayUrl rangeOfString:@"?"];
         NSString * par = [self.ServerPayUrl substringFromIndex:(parameRange.location+parameRange.length)];
