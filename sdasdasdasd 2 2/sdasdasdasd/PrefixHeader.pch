@@ -348,6 +348,8 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "Order.h"
 #import "RSADataSigner.h"
+#import "UITabBar+XSDExt.h"
+
 
 #ifdef DEBUG
 #define LWLog(...) NSLog(__VA_ARGS__)

@@ -515,6 +515,8 @@
     [ShareSDK getUserInfo:SSDKPlatformTypeWechat onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         if (state == SSDKResponseStateSuccess) {
             
+            
+            LWLog(@"----%s----%@",__func__,user.rawData);
             UserInfo * userInfo = [UserInfo mj_objectWithKeyValues:user.rawData];
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];

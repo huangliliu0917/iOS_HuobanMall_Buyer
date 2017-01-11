@@ -332,7 +332,7 @@
     
     LWLog(@"%@",note);
     PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-    funWeb.funUrl = note.object[@"url"];
+    funWeb.funUrl = [NSString stringWithFormat:@"%@%@",note.object[@"url"],self.orderNo];
     [self.navigationController pushViewController:funWeb animated:YES];
     
     
@@ -849,13 +849,17 @@
         }
     }];
     
+
+    
+    
+    
     [_refreshBtn setBackgroundImage:[UIImage imageNamed:@"main_title_left_refresh"] forState:UIControlStateNormal];
     
     self.refreshBtn.userInteractionEnabled = YES;
     
     [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
         NSString *str = title;
-        self.title = str;
+        self.navigationItem.title = str;
     }];
 
     _shareBtn.userInteractionEnabled = YES;

@@ -29,6 +29,7 @@
 		70CE6C993C5EA4214E3834DF /* libPods-sdasdasdasdUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41E2BF2687D13CE3A8708C /* libPods-sdasdasdasdUITests.a */; };
 		A5ABAD583EAF5D812358EE78 /* libPods-sdasdasdasd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D010A5F8BD61438DD111EE4 /* libPods-sdasdasdasd.a */; };
 		AEDF1D33635CADDA117974F0 /* libPods-sdasdasdasdTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294BA303E2DC6426C4856943 /* libPods-sdasdasdasdTests.a */; };
+		EF01595E1E24E3E50017D7BA /* UITabBar+XSDExt.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01595C1E24E3E50017D7BA /* UITabBar+XSDExt.m */; };
 		EF2D83D31DD2CF23008F0ED5 /* AlipayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2D83D21DD2CF23008F0ED5 /* AlipayViewController.m */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
@@ -187,6 +188,8 @@
 		B2CA2476854D5BB3A46CB1C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FA7512B2CD8F74C2A874B4 /* Pods-sdasdasdasdTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdTests/Pods-sdasdasdasdTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA2EEA1809CD99910D259E86 /* Pods-sdasdasdasd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasd/Pods-sdasdasdasd.debug.xcconfig"; sourceTree = "<group>"; };
+		EF01595C1E24E3E50017D7BA /* UITabBar+XSDExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+XSDExt.m"; sourceTree = "<group>"; };
+		EF01595D1E24E3E50017D7BA /* UITabBar+XSDExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+XSDExt.h"; sourceTree = "<group>"; };
 		EF2D83D11DD2CF23008F0ED5 /* AlipayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayViewController.h; sourceTree = "<group>"; };
 		EF2D83D21DD2CF23008F0ED5 /* AlipayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlipayViewController.m; sourceTree = "<group>"; };
 		EF2DC41E1C0BDE2400C3ACD2 /* WeiXinLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiXinLoginModel.h; sourceTree = "<group>"; };
@@ -812,6 +815,8 @@
 		EF9D4B1E1C055FF900D005E8 /* CateGory */ = {
 			isa = PBXGroup;
 			children = (
+				EF01595C1E24E3E50017D7BA /* UITabBar+XSDExt.m */,
+				EF01595D1E24E3E50017D7BA /* UITabBar+XSDExt.h */,
 				60329CA01D967628002AD71F /* NSDictionary+ConfirmSign.h */,
 				60329CA11D967628002AD71F /* NSDictionary+ConfirmSign.m */,
 				EF9D4B1F1C055FF900D005E8 /* UIBarButtonItem+LHB.h */,
@@ -1585,6 +1590,7 @@
 				60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */,
 				EF9A5BE71E24787C004E23EE /* NSObject+MJCoding.m in Sources */,
 				EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */,
+				EF01595E1E24E3E50017D7BA /* UITabBar+XSDExt.m in Sources */,
 				60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */,
 				608E62A11D87CE5C00C1C7C2 /* TabBarModel.m in Sources */,
 				EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */,

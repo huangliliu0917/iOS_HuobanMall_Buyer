@@ -155,8 +155,7 @@
             if([resultDic[@"resultStatus"] intValue] == 9000){
 
                 MallMessage * mess =  [MallMessage getMallMessage];
-                
-                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=%@",mess.mall_site,HuoBanMallBuyApp_Merchant_Id,orderDic[@"alipay_trade_app_pay_response"][@"out_trade_no"]];
+                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
                 LWLog(@"%@",url);
                 
                 //支付成功通知
@@ -275,14 +274,19 @@
         //支付返回结果，实际支付结果需要去微信服务器端查询
         strTitle = [NSString stringWithFormat:@"支付结果"];
         switch (resp.errCode) {
-            case WXSuccess:
+            case WXSuccess:{
                 strMsg = @"支付结果：成功！";
+                MallMessage * mess =  [MallMessage getMallMessage];
+                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
+                //支付成功通知
+                NSDictionary * parame = @{@"url":url};
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 break;
-                
+            }
             default:
                 strMsg = [NSString stringWithFormat:@"支付结果：失败"];
-                //                strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
+                //strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
                 break;
         }

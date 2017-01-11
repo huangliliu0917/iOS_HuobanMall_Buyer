@@ -96,10 +96,13 @@
 /***1.5.4修改 用于识别当前加载的页面是否是首页***/
 @property (nonatomic, strong) NSString *homeWebUrl;
 
+
+@property (nonatomic, strong) NSTimer * timer;
 @end
 
 
 @implementation HomeViewController
+
 
 
 - (NSMutableString *)debugInfo{
@@ -431,7 +434,17 @@
             [self presentViewController:aa animated:YES completion:nil];
         }
     }
+
+    if (webChennel.length) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:5
+                                                      target:self
+                                                    selector:@selector(timerUp)
+                                                    userInfo:nil
+                                                     repeats:YES];
+
+    }
     
+   
     
 }
 
@@ -782,6 +795,7 @@
 
 - (void)dealloc{
     
+    [self.timer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.homeWebView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
@@ -1358,6 +1372,27 @@
     
 }
 
+
+- (void)timerUp{
+ 
+        [self.homeWebView evaluateJavaScript:@"easemobMessage.getMessageNum()" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+            LWLog(@"%@",[NSThread currentThread]);
+            LWLog(@"xxxxx%@",title);
+            LWLog(@"xxxxx%lu",self.tabBarController.tabBar.subviews.count);
+
+            if(title != NULL){
+                NSArray * items = [self.tabBarController.tabBar items];
+                if ([title intValue] > 0) {
+                    [self.tabBarController.tabBar showBadgeOnItemIndex:items.count - 1 andItemMumber:items.count];
+                }else{
+                   [self.tabBarController.tabBar hideBadgeOnItemIndex:items.count - 1];
+                }
+            }
+        }];
+    
+
+    
+}
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
     LWLog(@"didFinishNavigation");
@@ -1373,22 +1408,8 @@
         }];
         
         
-        [webView evaluateJavaScript:@"easemobMessage.getMessageNum()" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            LWLog(@"xxxxx%@",title);
-        }];
         
-        
-        
-        //        if (_showBackArrows) {//返回按钮
-        //
-        //            [UIView animateWithDuration:0.05 animations:^{
-        //                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
-        //            }];
-        //        }else{
-        //            [UIView animateWithDuration:0.05 animations:^{
-        //                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backArrow];
-        //            }];
-        //        }
+
         
         [webView evaluateJavaScript:@"__getShareStr()" completionHandler:^(id _Nullable shareStr, NSError * _Nullable error) {
             
@@ -1405,6 +1426,12 @@
     
     _shareBtn.userInteractionEnabled = YES;
     [self.homeWebView.scrollView.mj_header endRefreshing];
+}
+
+- (void)setRedHead{
+    
+    
+    
 }
 
 
