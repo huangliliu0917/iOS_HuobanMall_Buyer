@@ -44,6 +44,8 @@
 #import "NSDictionary+ConfirmSign.h"
 
 
+
+
 @interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate,WXApiDelegate>
 
 
@@ -1376,10 +1378,6 @@
 - (void)timerUp{
  
         [self.homeWebView evaluateJavaScript:@"easemobMessage.getMessageNum()" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            LWLog(@"%@",[NSThread currentThread]);
-            LWLog(@"xxxxx%@",title);
-            LWLog(@"xxxxx%lu",self.tabBarController.tabBar.subviews.count);
-
             if(title != NULL){
                 NSArray * items = [self.tabBarController.tabBar items];
                 if ([title intValue] > 0) {

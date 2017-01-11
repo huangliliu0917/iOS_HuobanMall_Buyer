@@ -30,6 +30,8 @@
 		A5ABAD583EAF5D812358EE78 /* libPods-sdasdasdasd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D010A5F8BD61438DD111EE4 /* libPods-sdasdasdasd.a */; };
 		AEDF1D33635CADDA117974F0 /* libPods-sdasdasdasdTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294BA303E2DC6426C4856943 /* libPods-sdasdasdasdTests.a */; };
 		EF01595E1E24E3E50017D7BA /* UITabBar+XSDExt.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01595C1E24E3E50017D7BA /* UITabBar+XSDExt.m */; };
+		EF01597A1E262F8C0017D7BA /* ADView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0159791E262F8C0017D7BA /* ADView.m */; };
+		EF01597D1E262FDE0017D7BA /* AdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF01597C1E262FDE0017D7BA /* AdModel.m */; };
 		EF2D83D31DD2CF23008F0ED5 /* AlipayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2D83D21DD2CF23008F0ED5 /* AlipayViewController.m */; };
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
@@ -190,6 +192,10 @@
 		EA2EEA1809CD99910D259E86 /* Pods-sdasdasdasd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasd/Pods-sdasdasdasd.debug.xcconfig"; sourceTree = "<group>"; };
 		EF01595C1E24E3E50017D7BA /* UITabBar+XSDExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+XSDExt.m"; sourceTree = "<group>"; };
 		EF01595D1E24E3E50017D7BA /* UITabBar+XSDExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+XSDExt.h"; sourceTree = "<group>"; };
+		EF0159781E262F8C0017D7BA /* ADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADView.h; sourceTree = "<group>"; };
+		EF0159791E262F8C0017D7BA /* ADView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADView.m; sourceTree = "<group>"; };
+		EF01597B1E262FDE0017D7BA /* AdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdModel.h; sourceTree = "<group>"; };
+		EF01597C1E262FDE0017D7BA /* AdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdModel.m; sourceTree = "<group>"; };
 		EF2D83D11DD2CF23008F0ED5 /* AlipayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayViewController.h; sourceTree = "<group>"; };
 		EF2D83D21DD2CF23008F0ED5 /* AlipayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlipayViewController.m; sourceTree = "<group>"; };
 		EF2DC41E1C0BDE2400C3ACD2 /* WeiXinLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiXinLoginModel.h; sourceTree = "<group>"; };
@@ -1235,6 +1241,10 @@
 		EFB0D8A21D826A4400D24FE4 /* HomeLuanch */ = {
 			isa = PBXGroup;
 			children = (
+				EF01597B1E262FDE0017D7BA /* AdModel.h */,
+				EF01597C1E262FDE0017D7BA /* AdModel.m */,
+				EF0159781E262F8C0017D7BA /* ADView.h */,
+				EF0159791E262F8C0017D7BA /* ADView.m */,
 				EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */,
 				EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */,
 			);
@@ -1553,6 +1563,7 @@
 				EF9D4CA91C055FF900D005E8 /* MallMessage.m in Sources */,
 				EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */,
 				EF9D4C7D1C055FF900D005E8 /* ApiXml.mm in Sources */,
+				EF01597A1E262F8C0017D7BA /* ADView.m in Sources */,
 				EF9D4CBA1C055FF900D005E8 /* RootViewController.m in Sources */,
 				EF9D4CAD1C055FF900D005E8 /* LWBadgeButton.m in Sources */,
 				EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */,
@@ -1584,6 +1595,7 @@
 				EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */,
 				EF9D4C5F1C055FF900D005E8 /* AQuthModel.m in Sources */,
 				EF9D4C5B1C055FF900D005E8 /* HomeViewController.m in Sources */,
+				EF01597D1E262FDE0017D7BA /* AdModel.m in Sources */,
 				EF9BF88B1DD0551B0073B90A /* WKCookieSyncManager.m in Sources */,
 				608E629E1D87CE4000C1C7C2 /* MallTabbarViewController.m in Sources */,
 				EF9D4C9B1C055FF900D005E8 /* MMDrawerVisualState.m in Sources */,

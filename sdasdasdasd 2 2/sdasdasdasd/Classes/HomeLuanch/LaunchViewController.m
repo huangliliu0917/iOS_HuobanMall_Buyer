@@ -353,22 +353,7 @@
             
             AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
             de.payConfig = payType;
-//            NSMutableData *data = [[NSMutableData alloc] init];
-//            //创建归档辅助类
-//            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-//            //编码
-//            [archiver encodeObject:payType forKey:PayTypeflat];
-//            //结束编码
-//            [archiver finishEncoding];
-//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//            //写入
-//            [data writeToFile:filename atomically:YES];
-            
-            
-            
 
-            
             
             
             [self myAppGetConfig];

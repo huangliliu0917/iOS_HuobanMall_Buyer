@@ -349,7 +349,7 @@
 #import "Order.h"
 #import "RSADataSigner.h"
 #import "UITabBar+XSDExt.h"
-
+#import "AdModel.h"
 
 #ifdef DEBUG
 #define LWLog(...) NSLog(__VA_ARGS__)
