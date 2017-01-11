@@ -42,6 +42,8 @@
 #import <SDWebImage/SDWebImageManager.h>
 #import "WKCookieSyncManager.h"
 #import "NSDictionary+ConfirmSign.h"
+#import "ADView.h"
+
 
 
 
@@ -374,6 +376,32 @@
        // [self.homeWebView loadRequest:req];
     //}
     
+    if (app.Ad) {
+        
+        
+        AdModel * md = app.Ad;
+        
+        LWLog(@"%@",[md mj_keyValues]);
+        NSString *image = [md.images copy];
+        NSString *ad = [md.linkUrl copy];
+        
+        //1、创建广告
+        ADView *adView = [[ADView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds imgUrl:image adUrl:ad clickImg:^(NSString *clikImgUrl) {
+            
+            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+            funWeb.funUrl = clikImgUrl;
+            [self.navigationController pushViewController:funWeb animated:YES];
+            self.tabBarController.tabBar.hidden = YES;
+            
+        }];
+        //设置倒计时（默认3秒）
+        adView.showTime = 5;
+        
+        //2、显示广告
+        [adView show];
+    }
+    
+
     
     
     //UserCenter/Index.aspx

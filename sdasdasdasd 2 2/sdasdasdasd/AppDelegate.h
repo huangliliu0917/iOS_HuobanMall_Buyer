@@ -11,7 +11,7 @@
 #import "PayModel.h"
 
 
-
+#import "AdModel.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -36,7 +36,7 @@
 
 @property (nonatomic, strong) NSArray <PayModel *> * payConfig;
 
-
+@property (nonatomic, strong) AdModel * Ad;
 
 
 

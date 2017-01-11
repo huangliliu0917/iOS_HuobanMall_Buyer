@@ -143,10 +143,16 @@
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString *url = [NSMutableString stringWithFormat:AppOriginUrl];
     [url appendString:@"/mall/getConfig"];
+    
+    __block AppDelegate * appde =(AppDelegate *)[UIApplication sharedApplication].delegate;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
         LWLog(@"myAppGetConfig%@",json);
         if (json) {
+
+            NSArray * adArray = [AdModel mj_objectArrayWithKeyValuesArray:json[@"appad"]];
+            appde.Ad = [adArray firstObject];
+            
             MallMessage * mallmodel = [MallMessage mj_objectWithKeyValues:json];
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
