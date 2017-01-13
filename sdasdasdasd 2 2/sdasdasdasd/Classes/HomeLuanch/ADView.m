@@ -7,7 +7,7 @@
 //
 
 #import "ADView.h"
-
+#import "SDWebImageManager.h"
 @interface ADView()
 
 @property (nonatomic, strong) UIImageView *adView;
@@ -204,26 +204,51 @@
  */
 - (void)downloadAdImageWithUrl:(NSString *)imageUrl imageName:(NSString *)imageName
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+    
+    
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:imageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
-        UIImage *image = [UIImage imageWithData:data];
-        
-        NSString *filePath = [self getFilePathWithImageName:imageName];
-        if ([UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES]) {// 保存成功
-            NSLog(@"保存成功");
-            //删除旧广告图片
-            [self deleteOldImage];
-            //设置新图片
-            [UserDefaults setValue:imageName forKey:adImageName];
-            //设置广告链接
-            [UserDefaults setValue:_adUrl forKey:adUrl];
-            [UserDefaults synchronize];
-        }else{
-            NSLog(@"保存失败");
+        if (!error) {
+            NSString *filePath = [self getFilePathWithImageName:imageName];
+            if ([UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES]) {// 保存成功
+                NSLog(@"保存成功");
+                //删除旧广告图片
+                [self deleteOldImage];
+                //设置新图片
+                [UserDefaults setValue:imageName forKey:adImageName];
+                //设置广告链接
+                [UserDefaults setValue:_adUrl forKey:adUrl];
+                [UserDefaults synchronize];
+            }else{
+                NSLog(@"保存失败");
+            }
         }
         
-    });
+
+        
+        
+    }];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+//        UIImage *image = [UIImage imageWithData:data];
+//        
+//        NSString *filePath = [self getFilePathWithImageName:imageName];
+//        if ([UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES]) {// 保存成功
+//            NSLog(@"保存成功");
+//            //删除旧广告图片
+//            [self deleteOldImage];
+//            //设置新图片
+//            [UserDefaults setValue:imageName forKey:adImageName];
+//            //设置广告链接
+//            [UserDefaults setValue:_adUrl forKey:adUrl];
+//            [UserDefaults synchronize];
+//        }else{
+//            NSLog(@"保存失败");
+//        }
+//        
+//    });
 }
 
 
