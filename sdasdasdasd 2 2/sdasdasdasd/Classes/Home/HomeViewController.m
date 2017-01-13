@@ -376,7 +376,7 @@
        // [self.homeWebView loadRequest:req];
     //}
     
-    if (app.Ad) {
+    if (app.Ad != NULL) {
         
         
         AdModel * md = app.Ad;
@@ -399,6 +399,8 @@
         
         //2、显示广告
         [adView show];
+        
+        app.Ad = NULL;
     }
     
 
@@ -1406,6 +1408,9 @@
 - (void)timerUp{
  
         [self.homeWebView evaluateJavaScript:@"easemobMessage.getMessageNum()" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+            
+            
+            LWLog(@"sssss----%@",title);
             if(title != NULL){
                 NSArray * items = [self.tabBarController.tabBar items];
                 if ([title intValue] > 0) {
