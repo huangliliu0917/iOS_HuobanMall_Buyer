@@ -75,39 +75,23 @@
     
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    app.statusBarStyle = UIStatusBarStyleLightContent;
     
     
-    
+    if ([HuoBanMallBuyApp_Merchant_Id intValue] == 7020) {
+        app.statusBarStyle = UIStatusBarStyleDefault;
+        
+    }else{
+        app.statusBarStyle = UIStatusBarStyleLightContent;
+    }
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.window.backgroundColor = [UIColor whiteColor];
     LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
     self.window.rootViewController = launchViewController;
     [self.window makeKeyAndVisible];
     [self setupInit];
-    //    [self myAppToInit];
-    
-    
-    //
-    //    [self setImage];
-    //
-    //
-    //    [self myAppGetUserInfo];
-    //    //微信支付
-    //
-    //
-    //
-    //
-    //
-    //
+
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    //
-    //    _maskLayer = [CALayer layer];
-    //    [_maskLayer setFrame:CGRectMake(SecrenWith, 0, 0, SecrenHeight)];
-    //    [_maskLayer setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.400].CGColor];
-    //    [_window.layer addSublayer:_maskLayer];
-    //    self.maskLayer.hidden = YES;
-    //
+
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     _Agent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     [self resetUserAgent:nil];

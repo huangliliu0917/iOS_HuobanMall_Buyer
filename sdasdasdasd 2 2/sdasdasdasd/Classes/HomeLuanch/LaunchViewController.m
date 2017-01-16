@@ -309,7 +309,15 @@
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
         
-       
+        NSString * localVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppVerSion"];
+        if (localVersion.length == 0 || [localVersion isEqualToString:AppVersion] == NO) {
+            LWNewFeatureController * new = [[LWNewFeatureController alloc] init];
+            new.tabbarArray = temp;
+            //            [wself myAppToInit];
+            [UIApplication sharedApplication].keyWindow.rootViewController = new;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:AppVersion forKey:@"AppVerSion"];
+        }else {
             NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
             //    AQuthModel * AQuth = [AccountTool account];
             if ([login isEqualToString:Success]) {
@@ -318,11 +326,12 @@
             RootViewController * root = [[RootViewController alloc] init];
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
-    
-       
+            
+            
             [self getMallBaseInfo];
-        
-        
+            
+            
+        }
         
     } failure:^(NSError *error) {
         LWLog(@"%@",error);
