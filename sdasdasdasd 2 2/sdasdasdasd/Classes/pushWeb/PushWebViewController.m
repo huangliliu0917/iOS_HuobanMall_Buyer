@@ -719,16 +719,7 @@
             NSRange trade_noRange = {trade_no.location + 9,customerID.location-trade_no.location-10};
             NSString * trade_noss = [temp substringWithRange:trade_noRange];//订单号
             self.orderNo = trade_noss;
-            //            NSString * payType = [url substringFromIndex:paymentType.location+paymentType.length];
-            // 1.得到data
-//            NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//            NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:PayTypeflat];
-//            NSData *data = [NSData dataWithContentsOfFile:filename];
-//            // 2.创建反归档对象
-//            NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//            // 3.解码并存到数组中
-//            NSArray *namesArray = [unArchiver decodeObjectForKey:PayTypeflat];
-        
+
         AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
         NSArray *namesArray = de.payConfig;
         LWLog(@"%lu",(unsigned long)namesArray.count);
@@ -758,7 +749,7 @@
                             [wself weixinPay];
                         }]];
                         [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            
+                            [self payCancle];
                         }]];
                         [self presentViewController:aa animated:YES completion:nil];
                     }
@@ -768,7 +759,7 @@
                             [wself zhifubaoPay];
                         }]];
                         [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            
+                            [self payCancle];
                         }]];
                         [self presentViewController:aa animated:YES completion:nil];
                     }
@@ -782,14 +773,8 @@
                         [wself zhifubaoPay];
                     }]];
                     [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                         
-                        
-                        MallMessage * mess =  [MallMessage getMallMessage];
-                        LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",mess.mall_site,HuoBanMallBuyApp_Merchant_Id]);
-                        funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
-                        [self.navigationController pushViewController:funWeb animated:YES];
-                        
+                        [self payCancle];
                         
                         
                     }]];
@@ -845,6 +830,21 @@
     //decisionHandler(WKNavigationResponsePolicyAllow);
 
 }
+
+
+/**
+ * 支付取消
+ */
+- (void)payCancle{
+    
+    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+    NSString * Msiteurl =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id]);
+    funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id];
+    [self.navigationController pushViewController:funWeb animated:YES];
+}
+
+
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
 

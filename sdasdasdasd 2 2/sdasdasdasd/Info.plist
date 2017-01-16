@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>newfanmore2015</string>
+				<string>Efuton.hangzhou.cn</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxaeda2d5603b12302</string>
+				<string>wx776ef947adaff9ba</string>
 			</array>
 		</dict>
 	</array>
