@@ -23,11 +23,14 @@
     [self setupNavBarTheme];
     
     //2、设置导航栏的按钮主题
-//    [self setupNavBarButtonItemTheme];
+    [self setupNavBarButtonItemTheme];
 }
 
 + (void)setupNavBarButtonItemTheme
 {
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(ScreenWidth, ScreenHeight)
+                                                         forBarMetrics:UIBarMetricsDefault];
 //    UIBarButtonItem * item = [UIBarButtonItem appearance];
 //    if (!iOS7) {
 //        

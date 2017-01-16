@@ -133,20 +133,17 @@
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-            
+            LWLog(@"result = %@",resultDic);
             NSDictionary * orderDic =  [NSString dictionaryWithJsonString:resultDic[@"result"]];
             if([resultDic[@"resultStatus"] intValue] == 9000){
-
                 MallMessage * mess =  [MallMessage getMallMessage];
                 NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
                 LWLog(@"%@",url);
-                
                 //支付成功通知
                 NSDictionary * parame = @{@"url":url};
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
-           
-                
+            }else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
             }
             
         }];
@@ -272,6 +269,7 @@
                 strMsg = [NSString stringWithFormat:@"支付结果：失败"];
                 //strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
                 break;
         }
 //        //支付成功通知

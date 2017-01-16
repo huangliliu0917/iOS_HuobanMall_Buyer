@@ -331,9 +331,15 @@
 - (void)payCuccess:(NSNotification *)note{
     
     LWLog(@"%@",note);
-    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-    funWeb.funUrl = [NSString stringWithFormat:@"%@%@",note.object[@"url"],self.orderNo];
-    [self.navigationController pushViewController:funWeb animated:YES];
+    
+    if (note.userInfo) {
+        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+        funWeb.funUrl = [NSString stringWithFormat:@"%@%@",note.object[@"url"],self.orderNo];
+        [self.navigationController pushViewController:funWeb animated:YES];
+    }else{
+        [self payCancle];
+    }
+    
     
     
 }
