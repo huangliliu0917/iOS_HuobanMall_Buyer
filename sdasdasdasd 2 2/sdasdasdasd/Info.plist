@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Efuton.hangzhou.cn</string>
+				<string>HuoBanMallYingyan2015</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx776ef947adaff9ba</string>
+				<string>wxf0b37b263cfe4d44</string>
 			</array>
 		</dict>
 	</array>
