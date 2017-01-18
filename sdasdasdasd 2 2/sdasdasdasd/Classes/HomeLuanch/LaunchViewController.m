@@ -358,11 +358,7 @@
             NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
             LWLog(@"%lu",(unsigned long)payType.count);
             
-            PayModel * dd = [payType objectAtIndex:0];
-            PayModel * ee = [payType objectAtIndex:1];
-            
-            LWLog(@"%@", [dd mj_keyValues] );
-            LWLog(@"%@", [ee mj_keyValues]);
+         
             
             
             
