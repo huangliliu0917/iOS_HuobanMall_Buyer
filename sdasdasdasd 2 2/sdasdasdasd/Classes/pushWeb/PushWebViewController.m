@@ -145,6 +145,7 @@
     
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(-25, 0, 25, 25);
+    btn.contentEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0);
     [btn addTarget:self action:@selector(BackToHome) forControlEvents:UIControlEventTouchUpInside];
     [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

@@ -136,8 +136,10 @@
             LWLog(@"result = %@",resultDic);
             NSDictionary * orderDic =  [NSString dictionaryWithJsonString:resultDic[@"result"]];
             if([resultDic[@"resultStatus"] intValue] == 9000){
-                MallMessage * mess =  [MallMessage getMallMessage];
-                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
+                
+                //站点地址
+                NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
                 LWLog(@"%@",url);
                 //支付成功通知
                 NSDictionary * parame = @{@"url":url};
@@ -257,8 +259,9 @@
         switch (resp.errCode) {
             case WXSuccess:{
                 strMsg = @"支付结果：成功！";
-                MallMessage * mess =  [MallMessage getMallMessage];
-                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",mess.mall_site,HuoBanMallBuyApp_Merchant_Id];
+                NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//                MallMessage * mess =  [MallMessage getMallMessage];
+                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
                 //支付成功通知
                 NSDictionary * parame = @{@"url":url};
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
