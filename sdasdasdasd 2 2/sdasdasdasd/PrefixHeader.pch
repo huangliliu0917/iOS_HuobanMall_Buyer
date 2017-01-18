@@ -311,7 +311,8 @@
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
 #define ButtonTitleColor ([UIColor whiteColor])
-#define BudleId @"com.huobanmallbuyer.yingyan"
+//#define BudleId @"com.huobanmallbuyer.yingyan"
+#define BudleId @"HuoBanMallYingyan2015"
 #define urlS @"HuoBanMallYingyan2015"
 
 

@@ -371,6 +371,8 @@
         }
     } failure:^(NSError *error) {
         LWLog(@"%@",error.description);
+        
+        [self NewMyAppToInit];
     }];
     
 }

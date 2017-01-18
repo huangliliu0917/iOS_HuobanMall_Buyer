@@ -143,13 +143,27 @@
     [UIViewController MonitorNetWork];
     
     
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(-25, 0, 25, 25);
+    [btn addTarget:self action:@selector(BackToHome) forControlEvents:UIControlEventTouchUpInside];
+    [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+  
+    
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payCuccess:) name:@"payback" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restPushWebAgent) name:ResetAllWebAgent object:nil];
 
     
 }
-
+- (void)BackToHome{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 - (void)viewWillAppear:(BOOL)animated

@@ -139,7 +139,7 @@
 
 - (UIButton *)backArrow{
     if (_backArrow == nil) {
-        _backArrow = [[UIButton alloc] init];
+        _backArrow = [UIButton buttonWithType:UIButtonTypeCustom];
         _backArrow.frame = CGRectMake(0, 0, 25, 25);
         [_backArrow addTarget:self action:@selector(BackToWebView) forControlEvents:UIControlEventTouchUpInside];
         [_backArrow setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];

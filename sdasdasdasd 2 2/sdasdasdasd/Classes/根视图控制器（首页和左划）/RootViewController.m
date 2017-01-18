@@ -161,7 +161,7 @@
         }
         
     }
-    [tabbar.tabBar setTintColor:[UIColor blackColor]];
+    [tabbar.tabBar setTintColor:BottomTaBarButtonTitleColor];
     [tabbar.tabBar setBarTintColor:[UIColor whiteColor]];
     tabbar.selectedIndex = tabbar.HomePage;
     

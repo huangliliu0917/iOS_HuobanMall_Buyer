@@ -397,11 +397,12 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = [UIFont systemFontOfSize:18];
     }
     LeftGroupModel * model = self.groupArray[indexPath.section];
     LeftMenuModel * models =  model.models[indexPath.row];
     cell.textLabel.text = models.menu_name;
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
+//    cell.textLabel.font = [UIFont systemFontOfSize:15];
 //    NSString *unsavedPath = [NSHomeDirectory() stringByAppendingString:@"/Documents/update/icon"];
 //    NSString * imageUrl = [NSString stringWithFormat:@"%@/%@",unsavedPath,models.menu_icon];
 //    LWLog(@"%@",imageUrl);
