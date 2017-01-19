@@ -152,7 +152,13 @@
     btn.frame = CGRectMake(-25, 0, 25, 25);
     btn.contentEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0);
     [btn addTarget:self action:@selector(BackToHome) forControlEvents:UIControlEventTouchUpInside];
-    [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
+    
+    if([HuoBanMallBuyApp_Merchant_Id intValue] == 7020){
+       [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back_1"] forState:UIControlStateNormal];  
+    }else{
+      [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
+    }
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
   
