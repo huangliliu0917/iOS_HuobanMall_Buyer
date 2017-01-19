@@ -39,6 +39,9 @@
 @property (nonatomic, strong) AdModel * Ad;
 
 
+/**当前控制器*/
+@property (nonatomic, strong) UIViewController * currentVc;
+
 
 @end
 

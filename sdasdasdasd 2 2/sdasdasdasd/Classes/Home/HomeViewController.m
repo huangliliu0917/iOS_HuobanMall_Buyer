@@ -314,6 +314,13 @@
     //    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
+    
+    
+    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appde.currentVc = self;
+    
+    
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     

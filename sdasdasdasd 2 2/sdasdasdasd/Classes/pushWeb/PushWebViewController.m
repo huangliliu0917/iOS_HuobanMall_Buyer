@@ -109,6 +109,11 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     
+    
+    
+    
+    
+    
     LWLog(@"%@",NSStringFromCGRect(self.view.frame));
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -170,6 +175,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appde.currentVc = self;
+    
     
     self.webView.frame = self.view.frame;
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
@@ -347,13 +356,20 @@
     
     LWLog(@"%@",note);
     
-    if (note.userInfo) {
-        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-        funWeb.funUrl = [NSString stringWithFormat:@"%@%@",note.object[@"url"],self.orderNo];
-        [self.navigationController pushViewController:funWeb animated:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"payback" object:nil];
+    
+    if ([self.navigationItem.title isEqualToString:@"订单列表"]) {
+        [self.webView reload];
     }else{
-        [self payCancle];
+        if (note.userInfo) {
+            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+            funWeb.funUrl = [NSString stringWithFormat:@"%@%@",note.object[@"url"],self.orderNo];
+            [self.navigationController pushViewController:funWeb animated:YES];
+        }else{
+            [self payCancle];
+        }
     }
+    
     
     
     
@@ -858,11 +874,16 @@
  */
 - (void)payCancle{
     
-    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-    NSString * Msiteurl =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id]);
-    funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id];
-    [self.navigationController pushViewController:funWeb animated:YES];
+    if (![self.navigationItem.title isEqualToString:@"订单列表"]) {
+        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+        NSString * Msiteurl =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id]);
+        funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id];
+        [self.navigationController pushViewController:funWeb animated:YES];
+    }else{
+        [self.webView reload];
+    }
+   
 }
 
 

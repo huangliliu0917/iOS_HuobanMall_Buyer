@@ -134,18 +134,12 @@
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             LWLog(@"result = %@",resultDic);
-            NSDictionary * orderDic =  [NSString dictionaryWithJsonString:resultDic[@"result"]];
+        
+            LWLog(@"%d",[resultDic[@"resultStatus"] intValue]);
             if([resultDic[@"resultStatus"] intValue] == 9000){
-                
-                //站点地址
-                NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
-                LWLog(@"%@",url);
-                //支付成功通知
-                NSDictionary * parame = @{@"url":url};
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
-            }else{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
+                [self paySuccess];
+            }else if([resultDic[@"resultStatus"] intValue] == 6001){
+                [self payCancle];
             }
             
         }];
@@ -259,20 +253,21 @@
         switch (resp.errCode) {
             case WXSuccess:{
                 strMsg = @"支付结果：成功！";
-                NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-//                MallMessage * mess =  [MallMessage getMallMessage];
-                NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
-                //支付成功通知
-                NSDictionary * parame = @{@"url":url};
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:parame];
-                NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
+                [self paySuccess];
+                LWLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 break;
+            }
+            case WXErrCodeUserCancel:{
+                
+                [self payCancle];
+//                self.currentVc.navigationController 
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
             }
             default:
                 strMsg = [NSString stringWithFormat:@"支付结果：失败"];
                 //strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
-                NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"payback" object:nil];
+                LWLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
+                
                 break;
         }
 //        //支付成功通知
@@ -482,6 +477,35 @@
             NSLog(@"Push  success");
         }
     }];
+    
+}
+
+
+/**
+ * 支付取消
+ */
+- (void)payCancle{
+    
+    if (![self.currentVc.navigationItem.title isEqualToString:@"订单列表"]) {
+        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+        NSString * Msiteurl =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        LWLog(@"%@",[NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id]);
+        funWeb.funUrl = [NSString stringWithFormat:@"%@/UserCenter/OrderV2/ListV2.aspx?customerid=%@&tab=1",Msiteurl,HuoBanMallBuyApp_Merchant_Id];
+        [self.currentVc.navigationController pushViewController:funWeb animated:YES];
+    }
+    
+}
+
+
+- (void)paySuccess{
+    
+    NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+    NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
+    if (![self.currentVc.navigationItem.title isEqualToString:@"订单列表"]) {
+        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+        funWeb.funUrl = url;
+        [self.currentVc.navigationController pushViewController:funWeb animated:YES];
+    }
     
 }
 

@@ -51,7 +51,7 @@
     //2、添加  pageControll
     
    
-    [self setupPageControll];
+//    [self setupPageControll];
  
     
     
