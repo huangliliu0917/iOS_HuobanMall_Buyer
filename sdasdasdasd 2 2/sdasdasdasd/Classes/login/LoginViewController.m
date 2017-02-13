@@ -48,7 +48,22 @@
     self.image.contentMode = UIViewContentModeScaleAspectFit;
     
     
-    
+    /**
+     *	- /account/loginorregisterbymobilewithoauth
+     - customerid
+     - mobile
+     - code
+     - secure
+     - sex
+     - nickname
+     - openid
+     - city
+     - country
+     - province
+     - headimgurl
+     - unionid
+
+     */
     
     [UIViewController MonitorNetWork];
     
@@ -150,17 +165,48 @@
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
             [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
-            //向服务端提供微信数据
-            [wself toPostWeiXinUserMessage:userInfo];
-            //获取主地址
-            [wself toGetMainUrl];
-            //微信授权成功后获取支付参数
-            [wself WeiXinLoginSuccessToGetPayParameter];
-            //获得用户账户列表
+            
+            
+            
+            //第四种方式不是直接登录
+            NSString * login =  [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+             
+            
+            
+            if([login intValue] == 3){
+               
+                [wself forthLoginWay];
+            }else{
+                //向服务端提供微信数据
+                [wself toPostWeiXinUserMessage:userInfo];
+                //获取主地址
+                [wself toGetMainUrl];
+                //微信授权成功后获取支付参数
+                [wself WeiXinLoginSuccessToGetPayParameter];
+                //获得用户账户列表
+  
+            }
+            
         }
     }];
     
 }
+
+
+
+
+
+- (void)forthLoginWay{
+    
+    IponeVerifyViewController *bundle = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
+    bundle.isBundlPhone = YES;
+    bundle.goUrl = _goUrl;
+    //AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //[app resetUserAgent:nil];
+    [self.navigationController pushViewController:bundle animated:YES];
+    
+}
+
 
 /**
  *  用户登录成功
@@ -168,6 +214,8 @@
  *  @param note
  */
 - (void)UserLoginSuccess{
+    
+    //用户绑定数据类型 0需要绑定微信 1需要绑定手机
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
     
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];

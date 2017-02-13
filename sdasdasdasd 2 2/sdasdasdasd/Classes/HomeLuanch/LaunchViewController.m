@@ -157,6 +157,12 @@
             NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
             [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
+            /*
+            微信加手机 = 0,
+            手机登录 = 1,
+            微信登录 = 2,
+            手机为主授权为辅 = 3
+            */
             [[NSUserDefaults standardUserDefaults] setObject:json[@"accountmodel"] forKey:AppLoginType];
             NSString *webchannel = json[@"webchannel"];
             if (webchannel.length) {

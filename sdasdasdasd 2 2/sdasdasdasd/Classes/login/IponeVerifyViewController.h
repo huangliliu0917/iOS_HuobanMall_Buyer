@@ -8,11 +8,10 @@
 
 
 #import <UIKit/UIKit.h>
+@class  UserInfo;
 
 @interface IponeVerifyViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *login;
 
-@property (weak, nonatomic) IBOutlet UIButton *weixinLogin;
 
 
 @property (nonatomic, assign) BOOL isPhoneLogin;
@@ -22,4 +21,6 @@
 
 @property (nonatomic, strong) NSString *goUrl;
 
+
+@property (nonatomic, strong) UserInfo * userInfo;
 @end

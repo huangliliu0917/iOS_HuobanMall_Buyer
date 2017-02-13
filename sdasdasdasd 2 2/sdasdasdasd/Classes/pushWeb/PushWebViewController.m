@@ -671,11 +671,15 @@
     
     NSString *temp = webView.URL.absoluteString;
     LWLog(@"decidePolicyForNavigationResponse%@",temp);
+    
+    //downurl
     NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
          decisionHandler(WKNavigationResponsePolicyCancel);
     }
-    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
+    
+    //拦截没登录
+    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound) {
         NSString *goUrl = [[NSString alloc] init];
         if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
             NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
@@ -714,7 +718,7 @@
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
-        }else if ([str intValue] == 2) {
+        }else if ([str intValue] == 2 || [str intValue] == 3) {
             LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
             login.title = @"登录";
             login.goUrl = goUrl;
@@ -742,8 +746,9 @@
         [self changeWithUserInfo:array];
         decisionHandler(WKNavigationResponsePolicyCancel);
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
-//        [self.navigationController popViewControllerAnimated:YES];
         decisionHandler(WKNavigationResponsePolicyAllow);
+        //[self.navigationController popViewControllerAnimated:YES];
+        
     }else if([url rangeOfString:@"mredirectv2.aspx"].location != NSNotFound ){
          decisionHandler(WKNavigationResponsePolicyCancel);
         AlipayViewController * vc = [[AlipayViewController alloc] init];

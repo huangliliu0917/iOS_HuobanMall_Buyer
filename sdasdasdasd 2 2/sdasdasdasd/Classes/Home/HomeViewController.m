@@ -1181,7 +1181,7 @@
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             decisionHandler(WKNavigationResponsePolicyAllow);
         }
-        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound) {
+        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound) {
             
             NSString *goUrl = [[NSString alloc] init];
             if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
@@ -1204,27 +1204,25 @@
             UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
-            
-            if ([str intValue] == 0) {
+            /*
+             微信加手机 = 0,
+             手机登录 = 1,
+             微信登录 = 2,
+             手机为主授权为辅 = 3
+             */
+            if ([str intValue] == 0 || [str intValue] == 3 || [str intValue] == 1) {
                 IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
                 UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
                 login.title = @"登录";
                 login.goUrl = goUrl;
+                if ([str intValue] == 1) {
+                   login.isPhoneLogin = YES;
+                }
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
                     [self BackToWebView];
                 }];
-            }else if ([str intValue] == 1) {
-                IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
-                login.isPhoneLogin = YES;
-                login.title = @"登录";
-                login.goUrl = goUrl;
-                [self presentViewController:root animated:YES completion:^{
-                    [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-                    [self BackToWebView];
-                }];
-            }else if ([str intValue] == 2) {
+            }else if ([str intValue] == 2 ) {
                 LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
                 login.title = @"登录";
                 login.goUrl = goUrl;

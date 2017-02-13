@@ -161,9 +161,9 @@
         }
         
     }
-    [tabbar.tabBar setTintColor:TopNavTitleViewTitleColor];
+    [tabbar.tabBar setTintColor:BottomTaBarButtonTitleColor];
     
-    [tabbar.tabBar setBarTintColor:[UIColor whiteColor]];
+//    [tabbar.tabBar setBarTintColor:BottomTaBarButtonTitleColor];
     tabbar.selectedIndex = tabbar.HomePage;
     
     tabbar.delegate = self;
