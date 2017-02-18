@@ -700,12 +700,16 @@
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
         NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
+
         
-        if ([str intValue] == 0) {
+        if ([str intValue] == 0 || [str intValue] == 3 || [str intValue] == 1) {
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
             UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
             login.title = @"登录";
             login.goUrl = goUrl;
+            if ([str intValue] == 1) {
+                login.isPhoneLogin = YES;
+            }
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
@@ -718,7 +722,7 @@
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
-        }else if ([str intValue] == 2 || [str intValue] == 3) {
+        }else if ([str intValue] == 2 ) {
             LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
             login.title = @"登录";
             login.goUrl = goUrl;
@@ -856,7 +860,7 @@
                      decisionHandler(WKNavigationResponsePolicyAllow);
                 }
                 
-            }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound) {
+            }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updateSisProfile"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
                 decisionHandler(WKNavigationResponsePolicyCancel);

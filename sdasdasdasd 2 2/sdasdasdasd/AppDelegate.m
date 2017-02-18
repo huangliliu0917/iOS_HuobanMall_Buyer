@@ -8,7 +8,7 @@
 //  Created by lhb on 15/11/24.
 //  Copyright © 2015年 HT. All rights reserved.
 //
-
+#import "UMMobClick/MobClick.h"
 #import "AppDelegate.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
@@ -75,7 +75,7 @@
     
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
-    
+    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
     
     if ([HuoBanMallBuyApp_Merchant_Id intValue] == 7020) {
         app.statusBarStyle = UIStatusBarStyleDefault;
@@ -207,6 +207,13 @@
                  break;
          }
      }];
+    
+    if([HuoBanMallBuyApp_Merchant_Id intValue] == 4886){
+        UMConfigInstance.appKey = @"58a7f44f1061d22d8a0001c8";
+        UMConfigInstance.channelId = @"App Store";
+        [MobClick startWithConfigure:UMConfigInstance];
+    }
+    
     
 }
 

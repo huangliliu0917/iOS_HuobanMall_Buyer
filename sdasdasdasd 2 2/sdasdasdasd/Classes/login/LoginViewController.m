@@ -216,10 +216,9 @@
 - (void)UserLoginSuccess{
     
     //用户绑定数据类型 0需要绑定微信 1需要绑定手机
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:MallUserRelatedType];
-    
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"bangShouji"];
     [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
-    if ([str intValue] == 1) {
+    if ([str intValue] == 0) {
         [SVProgressHUD dismiss];
         [self.view endEditing:NO];
         IponeVerifyViewController *bundle = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
@@ -382,6 +381,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"IsMobileBind"] forKey:@"bangShouji"];
             NSArray * lefts = [LeftMenuModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"home_menus"]];
             NSMutableData *data = [[NSMutableData alloc] init];
             //创建归档辅助类

@@ -117,6 +117,7 @@
 		EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4C501C055FF900D005E8 /* PushWebViewController.m */; };
 		EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4C541C055FF900D005E8 /* Settingviewcontrller.m */; };
 		EF9D4CBA1C055FF900D005E8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4C571C055FF900D005E8 /* RootViewController.m */; };
+		EFA682A71E582ABD00626B93 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA682A61E582ABD00626B93 /* UMMobClick.framework */; };
 		EFA6D3571C04514500B39B36 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3561C04514500B39B36 /* main.m */; };
 		EFA6D35A1C04514500B39B36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6D3591C04514500B39B36 /* AppDelegate.m */; };
 		EFA6D3651C04514500B39B36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFA6D3631C04514500B39B36 /* LaunchScreen.storyboard */; };
@@ -429,6 +430,7 @@
 		EF9D4C541C055FF900D005E8 /* Settingviewcontrller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settingviewcontrller.m; sourceTree = "<group>"; };
 		EF9D4C561C055FF900D005E8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		EF9D4C571C055FF900D005E8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		EFA682A61E582ABD00626B93 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		EFA6D3521C04514500B39B36 /* sdasdasdasd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sdasdasdasd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA6D3561C04514500B39B36 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EFA6D3581C04514500B39B36 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				EF9A5AAF1E235DCF004E23EE /* QuartzCore.framework in Frameworks */,
 				EF9A5AAD1E235DC0004E23EE /* CoreTelephony.framework in Frameworks */,
 				EF9A5AAB1E235D58004E23EE /* SystemConfiguration.framework in Frameworks */,
+				EFA682A71E582ABD00626B93 /* UMMobClick.framework in Frameworks */,
 				6042A6AB1D3CAF560030D895 /* WebKit.framework in Frameworks */,
 				EF9A5BC91E2373DE004E23EE /* libcrypto.a in Frameworks */,
 				EF9A5AA91E235D24004E23EE /* AlipaySDK.framework in Frameworks */,
@@ -1160,6 +1163,7 @@
 		EFA6D3491C04514500B39B36 = {
 			isa = PBXGroup;
 			children = (
+				EFA682A61E582ABD00626B93 /* UMMobClick.framework */,
 				EF9A5BC71E2373DE004E23EE /* libcrypto.a */,
 				EF9A5BC81E2373DE004E23EE /* libssl.a */,
 				EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */,
@@ -1326,7 +1330,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = Q3B3AD6JJH;
+						DevelopmentTeam = 96GEC3X62W;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1761,7 +1765,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q3B3AD6JJH;
+				DEVELOPMENT_TEAM = 96GEC3X62W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1785,7 +1789,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1801,7 +1805,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q3B3AD6JJH;
+				DEVELOPMENT_TEAM = 96GEC3X62W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1825,7 +1829,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.huotu.fanmore---";
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

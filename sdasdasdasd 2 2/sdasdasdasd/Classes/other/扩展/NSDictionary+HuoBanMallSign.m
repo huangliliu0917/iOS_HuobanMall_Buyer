@@ -21,6 +21,8 @@
     dict[@"appid"] = HuoBanMallBuyAppId;
     dict[@"timestamp"] = timeSp;
     dict[@"operation"]=@"app";
+    dict[@"version"]=AppVersion;
+    
     //计算asign参数
     NSArray * arr = [dict allKeys];
     [arr enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

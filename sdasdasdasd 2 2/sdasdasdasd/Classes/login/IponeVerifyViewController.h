@@ -13,14 +13,18 @@
 @interface IponeVerifyViewController : UIViewController
 
 
-
+/**是否只有手机登录*/
 @property (nonatomic, assign) BOOL isPhoneLogin;
 
+
+/**是否是绑定手机*/
 @property (nonatomic, assign) BOOL isBundlPhone;
 
-
+/**登录成功后要去的地址*/
 @property (nonatomic, strong) NSString *goUrl;
 
 
+/**新方式去登录需要的信息*/
 @property (nonatomic, strong) UserInfo * userInfo;
+
 @end

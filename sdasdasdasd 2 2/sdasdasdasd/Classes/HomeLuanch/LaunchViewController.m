@@ -196,6 +196,7 @@
     [url appendString:@"/Account/getAppUserInfo"];
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         
+        LWLog(@"%@",json);
         if ([json[@"code"] integerValue] == 200) {
             UserInfo * userInfo = [[UserInfo alloc] init];
             userInfo.unionid = json[@"data"][@"unionId"];
@@ -207,7 +208,7 @@
             NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
             [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
             
-            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"IsMobileBind"] forKey:@"bangShouji"];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
             if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
@@ -299,19 +300,21 @@
 #pragma mark 获取底部导航数据
 
 - (void)getButtomTabbarData {
+    
+    __weak typeof(self) wself = self;
     NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
     //__weak LaunchViewController * wself = self;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
-
-        
         LWLog(@"%@",json);
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  mj_objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
         
+        
+        //底部栏目图片的域名地址
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
         
@@ -341,6 +344,7 @@
         
     } failure:^(NSError *error) {
         LWLog(@"%@",error);
+        [wself getButtomTabbarData];
     }];
 }
 
@@ -356,23 +360,15 @@
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         LWLog(@"myAppToInit%@",json);
         if ([json[@"code"] integerValue] == 200) {
-            //登录方式
+            //测试模式
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"testMode"] forKey:TestMode];
             //站点地址
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
             //支付信息
             NSArray * payType = [PayModel mj_objectArrayWithKeyValuesArray:json[@"data"][@"payConfig"]];
             LWLog(@"%lu",(unsigned long)payType.count);
-            
-         
-            
-            
-            
             AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
             de.payConfig = payType;
-
-            
-            
             [self myAppGetConfig];
         }
     } failure:^(NSError *error) {

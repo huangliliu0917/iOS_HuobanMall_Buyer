@@ -39,23 +39,25 @@
     
     [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
     
-     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-//    LWLog(@"xxxxxxxxxx===%@",path);
-    NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSArray * fileName = [fileManager contentsOfDirectoryAtPath:path error:nil];
+//     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+////    LWLog(@"xxxxxxxxxx===%@",path);
+//    NSFileManager * fileManager = [NSFileManager defaultManager];
+//    NSArray * fileName = [fileManager contentsOfDirectoryAtPath:path error:nil];
+//    
+//    for (int i = 0; i<fileName.count; i++) {
+//        NSString * cc = [fileName[i] copy];
+////        LWLog(@"xxxxxxxxxx===%@",cc);
+//        NSError * error = nil;
+//        
+//        
+//        [fileManager removeItemAtPath:[path stringByAppendingPathComponent:cc] error:&error];
+//        if (error) {
+//            
+//            LWLog(@"%@",error.description);
+//        }
+//    }
     
-    for (int i = 0; i<fileName.count; i++) {
-        NSString * cc = [fileName[i] copy];
-//        LWLog(@"xxxxxxxxxx===%@",cc);
-        NSError * error = nil;
-        
-        
-        [fileManager removeItemAtPath:[path stringByAppendingPathComponent:cc] error:&error];
-        if (error) {
-            
-            LWLog(@"%@",error.description);
-        }
-    }
+    [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:HuoBanMallUserId];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:IconHeadImage];
     

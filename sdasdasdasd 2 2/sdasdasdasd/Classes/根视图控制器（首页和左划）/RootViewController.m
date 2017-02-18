@@ -69,6 +69,7 @@
     tabbar.tabbarArray = self.tabbarArray;
     
     self.controllerArray = [NSMutableArray array];
+    //图片的前面地址
     NSString *imageHostUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"mallResourceURL"];
     
     for (int i = 0; i < self.tabbarArray.count;  i++) {
@@ -161,7 +162,7 @@
         }
         
     }
-    [tabbar.tabBar setTintColor:BottomTaBarButtonTitleColor];
+    [tabbar.tabBar setTintColor:TopNavTitleViewTitleColor];
     
 //    [tabbar.tabBar setBarTintColor:BottomTaBarButtonTitleColor];
     tabbar.selectedIndex = tabbar.HomePage;

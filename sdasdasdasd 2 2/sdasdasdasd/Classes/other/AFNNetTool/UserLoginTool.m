@@ -9,7 +9,7 @@
 #import "UserLoginTool.h"
 #import "AFNetworking.h"
 #import <MKNetworkKit.h>
-
+#import "SVProgressHUD.h"
 
 @interface UserLoginTool()
 
@@ -24,6 +24,7 @@
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 30;
     [manager GET:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         success(responseObject);
@@ -32,15 +33,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         failure(error);
     }];
-    
-    
-//    [manager GET:urlStr parameters:params success:^void(AFHTTPRequestOperation * request, id json) {
-//       success(json);
-//        NSLog(@"%@",request);
-//    } failure:^void(AFHTTPRequestOperation * reponse, NSError * error) {
-//        NSLog(@"%@",reponse);
-//        failure(error);
-//    }];
+
 }
 
 + (void)loginRequestDateGet:(NSString *)urlStr parame:(NSMutableDictionary *)params downloadSuccess:(void (^)(AFHTTPRequestSerializer *operation, id responseObject))success downloadFailure:(void (^)(AFHTTPRequestSerializer *operation, NSError *error))failure progress:(void (^)(float progress))progress{
@@ -73,6 +66,8 @@
   
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 30;
+  
     [manager POST:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         success(responseObject);
@@ -80,6 +75,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         failure(error);
     }];
+    
 }
 
 + (void)loginRequestPostWithFile:(NSString *)urlStr parame:(NSMutableDictionary *)params success:(void (^)(id json))success failure:(void (^)(NSError *error))failure withFileKey:(NSString *)key{
