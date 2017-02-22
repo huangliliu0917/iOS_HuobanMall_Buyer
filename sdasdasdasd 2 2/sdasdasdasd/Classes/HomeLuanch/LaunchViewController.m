@@ -301,8 +301,9 @@
 
 - (void)getButtomTabbarData {
     
+    
     __weak typeof(self) wself = self;
-    NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,HuoBanMallBuyApp_Merchant_Id];
+    NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 ? @"7944" :HuoBanMallBuyApp_Merchant_Id)];
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
@@ -354,6 +355,9 @@
 - (void)NewMyAppToInit{
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    if ([HuoBanMallBuyApp_Merchant_Id intValue] == 5020) {
+       parame[@"merchantid"] = @"7944";
+    }
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/mall/InitMall"];
@@ -386,6 +390,9 @@
 - (void)myAppToInit{
     NSMutableDictionary * parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    if ([HuoBanMallBuyApp_Merchant_Id intValue] == 5020) {
+        parame[@"merchantid"] = @"7944";
+    }
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
     [url appendString:@"/mall/Init"];

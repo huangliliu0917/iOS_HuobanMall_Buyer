@@ -501,6 +501,14 @@
         NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
         [self.homeWebView loadRequest:req];
     }
+    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+        if (error) {
+            self.navigationItem.title = MallName;
+        }else{
+            self.navigationItem.title = title;
+        }
+        
+    }];
 
 }
 //
@@ -1317,12 +1325,35 @@
                 if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
                     decisionHandler(WKNavigationResponsePolicyAllow);
                 }else {
-                    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-                    funWeb.funUrl = temp;
-                    [self.navigationController pushViewController:funWeb animated:YES];
-                    self.tabBarController.tabBar.hidden = YES;
-                    self.navigationItem.title = nil;
-                    decisionHandler(WKNavigationResponsePolicyCancel);
+                    
+                    NSRange spe = [temp rangeOfString:@"#0"];
+                    if (spe.location != NSNotFound ) {
+                        
+                        NSString * hou = [temp substringToIndex:spe.location];
+                        LWLog(@"%@",hou);
+                        if ([[hou lowercaseString] isEqualToString:[self.homeWebUrl lowercaseString]]) {
+                            decisionHandler(WKNavigationResponsePolicyAllow);
+                        }else{
+                            decisionHandler(WKNavigationResponsePolicyCancel);
+                            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                            funWeb.funUrl = temp;
+                            [self.navigationController pushViewController:funWeb animated:YES];
+                            self.tabBarController.tabBar.hidden = YES;
+                            self.navigationItem.title = nil;
+                            [self.homeWebView.scrollView.mj_header endRefreshing];
+                        }
+                        
+                    }else{
+                        decisionHandler(WKNavigationResponsePolicyCancel);
+                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                        funWeb.funUrl = temp;
+                        [self.navigationController pushViewController:funWeb animated:YES];
+                        self.tabBarController.tabBar.hidden = YES;
+                        self.navigationItem.title = nil;
+                        [self.homeWebView.scrollView.mj_header endRefreshing];
+                        
+                    }
+                    
                     
                 }
             }
@@ -1363,7 +1394,12 @@
     if (webView.tag == 100) {
         
         [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            self.navigationItem.title = title;
+            if (error) {
+                self.navigationItem.title = MallName;
+            }else{
+               self.navigationItem.title = title;
+            }
+            
         }];
         
         
