@@ -863,12 +863,34 @@
             }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updateSisProfile"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
-                decisionHandler(WKNavigationResponsePolicyCancel);
-                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-                funWeb.funUrl = temp;
-                [self.navigationController pushViewController:funWeb animated:YES];
-                self.tabBarController.tabBar.hidden = YES;
-                self.navigationItem.title = nil;
+                
+                NSRange spe = [temp rangeOfString:@"#0"];
+                if (spe.location != NSNotFound ) {
+                    
+                    NSString * hou = [temp substringToIndex:spe.location];
+                    LWLog(@"%@",hou);
+                    if ([[hou lowercaseString] isEqualToString:[self.funUrl lowercaseString]]) {
+                        decisionHandler(WKNavigationResponsePolicyAllow);
+                    }else{
+                        decisionHandler(WKNavigationResponsePolicyCancel);
+                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                        funWeb.funUrl = temp;
+                        [self.navigationController pushViewController:funWeb animated:YES];
+                        self.tabBarController.tabBar.hidden = YES;
+                        self.navigationItem.title = nil;
+                        [self.webView.scrollView.mj_header endRefreshing];
+                    }
+                    
+                }else{
+                    decisionHandler(WKNavigationResponsePolicyCancel);
+                    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                    funWeb.funUrl = temp;
+                    [self.navigationController pushViewController:funWeb animated:YES];
+                    self.tabBarController.tabBar.hidden = YES;
+                    self.navigationItem.title = nil;
+                }
+                
+                
                 
                 
             }
