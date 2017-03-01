@@ -18,6 +18,8 @@ pod 'SSZipArchive'
 pod 'MKNetworkKit'
 pod 'MJRefresh'
 pod 'AFNetworking'
+pod 'MJExtension'
+pod 'UMengAnalytics-NO-IDFA'
   target 'sdasdasdasdTests' do
     inherit! :search_paths
     # Pods for testing

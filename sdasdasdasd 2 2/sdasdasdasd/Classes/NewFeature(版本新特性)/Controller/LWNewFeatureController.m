@@ -51,7 +51,10 @@
     //2、添加  pageControll
     
    
-    [self setupPageControll];
+//    if([LWNewFeatureImageCount ]){
+//       [self setupPageControll]; 
+//    }
+//    
  
     
     

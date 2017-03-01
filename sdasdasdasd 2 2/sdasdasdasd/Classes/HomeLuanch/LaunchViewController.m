@@ -357,6 +357,8 @@
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     if ([HuoBanMallBuyApp_Merchant_Id intValue] == 5020) {
        parame[@"merchantid"] = @"7944";
+    }else if([HuoBanMallBuyApp_Merchant_Id intValue] == 3447){
+       parame[@"merchantid"] = @"17413";
     }
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
@@ -392,6 +394,8 @@
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     if ([HuoBanMallBuyApp_Merchant_Id intValue] == 5020) {
         parame[@"merchantid"] = @"7944";
+    }else if([HuoBanMallBuyApp_Merchant_Id intValue] == 3447){
+        parame[@"merchantid"] = @"17413";
     }
     parame = [NSDictionary asignWithMutableDictionary:parame];
     NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];

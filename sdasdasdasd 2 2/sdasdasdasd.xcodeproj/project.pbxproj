@@ -36,7 +36,6 @@
 		EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DC41F1C0BDE2400C3ACD2 /* WeiXinLoginModel.m */; };
 		EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF40A81C1C05677600E664C8 /* Images.xcassets */; };
 		EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF40A8221C056D7E00E664C8 /* ViewController.m */; };
-		EF40A8291C05820B00E664C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF40A8281C05820B00E664C8 /* InfoPlist.strings */; };
 		EF42C11B1C0832FE00602E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF42C1191C0832FE00602E60 /* Main.storyboard */; };
 		EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */ = {isa = PBXBuildFile; fileRef = EF42C11D1C08350500602E60 /* UITableView+CJ.m */; };
 		EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8E69F81C16B27E004ACB5A /* IponeVerifyViewController.m */; };
@@ -60,16 +59,6 @@
 		EF9A5BC51E237128004E23EE /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BC01E237128004E23EE /* RSADataVerifier.m */; };
 		EF9A5BC91E2373DE004E23EE /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A5BC71E2373DE004E23EE /* libcrypto.a */; };
 		EF9A5BCA1E2373DE004E23EE /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A5BC81E2373DE004E23EE /* libssl.a */; };
-		EF9A5BE11E24787C004E23EE /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BCE1E24787C004E23EE /* MJExtensionConst.m */; };
-		EF9A5BE21E24787C004E23EE /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BD01E24787C004E23EE /* MJFoundation.m */; };
-		EF9A5BE31E24787C004E23EE /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BD21E24787C004E23EE /* MJProperty.m */; };
-		EF9A5BE41E24787C004E23EE /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BD41E24787C004E23EE /* MJPropertyKey.m */; };
-		EF9A5BE51E24787C004E23EE /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BD61E24787C004E23EE /* MJPropertyType.m */; };
-		EF9A5BE61E24787C004E23EE /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BD81E24787C004E23EE /* NSObject+MJClass.m */; };
-		EF9A5BE71E24787C004E23EE /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BDA1E24787C004E23EE /* NSObject+MJCoding.m */; };
-		EF9A5BE81E24787C004E23EE /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BDC1E24787C004E23EE /* NSObject+MJKeyValue.m */; };
-		EF9A5BE91E24787C004E23EE /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BDE1E24787C004E23EE /* NSObject+MJProperty.m */; };
-		EF9A5BEA1E24787C004E23EE /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9A5BE01E24787C004E23EE /* NSString+MJExtension.m */; };
 		EF9BF88B1DD0551B0073B90A /* WKCookieSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9BF88A1DD0551B0073B90A /* WKCookieSyncManager.m */; };
 		EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */; };
 		EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B221C055FF900D005E8 /* UIImage+LHB.m */; };
@@ -92,7 +81,6 @@
 		EF9D4C7D1C055FF900D005E8 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B771C055FF900D005E8 /* ApiXml.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EF9D4C7E1C055FF900D005E8 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B791C055FF900D005E8 /* payRequsestHandler.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EF9D4C7F1C055FF900D005E8 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B7B1C055FF900D005E8 /* WXUtil.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		EF9D4C981C055FF900D005E8 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = EF9D4BB41C055FF900D005E8 /* LICENSE */; };
 		EF9D4C991C055FF900D005E8 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4BB71C055FF900D005E8 /* MMDrawerBarButtonItem.m */; };
 		EF9D4C9A1C055FF900D005E8 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4BBA1C055FF900D005E8 /* MMDrawerController.m */; };
 		EF9D4C9B1C055FF900D005E8 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4BBC1C055FF900D005E8 /* MMDrawerVisualState.m */; };
@@ -131,6 +119,7 @@
 		EFA6D3BF1C0451D300B39B36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3BE1C0451D300B39B36 /* AdSupport.framework */; };
 		EFA6D3C11C0451DE00B39B36 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */; };
 		EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */; };
+		EFD580DE1E60196600DFC842 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EFD580DD1E60196600DFC842 /* InfoPlist.strings */; };
 		EFFD3DB31E12153A000FA9FE /* KeFuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -205,7 +194,6 @@
 		EF40A8211C056D7E00E664C8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF40A8221C056D7E00E664C8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		EF40A8271C05805300E664C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		EF40A8281C05820B00E664C8 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		EF41E2BF2687D13CE3A8708C /* libPods-sdasdasdasdUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sdasdasdasdUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF42C11A1C0832FE00602E60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EF42C11C1C08350500602E60 /* UITableView+CJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+CJ.h"; sourceTree = "<group>"; };
@@ -315,27 +303,6 @@
 		EF9A5BC01E237128004E23EE /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		EF9A5BC71E2373DE004E23EE /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		EF9A5BC81E2373DE004E23EE /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		EF9A5BCC1E24787C004E23EE /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
-		EF9A5BCD1E24787C004E23EE /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
-		EF9A5BCE1E24787C004E23EE /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
-		EF9A5BCF1E24787C004E23EE /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
-		EF9A5BD01E24787C004E23EE /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
-		EF9A5BD11E24787C004E23EE /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
-		EF9A5BD21E24787C004E23EE /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
-		EF9A5BD31E24787C004E23EE /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
-		EF9A5BD41E24787C004E23EE /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
-		EF9A5BD51E24787C004E23EE /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
-		EF9A5BD61E24787C004E23EE /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
-		EF9A5BD71E24787C004E23EE /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
-		EF9A5BD81E24787C004E23EE /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
-		EF9A5BD91E24787C004E23EE /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
-		EF9A5BDA1E24787C004E23EE /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
-		EF9A5BDB1E24787C004E23EE /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
-		EF9A5BDC1E24787C004E23EE /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
-		EF9A5BDD1E24787C004E23EE /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
-		EF9A5BDE1E24787C004E23EE /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
-		EF9A5BDF1E24787C004E23EE /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
-		EF9A5BE01E24787C004E23EE /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		EF9BF8891DD0551B0073B90A /* WKCookieSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKCookieSyncManager.h; sourceTree = "<group>"; };
 		EF9BF88A1DD0551B0073B90A /* WKCookieSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKCookieSyncManager.m; sourceTree = "<group>"; };
 		EF9D4B1C1C055B5400D005E8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -380,7 +347,6 @@
 		EF9D4B791C055FF900D005E8 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
 		EF9D4B7A1C055FF900D005E8 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
 		EF9D4B7B1C055FF900D005E8 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
-		EF9D4BB41C055FF900D005E8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		EF9D4BB61C055FF900D005E8 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		EF9D4BB71C055FF900D005E8 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		EF9D4BB81C055FF900D005E8 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -452,6 +418,7 @@
 		EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		EFD580DD1E60196600DFC842 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		EFFD3DB11E12153A000FA9FE /* KeFuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeFuViewController.h; sourceTree = "<group>"; };
 		EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeFuViewController.m; sourceTree = "<group>"; };
 		FD414A393AF918D028562104 /* Pods-sdasdasdasdUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sdasdasdasdUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sdasdasdasdUITests/Pods-sdasdasdasdUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -759,34 +726,6 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		EF9A5BCB1E24787C004E23EE /* MJExtension */ = {
-			isa = PBXGroup;
-			children = (
-				EF9A5BCC1E24787C004E23EE /* MJExtension.h */,
-				EF9A5BCD1E24787C004E23EE /* MJExtensionConst.h */,
-				EF9A5BCE1E24787C004E23EE /* MJExtensionConst.m */,
-				EF9A5BCF1E24787C004E23EE /* MJFoundation.h */,
-				EF9A5BD01E24787C004E23EE /* MJFoundation.m */,
-				EF9A5BD11E24787C004E23EE /* MJProperty.h */,
-				EF9A5BD21E24787C004E23EE /* MJProperty.m */,
-				EF9A5BD31E24787C004E23EE /* MJPropertyKey.h */,
-				EF9A5BD41E24787C004E23EE /* MJPropertyKey.m */,
-				EF9A5BD51E24787C004E23EE /* MJPropertyType.h */,
-				EF9A5BD61E24787C004E23EE /* MJPropertyType.m */,
-				EF9A5BD71E24787C004E23EE /* NSObject+MJClass.h */,
-				EF9A5BD81E24787C004E23EE /* NSObject+MJClass.m */,
-				EF9A5BD91E24787C004E23EE /* NSObject+MJCoding.h */,
-				EF9A5BDA1E24787C004E23EE /* NSObject+MJCoding.m */,
-				EF9A5BDB1E24787C004E23EE /* NSObject+MJKeyValue.h */,
-				EF9A5BDC1E24787C004E23EE /* NSObject+MJKeyValue.m */,
-				EF9A5BDD1E24787C004E23EE /* NSObject+MJProperty.h */,
-				EF9A5BDE1E24787C004E23EE /* NSObject+MJProperty.m */,
-				EF9A5BDF1E24787C004E23EE /* NSString+MJExtension.h */,
-				EF9A5BE01E24787C004E23EE /* NSString+MJExtension.m */,
-			);
-			path = MJExtension;
-			sourceTree = "<group>";
-		};
 		EF9BF8881DD055000073B90A /* single(cookie单例) */ = {
 			isa = PBXGroup;
 			children = (
@@ -917,7 +856,6 @@
 		EF9D4B421C055FF900D005E8 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				EF9A5BCB1E24787C004E23EE /* MJExtension */,
 				EF9D4B6D1C055FF900D005E8 /* Encryption */,
 				EF9D4B751C055FF900D005E8 /* lib */,
 				EF9D4BB31C055FF900D005E8 /* MMDrawerController */,
@@ -956,7 +894,6 @@
 		EF9D4BB31C055FF900D005E8 /* MMDrawerController */ = {
 			isa = PBXGroup;
 			children = (
-				EF9D4BB41C055FF900D005E8 /* LICENSE */,
 				EF9D4BB51C055FF900D005E8 /* MMDrawerController */,
 				EF9D4BBF1C055FF900D005E8 /* README.md */,
 			);
@@ -1216,9 +1153,9 @@
 		EFA6D3551C04514500B39B36 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFD580DD1E60196600DFC842 /* InfoPlist.strings */,
 				EF9A5AA61E235D24004E23EE /* AlipaySDK.bundle */,
 				EF9A5AA71E235D24004E23EE /* AlipaySDK.framework */,
-				EF40A8281C05820B00E664C8 /* InfoPlist.strings */,
 				EFA6D3561C04514500B39B36 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -1373,14 +1310,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF9D4C5D1C055FF900D005E8 /* MidTabelViewCell.xib in Resources */,
-				EF40A8291C05820B00E664C8 /* InfoPlist.strings in Resources */,
 				60A216B21D925B5500A0FF1D /* ShareSDKUI.bundle in Resources */,
 				EF9A5AA81E235D24004E23EE /* AlipaySDK.bundle in Resources */,
+				EFD580DE1E60196600DFC842 /* InfoPlist.strings in Resources */,
 				EF9D4C661C055FF900D005E8 /* MyLoginView.xib in Resources */,
 				EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */,
 				EF9D4CB31C055FF900D005E8 /* MBProgressHUD.bundle in Resources */,
 				EFA6D3651C04514500B39B36 /* LaunchScreen.storyboard in Resources */,
-				EF9D4C981C055FF900D005E8 /* LICENSE in Resources */,
 				60A216B51D925B5500A0FF1D /* read_me.txt in Resources */,
 				60A216B81D925B5500A0FF1D /* ShareSDK.bundle in Resources */,
 				60A216B61D925B5500A0FF1D /* README.txt in Resources */,
@@ -1542,7 +1478,6 @@
 				EF9D4C7E1C055FF900D005E8 /* payRequsestHandler.mm in Sources */,
 				EF9D4CA81C055FF900D005E8 /* AccountModel.m in Sources */,
 				EF9D4CAF1C055FF900D005E8 /* LWTabBarButton.m in Sources */,
-				EF9A5BE11E24787C004E23EE /* MJExtensionConst.m in Sources */,
 				EF9A5AA41E2359DA004E23EE /* NSString+Des.m in Sources */,
 				EF9A5BC51E237128004E23EE /* RSADataVerifier.m in Sources */,
 				EF9D4CA71C055FF900D005E8 /* LoginViewController.m in Sources */,
@@ -1556,7 +1491,6 @@
 				60025BC41D3F24940099A617 /* NSData+NSDataDeal.m in Sources */,
 				EF9D4C641C055FF900D005E8 /* LeftTableViewCell.m in Sources */,
 				EF9A5BC31E237128004E23EE /* openssl_wrapper.m in Sources */,
-				EF9A5BEA1E24787C004E23EE /* NSString+MJExtension.m in Sources */,
 				EF9D4C5E1C055FF900D005E8 /* HTLeftTableViewController.m in Sources */,
 				EF9D4C7F1C055FF900D005E8 /* WXUtil.mm in Sources */,
 				EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */,
@@ -1571,16 +1505,12 @@
 				EF9D4CBA1C055FF900D005E8 /* RootViewController.m in Sources */,
 				EF9D4CAD1C055FF900D005E8 /* LWBadgeButton.m in Sources */,
 				EF8E69F91C16B27E004ACB5A /* IponeVerifyViewController.m in Sources */,
-				EF9A5BE91E24787C004E23EE /* NSObject+MJProperty.m in Sources */,
-				EF9A5BE51E24787C004E23EE /* MJPropertyType.m in Sources */,
 				EF40A8231C056D7E00E664C8 /* ViewController.m in Sources */,
 				EF9D4C9C1C055FF900D005E8 /* UIViewController+MMDrawerController.m in Sources */,
 				EFFD3DB31E12153A000FA9FE /* KeFuViewController.m in Sources */,
-				EF9A5BE31E24787C004E23EE /* MJProperty.m in Sources */,
 				EF9D4C5C1C055FF900D005E8 /* MidTabelViewCell.m in Sources */,
 				EF2D83D31DD2CF23008F0ED5 /* AlipayViewController.m in Sources */,
 				EF9D4CB01C055FF900D005E8 /* LWNewFeatureController.m in Sources */,
-				EF9A5BE61E24787C004E23EE /* NSObject+MJClass.m in Sources */,
 				EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */,
 				EF9A5BC11E237128004E23EE /* base64.m in Sources */,
 				EF9A5B171E236148004E23EE /* Order.m in Sources */,
@@ -1594,8 +1524,6 @@
 				EF9D4CB41C055FF900D005E8 /* MBProgressHUD.m in Sources */,
 				EF9D4CB11C055FF900D005E8 /* UserLoginTool.m in Sources */,
 				EF9D4C611C055FF900D005E8 /* LeftMenuModel.m in Sources */,
-				EF9A5BE41E24787C004E23EE /* MJPropertyKey.m in Sources */,
-				EF9A5BE81E24787C004E23EE /* NSObject+MJKeyValue.m in Sources */,
 				EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */,
 				EF9D4C5F1C055FF900D005E8 /* AQuthModel.m in Sources */,
 				EF9D4C5B1C055FF900D005E8 /* HomeViewController.m in Sources */,
@@ -1604,13 +1532,11 @@
 				608E629E1D87CE4000C1C7C2 /* MallTabbarViewController.m in Sources */,
 				EF9D4C9B1C055FF900D005E8 /* MMDrawerVisualState.m in Sources */,
 				60025BCA1D3F250F0099A617 /* HTNoticeCenter.m in Sources */,
-				EF9A5BE71E24787C004E23EE /* NSObject+MJCoding.m in Sources */,
 				EF9D4CB81C055FF900D005E8 /* PushWebViewController.m in Sources */,
 				EF01595E1E24E3E50017D7BA /* UITabBar+XSDExt.m in Sources */,
 				60025BCB1D3F250F0099A617 /* NoticeMessage.m in Sources */,
 				608E62A11D87CE5C00C1C7C2 /* TabBarModel.m in Sources */,
 				EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */,
-				EF9A5BE21E24787C004E23EE /* MJFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
