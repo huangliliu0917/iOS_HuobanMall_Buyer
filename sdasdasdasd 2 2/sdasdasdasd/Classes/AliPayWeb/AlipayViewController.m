@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"支付宝支付";
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIWebView * web = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     web.delegate = self;
@@ -30,11 +31,7 @@
   
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    self.navigationItem.title = self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    
-}
-
+ 
 /*
 #pragma mark - Navigation
 

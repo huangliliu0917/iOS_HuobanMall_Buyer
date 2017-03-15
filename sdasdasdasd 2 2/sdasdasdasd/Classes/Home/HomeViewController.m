@@ -1327,7 +1327,8 @@
                 }else {
                     
                     NSRange spe = [temp rangeOfString:@"#0"];
-                    if (spe.location != NSNotFound ) {
+                    NSRange spes = [temp rangeOfString:@"#4"];
+                    if (spe.location != NSNotFound ||  spes.location != NSNotFound) {
                         
                         NSString * hou = [temp substringToIndex:spe.location];
                         LWLog(@"%@",hou);

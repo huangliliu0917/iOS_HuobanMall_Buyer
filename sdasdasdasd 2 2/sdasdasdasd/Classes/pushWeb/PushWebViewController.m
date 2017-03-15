@@ -150,7 +150,7 @@
     
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(-25, 0, 25, 25);
-    btn.contentEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0);
+    btn.contentEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);
     [btn addTarget:self action:@selector(BackToHome) forControlEvents:UIControlEventTouchUpInside];
     
     if([HuoBanMallBuyApp_Merchant_Id intValue] == 7020){
@@ -160,10 +160,9 @@
     }
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
   
-    
-    
+
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payCuccess:) name:@"payback" object:nil];
@@ -860,7 +859,7 @@
                      decisionHandler(WKNavigationResponsePolicyAllow);
                 }
                 
-            }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updateSisProfile"].location!=NSNotFound) {
+            }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updatesisprofile"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
                 
@@ -901,7 +900,7 @@
 
     }
     
-    //decisionHandler(WKNavigationResponsePolicyAllow);
+    decisionHandler(WKNavigationResponsePolicyAllow);
 
 }
 
@@ -1204,6 +1203,7 @@
  */
 - (void)zhifubaoPay {
     AppDelegate * de = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     NSArray *namesArray = de.payConfig;
 
     PayModel * paymodel =  namesArray[0];

@@ -32,4 +32,8 @@
 
 @property(nonatomic,assign) BOOL webPagePay;
 
+
+
+
+
 @end
