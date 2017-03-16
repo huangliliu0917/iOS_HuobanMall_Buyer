@@ -10,4 +10,6 @@
 
 @interface LWNavigationController : UINavigationController
 
+//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated swipeBack:(BOOL)swipeBack;
+
 @end

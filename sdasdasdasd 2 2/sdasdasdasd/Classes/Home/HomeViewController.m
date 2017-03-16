@@ -44,7 +44,7 @@
 #import "NSDictionary+ConfirmSign.h"
 #import "ADView.h"
 
-
+#import "LWNavigationController.h"
 
 
 
@@ -599,10 +599,11 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    RootViewController * root = (RootViewController *)self.mm_drawerController;
-    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    
+//    RootViewController * root = (RootViewController *)self.mm_drawerController;
+//    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+//    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+//    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
+//    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     //if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound || [[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location != NSNotFound) {
         //NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
         //NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
@@ -1348,7 +1349,7 @@
                         decisionHandler(WKNavigationResponsePolicyCancel);
                         PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                         funWeb.funUrl = temp;
-                        [self.navigationController pushViewController:funWeb animated:YES];
+                        [self.navigationController pushViewController:funWeb animated:YES ];
                         self.tabBarController.tabBar.hidden = YES;
                         self.navigationItem.title = nil;
                         [self.homeWebView.scrollView.mj_header endRefreshing];
@@ -1546,7 +1547,7 @@
     UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
     funWeb.funUrl = url;
-    [self.navigationController pushViewController:funWeb animated:YES];
+    [self.navigationController pushViewController:funWeb animated:YES ];
 }
 
 #pragma mark 登录修改

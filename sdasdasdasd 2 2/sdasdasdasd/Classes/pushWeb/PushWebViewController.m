@@ -180,6 +180,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    self.tabBarController.tabBar.hidden = YES;
     
     AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appde.currentVc = self;
@@ -192,9 +193,9 @@
     [self.webView loadRequest:req];
     
     
-    RootViewController * root = (RootViewController *)self.mm_drawerController;
-    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
-    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+//    RootViewController * root = (RootViewController *)self.mm_drawerController;
+//    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
+//    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeBezelPanningCenterView];
     
     [self.navigationController.navigationBar addSubview:_progressView];
     
