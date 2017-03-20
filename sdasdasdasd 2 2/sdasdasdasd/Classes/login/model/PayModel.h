@@ -33,7 +33,7 @@
 @property(nonatomic,assign) BOOL webPagePay;
 
 
-
+@property(nonatomic,strong) NSString * payCenterDomain;
 
 
 @end

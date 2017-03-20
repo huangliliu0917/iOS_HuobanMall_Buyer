@@ -35,6 +35,7 @@
 #import "NSDictionary+ConfirmSign.h"
 #import "WKCookieSyncManager.h"
 #import "AlipayViewController.h"
+#import "LWNavigationController.h"
 @interface PushWebViewController ()<WXApiDelegate,UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
@@ -188,7 +189,8 @@
     
     self.webView.frame = self.view.frame;
     NSURL * urlStr = [NSURL URLWithString:_funUrl];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+    [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
     self.webView.tag = 20;
     [self.webView loadRequest:req];
     
@@ -393,6 +395,8 @@
 //
 - (void)doAlipayPay:(PayModel *)pay
 {
+    
+    LWLog(@"%@",[pay mj_keyValues]);
     //重要说明
     //这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
     //真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
@@ -453,7 +457,7 @@
     order.sign_type = (rsa2PrivateKey.length > 1)?@"RSA2":@"RSA";
     
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSMutableString * urls = [NSMutableString stringWithString:uraaa];
+    NSMutableString * urls = [NSMutableString stringWithString:((pay.payCenterDomain.length > 0)? pay.payCenterDomain: uraaa)];
     [urls appendString:pay.notify];
     order.notify_url = urls;
     
@@ -542,7 +546,7 @@
         params[@"body"] = ((self.proDes.length)?self.proDes:MallName); //商品或支付单简要描述
 //        LWLog(@"self.proDes%@",self.proDes);
         NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-        NSMutableString * urls = [NSMutableString stringWithString:uraaa];
+        NSMutableString * urls = [NSMutableString stringWithString:((paymodel.payCenterDomain.length > 0)? paymodel.payCenterDomain: uraaa)];
         [urls appendString:paymodel.notify];
         params[@"notify_url"] = urls;  //接收微信支付异步通知回调地址
         params[@"out_trade_no"] = self.orderNo; //订单号
@@ -704,7 +708,7 @@
         
         if ([str intValue] == 0 || [str intValue] == 3 || [str intValue] == 1) {
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
             login.title = @"登录";
             login.goUrl = goUrl;
             if ([str intValue] == 1) {
@@ -715,7 +719,7 @@
             }];
         }else if ([str intValue] == 1) {
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
             login.isPhoneLogin = YES;
             login.title = @"登录";
             login.goUrl = goUrl;
@@ -726,7 +730,7 @@
             LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
             login.title = @"登录";
             login.goUrl = goUrl;
-            UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
             [self presentViewController:root animated:YES completion:^{
                 [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
             }];
@@ -777,10 +781,6 @@
         LWLog(@"%lu",(unsigned long)namesArray.count);
         NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
         [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
-        
-        
-        
-        
         AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
         NSString * to = [NSDictionary ToSignUrlWithString:url];
         [SVProgressHUD show];

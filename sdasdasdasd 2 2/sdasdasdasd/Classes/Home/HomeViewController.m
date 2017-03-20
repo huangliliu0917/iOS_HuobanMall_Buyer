@@ -398,7 +398,7 @@
             
         }];
         //设置倒计时（默认3秒）
-        adView.showTime = 5;
+//        adView.showTime = 5;
         
         //2、显示广告
         [adView show];
@@ -480,7 +480,8 @@
     }
     if ([self.homeWebUrl rangeOfString:@"/UserCenter/Index.aspx"].location == NSNotFound && [self.homeWebUrl rangeOfString:@"/Mall/Cart.aspx"].location == NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+        [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
         [self.homeWebView loadRequest:req];
     }
     
@@ -498,7 +499,8 @@
     
     if ([self.homeWebUrl rangeOfString:@"/UserCenter/Index.aspx"].location != NSNotFound || [self.homeWebUrl rangeOfString:@"/Mall/Cart.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-        NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+        NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+        [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
         [self.homeWebView loadRequest:req];
     }
     [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
@@ -587,7 +589,8 @@
     NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
     NSURL * urlStr = [NSURL URLWithString:ddd];
-    NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
+    NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+    [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
     [self.homeWebView loadRequest:req];
 }
 
@@ -1069,58 +1072,59 @@
 }
 #pragma mark UIWebView
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    LWLog(@"shouldStartLoadWithRequest");
-    NSString *temp = request.URL.absoluteString;
-    
-    LWLog(@"%@",temp);
-    NSString *url = [temp lowercaseString];
-    
-    
-    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-    if ([url isEqualToString:cc]) {
-        return YES;
-    }else if ([url rangeOfString:@"/js/easemob/im.html?"].location != NSNotFound){
-        
-        [self.homeWebView loadRequest:request];
-        return NO;
-    }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
-        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
-        }else{
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
-        }
-        return NO;
-    }else {
-        
-        NSRange range = [temp rangeOfString:@"back"];
-        NSString * newUrls = nil;
-        if (range.location != NSNotFound) {
-            
-            newUrls = [temp stringByReplacingCharactersInRange:range withString:@"back=1"];
-        }else{
-            newUrls = [NSString stringWithFormat:@"%@&back=1",temp];
-        }
-        
-        NSRange ran = [newUrls rangeOfString:@"aspx"];
-        NSString * newUrl = nil;
-        if (ran.location != NSNotFound) {
-            NSRange cc = NSMakeRange(ran.location+ran.length, 1);
-            newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
-            NSString * dddd = newUrl;
-            NSURL * urlStr = [NSURL URLWithString:dddd];
-            NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-            [self.homeWebView loadRequest:req];
-            return NO;
-        }else {
-            [self.homeWebView loadRequest:request];
-            return NO;
-        }
-    }
-    return NO;
-    //    }
-}
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+//    LWLog(@"shouldStartLoadWithRequest");
+//    NSString *temp = request.URL.absoluteString;
+//    
+//    LWLog(@"%@",temp);
+//    NSString *url = [temp lowercaseString];
+//    
+//    
+//    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+//    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
+//    if ([url isEqualToString:cc]) {
+//        return YES;
+//    }else if ([url rangeOfString:@"/js/easemob/im.html?"].location != NSNotFound){
+//        
+//        [self.homeWebView loadRequest:request];
+//        return NO;
+//    }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
+//        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
+//        }else{
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
+//        }
+//        return NO;
+//    }else {
+//        
+//        NSRange range = [temp rangeOfString:@"back"];
+//        NSString * newUrls = nil;
+//        if (range.location != NSNotFound) {
+//            
+//            newUrls = [temp stringByReplacingCharactersInRange:range withString:@"back=1"];
+//        }else{
+//            newUrls = [NSString stringWithFormat:@"%@&back=1",temp];
+//        }
+//        
+//        NSRange ran = [newUrls rangeOfString:@"aspx"];
+//        NSString * newUrl = nil;
+//        if (ran.location != NSNotFound) {
+//            NSRange cc = NSMakeRange(ran.location+ran.length, 1);
+//            newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
+//            NSString * dddd = newUrl;
+//            NSURL * urlStr = [NSURL URLWithString:dddd];
+//            NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+//            [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
+//            [self.homeWebView loadRequest:req];
+//            return NO;
+//        }else {
+//            [self.homeWebView loadRequest:request];
+//            return NO;
+//        }
+//    }
+//    return NO;
+//    //    }
+//}
 
 #pragma mark wkWebView
 
@@ -1129,6 +1133,7 @@
     
     LWLog(@"decidePolicyForNavigationResponse");
     NSString *temp = webView.URL.absoluteString;
+//    NSMutableURLRequest * res = webView.re
     LWLog(@"%@",temp);
     NSString *url = [temp lowercaseString];
     
@@ -1170,7 +1175,7 @@
              */
             if ([str intValue] == 0 || [str intValue] == 3 || [str intValue] == 1) {
                 IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+                LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
                 login.title = @"登录";
                 login.goUrl = goUrl;
                 if ([str intValue] == 1) {
@@ -1184,7 +1189,7 @@
                 LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
                 login.title = @"登录";
                 login.goUrl = goUrl;
-                UINavigationController * root = [[UINavigationController alloc] initWithRootViewController:login];
+                LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
                     [self BackToWebView];

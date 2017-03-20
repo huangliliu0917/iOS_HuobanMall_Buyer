@@ -141,7 +141,19 @@
             }else if([resultDic[@"resultStatus"] intValue] == 6001){
                 [self payCancle];
             }
-            
+            NSLog(@"result = %@",resultDic);
+            // 解析 auth code
+            NSString *result = resultDic[@"result"];
+            NSString *authCode = nil;
+            if (result.length>0) {
+                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+                for (NSString *subResult in resultArr) {
+                    if (subResult.length > 9 && [subResult hasPrefix:@"trade_no="]) {
+                        authCode = [subResult substringFromIndex:9];
+                        break;
+                    }
+                }
+            }
         }];
         // 授权跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
@@ -208,7 +220,7 @@
          }
      }];
     
-    if([HuoBanMallBuyApp_Merchant_Id intValue] == 4886 || [HuoBanMallBuyApp_Merchant_Id intValue] == 8082){
+    if([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 4886 || [HuoBanMallBuyApp_Merchant_Id intValue] == 8082){
        
         UMConfigInstance.appKey = HuoBanMallYouMeng;
         UMConfigInstance.channelId = @"App Store";
@@ -355,7 +367,7 @@
     NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",userID, usaa.unionid, usaa.openid, SISSecret]];
     
     
-    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,userID, usaa.unionid, usaa.openid]];
+    newAgent = [_Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;hotappver=%@;",str,userID, usaa.unionid, usaa.openid,WBAPPVERSION]];
     
     
     self.userAgent = newAgent;

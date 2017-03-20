@@ -267,6 +267,7 @@
             self.loginWarning.hidden = NO;
             self.warnView.hidden = YES;
             [self.login setTitle:@"登录" forState:UIControlStateNormal];
+            [self.login setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
             
