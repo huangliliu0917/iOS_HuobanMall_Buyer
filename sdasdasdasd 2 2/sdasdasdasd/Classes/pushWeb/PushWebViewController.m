@@ -37,6 +37,7 @@
 #import "AlipayViewController.h"
 #import "LWNavigationController.h"
 #import "NSString+Des.h"
+#import "MBProgressHUD+MJ.h"
 @interface PushWebViewController ()<WXApiDelegate,UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
@@ -525,6 +526,7 @@
         [WXApi sendReq:req];
     }else{
         LWLog(@"提示信息----微信预支付失败");
+        [MBProgressHUD showError:@"微信预支付失败"];
     }
 }
 
@@ -538,7 +540,6 @@
     
     LWLog(@"%@",paymodel.appKey);
     [payManager setKey:paymodel.appKey];
-    
 //    LWLog(@"%@-----%@ -----",paymodel.appId,paymodel.partnerId);
     BOOL isOk = [payManager init:paymodel.appId mch_id:paymodel.partnerId];
     if (isOk) {
@@ -562,8 +563,8 @@
         //获取prepayId（预支付交易会话标识）
         NSString * prePayid = nil;
         prePayid  = [payManager sendPrepay:params];
-//        [payManager getDebugifo];
-//        LWLog(@"%@",[payManager getDebugifo]);
+        [payManager getDebugifo];
+        LWLog(@"%@---%@",payManager.debugDescription,payManager.getDebugifo);
         if ( prePayid != nil) {
             //获取到prepayid后进行第二次签名
             NSString    *package, *time_stamp, *nonce_str;
@@ -588,6 +589,10 @@
             //添加签名
             [signParams setObject: sign forKey:@"sign"];
             [_debugInfo appendFormat:@"第二步签名成功，sign＝%@\n",sign];
+            
+            LWLog(@"%@",_debugInfo);
+            
+            
             //返回参数列表
             return signParams;
         }else{
@@ -862,7 +867,7 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        [self getOrderPayInfo:orderNo];
     }];
 
     

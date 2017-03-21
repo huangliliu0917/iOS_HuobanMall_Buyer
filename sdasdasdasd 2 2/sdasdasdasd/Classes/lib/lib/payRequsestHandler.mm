@@ -131,6 +131,7 @@
             last_errcode = 1;
             [debugInfo appendFormat:@"gen_sign=%@\n   _sign=%@\n",sign,send_sign];
             [debugInfo appendFormat:@"服务器返回签名验证错误！！！\n"];
+            LWLog(@"%@",debugInfo);
         }
     }else{
         last_errcode = 2;

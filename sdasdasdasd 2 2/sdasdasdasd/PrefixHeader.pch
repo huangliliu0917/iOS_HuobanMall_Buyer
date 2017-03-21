@@ -58,8 +58,8 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx5c8085c6edf32b7d" //@"wxaeda2d5603b12302"
-#define HuoBanMallShareSdkWeiXinSecret @"d46f7e913688767f049c1ce9dacc9cea"//@"8ad99de44bd96a323eb40dc161e7d8e8"
+#define HuoBanMallBuyWeiXinAppId @"wxaeda2d5603b12302" //@"wxaeda2d5603b12302"
+#define HuoBanMallShareSdkWeiXinSecret @"0db0d4908a6ae6a09b0a7727878f0ca6"//@"8ad99de44bd96a323eb40dc161e7d8e8"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
