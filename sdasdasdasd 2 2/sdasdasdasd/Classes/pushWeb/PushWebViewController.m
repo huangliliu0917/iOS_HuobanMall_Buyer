@@ -592,7 +592,7 @@
             
             LWLog(@"%@",_debugInfo);
             
-            
+            //code=404
             //返回参数列表
             return signParams;
         }else{
@@ -777,7 +777,9 @@
     }else if ([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
         decisionHandler(WKNavigationResponsePolicyCancel);
         [self doPayLogic:[temp copy]];
-    } else {
+    }else if([url rangeOfString:@"code=404"].location != NSNotFound){
+        decisionHandler(WKNavigationResponsePolicyAllow);
+    }else{
         if (![temp isEqualToString:self.funUrl]) {
             //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             
