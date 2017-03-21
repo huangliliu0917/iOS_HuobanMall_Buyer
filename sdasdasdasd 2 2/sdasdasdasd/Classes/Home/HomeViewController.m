@@ -342,6 +342,8 @@
     LWLog(@"%@",self.openUrl);
     
     //    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSLog(@"%@",app.userAgent);
     self.homeWebView.customUserAgent = app.userAgent;
     NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
     NSString * webChennel = [[NSUserDefaults standardUserDefaults] objectForKey:@"KeFuWebchannel"];

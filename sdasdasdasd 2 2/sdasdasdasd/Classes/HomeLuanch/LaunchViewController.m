@@ -245,55 +245,8 @@
 
 - (void)resetUserAgent:(NSString *) goUrl {
     
-    
-    // Do any additional setup after loading the view, typically from a nib.
-    
-    
-    //add my info to the new agent
-    NSString *newAgent = nil;
-    UserInfo * usaa = nil;
-    
-    NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
-    usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
-    
-    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    //    NSString *tempUserId = [(NSNumber*)userID  stringValue]
-    if ([NSString stringWithFormat:@"%@", userID].length == 0) {
-        userID = @"";
-    }
-    if (usaa) {
-        if (usaa.unionid) {
-        }else {
-            usaa.unionid = @"";
-        }
-        if (usaa.openid) {
-        }else {
-            usaa.openid= @"";
-        }
-    }else {
-        usaa = [[UserInfo alloc] init];
-        usaa.openid = @"";
-        usaa.unionid = @"";
-    }
-    
-    NSString *str = [MD5Encryption md5by32:[NSString stringWithFormat: @"%@%@%@%@",userID, usaa.unionid, usaa.openid, SISSecret]];
-    
-    AppDelegate * appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    newAgent = [appDelegate.Agent stringByAppendingString:[NSString stringWithFormat: @";mobile;hottec:%@:%@:%@:%@;",str,userID, usaa.unionid, usaa.openid]];
-    
-    
-    appDelegate.userAgent = newAgent;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:ResetAllWebAgent object:nil];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        if (goUrl) {
-            NSDictionary * objc = [NSDictionary dictionaryWithObject:goUrl forKey:@"url"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToHomeView" object:nil userInfo:objc];
-        }
-    });
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [app resetUserAgent:nil];
     
 }
 

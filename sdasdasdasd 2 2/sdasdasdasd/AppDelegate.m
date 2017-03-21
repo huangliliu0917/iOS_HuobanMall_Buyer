@@ -519,8 +519,9 @@
 
 - (void)paySuccess{
     
+    NSString * order = [[NSUserDefaults standardUserDefaults] objectForKey:@"OrderNo"];
     NSString * aa =  [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-    NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,HuoBanMallBuyApp_Merchant_Id];
+    NSString * url =  [NSString stringWithFormat:@"%@/Weixin/Pay/PayReturn.aspx?customerid=%@&orderid=",aa,order];
     if (![self.currentVc.navigationItem.title isEqualToString:@"订单列表"]) {
         PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
         funWeb.funUrl = url;

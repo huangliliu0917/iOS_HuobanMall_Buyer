@@ -14,4 +14,7 @@
 
 
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+
++ (NSMutableDictionary *)getURLParameters:(NSString *)urlStr;
+
 @end
