@@ -874,7 +874,7 @@
 }
 
 - (void)doPayLogic:(NSString *)serverUrl{
-    __weak PushWebViewController *wself = self;
+//    __weak PushWebViewController *wself = self;
     
     self.ServerPayUrl = serverUrl;
     
