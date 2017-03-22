@@ -66,12 +66,19 @@
 //@property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 @property (nonatomic, assign) BOOL bingWeixin;
 
+@property (nonatomic, copy) NSString * mainSite;
+
 @end
 
 
 @implementation PushWebViewController
 
-
+- (NSString *)mainSite{
+    if (!_mainSite.length) {
+        _mainSite = [[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl] lowercaseString];
+    }
+    return _mainSite;
+}
 
 - (UIButton *)shareBtn{
     if (_shareBtn == nil) {
@@ -273,42 +280,6 @@
     [self shareSdkSha];
 }
 
-/**
- *  分享url处理
- */
-- (NSString *) toCutew:(NSString *)urs{
-    
-    NSString * gduid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    
-    NSRange rang = [urs rangeOfString:@"?"];
-    
-    NSString * back = [urs substringFromIndex:rang.location + 1];
-    
-    NSArray * aa =  [back componentsSeparatedByString:@"&"];
-    
-    __block NSMutableArray * todelete = [NSMutableArray arrayWithArray:aa];
-    
-    NSArray * key = @[@"unionid",@"appid",@"sign"];
-    [aa enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [key enumerateObjectsUsingBlock:^(NSString * key, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj containsString:key]) {
-                [todelete removeObject:obj];
-            }
-        }];
-    }];
-    
-    NSMutableString * cc = [[NSMutableString alloc] init];
-    [todelete enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *  stop) {
-        
-        [cc appendFormat:@"%@&",obj];
-    }];
-    [cc appendFormat:@"gduid=%@",gduid];
-    
-    NSString * ee = [urs substringToIndex:rang.location+1];
-    
-    NSString * dd = [NSString stringWithFormat:@"%@%@",ee,cc];
-    return dd;
-}
 
 
 - (void)shareSdkSha{
@@ -679,6 +650,13 @@
 }
 
 #pragma mark wk
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+    if (navigationAction.targetFrame == nil) {
+        [webView loadRequest:navigationAction.request];
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
@@ -686,7 +664,7 @@
     
     NSString *temp = webView.URL.absoluteString;
     LWLog(@"decidePolicyForNavigationResponse%@",temp);
-    
+    LWLog(@"decidePolicyForNavigationResponse%@",self.mainSite);
     //downurl
     NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
@@ -779,25 +757,32 @@
         [self doPayLogic:[temp copy]];
     }else if([url rangeOfString:@"code=404"].location != NSNotFound){
         decisionHandler(WKNavigationResponsePolicyAllow);
+    }else if([url rangeOfString:self.mainSite].location != NSNotFound && [[url substringToIndex:url.length - 1] compare:self.mainSite] == NSOrderedSame){
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
         if (![temp isEqualToString:self.funUrl]) {
-            //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            
             if([temp rangeOfString:@"https"].location != NSNotFound){
-                
                 temp = [temp stringByReplacingOccurrencesOfString:@"https"withString:@"http"];
                 if ([temp isEqualToString:self.funUrl]) {
                      decisionHandler(WKNavigationResponsePolicyAllow);
                 }
-                
             }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updatesisprofile"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
                 
-                NSRange spe = [temp rangeOfString:@"#0"];
-                if (spe.location != NSNotFound ) {
+                NSRange spe = [temp rangeOfString:@"back#"];
+                LWLog(@"%@",NSStringFromRange(spe));
+                if (spe.location != NSNotFound) {
                     
-                    NSString * hou = [temp substringToIndex:spe.location];
+                    NSString * hou = nil;
+                    @try {
+                        hou = [temp substringToIndex:temp.length-2];
+                    } @catch (NSException *exception) {
+                        
+                    } @finally {
+                        
+                    }
                     LWLog(@"%@",hou);
                     if ([[hou lowercaseString] isEqualToString:[self.funUrl lowercaseString]]) {
                         decisionHandler(WKNavigationResponsePolicyAllow);
@@ -813,6 +798,7 @@
                     
                 }else{
                     decisionHandler(WKNavigationResponsePolicyCancel);
+                    [self.webView.scrollView.mj_header endRefreshing];
                     PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                     funWeb.funUrl = temp;
                     [self.navigationController pushViewController:funWeb animated:YES];

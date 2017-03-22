@@ -220,7 +220,7 @@
          }
      }];
     
-    if([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 4886 || [HuoBanMallBuyApp_Merchant_Id intValue] == 8082){
+    if([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 4886 || [HuoBanMallBuyApp_Merchant_Id intValue] == 8082 ||[HuoBanMallBuyApp_Merchant_Id intValue] == 7020){
        
         UMConfigInstance.appKey = HuoBanMallYouMeng;
         UMConfigInstance.channelId = @"App Store";

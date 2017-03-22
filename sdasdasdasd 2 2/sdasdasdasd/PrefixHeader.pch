@@ -38,82 +38,82 @@
 ///*
 // * 3447 51 商城
 // */
-#define LWNewFeatureImageCount 1
-#define MallName @"小月儿商城"
+//#define LWNewFeatureImageCount 1
+//#define MallName @"小月儿商城"
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081"
+//#define NoticeCenterMainUrl @"http://test.api.open.huobanplus.com:8081"
 /**网络  APP 标识*/
-#define NoticeCenterAppKey  @"huoban"
+//#define NoticeCenterAppKey  @"huoban"
 /**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"319ea9ad29ef4a50d6801c2f406dd208"
+//#define NoticeCenterAppSecure  @"319ea9ad29ef4a50d6801c2f406dd208"
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.51flashmall.com"
-#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"
-#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"
+//#define AppOriginUrl  @"http://mallapi.51flashmall.com"
+//#define HuoBanMallBuyAppId @"huotu686ad1fe2bd8a02bb"
+//#define HuoBanMallBuyAppSecrect @"483686ad1fe2bd8a02bbdca24e109953a4a96c"
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"1a99b09235260"
-#define HuoBanMallYouMeng @"58b66f22a3251127b3001e82"
+//#define HuoBanMallShareSdkAppId @"1a99b09235260"
+//#define HuoBanMallYouMeng @"58b66f22a3251127b3001e82"
 //sina
-#define HuoBanMallShareSdkSinaKey @"1000919385"
-#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
-#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44" //@"wxaeda2d5603b12302"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"//@"8ad99de44bd96a323eb40dc161e7d8e8"
+//#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44" //@"wxaeda2d5603b12302"
+//#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"//@"8ad99de44bd96a323eb40dc161e7d8e8"
 //qq
-#define HuoBanMallShareSdkQQKey @"1105829128"
-#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
-#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
+//#define HuoBanMallShareSdkQQKey @"1105829128"
+//#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
+//#define HuoBanMallBuyApp_Merchant_Id @"3447" //0504
 
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:229/255.0 green:15/255.0 blue:113/255.0 alpha:1.000])
+//#define HuoBanMallBuyNavColor ([UIColor colorWithRed:229/255.0 green:15/255.0 blue:113/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.000])
+//#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define TopNavTitleViewTitleColor ([UIColor whiteColor])
+//#define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
-#define ButtonTitleColor ([UIColor whiteColor])
-#define BudleId @"newfanmore2015"
-#define WBAPPVERSION @"2.0.0"
+//#define ButtonTitleColor ([UIColor whiteColor])
+//#define BudleId @"newfanmore2015"
+//#define WBAPPVERSION @"2.0.0"
 //#define BudleId @"com.huotu.fanmore---"
 
 
 ///*
 // *艺福堂茶商城
 // */
-//#define LWNewFeatureImageCount 3
-//#define MallName @"艺福堂茶商城"
+#define LWNewFeatureImageCount 1
+#define MallName @"艺福堂茶商城"
 ///**消息中心  网络接口*/
-//#define NoticeCenterMainUrl @"http://api.open.efuton.com"
-///**网络  APP 标识*/
-//#define NoticeCenterAppKey  @"app"
-///**网络  APP 签名秘药*/
-//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-////接口地址 .net
-//#define AppOriginUrl  @"http://mallapi.efuton.com"
-//#define HuoBanMallBuyAppId @"app"
-//#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-////ShareSDk数据统计
-//#define HuoBanMallShareSdkAppId @"1870d19d5c600"
-////sina
-//#define HuoBanMallShareSdkSinaKey @"1000919385"
-//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
-//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
-////WeiXin
-//#define HuoBanMallBuyWeiXinAppId @"wx776ef947adaff9ba"
-//#define HuoBanMallShareSdkWeiXinSecret @"d46f7e913688767f049c1ce9dacc9cea"
-////qq
-//#define HuoBanMallShareSdkQQKey @"1105503405"
-//#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
-//#define HuoBanMallBuyApp_Merchant_Id @"7020" //0504
-//#define HuoBanMallBuyNavColor ([UIColor whiteColor])
-////设置底部tabar按钮选中时文字的颜色
-//#define BottomTaBarButtonTitleColor ([UIColor whiteColor])
-////设置底部tabar按钮选中时文字的颜色
-//#define TopNavTitleViewTitleColor ([UIColor blackColor])
-//
-//#define ButtonTitleColor ([UIColor blackColor])
-//#define BudleId @"Efuton.hangzhou.cn"
-
+#define NoticeCenterMainUrl @"http://api.open.efuton.com"
+/**网络  APP 标识*/
+#define NoticeCenterAppKey  @"app"
+/**网络  APP 签名秘药*/
+#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+//接口地址 .net
+#define AppOriginUrl  @"http://mallapi.efuton.com"
+#define HuoBanMallBuyAppId @"app"
+#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+//ShareSDk数据统计
+#define HuoBanMallShareSdkAppId @"1870d19d5c600"
+#define HuoBanMallYouMeng @"57be8af467e58ea5510009f6"
+//sina
+#define HuoBanMallShareSdkSinaKey @"1000919385"
+#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+//WeiXin
+#define HuoBanMallBuyWeiXinAppId @"wx776ef947adaff9ba"
+#define HuoBanMallShareSdkWeiXinSecret @"d46f7e913688767f049c1ce9dacc9cea"
+//qq
+#define HuoBanMallShareSdkQQKey @"1105503405"
+#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
+#define HuoBanMallBuyApp_Merchant_Id @"7020" //0504
+#define HuoBanMallBuyNavColor ([UIColor whiteColor])
+//设置底部tabar按钮选中时文字的颜色
+#define BottomTaBarButtonTitleColor ([UIColor blackColor])
+//设置底部tabar按钮选中时文字的颜色
+#define TopNavTitleViewTitleColor ([UIColor blackColor])
+#define ButtonTitleColor ([UIColor blackColor])
+#define BudleId @"Efuton.hangzhou.cn"
+#define WBAPPVERSION @"2.0.0"
 
 
 ///*
@@ -480,7 +480,7 @@
 //#define ButtonTitleColor ([UIColor whiteColor])
 //#define BudleId @"ZHhuobanjia2016"
 //#define idxxx @"huotu.hangzhou.huobanjia"
-
+//#define WBAPPVERSION @"2.0.0"
 
 
 ///*

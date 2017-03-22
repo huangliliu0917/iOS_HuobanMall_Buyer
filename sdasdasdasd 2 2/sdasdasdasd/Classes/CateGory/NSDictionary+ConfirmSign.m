@@ -41,6 +41,7 @@
     for (NSString * dicKey in arrKey) {
         [signCap appendString:[NSString stringWithFormat:@"%@=%@&", [dicKey lowercaseString], [newDict objectForKey:dicKey]]];
     }
+    
     NSString * aa = [signCap substringToIndex:signCap.length-1];
     NSString * cc  = [NSString stringWithFormat:@"%@%@",aa,HuoBanMallBuyAppSecrect];
     return [[MD5Encryption md5by32:cc] isEqualToString:[self objectForKey:@"sign"]];

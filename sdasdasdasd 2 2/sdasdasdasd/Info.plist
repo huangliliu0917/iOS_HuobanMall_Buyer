@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>粉猫</string>
+	<string>艺福堂茶商城</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0</string>
+	<string>1.2.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>HuoBanMallYingyan2015</string>
+				<string>Efuton.hangzhou.cn</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,12 +44,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxf0b37b263cfe4d44</string>
+				<string>wx776ef947adaff9ba</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>2</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiV2</string>

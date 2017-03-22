@@ -204,49 +204,7 @@
 
 
 
-/**
- *  分享url处理
- */
-- (NSString *) toCutew:(NSString *)urs{
-    
-    NSString * gduid = [[NSUserDefaults standardUserDefaults] objectForKey:HuoBanMallUserId];
-    
-    NSRange rang = [urs rangeOfString:@"?"];
-    
-    if (rang.location != NSNotFound) {
-        NSString * back = [urs substringFromIndex:rang.location + 1];
-        
-        NSArray * aa =  [back componentsSeparatedByString:@"&"];
-        
-        __block NSMutableArray * todelete = [NSMutableArray arrayWithArray:aa];
-        
-        NSArray * key = @[@"unionid",@"appid",@"sign"];
-        [aa enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [key enumerateObjectsUsingBlock:^(NSString * key, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj containsString:key]) {
-                    [todelete removeObject:obj];
-                }
-            }];
-        }];
-        
-        NSMutableString * cc = [[NSMutableString alloc] init];
-        [todelete enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL *  stop) {
-            
-            [cc appendFormat:@"%@&",obj];
-        }];
-        [cc appendFormat:@"gduid=%@",gduid];
-        
-        NSString * ee = [urs substringToIndex:rang.location+1];
-        
-        NSString * dd = [NSString stringWithFormat:@"%@%@",ee,cc];
-        
-        
-        return dd;
-    }else {
-        return urs;
-    }
-    
-}
+
 
 - (void)shareSdkSha{
     
@@ -1129,6 +1087,14 @@
 //}
 
 #pragma mark wkWebView
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+    if (navigationAction.targetFrame == nil) {
+        [webView loadRequest:navigationAction.request];
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
@@ -1333,12 +1299,18 @@
                 if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
                     decisionHandler(WKNavigationResponsePolicyAllow);
                 }else {
-                    
-                    NSRange spe = [temp rangeOfString:@"#0"];
-                    NSRange spes = [temp rangeOfString:@"#4"];
-                    if (spe.location != NSNotFound ||  spes.location != NSNotFound) {
+                    NSRange spe = [temp rangeOfString:@"back#"];
+                    LWLog(@"%@",NSStringFromRange(spe));
+                    if (spe.location != NSNotFound) {
                         
-                        NSString * hou = [temp substringToIndex:spe.location];
+                        NSString * hou = nil;
+                        @try {
+                             hou = [temp substringToIndex:temp.length-2];
+                        } @catch (NSException *exception) {
+                            
+                        } @finally {
+                            
+                        }
                         LWLog(@"%@",hou);
                         if ([[hou lowercaseString] isEqualToString:[self.homeWebUrl lowercaseString]]) {
                             decisionHandler(WKNavigationResponsePolicyAllow);
@@ -1351,6 +1323,7 @@
                             self.navigationItem.title = nil;
                             [self.homeWebView.scrollView.mj_header endRefreshing];
                         }
+                        [self.homeWebView.scrollView.mj_header endRefreshing];
                         
                     }else{
                         decisionHandler(WKNavigationResponsePolicyCancel);
