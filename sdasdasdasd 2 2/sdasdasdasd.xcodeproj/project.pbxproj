@@ -1264,7 +1264,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 96GEC3X62W;
+						DevelopmentTeam = QBUWVC7BH8;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1687,7 +1687,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 96GEC3X62W;
+				DEVELOPMENT_TEAM = QBUWVC7BH8;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1712,7 +1712,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhujunzhi.zjz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1728,7 +1728,7 @@
 				CODE_SIGN_ENTITLEMENTS = sdasdasdasd/sdasdasdasd.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 96GEC3X62W;
+				DEVELOPMENT_TEAM = QBUWVC7BH8;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1753,7 +1753,7 @@
 					"$(PROJECT_DIR)/sdasdasdasd/Classes/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmallbuyer.yingyan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhujunzhi.zjz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

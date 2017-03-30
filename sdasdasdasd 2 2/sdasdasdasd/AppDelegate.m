@@ -77,7 +77,7 @@
     app.applicationIconBadgeNumber = 0;
     [SVProgressHUD setMinimumDismissTimeInterval:0.5];
     
-    if ([HuoBanMallBuyApp_Merchant_Id intValue] == 7020) {
+    if ([HuoBanMallBuyApp_Merchant_Id intValue] == 7020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 7176) {
         app.statusBarStyle = UIStatusBarStyleDefault;
         
     }else{

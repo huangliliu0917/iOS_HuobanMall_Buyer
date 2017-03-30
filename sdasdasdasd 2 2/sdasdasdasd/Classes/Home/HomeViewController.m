@@ -1320,7 +1320,7 @@
                             funWeb.funUrl = temp;
                             [self.navigationController pushViewController:funWeb animated:YES];
                             self.tabBarController.tabBar.hidden = YES;
-                            self.navigationItem.title = nil;
+                            //self.navigationItem.title = nil;
                             [self.homeWebView.scrollView.mj_header endRefreshing];
                         }
                         [self.homeWebView.scrollView.mj_header endRefreshing];
@@ -1331,7 +1331,7 @@
                         funWeb.funUrl = temp;
                         [self.navigationController pushViewController:funWeb animated:YES ];
                         self.tabBarController.tabBar.hidden = YES;
-                        self.navigationItem.title = nil;
+                        //self.navigationItem.title = nil;
                         [self.homeWebView.scrollView.mj_header endRefreshing];
                         
                     }
@@ -1375,11 +1375,12 @@
     
     if (webView.tag == 100) {
         
-        [webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
-            if (error) {
-                self.navigationItem.title = MallName;
+        [webView evaluateJavaScript:@"document.title" completionHandler:^(NSString * _Nullable title, NSError * _Nullable error) {
+            if (title.length > 0) {
+                self.navigationItem.title = title;
+                
             }else{
-               self.navigationItem.title = title;
+                self.navigationItem.title = MallName;
             }
             
         }];
