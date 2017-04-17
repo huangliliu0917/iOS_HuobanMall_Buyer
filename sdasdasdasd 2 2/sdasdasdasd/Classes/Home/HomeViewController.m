@@ -272,7 +272,7 @@
     //    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    
+    LWLog(@"%@",self.homeWebUrl);
     
     AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appde.currentVc = self;
@@ -459,15 +459,17 @@
     
     if ([self.homeWebUrl rangeOfString:@"/UserCenter/Index.aspx"].location != NSNotFound || [self.homeWebUrl rangeOfString:@"/Mall/Cart.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
+        LWLog(@"%@",self.homeWebUrl);
         NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
         [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
         [self.homeWebView loadRequest:req];
     }
-    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
+    [self.homeWebView evaluateJavaScript:@"document.title" completionHandler:^(NSString * _Nullable title, NSError * _Nullable error) {
         if (error) {
             self.navigationItem.title = MallName;
         }else{
-            self.navigationItem.title = title;
+            
+            title.length > 0 ? (self.navigationItem.title = title) : (self.navigationItem.title = MallName);
         }
         
     }];
@@ -1300,8 +1302,9 @@
                     decisionHandler(WKNavigationResponsePolicyAllow);
                 }else {
                     NSRange spe = [temp rangeOfString:@"back#"];
+                    NSRange spe1 = [temp rangeOfString:@"back=1#"];
                     LWLog(@"%@",NSStringFromRange(spe));
-                    if (spe.location != NSNotFound) {
+                    if (spe.location != NSNotFound || spe1.location != NSNotFound) {
                         
                         NSString * hou = nil;
                         @try {

@@ -120,12 +120,6 @@
     self.view.backgroundColor = [UIColor redColor];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
-    
-    
-    
-    
-    
-    
     LWLog(@"%@",NSStringFromCGRect(self.view.frame));
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -147,7 +141,21 @@
 //    [self.view addSubview:self.webView];
     self.view = _webView;
     
- 
+    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appde.currentVc = self;
+    
+    
+    if ([[self.funUrl lowercaseString] rangeOfString:@"/mall/view.aspx"].location == NSNotFound || [[self.funUrl lowercaseString] rangeOfString:@"submitorder.aspx"].location == NSNotFound) {
+        NSURL * urlStr = [NSURL URLWithString:_funUrl];
+        NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+        [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
+        self.webView.tag = 20;
+        [self.webView loadRequest:req];
+
+    }
+    
+    self.webView.frame = self.view.frame;
+        [self.navigationController.navigationBar addSubview:_progressView];
     
     //加载刷新控件
     [self AddMjRefresh];
@@ -194,23 +202,22 @@
     [super viewWillAppear:animated];
 //    self.tabBarController.tabBar.hidden = YES;
     
-    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appde.currentVc = self;
     
-    
-    self.webView.frame = self.view.frame;
-    NSURL * urlStr = [NSURL URLWithString:_funUrl];
-    NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
-    [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
-    self.webView.tag = 20;
-    [self.webView loadRequest:req];
-    
+    if ([[self.funUrl lowercaseString] rangeOfString:@"/mall/view.aspx"].location != NSNotFound || [[self.funUrl lowercaseString] rangeOfString:@"submitorder.aspx"].location != NSNotFound) {
+        NSURL * urlStr = [NSURL URLWithString:_funUrl];
+        NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
+        [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
+        self.webView.tag = 20;
+        [self.webView loadRequest:req];
+        
+    }
+
     
 //    RootViewController * root = (RootViewController *)self.mm_drawerController;
 //    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 //    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeBezelPanningCenterView];
     
-    [self.navigationController.navigationBar addSubview:_progressView];
+    
     
     [self.webView evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable title, NSError * _Nullable error) {
         NSString *str = title;
