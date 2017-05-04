@@ -10,4 +10,4 @@
 
 @implementation AdModel
 
-@end
+@end                                                                                                                                                                                                                                                                                                                                               

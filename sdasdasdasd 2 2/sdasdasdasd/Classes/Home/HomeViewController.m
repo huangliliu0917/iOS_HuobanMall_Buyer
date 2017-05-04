@@ -564,11 +564,11 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-//    RootViewController * root = (RootViewController *)self.mm_drawerController;
-//    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-//    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    RootViewController * root = (RootViewController *)self.mm_drawerController;
+    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
 //    [root setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
-//    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    [root setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     //if ([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound || [[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location != NSNotFound) {
         //NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
         //NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
