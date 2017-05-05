@@ -179,7 +179,7 @@
 //      [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
 //    }
     
-    [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back_1"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

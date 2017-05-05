@@ -118,8 +118,11 @@
 //
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     //    NSLog(@"%@", userInfo);
-    
-    [self getRemoteNotifocation:userInfo];
+    if (application.applicationState == UIApplicationStateActive) {
+        [self getRemoteNotifocation:userInfo];
+    }else{
+        self.openNotifacation = userInfo;
+    }
 }
 
 /**支付宝支付回调*/
