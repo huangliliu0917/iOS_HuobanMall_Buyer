@@ -185,6 +185,7 @@
 //                wself.btn.hidden = NO;
 //            });
 //        });
+        [self myAppGetConfig];
       }];
 }
 
@@ -289,6 +290,8 @@
             RootViewController * root = [[RootViewController alloc] init];
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
+           
+            
             
             
             [self getMallBaseInfo];

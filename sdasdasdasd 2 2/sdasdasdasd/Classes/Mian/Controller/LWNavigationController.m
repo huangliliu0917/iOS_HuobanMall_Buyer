@@ -79,6 +79,7 @@
 {
     //取出appeace对象,就能改导航栏的样式了
     UINavigationBar * NavBar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
+    
 //    NavBar. = [UIColor redColor];
     [NavBar setTintColor:BottomTaBarButtonTitleColor];
     
@@ -115,6 +116,8 @@
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:target  action:@selector(handleNavigationTransition:)];
 //
+    
+    
     pan.delegate =self;
     self.interactivePopGestureRecognizer.enabled = NO;
     [self.view addGestureRecognizer:pan];

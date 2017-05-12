@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>善e圈</string>
+	<string>好丝绸</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.huobanmall.syq</string>
+				<string>HuoBanMallYingyan2015</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,12 +44,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxdac5219154094b9d</string>
+				<string>wxf0b37b263cfe4d44</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>5</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiV2</string>

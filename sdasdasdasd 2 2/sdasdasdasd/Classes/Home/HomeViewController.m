@@ -269,6 +269,8 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    
     //    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
@@ -370,7 +372,8 @@
     
     
     //UserCenter/Index.aspx
-    self.navigationController.navigationBar.alpha = 0;
+//    self.navigationController.navigationBar.alpha = 0;
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
     
@@ -1301,46 +1304,62 @@
                 if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
                     decisionHandler(WKNavigationResponsePolicyAllow);
                 }else {
-                    NSRange spe = [temp rangeOfString:@"back#"];
-                    NSRange spe1 = [temp rangeOfString:@"back=1#"];
-                    LWLog(@"%@",NSStringFromRange(spe));
-                    if (spe.location != NSNotFound || spe1.location != NSNotFound) {
-                        
-                        NSString * hou = nil;
-                        @try {
-                             hou = [temp substringToIndex:temp.length-2];
-                        } @catch (NSException *exception) {
-                            
-                        } @finally {
-                            
-                        }
-                        LWLog(@"%@",hou);
-                        if ([[hou lowercaseString] isEqualToString:[self.homeWebUrl lowercaseString]]) {
-                            decisionHandler(WKNavigationResponsePolicyAllow);
-                        }else{
-                            decisionHandler(WKNavigationResponsePolicyCancel);
-                            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-                            funWeb.funUrl = temp;
-                            [self.navigationController pushViewController:funWeb animated:YES];
-                            self.tabBarController.tabBar.hidden = YES;
-                            //self.navigationItem.title = nil;
-                            [self.homeWebView.scrollView.mj_header endRefreshing];
-                        }
-                        [self.homeWebView.scrollView.mj_header endRefreshing];
-                        
+                    NSRange spe = [temp rangeOfString:@"back"];
+                    
+                    if (spe.location != NSNotFound) {
+                        decisionHandler(WKNavigationResponsePolicyAllow);
                     }else{
                         decisionHandler(WKNavigationResponsePolicyCancel);
                         PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                         funWeb.funUrl = temp;
-                        [self.navigationController pushViewController:funWeb animated:YES ];
+                        [self.navigationController pushViewController:funWeb animated:YES];
                         self.tabBarController.tabBar.hidden = YES;
                         //self.navigationItem.title = nil;
                         [self.homeWebView.scrollView.mj_header endRefreshing];
-                        
+                        decisionHandler(WKNavigationResponsePolicyCancel);
+
                     }
-                    
+//                    NSRange spe1 = [temp rangeOfString:@"back=1#"];
+//                    LWLog(@"%@",NSStringFromRange(spe));
+//                    if (spe.location != NSNotFound || spe1.location != NSNotFound) {
+//                        
+//                        NSString * hou = nil;
+//                        @try {
+//                             hou = [temp substringToIndex:temp.length-2];
+//                        } @catch (NSException *exception) {
+//                            
+//                        } @finally {
+//                            
+//                        }
+//                        LWLog(@"%@",hou);
+//                        if ([[hou lowercaseString] isEqualToString:[self.homeWebUrl lowercaseString]]) {
+//                            decisionHandler(WKNavigationResponsePolicyAllow);
+//                        }else{
+//                            decisionHandler(WKNavigationResponsePolicyCancel);
+//                            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+//                            funWeb.funUrl = temp;
+//                            [self.navigationController pushViewController:funWeb animated:YES];
+//                            self.tabBarController.tabBar.hidden = YES;
+//                            //self.navigationItem.title = nil;
+//                            [self.homeWebView.scrollView.mj_header endRefreshing];
+//                        }
+//                        [self.homeWebView.scrollView.mj_header endRefreshing];
+//                        
+//                    }else{
+//                        decisionHandler(WKNavigationResponsePolicyCancel);
+//                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+//                        funWeb.funUrl = temp;
+//                        [self.navigationController pushViewController:funWeb animated:YES ];
+//                        self.tabBarController.tabBar.hidden = YES;
+//                        //self.navigationItem.title = nil;
+//                        [self.homeWebView.scrollView.mj_header endRefreshing];
+//                        
+//                    }
+//                    
                     
                 }
+            } else{
+                decisionHandler(WKNavigationResponsePolicyAllow);
             }
         }
         

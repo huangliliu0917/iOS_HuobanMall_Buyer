@@ -117,7 +117,8 @@
 }
 //
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    //    NSLog(@"%@", userInfo);
+    //    NSLog(@"%@", userInfo);2
+    
     if (application.applicationState == UIApplicationStateActive) {
         [self getRemoteNotifocation:userInfo];
     }else{
