@@ -271,6 +271,7 @@
     [super viewDidLoad];
     
     
+    
     //    WKWebsiteDataRecord *rec = [
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
@@ -448,7 +449,7 @@
         [self.homeWebView loadRequest:req];
     }
     
-    
+    [self checkVersion];
     
 }
 
@@ -1222,9 +1223,6 @@
             NSMutableString *url = [NSMutableString stringWithString:AppOriginUrl];
             [url appendFormat:@"%@?orderid=%@",@"/order/getpayinfo",trade_noss];
             
-            
-            
-            
             AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
             NSString * to = [NSDictionary ToSignUrlWithString:url];
             [SVProgressHUD show];
@@ -1289,18 +1287,9 @@
             
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if ([url rangeOfString:@"im.html"].location != NSNotFound || [url rangeOfString:@"/webChannel.html"].location != NSNotFound){
-            //            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-            //            funWeb.funUrl = temp;
-            //            [self.navigationController pushViewController:funWeb animated:YES];
-            //            self.tabBarController.tabBar.hidden = YES;
-            //            self.navigationItem.title = nil;
-            //            decisionHandler(WKNavigationResponsePolicyCancel);
             decisionHandler(WKNavigationResponsePolicyAllow);
         }else{
-            
-            //            NSRange range = [url rangeOfString:@"__newframe"];
             if (![temp isEqualToString:self.homeWebUrl]) {
-                //                UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 if ([temp.lowercaseString isEqualToString:self.homeWebUrl.lowercaseString]) {
                     decisionHandler(WKNavigationResponsePolicyAllow);
                 }else {
@@ -1309,61 +1298,71 @@
                     if (spe.location != NSNotFound) {
                         decisionHandler(WKNavigationResponsePolicyAllow);
                     }else{
-                        decisionHandler(WKNavigationResponsePolicyCancel);
-                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-                        funWeb.funUrl = temp;
-                        [self.navigationController pushViewController:funWeb animated:YES];
-                        self.tabBarController.tabBar.hidden = YES;
-                        //self.navigationItem.title = nil;
-                        [self.homeWebView.scrollView.mj_header endRefreshing];
-                        decisionHandler(WKNavigationResponsePolicyCancel);
+                        
+                        if([url rangeOfString:@"webchannelhtml"].location != NSNotFound){
+                            [self tarbarSwitch:url];
+                            decisionHandler(WKNavigationResponsePolicyCancel);
+                        }else if([url rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
+                            [self tarbarSwitch:url];
+                            decisionHandler(WKNavigationResponsePolicyCancel);
+                            
+                        }else{
+                            decisionHandler(WKNavigationResponsePolicyCancel);
+                            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                            funWeb.funUrl = temp;
+                            [self.navigationController pushViewController:funWeb animated:YES];
+                            self.tabBarController.tabBar.hidden = YES;
+                            //self.navigationItem.title = nil;
+                            [self.homeWebView.scrollView.mj_header endRefreshing];
+                            decisionHandler(WKNavigationResponsePolicyCancel);
+                        }
+                        
 
                     }
-//                    NSRange spe1 = [temp rangeOfString:@"back=1#"];
-//                    LWLog(@"%@",NSStringFromRange(spe));
-//                    if (spe.location != NSNotFound || spe1.location != NSNotFound) {
-//                        
-//                        NSString * hou = nil;
-//                        @try {
-//                             hou = [temp substringToIndex:temp.length-2];
-//                        } @catch (NSException *exception) {
-//                            
-//                        } @finally {
-//                            
-//                        }
-//                        LWLog(@"%@",hou);
-//                        if ([[hou lowercaseString] isEqualToString:[self.homeWebUrl lowercaseString]]) {
-//                            decisionHandler(WKNavigationResponsePolicyAllow);
-//                        }else{
-//                            decisionHandler(WKNavigationResponsePolicyCancel);
-//                            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-//                            funWeb.funUrl = temp;
-//                            [self.navigationController pushViewController:funWeb animated:YES];
-//                            self.tabBarController.tabBar.hidden = YES;
-//                            //self.navigationItem.title = nil;
-//                            [self.homeWebView.scrollView.mj_header endRefreshing];
-//                        }
-//                        [self.homeWebView.scrollView.mj_header endRefreshing];
-//                        
-//                    }else{
-//                        decisionHandler(WKNavigationResponsePolicyCancel);
-//                        PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-//                        funWeb.funUrl = temp;
-//                        [self.navigationController pushViewController:funWeb animated:YES ];
-//                        self.tabBarController.tabBar.hidden = YES;
-//                        //self.navigationItem.title = nil;
-//                        [self.homeWebView.scrollView.mj_header endRefreshing];
-//                        
-//                    }
-//                    
-                    
+
                 }
             } else{
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }
+            
+            
+            
         }
         
         decisionHandler(WKNavigationResponsePolicyAllow);
+    }
+    
+}
+
+- (void)tarbarSwitch:(NSString *)option{
+    
+    MallTabbarViewController * tabbar = (MallTabbarViewController *)self.tabBarController;
+    NSArray<TabBarModel *> *tabmodels = tabbar.tabbarArray;
+    int dex = - 1;
+    if([option rangeOfString:@"webchannelhtml"].location != NSNotFound){//首页消息中心
+        for(int i = 0 ; i < tabmodels.count; i++){
+            TabBarModel * model = tabmodels[i];
+            if ([model.linkUrl rangeOfString:@"{QQ}"].location != NSNotFound) {
+                dex = i;
+                break;
+            }
+        }
+        if (dex > - 1) {
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:dex];
+        }
+
+    }else if([option rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
+        for(int i = 0 ; i < tabmodels.count; i++){
+            TabBarModel * model = tabmodels[i];
+            if ([model.linkUrl rangeOfString:@"UserCenter/Index"].location != NSNotFound) {
+                dex = i;
+                break;
+            }
+        }
+        if (dex > - 1) {
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:dex];
+        }
+        
     }
     
 }
@@ -1593,7 +1592,65 @@
     }
 }
 
+- (void)checkVersion{
+    
+    static int i = 0;
+    
+    if (i > 0 || AppStoryId.length <= 0) {
+        return;
+    }
+    
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion =[infoDic objectForKey:@"CFBundleShortVersionString"];
+    NSString *URL = [NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@",AppStoryId];
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 30;
+    [manager POST:URL parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id   _Nullable responseObject) {
+        
+        LWLog(@"%@",responseObject);
+        NSArray *infoArray = [responseObject objectForKey:@"results"];
+        
+        
+            if ([infoArray count]) {
 
+                NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
+
+                NSString *lastVersion = [releaseInfo objectForKey:@"version"];
+                NSString *trackViewUrl = [releaseInfo objectForKey:@"trackViewUrl"];
+
+                
+                int  lastVersionnum = [[lastVersion stringByReplacingOccurrencesOfString:@"." withString:@""]intValue];
+
+                int  currentVersionnum = [[currentVersion stringByReplacingOccurrencesOfString:@"." withString:@""] intValue];
+
+                if (lastVersionnum > currentVersionnum) {
+
+                    
+                    UIAlertController *aa = [UIAlertController alertControllerWithTitle:@"版本更新提示" message:[NSString stringWithFormat:@"发现新的版本%@，是否前往AppStore更新新版本？",lastVersion] preferredStyle:UIAlertControllerStyleAlert];
+                    [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl]];
+                    }]];
+                    [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }]];
+                    
+                    [self presentViewController:aa animated:YES completion:nil];
+                    
+                    
+                   
+                }
+                
+            }
+
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+    i = 1;
+    
+}
 
 @end
 
