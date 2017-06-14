@@ -410,15 +410,14 @@
     if (_openNotifacation) {
         //        LWLog(@"%@", _openNotifacation);
         NoticeMessage *message = [NoticeMessage mj_objectWithKeyValues:_openNotifacation];
-        if (![message.alertUrl isKindOfClass:[NSNull class]]) {
+        if (message.alertUrl.length > 0) {
             UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             PushWebViewController * funWeb =  [mainStory instantiateViewControllerWithIdentifier:@"PushWebViewController"];
             funWeb.funUrl = message.alertUrl;
             [self.navigationController pushViewController:funWeb animated:YES];
-        }else if (![message.url isKindOfClass:[NSNull class]]) {
+        }else if (message.url.length) {
             UIAlertController *aa = [UIAlertController alertControllerWithTitle:message.title message:message.body preferredStyle:UIAlertControllerStyleAlert];
             [aa addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
             }]];
             [aa addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 UIStoryboard * mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -1298,10 +1297,11 @@
                     }else{
                         
                         if([url rangeOfString:@"webchannelhtml"].location != NSNotFound){
-                            [self tarbarSwitch:url];
                             decisionHandler(WKNavigationResponsePolicyCancel);
+                            [self tarbarSwitch:temp];
+                            
                         }else if([url rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
-                            [self tarbarSwitch:url];
+                            [self tarbarSwitch:temp];
                             decisionHandler(WKNavigationResponsePolicyCancel);
                             
                         }else{
@@ -1337,7 +1337,7 @@
     MallTabbarViewController * tabbar = (MallTabbarViewController *)self.tabBarController;
     NSArray<TabBarModel *> *tabmodels = tabbar.tabbarArray;
     int dex = - 1;
-    if([option rangeOfString:@"webchannelhtml"].location != NSNotFound){//首页消息中心
+    if([[option lowercaseString] rangeOfString:@"webchannelhtml"].location != NSNotFound){//首页消息中心
         for(int i = 0 ; i < tabmodels.count; i++){
             TabBarModel * model = tabmodels[i];
             if ([model.linkUrl rangeOfString:@"{QQ}"].location != NSNotFound) {
@@ -1347,9 +1347,17 @@
         }
         if (dex > - 1) {
             self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:dex];
+        }else{
+            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+            funWeb.funUrl = option;
+            [self.navigationController pushViewController:funWeb animated:YES];
+            self.tabBarController.tabBar.hidden = YES;
+            //self.navigationItem.title = nil;
+            [self.homeWebView.scrollView.mj_header endRefreshing];
+            
         }
 
-    }else if([option rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
+    }else if([[option lowercaseString] rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
         for(int i = 0 ; i < tabmodels.count; i++){
             TabBarModel * model = tabmodels[i];
             if ([model.linkUrl rangeOfString:@"UserCenter/Index"].location != NSNotFound) {
