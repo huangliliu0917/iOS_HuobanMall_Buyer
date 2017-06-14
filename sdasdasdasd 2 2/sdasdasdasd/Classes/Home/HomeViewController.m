@@ -344,21 +344,18 @@
     
     if (app.Ad != NULL) {
         
-        
         AdModel * md = app.Ad;
-        
         LWLog(@"%@",[md mj_keyValues]);
         NSString *image = [md.images copy];
         NSString *ad = [md.linkUrl copy];
-        
         //1、创建广告
         ADView *adView = [[ADView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds imgUrl:image adUrl:ad clickImg:^(NSString *clikImgUrl) {
-            
-            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
-            funWeb.funUrl = clikImgUrl;
-            [self.navigationController pushViewController:funWeb animated:YES];
-            self.tabBarController.tabBar.hidden = YES;
-            
+            if (clikImgUrl.length) {
+                PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+                funWeb.funUrl = clikImgUrl;
+                [self.navigationController pushViewController:funWeb animated:YES];
+                self.tabBarController.tabBar.hidden = YES;
+            }
         }];
         //设置倒计时（默认3秒）
 //        adView.showTime = 5;
@@ -460,6 +457,7 @@
     [self.navigationController setNavigationBarHidden:NO  animated:YES];
     self.tabBarController.tabBar.hidden = NO;
     
+    [UIApplication sharedApplication].statusBarHidden = NO;
     
     if ([self.homeWebUrl rangeOfString:@"/UserCenter/Index.aspx"].location != NSNotFound || [self.homeWebUrl rangeOfString:@"/Mall/Cart.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];

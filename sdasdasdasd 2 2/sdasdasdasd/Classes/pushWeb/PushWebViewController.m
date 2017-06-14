@@ -204,6 +204,8 @@
     [super viewWillAppear:animated];
 //    self.tabBarController.tabBar.hidden = YES;
     
+    [UIApplication sharedApplication].statusBarHidden = NO;
+    
     
     if ([[self.funUrl lowercaseString] rangeOfString:@"/mall/view.aspx"].location != NSNotFound || [[self.funUrl lowercaseString] rangeOfString:@"submitorder.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:_funUrl];
