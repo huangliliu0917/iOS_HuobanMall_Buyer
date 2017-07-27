@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>利市派</string>
+	<string>居康</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.huobanmall.lishipai</string>
+				<string>com.huobanmall.jukang</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx5b1331f262e80778</string>
+				<string>wxbe11c7609647ded7</string>
 			</array>
 		</dict>
 	</array>

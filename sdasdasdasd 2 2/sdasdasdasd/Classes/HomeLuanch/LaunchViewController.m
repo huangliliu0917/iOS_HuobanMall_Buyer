@@ -35,13 +35,6 @@
     
     
     //[self AddButtonToRefresh];
-    
-    
-    
-    
-    
-
-    
     AFNetworkReachabilityManager * Reachability = [AFNetworkReachabilityManager sharedManager];
     
     [Reachability startMonitoring];
@@ -58,6 +51,7 @@
         
         if (!(status == 0) || (status == -1)) {
             [self NewMyAppToInit];
+            
              //[self myAppToInit];
 
         }else{
@@ -255,7 +249,6 @@
 
 - (void)getButtomTabbarData {
     
-    
     __weak typeof(self) wself = self;
     NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 ? @"7944" :HuoBanMallBuyApp_Merchant_Id)];
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
@@ -264,11 +257,10 @@
     //__weak LaunchViewController * wself = self;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         LWLog(@"%@",json);
+        [self getMallBaseInfo];
         NSArray *array = json[@"widgets"];
         NSDictionary *dic = array[0];
         NSArray *temp = [TabBarModel  mj_objectArrayWithKeyValuesArray:dic[@"properties"][@"Rows"]];
-        
-        
         //底部栏目图片的域名地址
         [[NSUserDefaults standardUserDefaults] setObject:json[@"mallResourceURL"] forKey:@"mallResourceURL"];
         
@@ -290,13 +282,6 @@
             RootViewController * root = [[RootViewController alloc] init];
             root.tabbarArray = temp;
             [UIApplication sharedApplication].keyWindow.rootViewController = root;
-           
-            
-            
-            
-            [self getMallBaseInfo];
-            
-            
         }
         
     } failure:^(NSError *error) {
@@ -403,7 +388,7 @@
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     parame = [NSDictionary asignWithMutableDictionary:parame];
-
+    LWLog(@"%@",parame);
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         LWLog(@"getMallBaseInfo%@",json);
         if ([json[@"resultCode"] integerValue] == 200) {

@@ -17,7 +17,7 @@ pod 'SDWebImage'
 pod 'SSZipArchive'
 pod 'MKNetworkKit'
 pod 'MJRefresh'
-pod 'AFNetworking'
+pod 'AFNetworking', '~> 3.0'
 pod 'MJExtension'
 pod 'UMengAnalytics-NO-IDFA'
   target 'sdasdasdasdTests' do
