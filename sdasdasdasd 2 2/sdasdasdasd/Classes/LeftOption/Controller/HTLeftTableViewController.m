@@ -312,12 +312,16 @@
     headView.iconView.layer.borderWidth = 2;
     
     
+    
     headView.secondLable1.textColor = HuoBanMallBuyNavColor;
     headView.secondLable2.textColor = HuoBanMallBuyNavColor;
     headView.secondLable3.textColor = HuoBanMallBuyNavColor;
     CGFloat HeadViewW =  SecrenWith * SplitScreenRate;
-    CGFloat HeadViewH = 130;
+    CGFloat HeadViewH = 130.0/667*ScreenHeight;
     headView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
+    /**
+     * luohaibo
+     */
     headView.backgroundColor = HuoBanMallBuyNavColor;
     self.tableView.tableHeaderView.frame = CGRectMake(0,0, HeadViewW,HeadViewH);
     self.tableView.tableHeaderView = headView; 

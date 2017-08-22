@@ -253,7 +253,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/merchantWidgetSettings/search/findByMerchantIdAndScopeDependsScopeOrDefault/nativeCode/%@/global",NoticeCenterMainUrl,([HuoBanMallBuyApp_Merchant_Id intValue] == 5020 ? @"7944" :HuoBanMallBuyApp_Merchant_Id)];
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
+    parame = [NSDictionary javaAsignWithMutableDictionary:parame];
     //__weak LaunchViewController * wself = self;
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         LWLog(@"%@",json);
@@ -387,7 +387,7 @@
     LWLog(@"%@",url);
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];
     parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
-    parame = [NSDictionary asignWithMutableDictionary:parame];
+    parame = [NSDictionary javaAsignWithMutableDictionary:parame];
     LWLog(@"%@",parame);
     [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
         LWLog(@"getMallBaseInfo%@",json);

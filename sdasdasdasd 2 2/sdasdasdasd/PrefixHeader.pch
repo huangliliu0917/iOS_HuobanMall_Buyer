@@ -35,48 +35,177 @@
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
-
 /*
- *利市派商城
+ *云品星球
  */
 #define LWNewFeatureImageCount 1
-#define MallName @"居康"
+#define MallName @"云品星球"
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
+#define NoticeCenterMainUrl @"http://api.open.championstar.cn"
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //接口地址 .net
-#define AppOriginUrl  @"http://mallapi.huobanmall.com"
-#define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+#define AppOriginUrl  @"http://mallapi.championstar.cn"
+#define HuoBanMallBuyAppId @"hotfangsho62b82w1g16gu17tbz"
+#define HuoBanMallBuyAppSecrect @"5e29e83hc22e3a31wz220nt0fb8iewq"
 //ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"1f3914e40f5b8"
-#define HuoBanMallYouMeng @"595def9e4ad1563b23001a42"
+#define HuoBanMallShareSdkAppId @"2057a2d796770"
+#define HuoBanMallYouMeng @"59965497bbea8366e2000b00"
 //sina
 #define HuoBanMallShareSdkSinaKey @"1000919385"
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxbe11c7609647ded7"
-#define HuoBanMallShareSdkWeiXinSecret @"01a5dd6af92b90e1ed58eae4d80c87f0"
+#define HuoBanMallBuyWeiXinAppId @"wx5231134431122437"
+#define HuoBanMallShareSdkWeiXinSecret @"8d655d835fad07e3f9039f6aec2cd3da"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
-#define HuoBanMallBuyApp_Merchant_Id @"8251" //0504
+#define HuoBanMallBuyApp_Merchant_Id @"7031" //0504
 
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:255/255.0 green:60/255.0 blue:20/255.0 alpha:1.000])
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:22/255.0 green:91/255.0 blue:221/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor redColor])
+#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:22/255.0 green:91/255.0 blue:221/255.0 alpha:1.000])
 //设置底部tabar按钮选中时文字的颜色
 #define TopNavTitleViewTitleColor ([UIColor whiteColor])
 
 #define ButtonTitleColor ([UIColor whiteColor])
-#define BudleId @"com.huobanmall.jukang"
-#define idxxx @"com.huobanmall.jukang"
+#define BudleId @"com.huobanmall.ypxq"
+#define idxxx @"com.huobanmall.ypxq"
 #define WBAPPVERSION @"2.0.0"
-#define AppStoryId @"1264447649"
+#define AppStoryId @"1273033859"
+//设置导航栏背景图片
+#define NaVColor @true
+
+///*
+// *生活购物中心
+// */
+//#define LWNewFeatureImageCount 1
+//#define MallName @"生活购物中心"
+///**消息中心  网络接口*/
+//#define NoticeCenterMainUrl @"http://api.open.yuhewangluokeji.com"
+///**网络  APP 标识*/
+//#define NoticeCenterAppKey  @"app"
+///**网络  APP 签名秘药*/
+//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.yuhewangluokeji.com"
+//#define HuoBanMallBuyAppId @"app"
+//#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////ShareSDk数据统计
+//#define HuoBanMallShareSdkAppId @"1fc81642f2db0"
+//#define HuoBanMallYouMeng @"9d1f0ee490ea6bd15c4fcbb3d8a3e154"
+////sina
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+////WeiXin
+//#define HuoBanMallBuyWeiXinAppId @"wx33ca17ffc1998b88"
+//#define HuoBanMallShareSdkWeiXinSecret @"96a882a087783c9c20b4765c0da5099f"
+////qq
+//#define HuoBanMallShareSdkQQKey @"1105829128"
+//#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
+//#define HuoBanMallBuyApp_Merchant_Id @"7028" //0504
+//
+//#define HuoBanMallBuyNavColor ([UIColor colorWithRed:251/255.0 green:56/255.0 blue:56/255.0 alpha:1.000])
+////设置底部tabar按钮选中时文字的颜色
+//#define BottomTaBarButtonTitleColor ([UIColor redColor])
+////设置底部tabar按钮选中时文字的颜色
+//#define TopNavTitleViewTitleColor ([UIColor whiteColor])
+//
+//#define ButtonTitleColor ([UIColor whiteColor])
+//#define BudleId @"com.huobanmall.shgwzx"
+//#define idxxx @"com.huobanmall.shgwzx"
+//#define WBAPPVERSION @"2.0.0"
+//#define AppStoryId @"1268604980"
+
+
+
+///*
+// *盛友商城
+// */
+//#define LWNewFeatureImageCount 1
+//#define MallName @"盛友"
+///**消息中心  网络接口*/
+//#define NoticeCenterMainUrl @"http://api.open.kaixinmall888.com"
+///**网络  APP 标识*/
+//#define NoticeCenterAppKey  @"app"
+///**网络  APP 签名秘药*/
+//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.kaixinmall888.com"
+//#define HuoBanMallBuyAppId @"7436d22352bjkvcb37981b7ya91euiwe"
+//#define HuoBanMallBuyAppSecrect @"0ad8abe201631aacf89c9231999c9f49"
+////ShareSDk数据统计
+//#define HuoBanMallShareSdkAppId @"1fbfc77f71064"
+//#define HuoBanMallYouMeng @"5979a55cb27b0a0f4e0017d3"
+////sina
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+////WeiXin
+//#define HuoBanMallBuyWeiXinAppId @"wx75382b40b3397991"
+//#define HuoBanMallShareSdkWeiXinSecret @"6f4b99333fc0b3a27ffc18ae725b9c72"
+////qq
+//#define HuoBanMallShareSdkQQKey @"1105829128"
+//#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
+//#define HuoBanMallBuyApp_Merchant_Id @"7027" //0504
+//
+//#define HuoBanMallBuyNavColor ([UIColor colorWithRed:255/255.0 green:60/255.0 blue:20/255.0 alpha:1.000])
+////设置底部tabar按钮选中时文字的颜色
+//#define BottomTaBarButtonTitleColor ([UIColor redColor])
+////设置底部tabar按钮选中时文字的颜色
+//#define TopNavTitleViewTitleColor ([UIColor whiteColor])
+//
+//#define ButtonTitleColor ([UIColor whiteColor])
+//#define BudleId @"com.huobanmall.shengyoushangcheng"
+//#define idxxx @"com.huobanmall.shengyoushangcheng"
+//#define WBAPPVERSION @"2.0.0"
+//#define AppStoryId @"1264476434"
+
+///*
+// *居康
+// */
+//#define LWNewFeatureImageCount 1
+//#define MallName @"居康"
+///**消息中心  网络接口*/
+//#define NoticeCenterMainUrl @"http://api.open.huobanplus.com"
+///**网络  APP 标识*/
+//#define NoticeCenterAppKey  @"app"
+///**网络  APP 签名秘药*/
+//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.huobanmall.com"
+//#define HuoBanMallBuyAppId @"app"
+//#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////ShareSDk数据统计
+//#define HuoBanMallShareSdkAppId @"1f3914e40f5b8"
+//#define HuoBanMallYouMeng @"595def9e4ad1563b23001a42"
+////sina
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+////WeiXin
+//#define HuoBanMallBuyWeiXinAppId @"wxbe11c7609647ded7"
+//#define HuoBanMallShareSdkWeiXinSecret @"01a5dd6af92b90e1ed58eae4d80c87f0"
+////qq
+//#define HuoBanMallShareSdkQQKey @"1105829128"
+//#define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
+//#define HuoBanMallBuyApp_Merchant_Id @"8251" //0504
+//
+//#define HuoBanMallBuyNavColor ([UIColor colorWithRed:255/255.0 green:60/255.0 blue:20/255.0 alpha:1.000])
+////设置底部tabar按钮选中时文字的颜色
+//#define BottomTaBarButtonTitleColor ([UIColor redColor])
+////设置底部tabar按钮选中时文字的颜色
+//#define TopNavTitleViewTitleColor ([UIColor whiteColor])
+//
+//#define ButtonTitleColor ([UIColor whiteColor])
+//#define BudleId @"com.huobanmall.jukang"
+//#define idxxx @"com.huobanmall.jukang"
+//#define WBAPPVERSION @"2.0.0"
+//#define AppStoryId @"1264447649"
 
 ///*
 // *万事利商城买家版
@@ -706,7 +835,7 @@
 // *伙伴家商城
 // */
 //#define LWNewFeatureImageCount 1
-//#define MallName @"伙伴家"
+//#define MallName @"伙伴VIP"
 ///**消息中心  网络接口*/
 //#define NoticeCenterMainUrl @"http://api.open.huobanjia.com.cn"
 ///**网络  APP 标识*/
@@ -741,7 +870,7 @@
 //#define ButtonTitleColor ([UIColor whiteColor])
 //#define BudleId @"ZHhuobanjia2016"
 //#define idxxx @"huotu.hangzhou.huobanjia"
-//#define WBAPPVERSION @"2.0.0"
+//#define WBAPPVERSION @"3.0.0"
 //#define AppStoryId @"1144307790"
 
 

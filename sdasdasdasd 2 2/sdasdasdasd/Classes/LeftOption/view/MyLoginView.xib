@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +14,9 @@
             <rect key="frame" x="0.0" y="0.0" width="369" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navColor" translatesAutoresizingMaskIntoConstraints="NO" id="I9f-ej-qan">
+                    <rect key="frame" x="0.0" y="0.0" width="369" height="114"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-0D-SXj">
                     <rect key="frame" x="19" y="33" width="270" height="78"/>
                     <subviews>
@@ -83,11 +86,15 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="BoG-0D-SXj" secondAttribute="bottom" constant="5" id="1o3-YQ-hFK"/>
+                <constraint firstAttribute="trailing" secondItem="I9f-ej-qan" secondAttribute="trailing" id="BpW-Mc-X3C"/>
+                <constraint firstAttribute="bottom" secondItem="I9f-ej-qan" secondAttribute="bottom" id="Evp-re-cgW"/>
                 <constraint firstAttribute="trailing" secondItem="Yds-O2-c63" secondAttribute="trailing" constant="8" id="LrM-E1-U1B"/>
                 <constraint firstAttribute="trailing" secondItem="BoG-0D-SXj" secondAttribute="trailing" constant="80" id="TyS-a9-xJK"/>
                 <constraint firstItem="BoG-0D-SXj" firstAttribute="centerY" secondItem="dvP-5C-ymL" secondAttribute="centerY" constant="15" id="i6W-c3-alU"/>
                 <constraint firstItem="BoG-0D-SXj" firstAttribute="leading" secondItem="dvP-5C-ymL" secondAttribute="leading" constant="19" id="if8-Ol-Pmk"/>
                 <constraint firstItem="Yds-O2-c63" firstAttribute="top" secondItem="BoG-0D-SXj" secondAttribute="top" id="mmD-Xc-v89"/>
+                <constraint firstItem="I9f-ej-qan" firstAttribute="top" secondItem="dvP-5C-ymL" secondAttribute="top" id="pNo-nB-Y1K"/>
+                <constraint firstItem="I9f-ej-qan" firstAttribute="leading" secondItem="dvP-5C-ymL" secondAttribute="leading" id="vcc-8Y-bWe"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
@@ -96,6 +103,7 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="backImage" destination="I9f-ej-qan" id="rcB-xp-DqZ"/>
                 <outlet property="firstLable" destination="sLX-wy-lg8" id="PER-Xv-jsf"/>
                 <outlet property="iconView" destination="kbj-Lj-egw" id="2NH-6O-TfQ"/>
                 <outlet property="myButton" destination="BoG-0D-SXj" id="gX4-eh-rkW"/>
@@ -103,11 +111,12 @@
                 <outlet property="secondLable2" destination="skH-nH-ZSj" id="GyR-bx-XJi"/>
                 <outlet property="secondLable3" destination="38P-Tq-Wzg" id="lgb-yW-bBe"/>
             </connections>
-            <point key="canvasLocation" x="163" y="-60"/>
+            <point key="canvasLocation" x="162.5" y="-60"/>
         </view>
     </objects>
     <resources>
         <image name="moren" width="103" height="103"/>
+        <image name="navColor" width="320" height="64"/>
         <image name="sideslip_login_right_user_switcher" width="30" height="30"/>
     </resources>
 </document>

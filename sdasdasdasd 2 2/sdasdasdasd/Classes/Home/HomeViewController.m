@@ -165,7 +165,7 @@
     if (_shareBtn == nil) {
         _shareBtn = [[UIButton alloc] init];
         _shareBtn.frame = CGRectMake(0, 0, 25, 25);
-        _shareBtn.userInteractionEnabled = NO;
+//        _shareBtn.userInteractionEnabled = NO;
         [_shareBtn addTarget:self action:@selector(shareBtnClicks) forControlEvents:UIControlEventTouchUpInside];
         [_shareBtn setBackgroundImage:[UIImage imageNamed:@"home_title_right_share"] forState:UIControlStateNormal];
     }
@@ -372,7 +372,11 @@
     //UserCenter/Index.aspx
 //    self.navigationController.navigationBar.alpha = 0;
     self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
+    
+    /**
+     * luohaibo for yunpingxingqiu
+     */
+//    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
     
     //集成刷新控件

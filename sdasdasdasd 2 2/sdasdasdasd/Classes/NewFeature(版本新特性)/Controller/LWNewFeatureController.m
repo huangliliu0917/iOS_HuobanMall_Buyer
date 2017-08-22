@@ -176,7 +176,7 @@
     CGFloat centerX = imageView.frame.size.width*0.5;
     CGFloat centerY = imageView.frame.size.height*0.9;
     startButton.center = CGPointMake(centerX,centerY);
-//    startButton.layer.borderWidth = 1;
+    startButton.layer.borderWidth = 1;
     startButton.layer.cornerRadius = 5;
     startButton.layer.masksToBounds =YES;
     startButton.backgroundColor = HuoBanMallBuyNavColor;
@@ -189,7 +189,7 @@
 //    [startButton setImage:[UIImage imageNamed:@"weixing"] forState:UIControlStateNormal];
     [startButton setImageEdgeInsets:UIEdgeInsetsMake(0,0,0,8)];
     [startButton setTitle:@"开始体验" forState:UIControlStateNormal];
-    
+    startButton.layer.borderColor = [UIColor whiteColor].CGColor;
     [startButton setTitleColor:ButtonTitleColor forState:UIControlStateNormal];
     [imageView addSubview:startButton];
     

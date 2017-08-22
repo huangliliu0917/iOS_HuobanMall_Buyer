@@ -29,6 +29,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *secondLable3;
 /**按钮view*/
 @property (weak, nonatomic) IBOutlet UIView *myButton;
+/**头像背景图片*/
+@property (weak, nonatomic) IBOutlet UIImageView *backImage;
 
 @property(weak,nonatomic) id <MyLoginViewDelegate> delegate;
 

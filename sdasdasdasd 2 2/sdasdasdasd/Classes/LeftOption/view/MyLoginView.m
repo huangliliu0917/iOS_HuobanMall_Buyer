@@ -42,6 +42,14 @@
         self.firstLable.textColor = [UIColor blackColor];
     }
     
+    
+    if(NaVColor){
+        self.backImage.alpha = 1;
+    }else{
+        self.backImage.alpha = 0;
+    }
+    
+    
 }
 
 - (IBAction)SwitchAccount:(id)sender {

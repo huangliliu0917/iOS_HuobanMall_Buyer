@@ -81,25 +81,36 @@
     UINavigationBar * NavBar = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
     
 //    NavBar. = [UIColor redColor];
-    [NavBar setTintColor:BottomTaBarButtonTitleColor];
+//    [NavBar setTintColor:BottomTaBarButtonTitleColor];
     
     if (IsIos8) {
         [NavBar setTranslucent:NO];
     }
     
 
-    [NavBar setBarTintColor:HuoBanMallBuyNavColor];
-//    //设置标题样式
-    NSMutableDictionary * textAttr = [NSMutableDictionary dictionary];
-    textAttr[NSForegroundColorAttributeName] = TopNavTitleViewTitleColor;
-    [NavBar setTitleTextAttributes:textAttr];
+//    [NavBar setBarTintColor:HuoBanMallBuyNavColor];
+////    //设置标题样式
+//    NSMutableDictionary * textAttr = [NSMutableDictionary dictionary];
+//    textAttr[NSForegroundColorAttributeName] = TopNavTitleViewTitleColor;
+//    [NavBar setTitleTextAttributes:textAttr];
 //    //取消阴影
 //    textAttr[NSBaselineOffsetAttributeName]=[NSValue valueWithUIOffset:UIOffsetZero];
 //    textAttr[NSFontAttributeName] = [UIFont boldSystemFontOfSize:19];
     
+    
+    
+    
+    if(NaVColor){
+        UIImage * colorImage = [UIImage imageNamed:@"navColor"];
+        colorImage = [colorImage resizableImageWithCapInsets:UIEdgeInsetsMake(32, 160, 12, 170) resizingMode:UIImageResizingModeStretch];
+        [NavBar setBackgroundImage:colorImage forBarMetrics:UIBarMetricsDefault];
+  
+    }
+    
     NavBar.barTintColor = TopNavTitleViewTitleColor;
     NavBar.tintColor = TopNavTitleViewTitleColor;
     [NavBar setTitleTextAttributes:@{NSForegroundColorAttributeName : TopNavTitleViewTitleColor}];
+    
 //    if (IsIos9) {
 //        
 //    }else{

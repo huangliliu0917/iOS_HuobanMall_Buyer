@@ -12,9 +12,50 @@
 #import "UserInfo.h"
 @implementation NSDictionary (HuoBanMallSign)
 
+
+
++ (NSMutableDictionary *)javaAsignWithMutableDictionary:(NSMutableDictionary *)dict{
+    
+    
+    dict[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    NSDate * timestamp = [[NSDate alloc] init];
+    NSString *timeSp = [NSString stringWithFormat:@"%lld", (long long)[timestamp timeIntervalSince1970] * 1000];  //转化为UNIX时间戳
+    dict[@"appid"] = NoticeCenterAppKey;
+    dict[@"timestamp"] = timeSp;
+    dict[@"operation"]=@"app";
+    dict[@"version"]=AppVersion;
+    
+    //计算asign参数
+    NSArray * arr = [dict allKeys];
+    [arr enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString * cc = [dict objectForKey:obj];
+        if (cc.length==0) {
+            //            NSLog(@"%@",cc);
+            [dict removeObjectForKey:obj];
+        }
+        
+    }];
+    //计算asign参数
+    arr = [dict allKeys];
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(NSString* obj1, NSString* obj2) {
+        return [obj1 compare:obj2] == NSOrderedDescending;
+    }];
+    NSMutableString * signCap = [[NSMutableString alloc] init];
+    //进行asign拼接
+    for (NSString * dicKey in arr) {
+        [signCap appendString:[NSString stringWithFormat:@"%@=%@&",dicKey,[dict valueForKey:dicKey]]];
+    }
+    NSString * aa = [signCap substringToIndex:signCap.length-1];
+    
+    NSString * cc  = [NSString stringWithFormat:@"%@%@",aa,NoticeCenterAppSecure];
+    dict[@"sign"] = [MD5Encryption md5by32:cc];
+    return dict;
+}
+
+
+
 + (NSMutableDictionary *)asignWithMutableDictionary:(NSMutableDictionary *)dict{
-    
-    
     dict[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
     NSDate * timestamp = [[NSDate alloc] init];
     NSString *timeSp = [NSString stringWithFormat:@"%lld", (long long)[timestamp timeIntervalSince1970] * 1000];  //转化为UNIX时间戳

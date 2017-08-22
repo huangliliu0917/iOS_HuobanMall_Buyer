@@ -16,5 +16,5 @@
 + (NSString *)ToSignUrlWithString:(NSString *)urlStr;
 
 
-
++ (NSMutableDictionary *)javaAsignWithMutableDictionary:(NSMutableDictionary *)dict;
 @end
