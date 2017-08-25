@@ -54,8 +54,10 @@
 #import "NSData+NSDataDeal.h"
 
 #import "PushWebViewController.h"
-
+#import <IQKeyboardManager.h>
 #import "LaunchViewController.h"
+
+
 
 
 @interface AppDelegate ()<WXApiDelegate,UIAlertViewDelegate>
@@ -68,10 +70,19 @@
 
 @implementation AppDelegate
 
+- (void)setKeyboardManager
+{
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化
     
+    [self setKeyboardManager];
     
     UIApplication *app = [UIApplication sharedApplication];
     app.applicationIconBadgeNumber = 0;
@@ -85,6 +96,7 @@
     }
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.window.backgroundColor = [UIColor whiteColor];
+    
     LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
     self.window.rootViewController = launchViewController;
     [self.window makeKeyAndVisible];

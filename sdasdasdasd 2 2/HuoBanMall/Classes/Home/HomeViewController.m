@@ -45,7 +45,7 @@
 #import "ADView.h"
 
 #import "LWNavigationController.h"
-
+#import "OaLoginController.h"
 
 
 @interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate,WXApiDelegate>
@@ -1119,8 +1119,7 @@
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             decisionHandler(WKNavigationResponsePolicyAllow);
         }
-        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound ||
-            [url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound
+        if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound
             ) {
             
             NSString * goUrl = [[NSString alloc] init];
@@ -1173,6 +1172,14 @@
                 }];
             }
             decisionHandler(WKNavigationResponsePolicyCancel);
+        }else if([url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound){
+            
+            
+            OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+            [self presentViewController:root animated:YES completion:nil];
+            decisionHandler(WKNavigationResponsePolicyCancel);
+            
         }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
             
             if ([WXApi isWXAppInstalled]) {

@@ -122,6 +122,8 @@
 		EFA6D3BF1C0451D300B39B36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3BE1C0451D300B39B36 /* AdSupport.framework */; };
 		EFA6D3C11C0451DE00B39B36 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */; };
 		EFB0D8A51D826A8300D24FE4 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */; };
+		EFDBE0D91F4FB87500ADCEB4 /* OaLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDBE0D71F4FB87500ADCEB4 /* OaLoginController.m */; };
+		EFDBE0DA1F4FB87500ADCEB4 /* OaLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFDBE0D81F4FB87500ADCEB4 /* OaLoginController.xib */; };
 		EFFD3DB31E12153A000FA9FE /* KeFuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -428,6 +430,9 @@
 		EFA6D3C01C0451DE00B39B36 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EFB0D8A31D826A8300D24FE4 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		EFB0D8A41D826A8300D24FE4 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		EFDBE0D61F4FB87500ADCEB4 /* OaLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OaLoginController.h; sourceTree = "<group>"; };
+		EFDBE0D71F4FB87500ADCEB4 /* OaLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OaLoginController.m; sourceTree = "<group>"; };
+		EFDBE0D81F4FB87500ADCEB4 /* OaLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OaLoginController.xib; sourceTree = "<group>"; };
 		EFE4DCFB1F4D666200E88EE9 /* HuoBanMall.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = HuoBanMall.entitlements; path = HuoBanMall/HuoBanMall.entitlements; sourceTree = "<group>"; };
 		EFFD3DB11E12153A000FA9FE /* KeFuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeFuViewController.h; sourceTree = "<group>"; };
 		EFFD3DB21E12153A000FA9FE /* KeFuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeFuViewController.m; sourceTree = "<group>"; };
@@ -953,6 +958,9 @@
 				EF9D4C241C055FF900D005E8 /* model */,
 				EF8E69F71C16B27E004ACB5A /* IponeVerifyViewController.h */,
 				EF8E69F81C16B27E004ACB5A /* IponeVerifyViewController.m */,
+				EFDBE0D61F4FB87500ADCEB4 /* OaLoginController.h */,
+				EFDBE0D71F4FB87500ADCEB4 /* OaLoginController.m */,
+				EFDBE0D81F4FB87500ADCEB4 /* OaLoginController.xib */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1334,6 +1342,7 @@
 				EF9D4C5D1C055FF900D005E8 /* MidTabelViewCell.xib in Resources */,
 				60A216B21D925B5500A0FF1D /* ShareSDKUI.bundle in Resources */,
 				EF9A5AA81E235D24004E23EE /* AlipaySDK.bundle in Resources */,
+				EFDBE0DA1F4FB87500ADCEB4 /* OaLoginController.xib in Resources */,
 				EF9D4C661C055FF900D005E8 /* MyLoginView.xib in Resources */,
 				EF40A81D1C05677600E664C8 /* Images.xcassets in Resources */,
 				EF9D4CB31C055FF900D005E8 /* MBProgressHUD.bundle in Resources */,
@@ -1516,6 +1525,7 @@
 				EF9D4C7F1C055FF900D005E8 /* WXUtil.mm in Sources */,
 				EF42C11E1C08350500602E60 /* UITableView+CJ.m in Sources */,
 				EF9D4CB51C055FF900D005E8 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				EFDBE0D91F4FB87500ADCEB4 /* OaLoginController.m in Sources */,
 				EF9D4CAA1C055FF900D005E8 /* PayModel.m in Sources */,
 				EF9D4CB91C055FF900D005E8 /* Settingviewcontrller.m in Sources */,
 				EF2DC4201C0BDE2400C3ACD2 /* WeiXinLoginModel.m in Sources */,

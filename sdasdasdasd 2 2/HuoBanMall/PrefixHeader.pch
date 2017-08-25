@@ -27,6 +27,13 @@
 #define HomeUrl @"http://cosytest.51flashmall.com/3447/index.aspx?back=1" //测室
 #define HomeBottomUrl @"/bottom.aspx?customerid="
 
+#define kScreenWidthRatio  (ScreenWidth / 375.0)
+#define kScreenHeightRatio ((ScreenHeight-64)/603.0)
+#define kAdaptedWidth(x)  ceilf((x) * kScreenWidthRatio)
+#define kAdaptedHeight(x) ceilf((x) * kScreenHeightRatio)
+#define kCHINESE_SYSTEM(x) [UIFont systemFontOfSize:x]
+#define kAdaptedFontSize(R)     kCHINESE_SYSTEM(kAdaptedWidth(R))
+#define kCHINESE_SYSTEM(x) [UIFont systemFontOfSize:x]
 
 //java
 // 店中店
