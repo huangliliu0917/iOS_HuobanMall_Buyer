@@ -48,6 +48,13 @@
     self.image.contentMode = UIViewContentModeScaleAspectFit;
     
     
+    if(CGColorEqualToColor(HuoBanMallBuyNavColor.CGColor,[UIColor whiteColor].CGColor)){
+        self.loginButton.layer.borderWidth = 1;
+        self.loginButton.layer.borderColor = [UIColor blackColor].CGColor;
+    }
+    
+    
+    
     /**
      *	- /account/loginorregisterbymobilewithoauth
      - customerid
