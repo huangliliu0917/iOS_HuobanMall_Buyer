@@ -38,6 +38,8 @@
 #import "LWNavigationController.h"
 #import "NSString+Des.h"
 #import "MBProgressHUD+MJ.h"
+#import "OaLoginController.h"
+
 @interface PushWebViewController ()<WXApiDelegate,UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
@@ -661,6 +663,33 @@
 }
 
 #pragma mark wk
+
+
+/**
+ * 获取重定向地址
+ */
+- (NSString *)getRedirecturl:(NSString *)url{
+    NSString * goUrl = [[NSString alloc] init];
+    if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+        NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+        NSString *str = array[1];
+        if (str.length != 0) {
+            goUrl = [str stringByRemovingPercentEncoding];
+            if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
+                goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
+            }
+        }
+    }else {
+        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+        goUrl = ddd;
+    }
+    return goUrl;
+}
+
+
+
+
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
     if (navigationAction.targetFrame == nil) {
         [webView loadRequest:navigationAction.request];
@@ -684,22 +713,7 @@
     
     //拦截没登录
     if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound) {
-        NSString *goUrl = [[NSString alloc] init];
-        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
-            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
-            NSString *str = array[1];
-            if (str.length != 0) {
-                goUrl = [str stringByRemovingPercentEncoding];
-                if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
-                    goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
-                }
-            }
-        }else {
-            NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-            NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-            goUrl = ddd;
-        }
-        
+        NSString *goUrl = [self getRedirecturl:url];
         [UIViewController ToRemoveSandBoxDate];
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
@@ -737,6 +751,28 @@
         }
         
         decisionHandler(WKNavigationResponsePolicyCancel);
+    }else if([url rangeOfString:@"/usercenter/oazc.aspx?customerid=7031"].location !=  NSNotFound){
+        
+        LWLog(@"%lu",self.navigationController.viewControllers.count);
+        if (self.fromType == 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        
+    }else if([url rangeOfString:@"/usercenter/oalogin.aspx?customerid=7031"].location !=  NSNotFound){
+        if (self.fromType == 1) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+             decisionHandler(WKNavigationResponsePolicyCancel);
+        }else{
+            
+            OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+            oa.inWeb = 1;
+            oa.goUrl = [self getRedirecturl:url];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+            [self presentViewController:root animated:YES completion:nil];
+            decisionHandler(WKNavigationResponsePolicyCancel);
+        }
+        
     }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
         

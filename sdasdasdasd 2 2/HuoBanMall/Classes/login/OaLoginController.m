@@ -7,6 +7,11 @@
 //
 
 #import "OaLoginController.h"
+#import <SVProgressHUD.h>
+#import "UserLoginTool.h"
+#import "UserInfo.h"
+#import "MallMessage.h"
+#import "AccountTool.h"
 
 @interface OaLoginController ()<UITextFieldDelegate>
 
@@ -52,7 +57,10 @@
  */
 - (void)BackToWebView{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];
+    if (!self.inWeb) {
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];  
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^{
         
         
@@ -68,25 +76,152 @@
  * 注册
  **/
 - (IBAction)gesterBtn:(id)sender {
+    
+    
+    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+    funWeb.fromType = 1;
+    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAzc.aspx?customerid=7031";
+    [self.navigationController pushViewController:funWeb animated:YES];
 }
 
 /**
  * 找回密码
  **/
 - (IBAction)backPass:(id)sender {
+    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+    funWeb.fromType = 1;
+    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAlogin-w.aspx?customerid=7031";
+    [self.navigationController pushViewController:funWeb animated:YES];
 }
 
 /**
  * 登录
  **/
 - (IBAction)login:(id)sender {
+    
+    if (!self.firstName.text.length) {
+        [SVProgressHUD showErrorWithStatus:@"用户名不能为空"];
+        return;
+    }
+    if (!self.passWord.text.length) {
+        [SVProgressHUD showErrorWithStatus:@"密码不能为空"];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"loginname"] = self.firstName.text;
+    parame[@"password"] = [MD5Encryption md5by32:self.passWord.text];
+    //parame[@"CustomerID"] = HuoBanMallBuyApp_Merchant_Id;
+    NSDate * timestamp = [[NSDate alloc] init];
+    NSString *timeSp = [NSString stringWithFormat:@"%lld", (long long)[timestamp timeIntervalSince1970] * 1000];  //转化为UNIX时间戳
+    parame[@"secure"] = timeSp;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    LWLog(@"%@",parame);
+    LWLog(@"%@",[NSString stringWithFormat:@"%@/Account/OAlogin",AppOriginUrl]);
+    [SVProgressHUD showWithStatus:@"登录中"];
+    [UserLoginTool loginRequestPost:[NSString stringWithFormat:@"%@/Account/OAlogin",AppOriginUrl] parame:parame success:^(NSDictionary * json) {
+        LWLog(@"%@",json);
+        if ([json[@"code"] intValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
+            UserInfo * userInfo = [[UserInfo alloc] init];
+            userInfo.unionid = json[@"data"][@"authorizeCode"];
+            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.headimgurl = json[@"data"][@"headImgUrl"];
+            userInfo.openid = json[@"data"][@"openId"];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+            [NSKeyedArchiver archiveRootObject:userInfo toFile:fileName];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"levelName"] forKey:HuoBanMallMemberLevel];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userid"] forKey:HuoBanMallUserId];
+            if (![json[@"data"][@"headImgUrl"] isKindOfClass:[NSNull class]]) {
+                [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"headImgUrl"] forKey:IconHeadImage];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"userType"] forKey:MallUserType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"relatedType"] forKey:MallUserRelatedType];
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"IsMobileBind"] forKey:@"bangShouji"];
+            [self toGetMainUrl];
+            [self ToGetShareMessage];
+            [SVProgressHUD dismiss];
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [app resetUserAgent:_goUrl];
+            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"OATest" object:self.goUrl];
+            [self dismissViewControllerAnimated:NO completion:^{
+
+            }];
+            
+            
+            
+        }
+    } failure:^(NSError *error) {
+         LWLog(@"%@",error);
+         [SVProgressHUD dismiss];
+    }];
+  
 }
 
+
+
+/**
+ * 分享商城信息
+ */
+- (void)ToGetShareMessage{
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/mall/getConfig"];
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    parame[@"customerid"] = HuoBanMallBuyApp_Merchant_Id;
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        MallMessage * mallmodel = [MallMessage mj_objectWithKeyValues:json];
+        NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString * filename = [[array objectAtIndex:0] stringByAppendingPathComponent:HuoBanMaLLMess];
+        [NSKeyedArchiver archiveRootObject:mallmodel toFile:filename];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+    
+    
+}
+
+ 
+/**
+ *  获取主地址
+ */
+- (void)toGetMainUrl{
+    
+    NSMutableDictionary * parame = [NSMutableDictionary dictionary];
+    UserInfo * usaa = nil;
+    if ([AccountTool account]) {
+        NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *fileName = [path stringByAppendingPathComponent:WeiXinUserInfo];
+        usaa =  [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+    };
+    parame[@"unionid"] = usaa.unionid;
+    parame = [NSDictionary asignWithMutableDictionary:parame];
+    NSMutableString * url = [NSMutableString stringWithString:AppOriginUrl];
+    [url appendString:@"/mall/getmsiteurl"];
+    [UserLoginTool loginRequestGet:url parame:parame success:^(id json) {
+        if ([json[@"code"] integerValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"msiteUrl"] forKey:AppMainUrl];
+            
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"getmsiteurlSuccess" object:nil];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error.description);
+    }];
+}
 
 /**
  * 登录
  **/
 - (IBAction)haveOA:(id)sender {
+    PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+    funWeb.fromType = 1;
+    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAlogin-s.aspx?customerid=7031";
+    [self.navigationController pushViewController:funWeb animated:YES];
+    
     
 }
 

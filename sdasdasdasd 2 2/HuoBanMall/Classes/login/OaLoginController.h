@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface OaLoginController : UIViewController
+@property (nonatomic, strong) NSString *goUrl;
 
+@property (nonatomic, assign) int inWeb;
 @end

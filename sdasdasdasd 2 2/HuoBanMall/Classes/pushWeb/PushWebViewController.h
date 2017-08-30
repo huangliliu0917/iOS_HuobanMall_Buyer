@@ -12,4 +12,8 @@
 
 /***/
 @property(nonatomic,strong) NSString * funUrl;
+
+
+// 1 表示来自云品星球
+@property(nonatomic,assign) int fromType;
 @end
