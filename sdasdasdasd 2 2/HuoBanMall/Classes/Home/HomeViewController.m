@@ -364,7 +364,7 @@
      * luohaibo for yunpingxingqiu
      */
 //    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
 //
     //集成刷新控件
     [self AddMjRefresh];
@@ -1480,39 +1480,9 @@
 - (void)gotoLoginController {
     [UIViewController ToRemoveSandBoxDate];
     
-    UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
-    
-    if ([str intValue] == 0) {
-        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }else if ([str intValue] == 1) {
-        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        login.isPhoneLogin = YES;
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }else if ([str intValue] == 2) {
-        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }
+    OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+    LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+    [self presentViewController:root animated:YES completion:nil];
 }
 
 - (void)checkVersion{

@@ -42,25 +42,25 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ls-db-wEz">
                     <rect key="frame" x="0.0" y="205.5" width="414" height="123"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXx-5I-EOS">
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXx-5I-EOS" userLabel="top">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="LCx-ud-y0X"/>
+                                <constraint firstAttribute="height" constant="0.40000000000000002" id="LCx-ud-y0X"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gV-U9-Qii">
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gV-U9-Qii" userLabel="bottom">
                             <rect key="frame" x="0.0" y="122" width="414" height="1"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="LqT-Ge-KmF"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ib-ft-8J9">
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ib-ft-8J9" userLabel="center">
                             <rect key="frame" x="10" y="62" width="404" height="0.0"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="4Dd-V1-4EP"/>
+                                <constraint firstAttribute="height" constant="0.40000000000000002" id="4Dd-V1-4EP"/>
                             </constraints>
                         </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pop" translatesAutoresizingMaskIntoConstraints="NO" id="JTd-XW-AmC">
@@ -69,7 +69,7 @@
                                 <constraint firstAttribute="width" secondItem="JTd-XW-AmC" secondAttribute="height" id="bGJ-CJ-Vic"/>
                             </constraints>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号或登录名" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ee8-RF-psT">
+                        <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号或登录名" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ee8-RF-psT">
                             <rect key="frame" x="58" y="6" width="351" height="51"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -81,14 +81,13 @@
                                 <constraint firstAttribute="width" secondItem="Aav-vL-tZ8" secondAttribute="height" id="sjM-FP-oZC"/>
                             </constraints>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="j33-Au-M3x">
+                        <textField opaque="NO" clipsSubviews="YES" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="j33-Au-M3x">
                             <rect key="frame" x="58" y="67" width="351" height="50"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Ee8-RF-psT" secondAttribute="trailing" constant="5" id="1Cz-kr-nir"/>
                         <constraint firstItem="5gV-U9-Qii" firstAttribute="leading" secondItem="6Ls-db-wEz" secondAttribute="leading" id="7Ls-zC-Ngn"/>

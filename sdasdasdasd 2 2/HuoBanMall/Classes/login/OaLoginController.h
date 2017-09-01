@@ -11,5 +11,6 @@
 @interface OaLoginController : UIViewController
 @property (nonatomic, strong) NSString *goUrl;
 
+// 首页和非首页
 @property (nonatomic, assign) int inWeb;
 @end

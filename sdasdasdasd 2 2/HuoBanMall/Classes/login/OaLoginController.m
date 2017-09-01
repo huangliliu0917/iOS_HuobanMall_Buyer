@@ -39,7 +39,7 @@
     self.backBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
     
     self.passWord.delegate = self;
-    
+    self.firstName.delegate = self;
     self.navigationItem.title = MallName;
     _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    _leftBtn.frame = CGRectMake(0, 0, 25, 25);
@@ -80,7 +80,7 @@
     
     PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
     funWeb.fromType = 1;
-    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAzc.aspx?customerid=7031";
+    funWeb.funUrl = @"http://m.championstar.cn/UserCenter/OAzc.aspx?customerid=7031";
     [self.navigationController pushViewController:funWeb animated:YES];
 }
 
@@ -90,7 +90,7 @@
 - (IBAction)backPass:(id)sender {
     PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
     funWeb.fromType = 1;
-    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAlogin-w.aspx?customerid=7031";
+    funWeb.funUrl = @"http://m.championstar.cn/UserCenter/OAlogin-w.aspx?customerid=7031";
     [self.navigationController pushViewController:funWeb animated:YES];
 }
 
@@ -123,11 +123,14 @@
     [SVProgressHUD showWithStatus:@"登录中"];
     [UserLoginTool loginRequestPost:[NSString stringWithFormat:@"%@/Account/OAlogin",AppOriginUrl] parame:parame success:^(NSDictionary * json) {
         LWLog(@"%@",json);
+        [SVProgressHUD dismiss];
         if ([json[@"code"] intValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:Success forKey:LoginStatus];
             UserInfo * userInfo = [[UserInfo alloc] init];
+            
+            LWLog(@"%@",json[@"data"][@"nickName"]);
             userInfo.unionid = json[@"data"][@"authorizeCode"];
-            userInfo.nickname = json[@"data"][@"nickName"];
+            userInfo.nickname = json[@"data"][@"username"];
             userInfo.headimgurl = json[@"data"][@"headImgUrl"];
             userInfo.openid = json[@"data"][@"openId"];
             NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -144,16 +147,21 @@
             [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"IsMobileBind"] forKey:@"bangShouji"];
             [self toGetMainUrl];
             [self ToGetShareMessage];
-            [SVProgressHUD dismiss];
+            
             AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
             [app resetUserAgent:_goUrl];
             
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"OATest" object:self.goUrl];
             [self dismissViewControllerAnimated:NO completion:^{
-
+                [SVProgressHUD showSuccessWithStatus:@"登录成功"];
             }];
             
             
+            
+        }else{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD showErrorWithStatus:json[@"msg"]];
+            });
             
         }
     } failure:^(NSError *error) {
@@ -219,7 +227,7 @@
 - (IBAction)haveOA:(id)sender {
     PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
     funWeb.fromType = 1;
-    funWeb.funUrl = @"http://m.zhaohuotu.com/UserCenter/OAlogin-s.aspx?customerid=7031";
+    funWeb.funUrl = @"http://m.championstar.cn/UserCenter/OAlogin-s.aspx?customerid=7031";
     [self.navigationController pushViewController:funWeb animated:YES];
     
     
@@ -227,7 +235,12 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
+    if (textField.tag == 101) {
+      [textField resignFirstResponder];
+    }else{
+        [self.passWord becomeFirstResponder];
+    }
+    
     return YES;
 }
 

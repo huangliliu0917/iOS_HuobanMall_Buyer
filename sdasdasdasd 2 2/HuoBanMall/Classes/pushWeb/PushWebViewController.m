@@ -755,12 +755,16 @@
         
         LWLog(@"%lu",self.navigationController.viewControllers.count);
         if (self.fromType == 1) {
+            decisionHandler(WKNavigationResponsePolicyAllow);
+
+        }else{
             [self.navigationController popViewControllerAnimated:YES];
+            decisionHandler(WKNavigationResponsePolicyCancel);
+ 
         }
-        decisionHandler(WKNavigationResponsePolicyCancel);
         
     }else if([url rangeOfString:@"/usercenter/oalogin.aspx?customerid=7031"].location !=  NSNotFound){
-        if (self.fromType == 1) {
+        if (self.navigationController.viewControllers.count == 3) {
             [self.navigationController popToRootViewControllerAnimated:YES];
              decisionHandler(WKNavigationResponsePolicyCancel);
         }else{

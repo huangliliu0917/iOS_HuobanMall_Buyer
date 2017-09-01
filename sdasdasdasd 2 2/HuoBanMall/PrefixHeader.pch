@@ -48,13 +48,13 @@
 #define LWNewFeatureImageCount 1
 #define MallName @"云品星球"
 /**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.zhaohuotu.com"
+#define NoticeCenterMainUrl @"http://api.open.championstar.cn"
 /**网络  APP 标识*/
 #define NoticeCenterAppKey  @"app"
 /**网络  APP 签名秘药*/
 #define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
 //接口地址 .net   championstar
-#define AppOriginUrl  @"http://mallapi.zhaohuotu.com"
+#define AppOriginUrl  @"http://mallapi.championstar.cn"
 #define HuoBanMallBuyAppId @"hotfangsho62b82w1g16gu17tbz"
 #define HuoBanMallBuyAppSecrect @"5e29e83hc22e3a31wz220nt0fb8iewq"
 //ShareSDk数据统计
@@ -65,8 +65,8 @@
 #define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
 #define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
 //WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx5231134431122437"
-#define HuoBanMallShareSdkWeiXinSecret @"8d655d835fad07e3f9039f6aec2cd3da"
+#define HuoBanMallBuyWeiXinAppId @"wxccad0305dc20271a"
+#define HuoBanMallShareSdkWeiXinSecret @"48079fd93211b1f5e1b178e417758bd3"
 //qq
 #define HuoBanMallShareSdkQQKey @"1105829128"
 #define HuoBanMallShareSdkQQSecret @"7vF74vENmfILqwak"
