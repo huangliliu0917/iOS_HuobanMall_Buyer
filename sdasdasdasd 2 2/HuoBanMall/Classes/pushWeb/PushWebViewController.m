@@ -763,12 +763,12 @@
  
         }
         
-    }else if([url rangeOfString:@"/usercenter/oalogin.aspx?customerid=7031"].location !=  NSNotFound){
+    }else if([url rangeOfString:@"/usercenter/oalogin.aspx"].location !=  NSNotFound){
         if (self.navigationController.viewControllers.count == 3) {
             [self.navigationController popToRootViewControllerAnimated:YES];
              decisionHandler(WKNavigationResponsePolicyCancel);
         }else{
-            
+            [UIViewController ToRemoveSandBoxDate];
             OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
             oa.inWeb = 1;
             oa.goUrl = [self getRedirecturl:url];

@@ -1077,7 +1077,7 @@
             }
             decisionHandler(WKNavigationResponsePolicyCancel);
         }else if([url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound){
-            
+            [UIViewController ToRemoveSandBoxDate];
             OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
             oa.goUrl = [self getRedirecturl:url];
             LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];

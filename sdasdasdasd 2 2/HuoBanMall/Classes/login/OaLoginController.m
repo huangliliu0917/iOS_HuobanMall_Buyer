@@ -57,10 +57,9 @@
  */
 - (void)BackToWebView{
     
-    if (!self.inWeb) {
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];  
-    }
-    
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CannelLoginBackHome" object:nil];  
+ 
     [self dismissViewControllerAnimated:YES completion:^{
         
         
@@ -149,7 +148,13 @@
             [self ToGetShareMessage];
             
             AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            [app resetUserAgent:_goUrl];
+            if ([[[self goUrl] lowercaseString] rangeOfString:@"usercenter/usersetting"].location == NSNotFound) {
+                [app resetUserAgent:_goUrl];
+            }else{
+                [app resetUserAgent:nil];
+
+            }
+            
             
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"OATest" object:self.goUrl];
             [self dismissViewControllerAnimated:NO completion:^{
