@@ -35,6 +35,49 @@
 //MK
 #define MainUrlMK @"http://api.open.olquan.cn/sis/"
 
+
+
+///*
+// *尤易生活
+// */
+#define LWNewFeatureImageCount 1
+#define MallName @"尤易生活"
+///**消息中心  网络接口*/
+#define NoticeCenterMainUrl @"http://api.open.uyase.com"
+/**网络  APP 标识*/
+#define NoticeCenterAppKey  @"app"
+/**网络  APP 签名秘药*/
+#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+//接口地址 .net
+#define AppOriginUrl  @"http://mallapi.uyase.com"
+#define HuoBanMallBuyAppId @"app"
+#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+//ShareSDk数据统计
+#define HuoBanMallShareSdkAppId @"20d14035efab9"
+#define HuoBanMallYouMeng @"59b631f699f0c73927000d29"
+//sina
+#define HuoBanMallShareSdkSinaKey @"1000919385"
+#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+//WeiXin
+#define HuoBanMallBuyWeiXinAppId @"wxecbb3246b96e8bd2"
+#define HuoBanMallShareSdkWeiXinSecret @"3342c718ca6adf2171a0ef301b4a2904"
+//qq
+#define HuoBanMallShareSdkQQKey @"1105503405"
+#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
+#define HuoBanMallBuyApp_Merchant_Id @"7034" //0504
+#define HuoBanMallBuyNavColor ([UIColor colorWithRed:252/255.0 green:147/255.0 blue:145/255.0 alpha:1.000])
+//设置底部tabar按钮选中时文字的颜色
+#define BottomTaBarButtonTitleColor ([UIColor blackColor])
+//设置底部tabar按钮选中时文字的颜色
+#define TopNavTitleViewTitleColor ([UIColor whiteColor])
+#define ButtonTitleColor ([UIColor whiteColor])
+#define BudleId @"com.huobanmall.youyishenghuo"
+#define WBAPPVERSION @"2.0.0"
+#define AppStoryId @"1281419641"
+//设置导航栏背景图片
+#define NaVColor @false
+
 ///*
 // *云品星球
 // */
@@ -337,46 +380,46 @@
 //#define BudleId @"com.huotu.fanmore---"
 //#define AppStoryId @"123456"
 
-///*
-// *艺福堂茶商城
-// */
-#define LWNewFeatureImageCount 1
-#define MallName @"艺福堂茶商城"
-///**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.efuton.com"
-/**网络  APP 标识*/
-#define NoticeCenterAppKey  @"app"
-/**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-//接口地址 .net
-#define AppOriginUrl  @"http://mallapi.efuton.com"
-#define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-//ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"1870d19d5c600"
-#define HuoBanMallYouMeng @"57be8af467e58ea5510009f6"
-//sina
-#define HuoBanMallShareSdkSinaKey @"1000919385"
-#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
-#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
-//WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wx776ef947adaff9ba"
-#define HuoBanMallShareSdkWeiXinSecret @"d46f7e913688767f049c1ce9dacc9cea"
-//qq
-#define HuoBanMallShareSdkQQKey @"1105503405"
-#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
-#define HuoBanMallBuyApp_Merchant_Id @"7020" //0504
-#define HuoBanMallBuyNavColor ([UIColor whiteColor])
-//设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor blackColor])
-//设置底部tabar按钮选中时文字的颜色
-#define TopNavTitleViewTitleColor ([UIColor blackColor])
-#define ButtonTitleColor ([UIColor blackColor])
-#define BudleId @"Efuton.hangzhou.cn"
-#define WBAPPVERSION @"2.0.0"
-#define AppStoryId @"1167348803"
-//设置导航栏背景图片
-#define NaVColor @false
+/////*
+//// *艺福堂茶商城
+//// */
+//#define LWNewFeatureImageCount 1
+//#define MallName @"艺福堂茶商城"
+/////**消息中心  网络接口*/
+//#define NoticeCenterMainUrl @"http://api.open.efuton.com"
+///**网络  APP 标识*/
+//#define NoticeCenterAppKey  @"app"
+///**网络  APP 签名秘药*/
+//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.efuton.com"
+//#define HuoBanMallBuyAppId @"app"
+//#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////ShareSDk数据统计
+//#define HuoBanMallShareSdkAppId @"1870d19d5c600"
+//#define HuoBanMallYouMeng @"57be8af467e58ea5510009f6"
+////sina
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+////WeiXin
+//#define HuoBanMallBuyWeiXinAppId @"wx776ef947adaff9ba"
+//#define HuoBanMallShareSdkWeiXinSecret @"d46f7e913688767f049c1ce9dacc9cea"
+////qq
+//#define HuoBanMallShareSdkQQKey @"1105503405"
+//#define HuoBanMallShareSdkQQSecret @"5I2Fw3z6l5jtpqOT"
+//#define HuoBanMallBuyApp_Merchant_Id @"7020" //0504
+//#define HuoBanMallBuyNavColor ([UIColor whiteColor])
+////设置底部tabar按钮选中时文字的颜色
+//#define BottomTaBarButtonTitleColor ([UIColor blackColor])
+////设置底部tabar按钮选中时文字的颜色
+//#define TopNavTitleViewTitleColor ([UIColor blackColor])
+//#define ButtonTitleColor ([UIColor blackColor])
+//#define BudleId @"Efuton.hangzhou.cn"
+//#define WBAPPVERSION @"2.0.0"
+//#define AppStoryId @"1167348803"
+////设置导航栏背景图片
+//#define NaVColor @false
 
 
 ///*
@@ -1037,7 +1080,7 @@
 #import "UITabBar+XSDExt.h"
 #import "AdModel.h"
 #import "MallTabbarViewController.h"
-
+#import "NSMutableDictionary+UrlParame.h"
 #ifdef DEBUG
 #define LWLog(...) NSLog(__VA_ARGS__)
 #else

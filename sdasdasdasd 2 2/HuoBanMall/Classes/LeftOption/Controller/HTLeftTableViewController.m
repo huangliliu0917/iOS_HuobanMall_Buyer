@@ -358,7 +358,7 @@
     NSString * login = [[NSUserDefaults standardUserDefaults] objectForKey:LoginStatus];
     if ([login isEqualToString:Success]) {
         
-        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil options:SDWebImageRetryFailed];
+        [_topHeadView.iconView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:[UIImage imageNamed:@"moren"] options:SDWebImageRetryFailed];
         _topHeadView.firstLable.text = userInfor.nickname;
         _topHeadView.userInteractionEnabled = NO;
     }else {

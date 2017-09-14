@@ -144,7 +144,7 @@
         [url appendString:@"/Account/sendCode"];
         [self settime];
         [UserLoginTool loginRequestPost:url parame:params success:^(id json) {
-            
+            LWLog(@"%@",json);
             self.VerifyLable.userInteractionEnabled = YES;
             if ([json[@"code"] intValue] == 200) {
                 [SVProgressHUD showSuccessWithStatus:@"验证码发送成功"];

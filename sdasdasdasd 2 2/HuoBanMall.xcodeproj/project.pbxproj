@@ -63,6 +63,7 @@
 		EF9A5BC91E2373DE004E23EE /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A5BC71E2373DE004E23EE /* libcrypto.a */; };
 		EF9A5BCA1E2373DE004E23EE /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A5BC81E2373DE004E23EE /* libssl.a */; };
 		EF9BF88B1DD0551B0073B90A /* WKCookieSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9BF88A1DD0551B0073B90A /* WKCookieSyncManager.m */; };
+		EF9C4DFE1F66765D00941140 /* NSMutableDictionary+UrlParame.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C4DFD1F66765D00941140 /* NSMutableDictionary+UrlParame.m */; };
 		EF9D4C581C055FF900D005E8 /* UIBarButtonItem+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */; };
 		EF9D4C591C055FF900D005E8 /* UIImage+LHB.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B221C055FF900D005E8 /* UIImage+LHB.m */; };
 		EF9D4C5A1C055FF900D005E8 /* UIViewController+MonitorNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D4B241C055FF900D005E8 /* UIViewController+MonitorNetWork.m */; };
@@ -315,6 +316,8 @@
 		EF9A5BC81E2373DE004E23EE /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		EF9BF8891DD0551B0073B90A /* WKCookieSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKCookieSyncManager.h; sourceTree = "<group>"; };
 		EF9BF88A1DD0551B0073B90A /* WKCookieSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKCookieSyncManager.m; sourceTree = "<group>"; };
+		EF9C4DFC1F66765D00941140 /* NSMutableDictionary+UrlParame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+UrlParame.h"; sourceTree = "<group>"; };
+		EF9C4DFD1F66765D00941140 /* NSMutableDictionary+UrlParame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+UrlParame.m"; sourceTree = "<group>"; };
 		EF9D4B1C1C055B5400D005E8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		EF9D4B1F1C055FF900D005E8 /* UIBarButtonItem+LHB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+LHB.h"; sourceTree = "<group>"; };
 		EF9D4B201C055FF900D005E8 /* UIBarButtonItem+LHB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+LHB.m"; sourceTree = "<group>"; };
@@ -1078,6 +1081,8 @@
 				EF9D4C4B1C055FF900D005E8 /* NSDictionary+HuoBanMallSign.m */,
 				EF9D4C4C1C055FF900D005E8 /* UIViewController+NAV.h */,
 				EF9D4C4D1C055FF900D005E8 /* UIViewController+NAV.m */,
+				EF9C4DFC1F66765D00941140 /* NSMutableDictionary+UrlParame.h */,
+				EF9C4DFD1F66765D00941140 /* NSMutableDictionary+UrlParame.m */,
 			);
 			path = "扩展";
 			sourceTree = "<group>";
@@ -1288,7 +1293,7 @@
 				TargetAttributes = {
 					EFA6D3511C04514500B39B36 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = WW3SYYM5FY;
+						DevelopmentTeam = 6QLL48Z9D8;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1504,6 +1509,7 @@
 				EF9D4CA71C055FF900D005E8 /* LoginViewController.m in Sources */,
 				EF9D4C631C055FF900D005E8 /* AccountTool.m in Sources */,
 				60F11ACD1C194D480026DA33 /* NSString+EXTERN.m in Sources */,
+				EF9C4DFE1F66765D00941140 /* NSMutableDictionary+UrlParame.m in Sources */,
 				EF9D4CB71C055FF900D005E8 /* UIViewController+NAV.m in Sources */,
 				EF9A5BC21E237128004E23EE /* NSDataEx.m in Sources */,
 				EF9D4CAC1C055FF900D005E8 /* LWNavigationController.m in Sources */,
@@ -1712,7 +1718,7 @@
 				CODE_SIGN_ENTITLEMENTS = HuoBanMall/HuoBanMall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = WW3SYYM5FY;
+				DEVELOPMENT_TEAM = 6QLL48Z9D8;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1737,7 +1743,7 @@
 					"$(PROJECT_DIR)/HuoBanMall/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Efuton.hangzhou.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmall.youyishenghuo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1755,7 +1761,7 @@
 				CODE_SIGN_ENTITLEMENTS = HuoBanMall/HuoBanMall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = WW3SYYM5FY;
+				DEVELOPMENT_TEAM = 6QLL48Z9D8;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1780,7 +1786,7 @@
 					"$(PROJECT_DIR)/HuoBanMall/Classes/openssl",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Efuton.hangzhou.cn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huobanmall.youyishenghuo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
