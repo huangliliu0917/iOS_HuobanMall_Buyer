@@ -173,7 +173,7 @@
     btn.contentEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);
     [btn addTarget:self action:@selector(BackToHome) forControlEvents:UIControlEventTouchUpInside];
     
-    if([HuoBanMallBuyApp_Merchant_Id intValue] == 7020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 7176){
+    if([HuoBanMallBuyApp_Merchant_Id intValue] == 7020 || [HuoBanMallBuyApp_Merchant_Id intValue] == 7176 || [HuoBanMallBuyApp_Merchant_Id intValue] == 4886){
        [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back_1"] forState:UIControlStateNormal];  
     }else{
       [btn setBackgroundImage:[UIImage imageNamed:@"main_title_left_back"] forState:UIControlStateNormal];

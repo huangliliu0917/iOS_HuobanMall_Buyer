@@ -1117,16 +1117,13 @@
     }
     if (webView.tag == 100) {
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
+            decisionHandler(WKNavigationResponsePolicyCancel);
             NSString *urls = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",[[NSMutableDictionary getURLParameters:url] objectForKey:@"uin"]];
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urls]]) {
-                decisionHandler(WKNavigationResponsePolicyCancel);
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urls]];
             }else{
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }
-           
-            
-            
         }else if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound ||
             [url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound
             ) {
@@ -1342,6 +1339,8 @@
         }
         
         decisionHandler(WKNavigationResponsePolicyAllow);
+    }else{
+         decisionHandler(WKNavigationResponsePolicyAllow);
     }
     
 }

@@ -15,7 +15,7 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "29@2x.png",
+      "filename" : "29@2x-1.png",
       "scale" : "2x"
     },
     {
@@ -47,6 +47,12 @@
       "idiom" : "iphone",
       "filename" : "60@3x.png",
       "scale" : "3x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "5570D74D3CE2342E4FD3B9F25A1B46B7.png",
+      "scale" : "1x"
     }
   ],
   "info" : {

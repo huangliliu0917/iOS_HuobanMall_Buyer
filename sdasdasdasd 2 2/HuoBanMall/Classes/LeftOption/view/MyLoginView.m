@@ -34,7 +34,7 @@
 //    NSString * color = [NSString stringWithFormat:@"%@",HuoBanMallBuyNavColor];
     
     
-    if(CGColorEqualToColor(HuoBanMallBuyNavColor.CGColor,[UIColor whiteColor].CGColor)){
+    if(CGColorEqualToColor(HuoBanMallBuyNavColor.CGColor,[UIColor whiteColor].CGColor)|| [HuoBanMallBuyApp_Merchant_Id intValue] == 4886){
         self.secondLable1.backgroundColor = [UIColor blackColor];
         self.secondLable2.backgroundColor = [UIColor blackColor];
         self.secondLable3.backgroundColor = [UIColor blackColor];
