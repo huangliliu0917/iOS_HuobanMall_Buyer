@@ -43,7 +43,7 @@
 #import "WKCookieSyncManager.h"
 #import "NSDictionary+ConfirmSign.h"
 #import "ADView.h"
-
+#import "HMScannerController.h"
 #import "LWNavigationController.h"
 #import "OaLoginController.h"
 
@@ -364,7 +364,7 @@
      * luohaibo for yunpingxingqiu
      */
 //    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
 //
     //集成刷新控件
     [self AddMjRefresh];
@@ -542,14 +542,26 @@
 }
 
 /**
- *  去左侧
+ *  云品星球的扫一扫
  */
 - (void)GoToLeft{
     
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-        
-        
+    // 实例化扫描控制器
+    HMScannerController *scanner = [HMScannerController scannerWithCardName:nil avatar:nil completion:^(NSString *stringValue) {
+        NSLog(@"%@",stringValue);
+        if (stringValue.length) {
+            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+            funWeb.funUrl = stringValue;
+            [self.navigationController pushViewController:funWeb animated:YES];
+        }
     }];
+    
+    // 设置导航栏样式
+    [scanner setTitleColor:[UIColor whiteColor] tintColor:[UIColor greenColor]];
+    
+    // 展现扫描控制器
+    [self showDetailViewController:scanner sender:nil];
+    
 }
 
 
@@ -1545,6 +1557,9 @@
     
 }
 
+- (BOOL)prefersStatusBarHidden{
+    return NO;
+}
 @end
 
 

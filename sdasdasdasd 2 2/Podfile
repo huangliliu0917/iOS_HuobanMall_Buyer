@@ -21,6 +21,8 @@ pod 'AFNetworking'
 pod 'MJExtension'
 pod 'UMengAnalytics-NO-IDFA'
 pod 'IQKeyboardManager'
+pod 'HMQRCodeScanner'
+
   target 'HuoBanMallTests' do
     inherit! :search_paths
     # Pods for testing

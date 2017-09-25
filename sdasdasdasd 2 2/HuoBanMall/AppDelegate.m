@@ -96,10 +96,12 @@
     }
     self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     
     LaunchViewController * launchViewController = [[LaunchViewController alloc] init];
     self.window.rootViewController = launchViewController;
-    [self.window makeKeyAndVisible];
+    
     [self setupInit];
 
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
