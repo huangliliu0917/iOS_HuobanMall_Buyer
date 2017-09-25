@@ -537,7 +537,7 @@
         NSMutableString * urls = [NSMutableString stringWithString:((paymodel.payCenterDomain.length > 0)? paymodel.payCenterDomain: uraaa)];
         [urls appendString:paymodel.notify];
         params[@"notify_url"] = urls;  //接收微信支付异步通知回调地址
-        params[@"out_trade_no"] = self.orderNo; //订单号
+        params[@"out_trade_no"] = [NSString stringWithFormat:@"%@_%@_%@",[self orderNo],HuoBanMallBuyApp_Merchant_Id,noncestr]; //订单号
         params[@"spbill_create_ip"] = @"192.168.1.1"; //APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
         params[@"total_fee"] = [NSString stringWithFormat:@"%.f",[self.priceNumber floatValue] * 100];  //订单总金额，只能为整数，详见支付金额
         params[@"device_info"] = ([[UIDevice currentDevice].identifierForVendor UUIDString]);
@@ -866,7 +866,11 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self getOrderPayInfo:orderNo];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+           [self getOrderPayInfo:orderNo];
+        });
+        
     }];
 
     
@@ -876,7 +880,6 @@
 //    __weak PushWebViewController *wself = self;
     
     self.ServerPayUrl = serverUrl;
-    
     
     LWLog(@"%@",serverUrl);
     NSMutableDictionary * paremes = [NSString getURLParameters:[serverUrl lowercaseString]];

@@ -1117,9 +1117,10 @@
     }
     if (webView.tag == 100) {
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
-            decisionHandler(WKNavigationResponsePolicyCancel);
             NSString *urls = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",[[NSMutableDictionary getURLParameters:url] objectForKey:@"uin"]];
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urls]]) {
+                decisionHandler(WKNavigationResponsePolicyCancel);
+
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urls]];
             }else{
                 decisionHandler(WKNavigationResponsePolicyAllow);
@@ -1127,7 +1128,7 @@
         }else if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound ||
             [url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound
             ) {
-            
+            decisionHandler(WKNavigationResponsePolicyCancel);
             NSString * goUrl = [[NSString alloc] init];
             if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
                 NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
@@ -1177,9 +1178,9 @@
                     [self BackToWebView];
                 }];
             }
-            decisionHandler(WKNavigationResponsePolicyCancel);
-        }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
             
+        }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
+            decisionHandler(WKNavigationResponsePolicyCancel);
             if ([WXApi isWXAppInstalled]) {
                 NSString *goUrl = [[NSString alloc] init];
                 if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
@@ -1204,15 +1205,15 @@
             }else {
                 [SVProgressHUD showErrorWithStatus:@"绑定失败"];
             }
-            decisionHandler(WKNavigationResponsePolicyCancel);
-        }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
             
+        }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
+            decisionHandler(WKNavigationResponsePolicyCancel);
             NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
             LWLog(@"array:%@",array);
             [self changeWithUserInfo:array];
-            decisionHandler(WKNavigationResponsePolicyCancel);
-        }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
             
+        }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
+            decisionHandler(WKNavigationResponsePolicyCancel);
             __weak HomeViewController *wself = self;
             
             self.ServerPayUrl = [temp copy];
@@ -1293,7 +1294,7 @@
                 
             }];
             
-            decisionHandler(WKNavigationResponsePolicyCancel);
+            
         }else if ([url rangeOfString:@"im.html"].location != NSNotFound || [url rangeOfString:@"/webChannel.html"].location != NSNotFound){
             decisionHandler(WKNavigationResponsePolicyAllow);
         }else{
@@ -1310,11 +1311,9 @@
                         if([url rangeOfString:@"webchannelhtml"].location != NSNotFound){
                             decisionHandler(WKNavigationResponsePolicyCancel);
                             [self tarbarSwitch:temp];
-                            
                         }else if([url rangeOfString:@"usercenter/index.aspx"].location != NSNotFound){
                             [self tarbarSwitch:temp];
                             decisionHandler(WKNavigationResponsePolicyCancel);
-                            
                         }else{
                             decisionHandler(WKNavigationResponsePolicyCancel);
                             PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
@@ -1325,8 +1324,6 @@
                             [self.homeWebView.scrollView.mj_header endRefreshing];
                             decisionHandler(WKNavigationResponsePolicyCancel);
                         }
-                        
-
                     }
 
                 }
@@ -1334,15 +1331,12 @@
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }
             
-            
-            
         }
         
-        decisionHandler(WKNavigationResponsePolicyAllow);
+//        decisionHandler(WKNavigationResponsePolicyAllow);
     }else{
-         decisionHandler(WKNavigationResponsePolicyAllow);
+        decisionHandler(WKNavigationResponsePolicyAllow);
     }
-    
 }
 
 - (void)tarbarSwitch:(NSString *)option{
