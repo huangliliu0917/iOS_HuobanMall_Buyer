@@ -295,49 +295,49 @@
 
 
 
-/*
- *行装商城
- */
-#define LWNewFeatureImageCount 3
-#define MallName @"行装户外商城"
-/**消息中心  网络接口*/
-#define NoticeCenterMainUrl @"http://api.open.outfit.ren"
-/**网络  APP 标识*/
-#define NoticeCenterAppKey  @"app"
-/**网络  APP 签名秘药*/
-#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-//接口地址 .net
-#define AppOriginUrl  @"http://mallapi.outfit.ren"
-#define HuoBanMallBuyAppId @"app"
-#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
-//ShareSDk数据统计
-#define HuoBanMallShareSdkAppId @"be89777c387c"
-#define HuoBanMallYouMeng @"58a7f44f1061d22d8a0001c8"
-//sina
-#define HuoBanMallShareSdkSinaKey @"1000919385"
-#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
-#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
-//WeiXin
-#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
-#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
-//qq
-#define HuoBanMallShareSdkQQKey @"1104945838"
-#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
-#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
-
-#define HuoBanMallBuyNavColor ([UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000])
-//设置底部tabar按钮选中时文字的颜色
-#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000])
-//设置底部tabar按钮选中时文字的颜色
-#define TopNavTitleViewTitleColor ([UIColor blackColor])
-
-#define ButtonTitleColor ([UIColor blackColor])
-//#define BudleId @"com.huobanmallbuyer.yingyan"
-#define BudleId @"HuoBanMallYingyan2015"
-//#define urlS @"HuoBanMallYingyan2015"
-#define WBAPPVERSION @"2.0.0"
-#define AppStoryId @"1057806726"
-#define NaVColor @false
+///*
+// *行装商城
+// */
+//#define LWNewFeatureImageCount 3
+//#define MallName @"行装户外商城"
+///**消息中心  网络接口*/
+//#define NoticeCenterMainUrl @"http://api.open.outfit.ren"
+///**网络  APP 标识*/
+//#define NoticeCenterAppKey  @"app"
+///**网络  APP 签名秘药*/
+//#define NoticeCenterAppSecure  @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////接口地址 .net
+//#define AppOriginUrl  @"http://mallapi.outfit.ren"
+//#define HuoBanMallBuyAppId @"app"
+//#define HuoBanMallBuyAppSecrect @"21ff3104eb7a7bf3f2b663b8ab18eebe"
+////ShareSDk数据统计
+//#define HuoBanMallShareSdkAppId @"be89777c387c"
+//#define HuoBanMallYouMeng @"58a7f44f1061d22d8a0001c8"
+////sina
+//#define HuoBanMallShareSdkSinaKey @"1000919385"
+//#define HuoBanMallShareSdkSinaSecret @"87724c17ef0b834a81838cc5ab1ce702"
+//#define HuoBanMallShareSdkSinaRedirectUri @"https://api.weibo.com/oauth2/default.html"
+////WeiXin
+//#define HuoBanMallBuyWeiXinAppId @"wxf0b37b263cfe4d44"
+//#define HuoBanMallShareSdkWeiXinSecret @"d4624c36b6795d1d99dcf0547af5443d"
+////qq
+//#define HuoBanMallShareSdkQQKey @"1104945838"
+//#define HuoBanMallShareSdkQQSecret @"5hqWhRjQiQfiz0dX"
+//#define HuoBanMallBuyApp_Merchant_Id @"4886" //0504
+//
+//#define HuoBanMallBuyNavColor ([UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000])
+////设置底部tabar按钮选中时文字的颜色
+//#define BottomTaBarButtonTitleColor ([UIColor colorWithRed:249/255.0 green:194/255.0 blue:60/255 alpha:1.000])
+////设置底部tabar按钮选中时文字的颜色
+//#define TopNavTitleViewTitleColor ([UIColor blackColor])
+//
+//#define ButtonTitleColor ([UIColor blackColor])
+////#define BudleId @"com.huobanmallbuyer.yingyan"
+//#define BudleId @"HuoBanMallYingyan2015"
+////#define urlS @"HuoBanMallYingyan2015"
+//#define WBAPPVERSION @"2.0.0"
+//#define AppStoryId @"1057806726"
+//#define NaVColor @false
 
 ///*
 // * 3447 51 商城
