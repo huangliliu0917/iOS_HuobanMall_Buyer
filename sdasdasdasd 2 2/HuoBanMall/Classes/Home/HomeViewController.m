@@ -43,9 +43,9 @@
 #import "WKCookieSyncManager.h"
 #import "NSDictionary+ConfirmSign.h"
 #import "ADView.h"
-
+#import "HMScannerController.h"
 #import "LWNavigationController.h"
-
+#import "OaLoginController.h"
 
 
 @interface HomeViewController()<UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate,WXApiDelegate>
@@ -202,10 +202,9 @@
 }
 
 
-
-
-
-
+/**
+ *  分享
+ */
 - (void)shareSdkSha{
     
     //1、创建分享参数
@@ -330,20 +329,8 @@
             self.homeWebUrl = [NSString stringWithFormat:@"%@%@", uraaaaa, self.openUrl];
         }
     }
-    //NSString * del = self.homeWebUrl;
-    //if ([del rangeOfString:@"back=1"].location == NSNotFound) {
-    //   self.homeWebUrl = [NSString stringWithFormat:@"%@=1",del];
-    //}
-    
-    
-    //if (([[self.homeWebUrl lowercaseString] rangeOfString:@"usercenter/index.aspx"].location == //NSNotFound) &&([[self.homeWebUrl lowercaseString] rangeOfString:@"mall/cart.aspx"].location == NSNotFound)) {
-       // NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
-       // NSURLRequest * req = [[NSURLRequest alloc] initWithURL:urlStr];
-       // [self.homeWebView loadRequest:req];
-    //}
-    
+
     if (app.Ad != NULL) {
-        
         AdModel * md = app.Ad;
         LWLog(@"%@",[md mj_keyValues]);
         NSString *image = [md.images copy];
@@ -377,24 +364,15 @@
      * luohaibo for yunpingxingqiu
      */
 //    self.navigationController.navigationBar.barTintColor = HuoBanMallBuyNavColor;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftOption];
+//
     //集成刷新控件
     [self AddMjRefresh];
     self.shareBtn.hidden = YES;
     
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:self.shareBtn]];
     
-    
-    //左侧返回到首页
-    
-    
-    //切换账号
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ToSwitchAccount) name:@"SwitchAccount" object:nil];
-    
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToIphone) name:@"goToIponeVerifyViewController" object:nil];
-    
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CannelLoginBackToHome) name:@"CannelLoginBackHome" object:nil];
+ 
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetHomeWebAgent) name:ResetAllWebAgent object:nil];
     
@@ -402,11 +380,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotoLoginController) name:@"backAndGoLogin" object:nil];
     
+
     
+    //检查网络
     [UIViewController MonitorNetWork];
     
    
-    
+    //初始化网络进度条
     [self initWebViewProgress];
     
     
@@ -459,9 +439,7 @@
     [self.navigationController.navigationBar addSubview:_progressView];
     [self.navigationController setNavigationBarHidden:NO  animated:YES];
     self.tabBarController.tabBar.hidden = NO;
-    
     [UIApplication sharedApplication].statusBarHidden = NO;
-    
     if ([self.homeWebUrl rangeOfString:@"/UserCenter/Index.aspx"].location != NSNotFound || [self.homeWebUrl rangeOfString:@"/Mall/Cart.aspx"].location != NSNotFound) {
         NSURL * urlStr = [NSURL URLWithString:self.homeWebUrl];
         LWLog(@"%@",self.homeWebUrl);
@@ -473,39 +451,10 @@
         if (error) {
             self.navigationItem.title = MallName;
         }else{
-            
             title.length > 0 ? (self.navigationItem.title = title) : (self.navigationItem.title = MallName);
         }
-        
     }];
-
 }
-//
-///**
-// *  查看数据资源
-// */
-//- (void)ToCheckDate{
-//    
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:DatePackageVersion];
-//    __weak HomeViewController * wself = self;
-//    NSString * cc = [NSString stringWithFormat:@"%@%@",AppOriginUrl,@"/mall/CheckDataPacket"];
-//    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-//    dict[@"datapacketversion"] = AppVersion;
-//    NSMutableDictionary * aa =  [NSDictionary asignWithMutableDictionary:dict];
-//    [UserLoginTool loginRequestGet:cc parame:aa success:^(id json) {
-//        //        LWLog(@"%@",json);
-//        if ([json[@"code"] integerValue] == 200 && [json[@"data"][@"updateData"] integerValue] == 1 ) {
-//            //数据包版本号
-//            [[NSUserDefaults standardUserDefaults] setObject:json[@"data"][@"version"] forKey:DatePackageVersion];
-//            
-//            [wself ToGetDownDateWithDateSource:json[@"data"][@"downloadUrl"] andverson:json[@"version"]];
-//        }
-//    } failure:^(NSError *error) {
-//        //         LWLog(@"%@",error.description);
-//    }];
-//    
-//}
-
 
 - (void)AddMjRefresh{
     // 添加下拉刷新控件
@@ -593,14 +542,26 @@
 }
 
 /**
- *  去左侧
+ *  云品星球的扫一扫
  */
 - (void)GoToLeft{
     
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-        
-        
+    // 实例化扫描控制器
+    HMScannerController *scanner = [HMScannerController scannerWithCardName:nil avatar:nil completion:^(NSString *stringValue) {
+        NSLog(@"%@",stringValue);
+        if (stringValue.length) {
+            PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
+            funWeb.funUrl = stringValue;
+            [self.navigationController pushViewController:funWeb animated:YES];
+        }
     }];
+    
+    // 设置导航栏样式
+    [scanner setTitleColor:[UIColor whiteColor] tintColor:[UIColor greenColor]];
+    
+    // 展现扫描控制器
+    [self showDetailViewController:scanner sender:nil];
+    
 }
 
 
@@ -1031,67 +992,15 @@
     
 }
 
-
+/**
+ * 控制器view将要消失
+ **/
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [_progressView removeFromSuperview];
     
 }
-#pragma mark UIWebView
 
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-//    LWLog(@"shouldStartLoadWithRequest");
-//    NSString *temp = request.URL.absoluteString;
-//    
-//    LWLog(@"%@",temp);
-//    NSString *url = [temp lowercaseString];
-//    
-//    
-//    NSString * uraaaaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-//    NSString * cc = [NSString stringWithFormat:@"%@%@%@",uraaaaa,HomeBottomUrl,HuoBanMallBuyApp_Merchant_Id];
-//    if ([url isEqualToString:cc]) {
-//        return YES;
-//    }else if ([url rangeOfString:@"/js/easemob/im.html?"].location != NSNotFound){
-//        
-//        [self.homeWebView loadRequest:request];
-//        return NO;
-//    }else if([url rangeOfString:@"http://wpa.qq.com/msgrd?v=3&uin"].location != NSNotFound){
-//        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]; //拨号
-//        }else{
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/cn/app/qq/id451108668?mt=12"]]; //拨号
-//        }
-//        return NO;
-//    }else {
-//        
-//        NSRange range = [temp rangeOfString:@"back"];
-//        NSString * newUrls = nil;
-//        if (range.location != NSNotFound) {
-//            
-//            newUrls = [temp stringByReplacingCharactersInRange:range withString:@"back=1"];
-//        }else{
-//            newUrls = [NSString stringWithFormat:@"%@&back=1",temp];
-//        }
-//        
-//        NSRange ran = [newUrls rangeOfString:@"aspx"];
-//        NSString * newUrl = nil;
-//        if (ran.location != NSNotFound) {
-//            NSRange cc = NSMakeRange(ran.location+ran.length, 1);
-//            newUrl = [newUrls stringByReplacingCharactersInRange:cc withString:@"?"];
-//            NSString * dddd = newUrl;
-//            NSURL * urlStr = [NSURL URLWithString:dddd];
-//            NSMutableURLRequest * req = [[NSMutableURLRequest alloc] initWithURL:urlStr];
-//            [req addValue:WBAPPVERSION forHTTPHeaderField:@"appversion"];
-//            [self.homeWebView loadRequest:req];
-//            return NO;
-//        }else {
-//            [self.homeWebView loadRequest:request];
-//            return NO;
-//        }
-//    }
-//    return NO;
-//    //    }
-//}
 
 #pragma mark wkWebView
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
@@ -1101,21 +1010,38 @@
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
-
+/**
+ * 获取重定向地址
+ */
+- (NSString *)getRedirecturl:(NSString *)url{
+    NSString * goUrl = [[NSString alloc] init];
+    if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+        NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+        NSString *str = array[1];
+        if (str.length != 0) {
+            goUrl = [str stringByRemovingPercentEncoding];
+            if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
+                goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
+            }
+        }
+    }else {
+        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+        goUrl = ddd;
+    }
+    return goUrl;
+}
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     
-    
     LWLog(@"decidePolicyForNavigationResponse");
     NSString *temp = webView.URL.absoluteString;
-//    NSMutableURLRequest * res = webView.re
     LWLog(@"%@",temp);
     NSString *url = [temp lowercaseString];
     
     if ([url isEqualToString:@"about:blank"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
-    }
-    if (webView.tag == 100) {
+    }else if (webView.tag == 100) {
         if ([url rangeOfString:@"qq"].location !=  NSNotFound) {
             NSString *urls = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",[[NSMutableDictionary getURLParameters:url] objectForKey:@"uin"]];
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urls]]) {
@@ -1129,26 +1055,11 @@
             [url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound
             ) {
             decisionHandler(WKNavigationResponsePolicyCancel);
-            NSString * goUrl = [[NSString alloc] init];
-            if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
-                NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
-                NSString *str = array[1];
-                if (str.length != 0) {
-                    goUrl = [str stringByRemovingPercentEncoding];
-                    if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
-                        goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
-                    }
-                }
-            }else {
-                NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-                NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-                goUrl = ddd;
-            }
-            
+            //需要登录后重定向
+            NSString * goUrl = [self getRedirecturl:url];
+            //删除缓村数据
             [UIViewController ToRemoveSandBoxDate];
-            
             UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            
             NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
             /*
              微信加手机 = 0,
@@ -1160,9 +1071,9 @@
                 IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
                 LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
                 login.title = @"登录";
-                login.goUrl = goUrl;
+                login.goUrl = [goUrl copy];
                 if ([str intValue] == 1) {
-                   login.isPhoneLogin = YES;
+                    login.isPhoneLogin = YES;
                 }
                 [self presentViewController:root animated:YES completion:^{
                     [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
@@ -1178,7 +1089,13 @@
                     [self BackToWebView];
                 }];
             }
-            
+        }else if([url rangeOfString:@"/usercenter/oalogin.aspx?"].location != NSNotFound){
+            decisionHandler(WKNavigationResponsePolicyCancel);
+            [UIViewController ToRemoveSandBoxDate];
+            OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+            oa.goUrl = [self getRedirecturl:url];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+            [self presentViewController:root animated:YES completion:nil];
         }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
             decisionHandler(WKNavigationResponsePolicyCancel);
             if ([WXApi isWXAppInstalled]) {
@@ -1215,7 +1132,6 @@
         }else if([url rangeOfString:@"appalipay.aspx"].location != NSNotFound){
             decisionHandler(WKNavigationResponsePolicyCancel);
             __weak HomeViewController *wself = self;
-            
             self.ServerPayUrl = [temp copy];
             NSRange trade_no = [temp rangeOfString:@"trade_no="];
             NSRange customerID = [temp rangeOfString:@"customerID="];
@@ -1315,17 +1231,17 @@
                             [self tarbarSwitch:temp];
                             decisionHandler(WKNavigationResponsePolicyCancel);
                         }else{
+                            [self.homeWebView.scrollView.mj_header endRefreshing];
                             decisionHandler(WKNavigationResponsePolicyCancel);
+                           
                             PushWebViewController * funWeb =  [[PushWebViewController alloc] init];
                             funWeb.funUrl = temp;
                             [self.navigationController pushViewController:funWeb animated:YES];
                             self.tabBarController.tabBar.hidden = YES;
                             //self.navigationItem.title = nil;
-                            [self.homeWebView.scrollView.mj_header endRefreshing];
-                            decisionHandler(WKNavigationResponsePolicyCancel);
                         }
                     }
-
+                    
                 }
             } else{
                 decisionHandler(WKNavigationResponsePolicyAllow);
@@ -1570,39 +1486,9 @@
 - (void)gotoLoginController {
     [UIViewController ToRemoveSandBoxDate];
     
-    UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
-    
-    if ([str intValue] == 0) {
-        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }else if ([str intValue] == 1) {
-        IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        login.isPhoneLogin = YES;
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }else if ([str intValue] == 2) {
-        LoginViewController * login =  [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        login.title = @"登录";
-        //        login.goUrl = goUrl;
-        LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
-        [self presentViewController:root animated:YES completion:^{
-            [[NSUserDefaults standardUserDefaults] setObject:Failure forKey:LoginStatus];
-            [self BackToWebView];
-        }];
-    }
+    OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+    LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+    [self presentViewController:root animated:YES completion:nil];
 }
 
 - (void)checkVersion{
@@ -1665,6 +1551,9 @@
     
 }
 
+- (BOOL)prefersStatusBarHidden{
+    return NO;
+}
 @end
 
 

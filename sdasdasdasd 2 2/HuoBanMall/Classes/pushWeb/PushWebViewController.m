@@ -38,6 +38,8 @@
 #import "LWNavigationController.h"
 #import "NSString+Des.h"
 #import "MBProgressHUD+MJ.h"
+#import "OaLoginController.h"
+
 @interface PushWebViewController ()<WXApiDelegate,UIWebViewDelegate,UIActionSheetDelegate,WKUIDelegate,WKNavigationDelegate>
 
 @property (strong, nonatomic) WKWebView *webView;
@@ -661,6 +663,33 @@
 }
 
 #pragma mark wk
+
+
+/**
+ * 获取重定向地址
+ */
+- (NSString *)getRedirecturl:(NSString *)url{
+    NSString * goUrl = [[NSString alloc] init];
+    if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
+        NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
+        NSString *str = array[1];
+        if (str.length != 0) {
+            goUrl = [str stringByRemovingPercentEncoding];
+            if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
+                goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
+            }
+        }
+    }else {
+        NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
+        NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
+        goUrl = ddd;
+    }
+    return goUrl;
+}
+
+
+
+
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
     if (navigationAction.targetFrame == nil) {
         [webView loadRequest:navigationAction.request];
@@ -670,42 +699,19 @@
 
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    
-
-    
     NSString *temp = webView.URL.absoluteString;
     LWLog(@"decidePolicyForNavigationResponse%@",temp);
     LWLog(@"decidePolicyForNavigationResponse%@",self.mainSite);
     //downurl
     NSString *url = [temp lowercaseString];
     if ([url isEqualToString:@"about:blank"]) {
-         decisionHandler(WKNavigationResponsePolicyCancel);
-    }
-    
-    //拦截没登录
-    if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound) {
-        NSString *goUrl = [[NSString alloc] init];
-        if ([url rangeOfString:@"redirecturl="].location != NSNotFound) {
-            NSArray *array = [url componentsSeparatedByString:@"redirecturl="];
-            NSString *str = array[1];
-            if (str.length != 0) {
-                goUrl = [str stringByRemovingPercentEncoding];
-                if ([goUrl rangeOfString:@"http:"].location == NSNotFound) {
-                    goUrl = [NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl], goUrl];
-                }
-            }
-        }else {
-            NSString * uraaa = [[NSUserDefaults standardUserDefaults] objectForKey:AppMainUrl];
-            NSString * ddd = [NSString stringWithFormat:@"%@/%@/index.aspx?back=1",uraaa,HuoBanMallBuyApp_Merchant_Id];
-            goUrl = ddd;
-        }
-        
+        decisionHandler(WKNavigationResponsePolicyCancel);
+    }else if ([url rangeOfString:@"/usercenter/login.aspx"].location !=  NSNotFound || [url rangeOfString:@"/invite/mobilelogin.aspx?"].location != NSNotFound || [url rangeOfString:@"/usercenter/verifymobile.aspx?"].location != NSNotFound) {
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        NSString *goUrl = [self getRedirecturl:url];
         [UIViewController ToRemoveSandBoxDate];
         UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        
         NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:AppLoginType];
-
-        
         if ([str intValue] == 0 || [str intValue] == 3 || [str intValue] == 1) {
             IponeVerifyViewController *login = [main instantiateViewControllerWithIdentifier:@"IponeVerifyViewController"];
             LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:login];
@@ -736,8 +742,33 @@
             }];
         }
         
+        
+    }else if([url rangeOfString:@"/usercenter/oazc.aspx?customerid=7031"].location !=  NSNotFound){
+        LWLog(@"%lu",self.navigationController.viewControllers.count);
+        if (self.fromType == 1) {
+            decisionHandler(WKNavigationResponsePolicyAllow);
+            
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+            decisionHandler(WKNavigationResponsePolicyCancel);
+            
+        }
+    }else if([url rangeOfString:@"/usercenter/oalogin.aspx"].location !=  NSNotFound){
         decisionHandler(WKNavigationResponsePolicyCancel);
+        if (self.navigationController.viewControllers.count == 3) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            [UIViewController ToRemoveSandBoxDate];
+            OaLoginController * oa = [[OaLoginController alloc] initWithNibName:@"OaLoginController" bundle:nil];
+            oa.inWeb = 1;
+            oa.goUrl = [self getRedirecturl:url];
+            LWNavigationController * root = [[LWNavigationController alloc] initWithRootViewController:oa];
+            [self presentViewController:root animated:YES completion:nil];
+            
+        }
+        
     }else if ([url rangeOfString:@"/usercenter/bindingweixin.aspx"].location != NSNotFound) {
+        decisionHandler(WKNavigationResponsePolicyCancel);
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(OquthByWeiXinSuccess1:) name:@"ToGetUserInfoBuild" object:nil];
         
         if ([WXApi isWXAppInstalled]) {
@@ -747,18 +778,19 @@
         }else {
             [SVProgressHUD showErrorWithStatus:@"绑定失败"];
         }
-        decisionHandler(WKNavigationResponsePolicyCancel);
+        
     }else if ([url rangeOfString:@"/usercenter/appaccountswitcher.aspx"].location != NSNotFound) {
+        decisionHandler(WKNavigationResponsePolicyCancel);
         NSArray *array = [url componentsSeparatedByString:@"?u="]; //从字符A中分隔成2个元素的数组
         LWLog(@"array:%@",array);
         [self changeWithUserInfo:array];
-        decisionHandler(WKNavigationResponsePolicyCancel);
+        
     }else if ([url rangeOfString:@"/usercenter/index.aspx"].location != NSNotFound){
         decisionHandler(WKNavigationResponsePolicyAllow);
         //[self.navigationController popViewControllerAnimated:YES];
         
     }else if([url rangeOfString:@"mredirectv2.aspx"].location != NSNotFound ){
-         decisionHandler(WKNavigationResponsePolicyCancel);
+        decisionHandler(WKNavigationResponsePolicyCancel);
         AlipayViewController * vc = [[AlipayViewController alloc] init];
         vc.aliPayNewUrl = url;
         [self.navigationController pushViewController:vc animated:YES];
@@ -776,12 +808,11 @@
             if([temp rangeOfString:@"https"].location != NSNotFound){
                 temp = [temp stringByReplacingOccurrencesOfString:@"https"withString:@"http"];
                 if ([temp isEqualToString:self.funUrl]) {
-                     decisionHandler(WKNavigationResponsePolicyAllow);
+                    decisionHandler(WKNavigationResponsePolicyAllow);
                 }
             }else if ([temp.lowercaseString isEqualToString:self.funUrl.lowercaseString] || [temp.lowercaseString rangeOfString:@"im.html"].location!=NSNotFound || [temp.lowercaseString rangeOfString:@"sisweb/updatesisprofile"].location!=NSNotFound) {
                 decisionHandler(WKNavigationResponsePolicyAllow);
             }else {
-                
                 NSRange spe = [temp rangeOfString:@"back#"];
                 LWLog(@"%@",NSStringFromRange(spe));
                 if (spe.location != NSNotFound) {
@@ -816,20 +847,11 @@
                     self.tabBarController.tabBar.hidden = YES;
                     self.navigationItem.title = nil;
                 }
-                
-                
-                
-                
             }
         }else{
             decisionHandler(WKNavigationResponsePolicyAllow);
-
         }
-
     }
-    
-    decisionHandler(WKNavigationResponsePolicyAllow);
-
 }
 
 - (void)getOrderPayInfo:(NSString *)orderNo{
